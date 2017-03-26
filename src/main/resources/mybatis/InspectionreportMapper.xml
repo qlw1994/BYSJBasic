@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.InspectionreportMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Inspectionreport" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="inspectname" property="inspectname" jdbcType="VARCHAR" />
+    <result column="inspecttime" property="inspecttime" jdbcType="VARCHAR" />
+    <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
+    <result column="doctorid" property="doctorid" jdbcType="BIGINT" />
+    <result column="auditorid" property="auditorid" jdbcType="BIGINT" />
+    <result column="total" property="total" jdbcType="BIGINT" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="deletedate" property="deletedate" jdbcType="VARCHAR" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="examtime" property="examtime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, patientid, inspectname, inspecttime, departmentid, doctorid, auditorid, total, 
+    createdate, deletedate, hospitalid, examtime, status, date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.InspectionreportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from inspectionreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from inspectionreport
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from inspectionreport
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.InspectionreportExample" >
+    delete from inspectionreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Inspectionreport" >
+    insert into inspectionreport (id, patientid, inspectname, 
+      inspecttime, departmentid, doctorid, 
+      auditorid, total, createdate, 
+      deletedate, hospitalid, examtime, 
+      status, date)
+    values (#{id,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{inspectname,jdbcType=VARCHAR}, 
+      #{inspecttime,jdbcType=VARCHAR}, #{departmentid,jdbcType=BIGINT}, #{doctorid,jdbcType=BIGINT}, 
+      #{auditorid,jdbcType=BIGINT}, #{total,jdbcType=BIGINT}, #{createdate,jdbcType=VARCHAR}, 
+      #{deletedate,jdbcType=VARCHAR}, #{hospitalid,jdbcType=BIGINT}, #{examtime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{date,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Inspectionreport" >
+    insert into inspectionreport
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="patientid != null" >
+        patientid,
+      </if>
+      <if test="inspectname != null" >
+        inspectname,
+      </if>
+      <if test="inspecttime != null" >
+        inspecttime,
+      </if>
+      <if test="departmentid != null" >
+        departmentid,
+      </if>
+      <if test="doctorid != null" >
+        doctorid,
+      </if>
+      <if test="auditorid != null" >
+        auditorid,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="deletedate != null" >
+        deletedate,
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="examtime != null" >
+        examtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="inspectname != null" >
+        #{inspectname,jdbcType=VARCHAR},
+      </if>
+      <if test="inspecttime != null" >
+        #{inspecttime,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="auditorid != null" >
+        #{auditorid,jdbcType=BIGINT},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=BIGINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedate != null" >
+        #{deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="examtime != null" >
+        #{examtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.InspectionreportExample" resultType="java.lang.Integer" >
+    select count(*) from inspectionreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update inspectionreport
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.inspectname != null" >
+        inspectname = #{record.inspectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspecttime != null" >
+        inspecttime = #{record.inspecttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctorid != null" >
+        doctorid = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.auditorid != null" >
+        auditorid = #{record.auditorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletedate != null" >
+        deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.examtime != null" >
+        examtime = #{record.examtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update inspectionreport
+    set id = #{record.id,jdbcType=BIGINT},
+      patientid = #{record.patientid,jdbcType=BIGINT},
+      inspectname = #{record.inspectname,jdbcType=VARCHAR},
+      inspecttime = #{record.inspecttime,jdbcType=VARCHAR},
+      departmentid = #{record.departmentid,jdbcType=BIGINT},
+      doctorid = #{record.doctorid,jdbcType=BIGINT},
+      auditorid = #{record.auditorid,jdbcType=BIGINT},
+      total = #{record.total,jdbcType=BIGINT},
+      createdate = #{record.createdate,jdbcType=VARCHAR},
+      deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      examtime = #{record.examtime,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Inspectionreport" >
+    update inspectionreport
+    <set >
+      <if test="patientid != null" >
+        patientid = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="inspectname != null" >
+        inspectname = #{inspectname,jdbcType=VARCHAR},
+      </if>
+      <if test="inspecttime != null" >
+        inspecttime = #{inspecttime,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null" >
+        doctorid = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="auditorid != null" >
+        auditorid = #{auditorid,jdbcType=BIGINT},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=BIGINT},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedate != null" >
+        deletedate = #{deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="examtime != null" >
+        examtime = #{examtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Inspectionreport" >
+    update inspectionreport
+    set patientid = #{patientid,jdbcType=BIGINT},
+      inspectname = #{inspectname,jdbcType=VARCHAR},
+      inspecttime = #{inspecttime,jdbcType=VARCHAR},
+      departmentid = #{departmentid,jdbcType=BIGINT},
+      doctorid = #{doctorid,jdbcType=BIGINT},
+      auditorid = #{auditorid,jdbcType=BIGINT},
+      total = #{total,jdbcType=BIGINT},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      deletedate = #{deletedate,jdbcType=VARCHAR},
+      hospitalid = #{hospitalid,jdbcType=BIGINT},
+      examtime = #{examtime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      date = #{date,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

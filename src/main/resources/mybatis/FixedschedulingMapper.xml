@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.FixedschedulingMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Fixedscheduling" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="doctorid" property="doctorid" jdbcType="BIGINT" />
+    <result column="week" property="week" jdbcType="INTEGER" />
+    <result column="starttime" property="starttime" jdbcType="VARCHAR" />
+    <result column="endtime" property="endtime" jdbcType="VARCHAR" />
+    <result column="timeflag" property="timeflag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
+    <result column="regfee" property="regfee" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, doctorid, week, starttime, endtime, timeflag, status, date, hospitalid, departmentid, 
+    regfee
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.FixedschedulingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fixedscheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fixedscheduling
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fixedscheduling
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.FixedschedulingExample" >
+    delete from fixedscheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Fixedscheduling" >
+    insert into fixedscheduling (id, doctorid, week, 
+      starttime, endtime, timeflag, 
+      status, date, hospitalid, 
+      departmentid, regfee)
+    values (#{id,jdbcType=BIGINT}, #{doctorid,jdbcType=BIGINT}, #{week,jdbcType=INTEGER}, 
+      #{starttime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, #{timeflag,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{date,jdbcType=VARCHAR}, #{hospitalid,jdbcType=BIGINT}, 
+      #{departmentid,jdbcType=BIGINT}, #{regfee,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Fixedscheduling" >
+    insert into fixedscheduling
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doctorid != null" >
+        doctorid,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="timeflag != null" >
+        timeflag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="departmentid != null" >
+        departmentid,
+      </if>
+      <if test="regfee != null" >
+        regfee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeflag != null" >
+        #{timeflag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="regfee != null" >
+        #{regfee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.FixedschedulingExample" resultType="java.lang.Integer" >
+    select count(*) from fixedscheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fixedscheduling
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctorid != null" >
+        doctorid = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.week != null" >
+        week = #{record.week,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeflag != null" >
+        timeflag = #{record.timeflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.regfee != null" >
+        regfee = #{record.regfee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fixedscheduling
+    set id = #{record.id,jdbcType=BIGINT},
+      doctorid = #{record.doctorid,jdbcType=BIGINT},
+      week = #{record.week,jdbcType=INTEGER},
+      starttime = #{record.starttime,jdbcType=VARCHAR},
+      endtime = #{record.endtime,jdbcType=VARCHAR},
+      timeflag = #{record.timeflag,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=VARCHAR},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      departmentid = #{record.departmentid,jdbcType=BIGINT},
+      regfee = #{record.regfee,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Fixedscheduling" >
+    update fixedscheduling
+    <set >
+      <if test="doctorid != null" >
+        doctorid = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="week != null" >
+        week = #{week,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeflag != null" >
+        timeflag = #{timeflag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="regfee != null" >
+        regfee = #{regfee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Fixedscheduling" >
+    update fixedscheduling
+    set doctorid = #{doctorid,jdbcType=BIGINT},
+      week = #{week,jdbcType=INTEGER},
+      starttime = #{starttime,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=VARCHAR},
+      timeflag = #{timeflag,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      date = #{date,jdbcType=VARCHAR},
+      hospitalid = #{hospitalid,jdbcType=BIGINT},
+      departmentid = #{departmentid,jdbcType=BIGINT},
+      regfee = #{regfee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

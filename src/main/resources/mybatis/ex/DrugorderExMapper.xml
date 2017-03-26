@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.ex.DrugorderExMapper">
+    <resultMap id="ResultMap" type="qlw.model.Drugorder">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="doctorid" property="doctorid" jdbcType="BIGINT"/>
+        <result column="patientid" property="patientid" jdbcType="BIGINT"/>
+        <result column="createdate" property="createdate" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="advice" property="advice" jdbcType="VARCHAR"/>
+        <result column="total" property="total" jdbcType="INTEGER"/>
+        <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
+        <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
+        <result column="departmentid" property="departmentid" jdbcType="BIGINT"/>
+        <association property="hospital" javaType="qlw.model.Hospital">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="code" property="code" jdbcType="VARCHAR"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="level" property="level" jdbcType="INTEGER"/>
+            <result column="address" property="address" jdbcType="VARCHAR"/>
+            <result column="resume" property="resume" jdbcType="VARCHAR"/>
+            <result column="startdate" property="startdate" jdbcType="VARCHAR"/>
+            <result column="enddate" property="enddate" jdbcType="VARCHAR"/>
+            <result column="imgpath" property="imgpath" jdbcType="VARCHAR"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="area" property="area" jdbcType="VARCHAR"/>
+            <result column="status" property="status" jdbcType="INTEGER"/>
+        </association>
+        <association property="department" javaType="qlw.model.Department">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
+            <result column="code" property="code" jdbcType="VARCHAR"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="createdate" property="createdate" jdbcType="VARCHAR"/>
+            <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="drugorderdetails" ofType="qlw.model.Drugorderdetail">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="drugorderid" property="drugorderid" jdbcType="BIGINT"/>
+            <result column="drugid" property="drugid" jdbcType="BIGINT"/>
+            <result column="amount" property="amount" jdbcType="INTEGER"/>
+            <result column="price" property="price" jdbcType="DECIMAL"/>
+            <result column="format" property="format" jdbcType="VARCHAR"/>
+            <result column="money" property="money" jdbcType="DECIMAL"/>
+        </collection>
+    </resultMap>
+    <sql id="leftJoin">
+        drugorder as d left join drugorderdetail as dr on d.id=dr.drugorderid left join on hospital as h on d.hospitalid = h.id left join on department as de on d.departmentid = de.id
+    </sql>
+    <sql id="Example_Where_ClauseEx">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and d.${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and d.${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and d.${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and d.${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <select id="selectByExampleEx" resultMap="ResultMap" parameterType="qlw.model.DrugorderExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        *
+        from
+        <include refid="leftJoin"/>
+        <if test="_parameter != null">
+            <include refid="Example_Where_ClauseEx"/>
+        </if>
+        <if test="orderByClause != null">
+            order by d.${orderByClause}
+        </if>
+    </select>
+    <select id="countByExampleEx" parameterType="qlw.model.DrugorderExample" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="leftJoin"/>
+        <if test="_parameter != null">
+            <include refid="Example_Where_ClauseEx"/>
+        </if>
+    </select>
+    <insert id="insertBackId" parameterType="qlw.model.Drugorder" keyProperty="id" useGeneratedKeys="true">
+    INSERT into drugorder
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="doctorid != null" >
+                doctorid,
+            </if>
+            <if test="patientid != null" >
+                patientid,
+            </if>
+            <if test="createdate != null" >
+                createdate,
+            </if>
+            <if test="money != null" >
+                money,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="advice != null" >
+                advice,
+            </if>
+            <if test="total != null" >
+                total,
+            </if>
+            <if test="deletedate != null" >
+                deletedate,
+            </if>
+            <if test="hospitalid != null" >
+                hospitalid,
+            </if>
+            <if test="departmentid != null" >
+                departmentid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="doctorid != null" >
+                #{doctorid,jdbcType=BIGINT},
+            </if>
+            <if test="patientid != null" >
+                #{patientid,jdbcType=BIGINT},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null" >
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="advice != null" >
+                #{advice,jdbcType=VARCHAR},
+            </if>
+            <if test="total != null" >
+                #{total,jdbcType=INTEGER},
+            </if>
+            <if test="deletedate != null" >
+                #{deletedate,jdbcType=VARCHAR},
+            </if>
+            <if test="hospitalid != null" >
+                #{hospitalid,jdbcType=BIGINT},
+            </if>
+            <if test="departmentid != null" >
+                #{departmentid,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>

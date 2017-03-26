@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.PaymentdetailMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Paymentdetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="paymentid" property="paymentid" jdbcType="BIGINT" />
+    <result column="payname" property="payname" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="format" property="format" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="doctorname" property="doctorname" jdbcType="VARCHAR" />
+    <result column="departmentname" property="departmentname" jdbcType="VARCHAR" />
+    <result column="doctorid" property="doctorid" jdbcType="BIGINT" />
+    <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, paymentid, payname, count, format, unit, price, doctorname, departmentname, doctorid, 
+    departmentid, money
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.PaymentdetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paymentdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from paymentdetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from paymentdetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.PaymentdetailExample" >
+    delete from paymentdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Paymentdetail" >
+    insert into paymentdetail (id, paymentid, payname, 
+      count, format, unit, 
+      price, doctorname, departmentname, 
+      doctorid, departmentid, money
+      )
+    values (#{id,jdbcType=BIGINT}, #{paymentid,jdbcType=BIGINT}, #{payname,jdbcType=VARCHAR}, 
+      #{count,jdbcType=INTEGER}, #{format,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{doctorname,jdbcType=VARCHAR}, #{departmentname,jdbcType=VARCHAR}, 
+      #{doctorid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, #{money,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Paymentdetail" >
+    insert into paymentdetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="paymentid != null" >
+        paymentid,
+      </if>
+      <if test="payname != null" >
+        payname,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="format != null" >
+        format,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="doctorname != null" >
+        doctorname,
+      </if>
+      <if test="departmentname != null" >
+        departmentname,
+      </if>
+      <if test="doctorid != null" >
+        doctorid,
+      </if>
+      <if test="departmentid != null" >
+        departmentid,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="paymentid != null" >
+        #{paymentid,jdbcType=BIGINT},
+      </if>
+      <if test="payname != null" >
+        #{payname,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="format != null" >
+        #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="doctorname != null" >
+        #{doctorname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null" >
+        #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.PaymentdetailExample" resultType="java.lang.Integer" >
+    select count(*) from paymentdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update paymentdetail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentid != null" >
+        paymentid = #{record.paymentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.payname != null" >
+        payname = #{record.payname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.format != null" >
+        format = #{record.format,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.doctorname != null" >
+        doctorname = #{record.doctorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentname != null" >
+        departmentname = #{record.departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorid != null" >
+        doctorid = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update paymentdetail
+    set id = #{record.id,jdbcType=BIGINT},
+      paymentid = #{record.paymentid,jdbcType=BIGINT},
+      payname = #{record.payname,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=INTEGER},
+      format = #{record.format,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      doctorname = #{record.doctorname,jdbcType=VARCHAR},
+      departmentname = #{record.departmentname,jdbcType=VARCHAR},
+      doctorid = #{record.doctorid,jdbcType=BIGINT},
+      departmentid = #{record.departmentid,jdbcType=BIGINT},
+      money = #{record.money,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Paymentdetail" >
+    update paymentdetail
+    <set >
+      <if test="paymentid != null" >
+        paymentid = #{paymentid,jdbcType=BIGINT},
+      </if>
+      <if test="payname != null" >
+        payname = #{payname,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="format != null" >
+        format = #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="doctorname != null" >
+        doctorname = #{doctorname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null" >
+        departmentname = #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorid != null" >
+        doctorid = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Paymentdetail" >
+    update paymentdetail
+    set paymentid = #{paymentid,jdbcType=BIGINT},
+      payname = #{payname,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      format = #{format,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      doctorname = #{doctorname,jdbcType=VARCHAR},
+      departmentname = #{departmentname,jdbcType=VARCHAR},
+      doctorid = #{doctorid,jdbcType=BIGINT},
+      departmentid = #{departmentid,jdbcType=BIGINT},
+      money = #{money,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

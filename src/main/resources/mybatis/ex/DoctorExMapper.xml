@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.ex.DoctorExMapper">
+    <resultMap id="ResultMap" type="qlw.model.Doctor">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="departmentid" property="departmentid" jdbcType="BIGINT"/>
+        <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="job" property="job" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="resume" property="resume" jdbcType="VARCHAR"/>
+        <result column="headpath" property="headpath" jdbcType="VARCHAR"/>
+        <result column="idtype" property="idtype" jdbcType="INTEGER"/>
+        <result column="idnumber" property="idnumber" jdbcType="VARCHAR"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="createdate" property="createdate" jdbcType="VARCHAR"/>
+        <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
+        <association property="department" javaType="qlw.model.Department">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
+            <result column="code" property="code" jdbcType="VARCHAR"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="createdate" property="createdate" jdbcType="VARCHAR"/>
+            <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
+        </association>
+        <association property="hospital" javaType="qlw.model.Hospital">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="area" property="area" jdbcType="VARCHAR"/>
+            <result column="code" property="code" jdbcType="VARCHAR"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="level" property="level" jdbcType="INTEGER"/>
+            <result column="address" property="address" jdbcType="VARCHAR"/>
+            <result column="resume" property="resume" jdbcType="VARCHAR"/>
+            <result column="startdate" property="startdate" jdbcType="VARCHAR"/>
+            <result column="enddate" property="enddate" jdbcType="VARCHAR"/>
+            <result column="imgpath" property="imgpath" jdbcType="VARCHAR"/>
+            <result column="status" property="status" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <sql id="leftJoin">
+        doctor as d left join hospital as h on d.hospitalid = h.id left join department as de on d.departmentid = de.id
+    </sql>
+    <sql id="Example_Where_ClauseEx">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and d.${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and d.${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and d.${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and d.${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <insert id="insertBackId" parameterType="qlw.model.Doctor" keyProperty="id" useGeneratedKeys="true">
+        INSERT into doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="departmentid != null">
+                departmentid,
+            </if>
+            <if test="hospitalid != null">
+                hospitalid,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="resume != null">
+                resume,
+            </if>
+            <if test="headpath != null">
+                headpath,
+            </if>
+            <if test="idtype != null">
+                idtype,
+            </if>
+            <if test="idnumber != null">
+                idnumber,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="createdate != null">
+                createdate,
+            </if>
+            <if test="deletedate != null">
+                deletedate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="departmentid != null">
+                #{departmentid,jdbcType=BIGINT},
+            </if>
+            <if test="hospitalid != null">
+                #{hospitalid,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="resume != null">
+                #{resume,jdbcType=VARCHAR},
+            </if>
+            <if test="headpath != null">
+                #{headpath,jdbcType=VARCHAR},
+            </if>
+            <if test="idtype != null">
+                #{idtype,jdbcType=INTEGER},
+            </if>
+            <if test="idnumber != null">
+                #{idnumber,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                #{createdate,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedate != null">
+                #{deletedate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectByExampleEx" resultMap="ResultMap" parameterType="qlw.model.DoctorExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        d.id, d.departmentid, d.hospitalid, d.code, d.name, d.sex, d.age, d.job, d.level, d.resume, d.headpath, d.idtype, d.idnumber, d.account, d.password, d.createdate, d.deletedate, h.id, h.code, h.name, h.level, h.address, h.resume, h.startdate,h. enddate, h.imgpath,h. province,h. city,h. area, h.status,de. id, de.hospitalid, de.code,de. name, de.createdate,de. deletedate
+        from
+        <include refid="leftJoin"/>
+        <if test="_parameter != null">
+            <include refid="Example_Where_ClauseEx"/>
+        </if>
+        <if test="orderByClause != null">
+            order by d.${orderByClause}
+        </if>
+    </select>
+    <select id="countByExampleEx" parameterType="qlw.model.DoctorExample" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="leftJoin"/>
+        <if test="_parameter != null">
+            <include refid="Example_Where_ClauseEx"/>
+        </if>
+    </select>
+</mapper>

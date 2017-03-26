@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qlw.mapper.DrugMapper">
+  <resultMap id="BaseResultMap" type="qlw.model.Drug">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospitalid" jdbcType="BIGINT" property="hospitalid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="createdate" jdbcType="VARCHAR" property="createdate" />
+    <result column="deletedate" jdbcType="VARCHAR" property="deletedate" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="format" jdbcType="VARCHAR" property="format" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, hospitalid, code, name, createdate, deletedate, price, format
+  </sql>
+  <select id="selectByExample" parameterType="qlw.model.DrugExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from drug
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.DrugExample">
+    delete from drug
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Drug">
+    insert into drug (id, hospitalid, code, 
+      name, createdate, deletedate, 
+      price, format)
+    values (#{id,jdbcType=BIGINT}, #{hospitalid,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{deletedate,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{format,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Drug">
+    insert into drug
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hospitalid != null">
+        hospitalid,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="createdate != null">
+        createdate,
+      </if>
+      <if test="deletedate != null">
+        deletedate,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="format != null">
+        format,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalid != null">
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedate != null">
+        #{deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="format != null">
+        #{format,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.DrugExample" resultType="java.lang.Integer">
+    select count(*) from drug
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update drug
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalid != null">
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null">
+        createdate = #{record.createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletedate != null">
+        deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.format != null">
+        format = #{record.format,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update drug
+    set id = #{record.id,jdbcType=BIGINT},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      createdate = #{record.createdate,jdbcType=VARCHAR},
+      deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      format = #{record.format,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Drug">
+    update drug
+    <set>
+      <if test="hospitalid != null">
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedate != null">
+        deletedate = #{deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="format != null">
+        format = #{format,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Drug">
+    update drug
+    set hospitalid = #{hospitalid,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      deletedate = #{deletedate,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      format = #{format,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

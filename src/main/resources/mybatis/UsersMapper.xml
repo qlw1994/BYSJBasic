@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Users" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="idtype" property="idtype" jdbcType="VARCHAR" />
+    <result column="idnumber" property="idnumber" jdbcType="VARCHAR" />
+    <result column="headpath" property="headpath" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="deletedate" property="deletedate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, account, password, sex, phone, idtype, idnumber, headpath, createdate, 
+    deletedate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.UsersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from users
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.UsersExample" >
+    delete from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Users" >
+    insert into users (id, name, account, 
+      password, sex, phone, 
+      idtype, idnumber, headpath, 
+      createdate, deletedate)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{idtype,jdbcType=VARCHAR}, #{idnumber,jdbcType=VARCHAR}, #{headpath,jdbcType=VARCHAR}, 
+      #{createdate,jdbcType=VARCHAR}, #{deletedate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Users" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="idtype != null" >
+        idtype,
+      </if>
+      <if test="idnumber != null" >
+        idnumber,
+      </if>
+      <if test="headpath != null" >
+        headpath,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="deletedate != null" >
+        deletedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null" >
+        #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="headpath != null" >
+        #{headpath,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedate != null" >
+        #{deletedate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.UsersExample" resultType="java.lang.Integer" >
+    select count(*) from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update users
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.account != null" >
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idtype != null" >
+        idtype = #{record.idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idnumber != null" >
+        idnumber = #{record.idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headpath != null" >
+        headpath = #{record.headpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletedate != null" >
+        deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update users
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      idtype = #{record.idtype,jdbcType=VARCHAR},
+      idnumber = #{record.idnumber,jdbcType=VARCHAR},
+      headpath = #{record.headpath,jdbcType=VARCHAR},
+      createdate = #{record.createdate,jdbcType=VARCHAR},
+      deletedate = #{record.deletedate,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Users" >
+    update users
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        idtype = #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null" >
+        idnumber = #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="headpath != null" >
+        headpath = #{headpath,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedate != null" >
+        deletedate = #{deletedate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Users" >
+    update users
+    set name = #{name,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      idtype = #{idtype,jdbcType=VARCHAR},
+      idnumber = #{idnumber,jdbcType=VARCHAR},
+      headpath = #{headpath,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      deletedate = #{deletedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

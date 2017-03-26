@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qlw.mapper.ex.DrugExMapper">
+    <resultMap id="ResultMap" type="qlw.model.Drug">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospitalid" jdbcType="BIGINT" property="hospitalid" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="createdate" jdbcType="VARCHAR" property="createdate" />
+        <result column="deletedate" jdbcType="VARCHAR" property="deletedate" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="format" jdbcType="VARCHAR" property="format" />
+        <association property="hospital" javaType="qlw.model.Hospital">
+            <id column="id" property="id" jdbcType="BIGINT" />
+            <result column="province" property="province" jdbcType="VARCHAR" />
+            <result column="city" property="city" jdbcType="VARCHAR" />
+            <result column="area" property="area" jdbcType="VARCHAR" />
+            <result column="code" property="code" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+            <result column="level" property="level" jdbcType="INTEGER" />
+            <result column="address" property="address" jdbcType="VARCHAR" />
+            <result column="resume" property="resume" jdbcType="VARCHAR" />
+            <result column="startdate" property="startdate" jdbcType="VARCHAR" />
+            <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+            <result column="imgpath" property="imgpath" jdbcType="VARCHAR" />
+            <result column="status" property="status" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+</mapper>

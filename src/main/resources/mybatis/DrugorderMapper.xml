@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.DrugorderMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Drugorder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="doctorid" property="doctorid" jdbcType="BIGINT" />
+    <result column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="advice" property="advice" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="deletedate" property="deletedate" jdbcType="VARCHAR" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, doctorid, patientid, createdate, money, status, advice, total, deletedate, hospitalid, 
+    departmentid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.DrugorderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from drugorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from drugorder
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from drugorder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.DrugorderExample" >
+    delete from drugorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Drugorder" >
+    insert into drugorder (id, doctorid, patientid, 
+      createdate, money, status, 
+      advice, total, deletedate, 
+      hospitalid, departmentid)
+    values (#{id,jdbcType=BIGINT}, #{doctorid,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, 
+      #{createdate,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{advice,jdbcType=VARCHAR}, #{total,jdbcType=INTEGER}, #{deletedate,jdbcType=VARCHAR}, 
+      #{hospitalid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Drugorder" >
+    insert into drugorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doctorid != null" >
+        doctorid,
+      </if>
+      <if test="patientid != null" >
+        patientid,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="advice != null" >
+        advice,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="deletedate != null" >
+        deletedate,
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="departmentid != null" >
+        departmentid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="advice != null" >
+        #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="deletedate != null" >
+        #{deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.DrugorderExample" resultType="java.lang.Integer" >
+    select count(*) from drugorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update drugorder
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctorid != null" >
+        doctorid = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.advice != null" >
+        advice = #{record.advice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=INTEGER},
+      </if>
+      <if test="record.deletedate != null" >
+        deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update drugorder
+    set id = #{record.id,jdbcType=BIGINT},
+      doctorid = #{record.doctorid,jdbcType=BIGINT},
+      patientid = #{record.patientid,jdbcType=BIGINT},
+      createdate = #{record.createdate,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      advice = #{record.advice,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=INTEGER},
+      deletedate = #{record.deletedate,jdbcType=VARCHAR},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      departmentid = #{record.departmentid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Drugorder" >
+    update drugorder
+    <set >
+      <if test="doctorid != null" >
+        doctorid = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null" >
+        patientid = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="advice != null" >
+        advice = #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="deletedate != null" >
+        deletedate = #{deletedate,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Drugorder" >
+    update drugorder
+    set doctorid = #{doctorid,jdbcType=BIGINT},
+      patientid = #{patientid,jdbcType=BIGINT},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      advice = #{advice,jdbcType=VARCHAR},
+      total = #{total,jdbcType=INTEGER},
+      deletedate = #{deletedate,jdbcType=VARCHAR},
+      hospitalid = #{hospitalid,jdbcType=BIGINT},
+      departmentid = #{departmentid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

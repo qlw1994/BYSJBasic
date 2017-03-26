@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.AppointmentMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Appointment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="doctorid" property="doctorid" jdbcType="BIGINT" />
+    <result column="schedulingid" property="schedulingid" jdbcType="BIGINT" />
+    <result column="regfee" property="regfee" jdbcType="DECIMAL" />
+    <result column="committime" property="committime" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="VARCHAR" />
+    <result column="endtime" property="endtime" jdbcType="VARCHAR" />
+    <result column="timeflag" property="timeflag" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="serialnumber" property="serialnumber" jdbcType="VARCHAR" />
+    <result column="outnumber" property="outnumber" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
+    <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
+    <result column="departmentname" property="departmentname" jdbcType="VARCHAR" />
+    <result column="doctorname" property="doctorname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, patientid, uid, doctorid, schedulingid, regfee, committime, date, starttime, 
+    endtime, timeflag, type, serialnumber, outnumber, status, hospitalid, departmentid, 
+    hospitalname, departmentname, doctorname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.AppointmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appointment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from appointment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from appointment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.AppointmentExample" >
+    delete from appointment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Appointment" >
+    insert into appointment (id, patientid, uid, 
+      doctorid, schedulingid, regfee, 
+      committime, date, starttime, 
+      endtime, timeflag, type, 
+      serialnumber, outnumber, status, 
+      hospitalid, departmentid, hospitalname, 
+      departmentname, doctorname)
+    values (#{id,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, 
+      #{doctorid,jdbcType=BIGINT}, #{schedulingid,jdbcType=BIGINT}, #{regfee,jdbcType=DECIMAL}, 
+      #{committime,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, 
+      #{endtime,jdbcType=VARCHAR}, #{timeflag,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{serialnumber,jdbcType=VARCHAR}, #{outnumber,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{hospitalid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, #{hospitalname,jdbcType=VARCHAR}, 
+      #{departmentname,jdbcType=VARCHAR}, #{doctorname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Appointment" >
+    insert into appointment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="patientid != null" >
+        patientid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="doctorid != null" >
+        doctorid,
+      </if>
+      <if test="schedulingid != null" >
+        schedulingid,
+      </if>
+      <if test="regfee != null" >
+        regfee,
+      </if>
+      <if test="committime != null" >
+        committime,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="timeflag != null" >
+        timeflag,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="serialnumber != null" >
+        serialnumber,
+      </if>
+      <if test="outnumber != null" >
+        outnumber,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="departmentid != null" >
+        departmentid,
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname,
+      </if>
+      <if test="departmentname != null" >
+        departmentname,
+      </if>
+      <if test="doctorname != null" >
+        doctorname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="schedulingid != null" >
+        #{schedulingid,jdbcType=BIGINT},
+      </if>
+      <if test="regfee != null" >
+        #{regfee,jdbcType=DECIMAL},
+      </if>
+      <if test="committime != null" >
+        #{committime,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeflag != null" >
+        #{timeflag,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="serialnumber != null" >
+        #{serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="outnumber != null" >
+        #{outnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        #{hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null" >
+        #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorname != null" >
+        #{doctorname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.AppointmentExample" resultType="java.lang.Integer" >
+    select count(*) from appointment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update appointment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctorid != null" >
+        doctorid = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.schedulingid != null" >
+        schedulingid = #{record.schedulingid,jdbcType=BIGINT},
+      </if>
+      <if test="record.regfee != null" >
+        regfee = #{record.regfee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.committime != null" >
+        committime = #{record.committime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeflag != null" >
+        timeflag = #{record.timeflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.serialnumber != null" >
+        serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outnumber != null" >
+        outnumber = #{record.outnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalname != null" >
+        hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentname != null" >
+        departmentname = #{record.departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorname != null" >
+        doctorname = #{record.doctorname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update appointment
+    set id = #{record.id,jdbcType=BIGINT},
+      patientid = #{record.patientid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      doctorid = #{record.doctorid,jdbcType=BIGINT},
+      schedulingid = #{record.schedulingid,jdbcType=BIGINT},
+      regfee = #{record.regfee,jdbcType=DECIMAL},
+      committime = #{record.committime,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=VARCHAR},
+      endtime = #{record.endtime,jdbcType=VARCHAR},
+      timeflag = #{record.timeflag,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
+      outnumber = #{record.outnumber,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      departmentid = #{record.departmentid,jdbcType=BIGINT},
+      hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
+      departmentname = #{record.departmentname,jdbcType=VARCHAR},
+      doctorname = #{record.doctorname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Appointment" >
+    update appointment
+    <set >
+      <if test="patientid != null" >
+        patientid = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null" >
+        doctorid = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="schedulingid != null" >
+        schedulingid = #{schedulingid,jdbcType=BIGINT},
+      </if>
+      <if test="regfee != null" >
+        regfee = #{regfee,jdbcType=DECIMAL},
+      </if>
+      <if test="committime != null" >
+        committime = #{committime,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeflag != null" >
+        timeflag = #{timeflag,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="serialnumber != null" >
+        serialnumber = #{serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="outnumber != null" >
+        outnumber = #{outnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname = #{hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null" >
+        departmentname = #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorname != null" >
+        doctorname = #{doctorname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Appointment" >
+    update appointment
+    set patientid = #{patientid,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+      doctorid = #{doctorid,jdbcType=BIGINT},
+      schedulingid = #{schedulingid,jdbcType=BIGINT},
+      regfee = #{regfee,jdbcType=DECIMAL},
+      committime = #{committime,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=VARCHAR},
+      timeflag = #{timeflag,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      serialnumber = #{serialnumber,jdbcType=VARCHAR},
+      outnumber = #{outnumber,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      hospitalid = #{hospitalid,jdbcType=BIGINT},
+      departmentid = #{departmentid,jdbcType=BIGINT},
+      hospitalname = #{hospitalname,jdbcType=VARCHAR},
+      departmentname = #{departmentname,jdbcType=VARCHAR},
+      doctorname = #{doctorname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
