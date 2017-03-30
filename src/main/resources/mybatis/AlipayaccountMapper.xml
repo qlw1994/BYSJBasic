@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.AlipayaccountMapper" >
+  <resultMap id="BaseResultMap" type="qlw.model.Alipayaccount" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="privatekey" property="privatekey" jdbcType="VARCHAR" />
+    <result column="publickey" property="publickey" jdbcType="VARCHAR" />
+    <result column="checkkey" property="checkkey" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="accountname" property="accountname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hospitalid, hospitalname, appid, pid, privatekey, publickey, checkkey, remark, 
+    accountname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.AlipayaccountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from alipayaccount
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from alipayaccount
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from alipayaccount
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="qlw.model.AlipayaccountExample" >
+    delete from alipayaccount
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qlw.model.Alipayaccount" >
+    insert into alipayaccount (id, hospitalid, hospitalname, 
+      appid, pid, privatekey, 
+      publickey, checkkey, remark, 
+      accountname)
+    values (#{id,jdbcType=BIGINT}, #{hospitalid,jdbcType=BIGINT}, #{hospitalname,jdbcType=VARCHAR}, 
+      #{appid,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{privatekey,jdbcType=VARCHAR}, 
+      #{publickey,jdbcType=VARCHAR}, #{checkkey,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{accountname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qlw.model.Alipayaccount" >
+    insert into alipayaccount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="privatekey != null" >
+        privatekey,
+      </if>
+      <if test="publickey != null" >
+        publickey,
+      </if>
+      <if test="checkkey != null" >
+        checkkey,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="accountname != null" >
+        accountname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        #{hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="privatekey != null" >
+        #{privatekey,jdbcType=VARCHAR},
+      </if>
+      <if test="publickey != null" >
+        #{publickey,jdbcType=VARCHAR},
+      </if>
+      <if test="checkkey != null" >
+        #{checkkey,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountname != null" >
+        #{accountname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qlw.model.AlipayaccountExample" resultType="java.lang.Integer" >
+    select count(*) from alipayaccount
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update alipayaccount
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalname != null" >
+        hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appid != null" >
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privatekey != null" >
+        privatekey = #{record.privatekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publickey != null" >
+        publickey = #{record.publickey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkkey != null" >
+        checkkey = #{record.checkkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountname != null" >
+        accountname = #{record.accountname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update alipayaccount
+    set id = #{record.id,jdbcType=BIGINT},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=VARCHAR},
+      privatekey = #{record.privatekey,jdbcType=VARCHAR},
+      publickey = #{record.publickey,jdbcType=VARCHAR},
+      checkkey = #{record.checkkey,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      accountname = #{record.accountname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Alipayaccount" >
+    update alipayaccount
+    <set >
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname = #{hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="privatekey != null" >
+        privatekey = #{privatekey,jdbcType=VARCHAR},
+      </if>
+      <if test="publickey != null" >
+        publickey = #{publickey,jdbcType=VARCHAR},
+      </if>
+      <if test="checkkey != null" >
+        checkkey = #{checkkey,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountname != null" >
+        accountname = #{accountname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qlw.model.Alipayaccount" >
+    update alipayaccount
+    set hospitalid = #{hospitalid,jdbcType=BIGINT},
+      hospitalname = #{hospitalname,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      privatekey = #{privatekey,jdbcType=VARCHAR},
+      publickey = #{publickey,jdbcType=VARCHAR},
+      checkkey = #{checkkey,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      accountname = #{accountname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
