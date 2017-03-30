@@ -56,7 +56,7 @@
                     <li class="top-tools-item dropdown top-userbox">
                         <a href="#" class="top-tools-item-a top-user">
                             <img alt="" class="img-circle hide1" src="${ctx}/res-build/img/avatar3_small.jpg">
-                            <span class="username username-hide-on-mobile">${sessionScope.account.username}</span>
+                            <span class="username username-hide-on-mobile">${sessionScope.doctor.name}</span>
                             <i class="iconfont">&#xe606;</i>
                         </a><%--
 

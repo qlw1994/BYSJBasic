@@ -14,7 +14,6 @@ import qlw.model.Department;
 import qlw.model.Doctor;
 import qlw.model.Hospital;
 import qlw.util.CommonUtils;
-import qlw.util.MD5Utils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +67,7 @@ public class DoctorLoginController extends BaseController {
 //            return resMap;
 //        }
 
-        password = MD5Utils.getMD5(password);
+        //password = MD5Utils.getMD5(password);
         if (password.equals(doctor.getPassword())) {
             Hospital hospital = hospitalManage.getById(doctor.getHospitalid());
             Department department = departmentManage.getById(doctor.getDepartmentid());

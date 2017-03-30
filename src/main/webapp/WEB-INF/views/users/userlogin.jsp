@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
@@ -31,7 +30,7 @@
 
 <!-- BEGIN LOGO -->
 <div class="logo">
-    管理平台
+    智慧医疗平台
 </div>
 <!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -84,7 +83,7 @@
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
-<script type="text/javascript" src="${ctx}/res-build/config.js" data-init="user/login"></script>
+<script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/login"></script>
 
 <%--<script type="text/javascript">
     seajs.use("${ctx}/res-build/src/login.js")

@@ -20,16 +20,16 @@ import java.util.Map;
  * Created by Administrator on 2016/5/24.
  */
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/user")
 public class UsersIndexController extends BaseController {
     @RequestMapping(value = "")
     public String admin() {
-        return "redirect:admin/index";
+        return "redirect:user/index";
     }
 
     @RequestMapping(value = "index")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("admin/index");
+        ModelAndView modelAndView = new ModelAndView("users/index");
         return modelAndView;
     }
     /**

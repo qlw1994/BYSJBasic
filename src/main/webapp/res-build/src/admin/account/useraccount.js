@@ -61,7 +61,7 @@ define(function (require, exports, module) {
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-account="${item.account}" data-sex="${item.sex}" data-idtype="${item.idtype}"  data-idnumber="${item.idnumber}"  data-phone="${item.phone}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/patients/index?pcode=1&subcode=2&uid=${item.id}&uname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span> 就诊人管理</a>',
-            ' <button id="resetPWD" type="button" class="btn btn-danger btn-xs j-disable" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe604;</span>重置密码</button>',
+            ' <button  type="button" class="btn btn-danger btn-xs j-disable resetPWD" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe604;</span>重置密码</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
 
             '    </td>',

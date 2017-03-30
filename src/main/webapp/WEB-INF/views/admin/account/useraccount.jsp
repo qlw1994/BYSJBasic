@@ -109,7 +109,7 @@
                                 <label class="col-md-3 control-label">账号</label>
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" name="account"
-                                           placeholder="用户名">
+                                           placeholder="账号">
                                 </div>
                             </div>
                             <div class="form-group">

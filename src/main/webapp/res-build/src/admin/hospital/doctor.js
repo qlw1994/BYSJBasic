@@ -60,7 +60,7 @@ define(function (require, exports, module) {
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-account="${item.account}" data-sex="${item.sex}" data-idtype="${item.idtype}"  data-idnumber="${item.idnumber}" data-departmentid="${item.departmentid}" data-hospitalid="${item.hospitalid}" data-job="${item.job}" data-age="${item.age}" data-level="${item.level}"  data-resume="${item.resume}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
 
-            ' <button id="resetPWD" type="button" class="btn btn-danger btn-xs j-disable" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe604;</span>重置密码</button>',
+            ' <button  type="button" class="btn btn-danger btn-xs j-disable resetPWD" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe604;</span>重置密码</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '<br/>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/fixedschedulings/index?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>排班管理</a>',

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qlw.controller.BaseController;
-import qlw.manage.SysuserManage;
-import qlw.model.Sysusers;
+import qlw.manage.UserManage;
+import qlw.model.Users;
 import qlw.util.CommonUtils;
 import qlw.util.ResultCode;
 
@@ -22,12 +22,12 @@ import java.util.Map;
 @Controller
 public class UsersLoginController extends BaseController {
     @Autowired
-    SysuserManage userManange;
+    UserManage userManange;
 
 
-    @RequestMapping(value = "/userlogin")
+    @RequestMapping(value = "userlogin")
     public String login() {
-        return "user/userlogin";
+        return "users/userlogin";
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class UsersLoginController extends BaseController {
             resMap.put("msg", "传入参数不能为空");
             return resMap;
         }
-        Sysusers user = userManange.getSysusersByAccount(account);
+        Users user = userManange.getUsersByAccount(account);
         if (user == null) {
             resMap.put("code", ResultCode.ERROR);
             resMap.put("msg", "未找到该用户或该用户已经注销");
@@ -73,9 +73,9 @@ public class UsersLoginController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "logout")
+    @RequestMapping(value = "/user/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("user");
-        return "user/userlogin";
+        return "users/index";
     }
 }
