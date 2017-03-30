@@ -280,6 +280,7 @@ public abstract class MyUtils {
      * @param mdate
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static List<Date> dateToWeek(Date mdate,int flag) {
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(mdate);

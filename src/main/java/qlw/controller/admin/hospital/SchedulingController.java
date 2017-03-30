@@ -186,6 +186,7 @@ public class SchedulingController extends BaseController {
      *
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/generateScheduling")
     @ResponseBody
     public Map<String, Object> generateScheduling(Long doctorid, Long hospitalid, Long departmentid, int type, @RequestParam(value = "totalnumber", defaultValue = "50") Integer totalnumber) {
@@ -267,6 +268,7 @@ public class SchedulingController extends BaseController {
      *
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/generateSchedulingAddOne")
     @ResponseBody
     public Map<String, Object> generateSchedulingAddOne(Long doctorid, Long hospitalid, Long departmentid, int type, @RequestParam(value = "totalnumber", defaultValue = "50") Integer totalnumber) {

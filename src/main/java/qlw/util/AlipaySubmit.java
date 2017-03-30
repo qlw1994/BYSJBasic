@@ -96,6 +96,7 @@ public class AlipaySubmit {
      * @param strButtonName 确认按钮显示文字
      * @return 提交表单HTML文本
      */
+    @SuppressWarnings("unchecked")
     public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName,String charsest) {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
