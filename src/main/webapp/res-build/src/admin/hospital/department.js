@@ -140,6 +140,7 @@ $ModifyForm.on("click", ".j-form-edit", function (event) {
     $(formDom).find(".j-form-save").show();
 
     $(formDom).find("input").prop("disabled", false);
+    $ModifyForm.find("input[name=name]").prop("disabled", true);
     // $(event.relatedTarget)
 });
 //添加表单初始化
@@ -257,26 +258,26 @@ $DepartmentForm.validate({
 //表单验证-修改用户
 $ModifyForm.validate({
     rules: {
-        name: {
-            required: true,
-            remote: { //自带远程验证存在的方法
-                url: ROOTPAth + '/admin/departments/sameName',
-                type: "POST",
-                dataType: "json",
-                data: {
-                    name: function () {
-                        return $DepartmentForm.find('input[name="name"]').val();
-                    },
-                    hospitalid: hospitalid
-                }
-            }
-        },
+        // name: {
+        //     required: true,
+        //     remote: { //自带远程验证存在的方法
+        //         url: ROOTPAth + '/admin/departments/sameName',
+        //         type: "POST",
+        //         dataType: "json",
+        //         data: {
+        //             name: function () {
+        //                 return $DepartmentForm.find('input[name="name"]').val();
+        //             },
+        //             hospitalid: hospitalid
+        //         }
+        //     }
+        // },
     },
     messages: {
-        name: {
-            required: "科室名不能为空",
-            remote: "科室名重复"
-        }
+        // name: {
+        //     required: "科室名不能为空",
+        //     remote: "科室名重复"
+        // }
     },
     errorElement: 'span', //default input error message container
     errorClass: 'help-block', // default input error message class
@@ -300,7 +301,7 @@ $ModifyForm.validate({
         error.insertAfter(element);
     },
     submitHandler: function () {
-
+        $ModifyForm.find("input").prop("disabled",false);
 
         var updatePath = ROOTPAth + '/admin/departments/modDepartment';
         $.post(updatePath, $ModifyForm.serialize(), function (data) {

@@ -3,7 +3,8 @@
 <mapper namespace="qlw.mapper.PaymentdetailMapper" >
   <resultMap id="BaseResultMap" type="qlw.model.Paymentdetail" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="paymentid" property="paymentid" jdbcType="BIGINT" />
+    <result column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="patientname" property="patientname" jdbcType="VARCHAR" />
     <result column="payname" property="payname" jdbcType="VARCHAR" />
     <result column="count" property="count" jdbcType="INTEGER" />
     <result column="format" property="format" jdbcType="VARCHAR" />
@@ -14,6 +15,16 @@
     <result column="doctorid" property="doctorid" jdbcType="BIGINT" />
     <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
     <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="paytype" property="paytype" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="paynumber" property="paynumber" jdbcType="VARCHAR" />
+    <result column="invoicenumber" property="invoicenumber" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="paydate" property="paydate" jdbcType="VARCHAR" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,8 +85,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, paymentid, payname, count, format, unit, price, doctorname, departmentname, doctorid, 
-    departmentid, money
+    id, patientid, patientname, payname, count, format, unit, price, doctorname, departmentname, 
+    doctorid, departmentid, money, status, paytype, uid, uname, paynumber, invoicenumber, 
+    createdate, paydate, hospitalid, hospitalname
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.PaymentdetailExample" >
     select
@@ -108,16 +120,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="qlw.model.Paymentdetail" >
-    insert into paymentdetail (id, paymentid, payname, 
-      count, format, unit, 
-      price, doctorname, departmentname, 
-      doctorid, departmentid, money
-      )
-    values (#{id,jdbcType=BIGINT}, #{paymentid,jdbcType=BIGINT}, #{payname,jdbcType=VARCHAR}, 
-      #{count,jdbcType=INTEGER}, #{format,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{doctorname,jdbcType=VARCHAR}, #{departmentname,jdbcType=VARCHAR}, 
-      #{doctorid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, #{money,jdbcType=DECIMAL}
-      )
+    insert into paymentdetail (id, patientid, patientname, 
+      payname, count, format, 
+      unit, price, doctorname, 
+      departmentname, doctorid, departmentid, 
+      money, status, paytype, 
+      uid, uname, paynumber, 
+      invoicenumber, createdate, paydate, 
+      hospitalid, hospitalname)
+    values (#{id,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{patientname,jdbcType=VARCHAR}, 
+      #{payname,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{format,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{doctorname,jdbcType=VARCHAR}, 
+      #{departmentname,jdbcType=VARCHAR}, #{doctorid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, 
+      #{money,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER}, 
+      #{uid,jdbcType=BIGINT}, #{uname,jdbcType=VARCHAR}, #{paynumber,jdbcType=VARCHAR}, 
+      #{invoicenumber,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{paydate,jdbcType=VARCHAR}, 
+      #{hospitalid,jdbcType=BIGINT}, #{hospitalname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="qlw.model.Paymentdetail" >
     insert into paymentdetail
@@ -125,8 +143,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="paymentid != null" >
-        paymentid,
+      <if test="patientid != null" >
+        patientid,
+      </if>
+      <if test="patientname != null" >
+        patientname,
       </if>
       <if test="payname != null" >
         payname,
@@ -158,13 +179,46 @@
       <if test="money != null" >
         money,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="paytype != null" >
+        paytype,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="paynumber != null" >
+        paynumber,
+      </if>
+      <if test="invoicenumber != null" >
+        invoicenumber,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="paydate != null" >
+        paydate,
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="paymentid != null" >
-        #{paymentid,jdbcType=BIGINT},
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="patientname != null" >
+        #{patientname,jdbcType=VARCHAR},
       </if>
       <if test="payname != null" >
         #{payname,jdbcType=VARCHAR},
@@ -196,6 +250,36 @@
       <if test="money != null" >
         #{money,jdbcType=DECIMAL},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="paynumber != null" >
+        #{paynumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicenumber != null" >
+        #{invoicenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="paydate != null" >
+        #{paydate,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        #{hospitalname,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="qlw.model.PaymentdetailExample" resultType="java.lang.Integer" >
@@ -210,8 +294,11 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.paymentid != null" >
-        paymentid = #{record.paymentid,jdbcType=BIGINT},
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientname != null" >
+        patientname = #{record.patientname,jdbcType=VARCHAR},
       </if>
       <if test="record.payname != null" >
         payname = #{record.payname,jdbcType=VARCHAR},
@@ -243,6 +330,36 @@
       <if test="record.money != null" >
         money = #{record.money,jdbcType=DECIMAL},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.paytype != null" >
+        paytype = #{record.paytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paynumber != null" >
+        paynumber = #{record.paynumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoicenumber != null" >
+        invoicenumber = #{record.invoicenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paydate != null" >
+        paydate = #{record.paydate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalname != null" >
+        hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -251,7 +368,8 @@
   <update id="updateByExample" parameterType="map" >
     update paymentdetail
     set id = #{record.id,jdbcType=BIGINT},
-      paymentid = #{record.paymentid,jdbcType=BIGINT},
+      patientid = #{record.patientid,jdbcType=BIGINT},
+      patientname = #{record.patientname,jdbcType=VARCHAR},
       payname = #{record.payname,jdbcType=VARCHAR},
       count = #{record.count,jdbcType=INTEGER},
       format = #{record.format,jdbcType=VARCHAR},
@@ -261,7 +379,17 @@
       departmentname = #{record.departmentname,jdbcType=VARCHAR},
       doctorid = #{record.doctorid,jdbcType=BIGINT},
       departmentid = #{record.departmentid,jdbcType=BIGINT},
-      money = #{record.money,jdbcType=DECIMAL}
+      money = #{record.money,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      paytype = #{record.paytype,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=BIGINT},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      paynumber = #{record.paynumber,jdbcType=VARCHAR},
+      invoicenumber = #{record.invoicenumber,jdbcType=VARCHAR},
+      createdate = #{record.createdate,jdbcType=VARCHAR},
+      paydate = #{record.paydate,jdbcType=VARCHAR},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      hospitalname = #{record.hospitalname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -269,8 +397,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="qlw.model.Paymentdetail" >
     update paymentdetail
     <set >
-      <if test="paymentid != null" >
-        paymentid = #{paymentid,jdbcType=BIGINT},
+      <if test="patientid != null" >
+        patientid = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="patientname != null" >
+        patientname = #{patientname,jdbcType=VARCHAR},
       </if>
       <if test="payname != null" >
         payname = #{payname,jdbcType=VARCHAR},
@@ -302,12 +433,43 @@
       <if test="money != null" >
         money = #{money,jdbcType=DECIMAL},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        paytype = #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="paynumber != null" >
+        paynumber = #{paynumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicenumber != null" >
+        invoicenumber = #{invoicenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="paydate != null" >
+        paydate = #{paydate,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname = #{hospitalname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="qlw.model.Paymentdetail" >
     update paymentdetail
-    set paymentid = #{paymentid,jdbcType=BIGINT},
+    set patientid = #{patientid,jdbcType=BIGINT},
+      patientname = #{patientname,jdbcType=VARCHAR},
       payname = #{payname,jdbcType=VARCHAR},
       count = #{count,jdbcType=INTEGER},
       format = #{format,jdbcType=VARCHAR},
@@ -317,7 +479,17 @@
       departmentname = #{departmentname,jdbcType=VARCHAR},
       doctorid = #{doctorid,jdbcType=BIGINT},
       departmentid = #{departmentid,jdbcType=BIGINT},
-      money = #{money,jdbcType=DECIMAL}
+      money = #{money,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      paytype = #{paytype,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=BIGINT},
+      uname = #{uname,jdbcType=VARCHAR},
+      paynumber = #{paynumber,jdbcType=VARCHAR},
+      invoicenumber = #{invoicenumber,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      paydate = #{paydate,jdbcType=VARCHAR},
+      hospitalid = #{hospitalid,jdbcType=BIGINT},
+      hospitalname = #{hospitalname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

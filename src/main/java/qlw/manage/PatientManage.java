@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.PatientMapper;
 import qlw.model.Patient;
 import qlw.model.PatientExample;
+import qlw.model.Paymentdetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,6 +164,8 @@ public class PatientManage extends BaseManage {
         }
         return false;
     }
+
+
 
 
     /**

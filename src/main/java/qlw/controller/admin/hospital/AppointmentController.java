@@ -9,6 +9,7 @@ import qlw.manage.AppointmentManage;
 import qlw.manage.NumberManage;
 import qlw.model.Appointment;
 import qlw.model.Numbers;
+import qlw.model.Paymentdetail;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +61,7 @@ public class AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientindex")
-    public ModelAndView ViewPatient(long patientid, String patientname, Long uid,int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewPatient(long patientid, String patientname, Long uid, int pcode, int subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/appointment_patient");
         request.getSession().setAttribute("uid", uid);
         request.getSession().setAttribute("patientid", patientid);
@@ -70,6 +71,7 @@ public class AppointmentController extends BaseController {
         mv.addObject("currentpage", 1);
         return mv;
     }
+
     /**
      * 预约管理首页跳转  医生版
      *
@@ -85,6 +87,7 @@ public class AppointmentController extends BaseController {
         mv.addObject("currentpage", 1);
         return mv;
     }
+
     /**
      * 预约管理首页跳转  科室
      *
@@ -100,6 +103,7 @@ public class AppointmentController extends BaseController {
         mv.addObject("currentpage", 1);
         return mv;
     }
+
     /**
      * 添加预约
      *
@@ -116,9 +120,10 @@ public class AppointmentController extends BaseController {
             String date = appointment.getDate();
             int timeflag = appointment.getTimeflag();
             Long departmentid = appointment.getDepartmentid();
+            Paymentdetail paymentdetail=new Paymentdetail();
             Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date);
             if (numbers.getAppointleftcount() == 0) {
-                rtnMsg = "添加失败";
+                rtnMsg = "剩余可预约号源不足,添加失败";
                 rtnCode = ResultCode.ERROR;
             } else {
                 numbers.setAppointleftcount(numbers.getAppointleftcount() - 1);
@@ -215,7 +220,7 @@ public class AppointmentController extends BaseController {
      */
     @RequestMapping(value = "modAppointmentStatus", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateAppointment(Appointment appointment,Integer status) {
+    public Map<String, Object> updateAppointment(Appointment appointment, Integer status) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "修改预约状态->挂号状态成功";

@@ -171,6 +171,7 @@ define(function (require, exports, module) {
                 $(formDom).find("input").prop("disabled", false);
                 $ModifyForm.find("input[name=hospitalname]").prop("disabled", true)
                 $ModifyForm.find("input[name=account]").prop("disabled", true)
+                $ModifyForm.find("input[name=name]").prop("disabled", true);
             });
             //修改表单初始化
             $modifyModal.on('show.bs.modal', function (event) {
@@ -375,7 +376,7 @@ define(function (require, exports, module) {
                     //         }
                     //     }
                     // },
-                    name: "required",
+                    // name: "required",
                     password: "required",
                     password_again: {
                         equalTo: "#password"
@@ -393,7 +394,7 @@ define(function (require, exports, module) {
 
                 },
                 messages: {
-                    name: "名称不能为空",
+                    // name: "名称不能为空",
                     // account: {
                     //     required: "用户名不能为空",
                     //     remote: "用户名重复"

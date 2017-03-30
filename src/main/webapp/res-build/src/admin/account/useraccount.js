@@ -162,7 +162,8 @@ define(function (require, exports, module) {
                 $(formDom).find(".j-form-save").show();
 
                 $(formDom).find("input").prop("disabled", false);
-                $(formDom).find("input[name='account']").prop("disabled", true);
+                $ModifyForm.find("input[name='account']").prop("disabled", true);
+                $ModifyForm.find("input[name='name']").prop("disabled", true);
                 // $(event.relatedTarget)
             });
             //添加表单初始化
@@ -326,20 +327,20 @@ define(function (require, exports, module) {
             //表单验证-修改用户
             $ModifyForm.validate({
                 rules: {
-                    account: {
-                        required: true,
-                        // remote: { //自带远程验证存在的方法
-                        //     url: ROOTPAth + '/admin/users/sameName',
-                        //     type: "POST",
-                        //     dataType: "json",
-                        //     data: {
-                        //         account: function () {
-                        //             return $UserForm.find('input[name="account"]').val();
-                        //         }
-                        //     }
-                        // }
-                    },
-                    name: "required",
+                    // account: {
+                    //     required: true,
+                    //     // remote: { //自带远程验证存在的方法
+                    //     //     url: ROOTPAth + '/admin/users/sameName',
+                    //     //     type: "POST",
+                    //     //     dataType: "json",
+                    //     //     data: {
+                    //     //         account: function () {
+                    //     //             return $UserForm.find('input[name="account"]').val();
+                    //     //         }
+                    //     //     }
+                    //     // }
+                    // },
+                    // name: "required",
                     password: "required",
                     password_again: {
                         equalTo: "#password"
@@ -357,11 +358,11 @@ define(function (require, exports, module) {
                         required: "手机不能为空",
                         ismoblie: "手机格式不对"
                     },
-                    name: "名称不能为空",
-                    account: {
-                        required: "用户名不能为空",
-                        remote: "用户名重复"
-                    },
+                    // name: "名称不能为空",
+                    // account: {
+                    //     required: "用户名不能为空",
+                    //     remote: "用户名重复"
+                    // },
                     sex: "请选择性别",
                     idnumber: "请输入证件号码",
                     idtype:"请选择证件类型",
@@ -392,7 +393,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-
+                    $ModifyForm.find("input").prop("disabled",false);
 
                     var updatePath = ROOTPAth + '/admin/users/modUser';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {

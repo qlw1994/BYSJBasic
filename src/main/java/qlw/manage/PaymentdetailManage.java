@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.PaymentdetailMapper;
-import qlw.model.Payment;
-import qlw.model.PaymentExample;
+import qlw.model.PatientExample;
 import qlw.model.Paymentdetail;
 import qlw.model.PaymentdetailExample;
 
@@ -20,25 +19,128 @@ public class PaymentdetailManage extends BaseManage {
     @Autowired
     PaymentdetailMapper paymentdetailMapper;
 
-    public List<Paymentdetail> list(Integer pageNumber, Integer pageSize, long paymentid) {
+    public List<Paymentdetail> list(Integer pageNumber, Integer pageSize, String startdate, String enddate, Paymentdetail paymentdetail) {
         PaymentdetailExample example = new PaymentdetailExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         PaymentdetailExample.Criteria criteria = example.createCriteria();
-        criteria.andPaymentidEqualTo(paymentid);
+        if (paymentdetail.getDoctorid() != null) {
+            criteria.andDoctoridEqualTo(paymentdetail.getDoctorid());
+        }
+        if (paymentdetail.getPatientid() != null) {
+            criteria.andPatientidEqualTo(paymentdetail.getPatientid());
+        }
+        if (paymentdetail.getDepartmentid() != null) {
+            criteria.andDepartmentidEqualTo(paymentdetail.getDepartmentid());
+        }
+        if (paymentdetail.getHospitalid() != null) {
+            criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
+        }
+        if (startdate != null && !"".equals(startdate) && enddate != null && !"".equals(enddate)) {
+            startdate += " 00:00:00";
+            enddate += " 23:59:59";
+            criteria.andCreatedateBetween(startdate, enddate);
+        } else if (enddate != null && !"".equals(enddate)) {
+            enddate += " 23:59:59";
+            criteria.andCreatedateLessThanOrEqualTo(enddate);
+        } else {
+            startdate += " 00:00:00";
+            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        }
         return paymentdetailMapper.selectByExample(example);
     }
 
+    public List<Paymentdetail> listpayed(Integer pageNumber, Integer pageSize, String startdate, String enddate, Paymentdetail paymentdetail) {
+        PaymentdetailExample example = new PaymentdetailExample();
+        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        PaymentdetailExample.Criteria criteria = example.createCriteria();
+        if (paymentdetail.getDoctorid() != null) {
+            criteria.andDoctoridEqualTo(paymentdetail.getDoctorid());
+        }
+        if (paymentdetail.getPatientid() != null) {
+            criteria.andPatientidEqualTo(paymentdetail.getPatientid());
+        }
+        if (paymentdetail.getDepartmentid() != null) {
+            criteria.andDepartmentidEqualTo(paymentdetail.getDepartmentid());
+        }
+        if (paymentdetail.getHospitalid() != null) {
+            criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
+        }
+        if (startdate != null && !"".equals(startdate) && enddate != null && !"".equals(enddate)) {
+            startdate += " 00:00:00";
+            enddate += " 23:59:59";
+            criteria.andCreatedateBetween(startdate, enddate);
+        } else if (enddate != null && !"".equals(enddate)) {
+            enddate += " 23:59:59";
+            criteria.andCreatedateLessThanOrEqualTo(enddate);
+        } else {
+            startdate += " 00:00:00";
+            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        }
+        criteria.andStatusEqualTo(1);
+        return paymentdetailMapper.selectByExample(example);
+    }
 
-    public Integer count(long paymentid) {
+    public Integer count(String startdate, String enddate, Paymentdetail paymentdetail) {
         PaymentdetailExample example = new PaymentdetailExample();
         PaymentdetailExample.Criteria criteria = example.createCriteria();
-        criteria.andPaymentidEqualTo(paymentid);
+        if (paymentdetail.getDoctorid() != null) {
+            criteria.andDoctoridEqualTo(paymentdetail.getDoctorid());
+        }
+        if (paymentdetail.getPatientid() != null) {
+            criteria.andPatientidEqualTo(paymentdetail.getPatientid());
+        }
+        if (paymentdetail.getDepartmentid() != null) {
+            criteria.andDepartmentidEqualTo(paymentdetail.getDepartmentid());
+        }
+        if (paymentdetail.getHospitalid() != null) {
+            criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
+        }
+        if (startdate != null && !"".equals(startdate) && enddate != null && !"".equals(enddate)) {
+            startdate += " 00:00:00";
+            enddate += " 23:59:59";
+            criteria.andCreatedateBetween(startdate, enddate);
+        } else if (enddate != null && !"".equals(enddate)) {
+            enddate += " 23:59:59";
+            criteria.andCreatedateLessThanOrEqualTo(enddate);
+        } else {
+            startdate += " 00:00:00";
+            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        }
         return paymentdetailMapper.countByExample(example);
     }
 
+    public Integer countpayed(String startdate, String enddate, Paymentdetail paymentdetail) {
+        PaymentdetailExample example = new PaymentdetailExample();
+        PaymentdetailExample.Criteria criteria = example.createCriteria();
+        if (paymentdetail.getDoctorid() != null) {
+            criteria.andDoctoridEqualTo(paymentdetail.getDoctorid());
+        }
+        if (paymentdetail.getPatientid() != null) {
+            criteria.andPatientidEqualTo(paymentdetail.getPatientid());
+        }
+        if (paymentdetail.getDepartmentid() != null) {
+            criteria.andDepartmentidEqualTo(paymentdetail.getDepartmentid());
+        }
+        if (paymentdetail.getHospitalid() != null) {
+            criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
+        }
+        if (startdate != null && !"".equals(startdate) && enddate != null && !"".equals(enddate)) {
+            startdate += " 00:00:00";
+            enddate += " 23:59:59";
+            criteria.andCreatedateBetween(startdate, enddate);
+        } else if (enddate != null && !"".equals(enddate)) {
+            enddate += " 23:59:59";
+            criteria.andCreatedateLessThanOrEqualTo(enddate);
+        } else {
+            startdate += " 00:00:00";
+            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        }
+        criteria.andStatusEqualTo(1);
+        return paymentdetailMapper.countByExample(example);
+    }
 
     /**
-     * 根据id获取药品详情
+     * 根据id获取支付详情
      *
      * @param id
      * @return
@@ -49,7 +151,7 @@ public class PaymentdetailManage extends BaseManage {
 
 
     /**
-     * 修改药品详情信息
+     * 修改支付详情信息
      *
      * @param paymentdetail
      * @return
@@ -58,9 +160,40 @@ public class PaymentdetailManage extends BaseManage {
         return paymentdetailMapper.updateByPrimaryKeySelective(paymentdetail);
     }
 
+    /**
+     * 修改支付详情信息
+     *
+     * @param paymentdetail
+     * @return
+     */
+    public Integer updateByPaymentdetail(Paymentdetail paymentdetail, Paymentdetail newpaymentdetail) {
+        PaymentdetailExample example = new PaymentdetailExample();
+        PaymentdetailExample.Criteria criteria = example.createCriteria();
+        if (paymentdetail.getDepartmentid() != null)
+            criteria.andDepartmentidEqualTo(paymentdetail.getDepartmentid());
+        if (paymentdetail.getHospitalid() != null)
+            criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
+        if (paymentdetail.getDoctorid() != null)
+            criteria.andDoctoridEqualTo(paymentdetail.getDoctorid());
+        if (paymentdetail.getPatientid() != null)
+            criteria.andPatientidEqualTo(paymentdetail.getPatientid());
+        if (paymentdetail.getCreatedate() != null)
+            criteria.andCreatedateEqualTo(paymentdetail.getCreatedate());
+        if (paymentdetail.getFormat() != null)
+            criteria.andFormatEqualTo(paymentdetail.getFormat());
+        if (paymentdetail.getMoney() != null)
+            criteria.andMoneyEqualTo(paymentdetail.getMoney());
+        if (paymentdetail.getCount() != null)
+            criteria.andCountEqualTo(paymentdetail.getCount());
+        paymentdetail = paymentdetailMapper.selectByExample(example).get(0);
+        if (paymentdetail.getStatus() == 1) {
+            return -100;
+        }
+        return paymentdetailMapper.updateByExampleSelective(newpaymentdetail, example);
+    }
 
     /**
-     * 删除药品详情
+     * 删除支付详情
      *
      * @param id
      * @return
@@ -74,25 +207,42 @@ public class PaymentdetailManage extends BaseManage {
     }
 
     /**
-     * 删除药品详情
+     * 删除支付详情
      *
-     * @param paymentid
+     * @param paymentdetail
      * @return
      */
-    public boolean deleteByPaymentid(Long paymentid) {
+    public boolean deleteByPaymentdetail(Paymentdetail paymentdetail) {
+
         PaymentdetailExample example = new PaymentdetailExample();
         PaymentdetailExample.Criteria criteria = example.createCriteria();
-        criteria.andPaymentidEqualTo(paymentid);
-        int i = paymentdetailMapper.deleteByExample(example);
+        if (paymentdetail.getDepartmentid() != null)
+            criteria.andDepartmentidEqualTo(paymentdetail.getDepartmentid());
+        if (paymentdetail.getHospitalid() != null)
+            criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
+        if (paymentdetail.getDoctorid() != null)
+            criteria.andDoctoridEqualTo(paymentdetail.getDoctorid());
+        if (paymentdetail.getPatientid() != null)
+            criteria.andPatientidEqualTo(paymentdetail.getPatientid());
+        if (paymentdetail.getCreatedate() != null)
+            criteria.andCreatedateEqualTo(paymentdetail.getCreatedate());
+        if (paymentdetail.getFormat() != null)
+            criteria.andFormatEqualTo(paymentdetail.getFormat());
+        if (paymentdetail.getMoney() != null)
+            criteria.andMoneyEqualTo(paymentdetail.getMoney());
+        if (paymentdetail.getCount() != null)
+            criteria.andCountEqualTo(paymentdetail.getCount());
+        Paymentdetail paymentdetail_store = paymentdetailMapper.selectByExample(example).get(0);
+        int i = paymentdetailMapper.deleteByPrimaryKey(paymentdetail_store.getId());
+
         if (i > 0) {
             return true;
         }
         return false;
     }
 
-
     /**
-     * 保存药品详情
+     * 保存支付详情
      *
      * @param cities
      * @return
@@ -103,5 +253,27 @@ public class PaymentdetailManage extends BaseManage {
             return cities;
         }
         return null;
+    }
+
+    /**
+     * 支付确认
+     *
+     * @param paymentdetailidsTemp
+     * @return
+     */
+    public boolean paymentConfirm(String paymentdetailidsTemp, Integer paytype, String invoicenumber, String paynumber) {
+        String[] paymentdetailids = paymentdetailidsTemp.split("|");
+        for (int i = 0; i < paymentdetailids.length; i++) {
+            Paymentdetail paymentdetail = new Paymentdetail();
+            paymentdetail.setStatus(1);
+            paymentdetail.setPaytype(paytype);
+            paymentdetail.setPaynumber(paynumber);
+            paymentdetail.setInvoicenumber(invoicenumber);
+            PaymentdetailExample example = new PaymentdetailExample();
+            PaymentdetailExample.Criteria criteria = example.createCriteria();
+            criteria.andIdEqualTo(Long.parseLong(paymentdetailids[i]));
+            paymentdetailMapper.updateByExampleSelective(paymentdetail, example);
+        }
+        return true;
     }
 }

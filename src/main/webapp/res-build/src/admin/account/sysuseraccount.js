@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         selector: '.has-tooltip'
     });
 
-    
+
 
     var listTpl = juicer(
         [
@@ -158,6 +158,7 @@ define(function (require, exports, module) {
 
                 $(formDom).find("input").prop("disabled", false);
               $SysuserForm.find("input[name='account']").prop("disabled", true);
+
                 // $(event.relatedTarget)
             });
             //添加表单初始化
@@ -294,19 +295,19 @@ define(function (require, exports, module) {
             //表单验证-修改用户
             $ModifyForm.validate({
                 rules: {
-                    account: {
-                        required: true,
-                        // remote: { //自带远程验证存在的方法
-                        //     url: ROOTPAth + '/admin/sysusers/sameName',
-                        //     type: "POST",
-                        //     dataType: "json",
-                        //     data: {
-                        //         account: function () {
-                        //             return $SysuserForm.find('input[name="account"]').val();
-                        //         }
-                        //     }
-                        // }
-                    },
+                    // account: {
+                    //     required: true,
+                    //     // remote: { //自带远程验证存在的方法
+                    //     //     url: ROOTPAth + '/admin/sysusers/sameName',
+                    //     //     type: "POST",
+                    //     //     dataType: "json",
+                    //     //     data: {
+                    //     //         account: function () {
+                    //     //             return $SysuserForm.find('input[name="account"]').val();
+                    //     //         }
+                    //     //     }
+                    //     // }
+                    // },
                     name: "required",
                     password: "required",
                     password_again: {
@@ -316,10 +317,10 @@ define(function (require, exports, module) {
                 },
                 messages: {
                     name: "名称不能为空",
-                    account: {
-                        required: "用户名不能为空",
-                        remote: "用户名重复"
-                    },
+                    // account: {
+                    //     required: "用户名不能为空",
+                    //     remote: "用户名重复"
+                    // },
                     power: "请选择权限",
                     password: "密码不能为空",
                     password_again: "两次输入密码不一致",
@@ -347,7 +348,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-
+                    $ModifyForm.find("input").prop("disabled",false);
 
                     var updatePath = ROOTPAth + '/admin/sysusers/modSysuser';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {

@@ -145,6 +145,7 @@ define(function (require, exports, module) {
                 $(formDom).find(".j-form-save").show();
 
                 $(formDom).find("input").prop("disabled", false);
+                $ModifyForm.find("input[name=name]").prop("disabled", true);
                 // $(event.relatedTarget)
             });
             //添加表单初始化
@@ -282,20 +283,20 @@ define(function (require, exports, module) {
             //表单验证-修改用户
             $ModifyForm.validate({
                 rules: {
-                    name: {
-                        required: true,
-                        remote: { //自带远程验证存在的方法
-                            url: ROOTPAth + '/admin/drugs/sameName',
-                            type: "POST",
-                            dataType: "json",
-                            data: {
-                                name: function () {
-                                    return $DrugForm.find('input[name="name"]').val();
-                                },
-                                hospitalid: hospitalid
-                            }
-                        }
-                    },
+                    // name: {
+                    //     required: true,
+                    //     remote: { //自带远程验证存在的方法
+                    //         url: ROOTPAth + '/admin/drugs/sameName',
+                    //         type: "POST",
+                    //         dataType: "json",
+                    //         data: {
+                    //             name: function () {
+                    //                 return $DrugForm.find('input[name="name"]').val();
+                    //             },
+                    //             hospitalid: hospitalid
+                    //         }
+                    //     }
+                    // },
                     format:"required",
                     price: {
                         required: true,
@@ -303,10 +304,10 @@ define(function (require, exports, module) {
                     }
                 },
                 messages: {
-                    name: {
-                        required: "药品名不能为空",
-                        remote: "药品名重复"
-                    },
+                    // name: {
+                    //     required: "药品名不能为空",
+                    //     remote: "药品名重复"
+                    // },
                     format: "请输入规格",
                     price: {
                         required: "请输入单价"
@@ -335,7 +336,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
 
-
+                    $ModifyForm.find("input").prop("disabled",false);
                     var updatePath = ROOTPAth + '/admin/drugs/modDrug';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
                         if (data.code === 1) {

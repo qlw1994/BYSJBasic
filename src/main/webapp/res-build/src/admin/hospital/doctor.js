@@ -183,6 +183,7 @@ define(function (require, exports, module) {
                 $(formDom).find("input").prop("disabled", false);
                 $DoctorForm.find("input[name=hospitalname]").prop("disabled", true)
                 $DoctorForm.find("input[name=account]").prop("disabled", true)
+                $ModifyForm.find("input[name=name]").prop("disabled", true);
             });
             //添加表单账号变更就进行表单验证
             $("#add_account").bind("input onpropertychange", function () {
@@ -465,7 +466,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
 
-
+                    $ModifyForm.find("input").prop("disabled",false);
                     var updatePath = ROOTPAth + '/admin/hospitalDoctors/modDoctor';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
                         if (data.code === 1) {

@@ -5,15 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
-import qlw.manage.DrugorderManage;
-import qlw.manage.DrugorderdetailManage;
-import qlw.model.Drugorder;
-import qlw.model.Drugorderdetail;
+import qlw.manage.*;
+import qlw.model.*;
+import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +27,18 @@ public class DrugorderdetailController extends BaseController {
     DrugorderManage drugorderManage;
     @Autowired
     DrugorderdetailManage drugorderdetailManage;
+    @Autowired
+    PaymentdetailManage paymentdetailManage;
+    @Autowired
+    DepartmentManage departmentManage;
+    @Autowired
+    HospitalManage hospitalManage;
+    @Autowired
+    DoctorManage doctorManage;
+    @Autowired
+    PatientManage patientManage;
+    @Autowired
+    UserManage userManage;
 
     /**
      * 药品订单详情列表数据源
@@ -79,12 +91,35 @@ public class DrugorderdetailController extends BaseController {
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "添加成功";
         try {
-            long drugorderid = drugorderdetail.getDrugorderid();
+            Long drugorderid = drugorderdetail.getDrugorderid();
             Drugorder drugorder = drugorderManage.getById(drugorderid);
             drugorder.setTotal(drugorder.getTotal() + 1);
             drugorder.setMoney(drugorder.getMoney().add(drugorderdetail.getMoney()));
             drugorderManage.update(drugorder);
             drugorderdetailManage.save(drugorderdetail);
+
+            Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
+            Department department = departmentManage.getById(drugorder.getDepartmentid());
+            Doctor doctor = doctorManage.getDoctorById(drugorder.getDoctorid());
+            Patient patient = patientManage.getById(drugorder.getPatientid());
+            Users users = userManage.getUsersById(patient.getUid());
+            Paymentdetail paymentdetail = new Paymentdetail();
+            paymentdetail.setStatus(0);
+            paymentdetail.setDepartmentid(drugorder.getDepartmentid());
+            paymentdetail.setDepartmentname(department.getName());
+            paymentdetail.setHospitalid(hospital.getId());
+            paymentdetail.setHospitalname(hospital.getName());
+            paymentdetail.setDoctorid(doctor.getId());
+            paymentdetail.setDoctorname(doctor.getName());
+            paymentdetail.setCount(drugorderdetail.getAmount());
+            paymentdetail.setFormat(drugorderdetail.getFormat());
+            paymentdetail.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+            paymentdetail.setPatientid(drugorder.getPatientid());
+            paymentdetail.setPatientname(patient.getName());
+            paymentdetail.setUid(users.getId());
+            paymentdetail.setUname(users.getName());
+            paymentdetail.setMoney(drugorderdetail.getMoney());
+            paymentdetailManage.save(paymentdetail);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "添加失败";
@@ -126,11 +161,44 @@ public class DrugorderdetailController extends BaseController {
         String rtnMsg = "修改成功";
         try {
             long drugorderid = drugorderdetail.getDrugorderid();
+            Drugorderdetail oddDrugorderdetail = new Drugorderdetail();
+            oddDrugorderdetail = drugorderdetailManage.getById(drugorderdetail.getId());
             BigDecimal oddMoney = BigDecimal.valueOf(Double.parseDouble((String) odd_money));
+
             Drugorder drugorder = drugorderManage.getById(drugorderid);
-            drugorder.setMoney((drugorder.getMoney().subtract(oddMoney)).add(drugorderdetail.getMoney()));
-            drugorderManage.update(drugorder);
-            drugorderdetailManage.update(drugorderdetail);
+            Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
+            Department department = departmentManage.getById(drugorder.getDepartmentid());
+            Doctor doctor = doctorManage.getDoctorById(drugorder.getDoctorid());
+            Patient patient = patientManage.getById(drugorder.getPatientid());
+            Users users = userManage.getUsersById(patient.getUid());
+            Paymentdetail paymentdetail = new Paymentdetail();
+            paymentdetail.setMoney(oddDrugorderdetail.getMoney());
+            paymentdetail.setPatientid(drugorder.getPatientid());
+            paymentdetail.setPatientname(patient.getName());
+            paymentdetail.setUid(users.getId());
+            paymentdetail.setUname(users.getName());
+            paymentdetail.setDepartmentid(department.getId());
+            paymentdetail.setDepartmentname(department.getName());
+            paymentdetail.setDoctorid(doctor.getId());
+            paymentdetail.setDoctorname(doctor.getName());
+            paymentdetail.setHospitalid(hospital.getId());
+            paymentdetail.setHospitalname(hospital.getName());
+            paymentdetail.setCount(oddDrugorderdetail.getAmount());
+            paymentdetail.setFormat(oddDrugorderdetail.getFormat());
+            paymentdetail.setCreatedate(drugorder.getCreatedate());
+
+            Paymentdetail newpaymentdetail = new Paymentdetail();
+            newpaymentdetail.setCount(drugorderdetail.getAmount());
+            newpaymentdetail.setMoney(drugorderdetail.getMoney());
+            newpaymentdetail.setFormat(drugorderdetail.getFormat());
+            if (paymentdetailManage.updateByPaymentdetail(paymentdetail, newpaymentdetail) == -100) {
+                rtnMsg = "该订单已经支付";
+                rtnCode = ResultCode.ERROR;
+            } else {
+                drugorder.setMoney((drugorder.getMoney().subtract(oddMoney)).add(drugorderdetail.getMoney()));
+                drugorderManage.update(drugorder);
+                drugorderdetailManage.update(drugorderdetail);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "修改失败";
@@ -156,6 +224,29 @@ public class DrugorderdetailController extends BaseController {
             Drugorderdetail drugorderdetail = drugorderdetailManage.getById(id);
             Drugorder drugorder = drugorderManage.getById(drugorderdetail.getDrugorderid());
             drugorder.setTotal(drugorder.getTotal() - 1);
+            //删除支付
+            Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
+            Department department = departmentManage.getById(drugorder.getDepartmentid());
+            Doctor doctor = doctorManage.getDoctorById(drugorder.getDoctorid());
+            Patient patient = patientManage.getById(drugorder.getPatientid());
+            Users users = userManage.getUsersById(patient.getUid());
+            Paymentdetail paymentdetail = new Paymentdetail();
+            paymentdetail.setMoney(drugorderdetail.getMoney());
+            paymentdetail.setPatientid(drugorder.getPatientid());
+            paymentdetail.setPatientname(patient.getName());
+            paymentdetail.setUid(users.getId());
+            paymentdetail.setUname(users.getName());
+            paymentdetail.setDepartmentid(department.getId());
+            paymentdetail.setDepartmentname(department.getName());
+            paymentdetail.setDoctorid(doctor.getId());
+            paymentdetail.setDoctorname(doctor.getName());
+            paymentdetail.setHospitalid(hospital.getId());
+            paymentdetail.setHospitalname(hospital.getName());
+            paymentdetail.setCount(drugorderdetail.getAmount());
+            paymentdetail.setFormat(drugorderdetail.getFormat());
+            paymentdetail.setCreatedate(drugorder.getCreatedate());
+            paymentdetailManage.deleteByPaymentdetail(paymentdetail);
+
             if (drugorder.getTotal() == 0) {
                 drugorderdetailManage.delete(id);
                 drugorderManage.delete(drugorder.getId());

@@ -135,6 +135,30 @@ public class HospitalController extends BaseController {
     }
 
     /**
+     * 医院查询
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "hospitalInfoByName", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getHospitalInfoByName(String name) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "查询成功";
+        try {
+            result.put("data", hospitalManage.getByName(name, null, null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            rtnMsg = "查询失败";
+            rtnCode = ResultCode.ERROR;
+        }
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
+    }
+
+    /**
      * 修改医院
      *
      * @return
@@ -213,6 +237,19 @@ public class HospitalController extends BaseController {
     public boolean hasSameName(String name, @RequestParam(value = "province", defaultValue = "") String province, @RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "area", defaultValue = "") String area) {
         boolean res = hospitalManage.haveSameName(name, province, city, area);
         return !res;
+    }
+
+    /**
+     * 检查医院是否存在
+     *
+     * @param name
+     * @return @return 存在返回false 否则true
+     */
+    @RequestMapping(value = "/hasName", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean hasName(String name, @RequestParam(value = "province", defaultValue = "") String province, @RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "area", defaultValue = "") String area) {
+        boolean res = hospitalManage.haveSameName(name, province, city, area);
+        return res;
     }
 
     /**

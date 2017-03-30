@@ -161,6 +161,7 @@ define(function (require, exports, module) {
                 $(formDom).find("input").prop("disabled", false);
                 $(formDom).find("select").prop("disabled", false);
                 $(formDom).find("textarea").prop("disabled", false);
+                $ModifyForm.find("input[name=name]").prop("disabled", true);
             });
             //添加表单初始化
             $addModal.on('show.bs.modal', function (event) {
@@ -181,9 +182,9 @@ define(function (require, exports, module) {
             $modifyModal.on('show.bs.modal', function (event) {
                 var $modal = $ModifyForm;
                 $modal[0].reset();
-                $modal.find("input").prop("disabled",true);
-                $modal.find("select").prop("disabled",true);
-                $modal.find("textarea").prop("disabled",true);
+                $modal.find("input").prop("disabled", true);
+                $modal.find("select").prop("disabled", true);
+                $modal.find("textarea").prop("disabled", true);
                 $modal.find("input").removeAttr("aria-describedby");
                 $modal.find("input").removeAttr("aria-invalid");
                 $modal.find("input").removeAttr("aria-required");
@@ -211,9 +212,9 @@ define(function (require, exports, module) {
                 $modal.find('input[name=id]').val(id);
                 $modal.find('input[name=name]').val(name);
                 $modal.find('select[name=level]').val(level);
-                $modal.find('select[name=area]').val( area);
+                $modal.find('select[name=area]').val(area);
                 $modal.find('select[name=province]').val(province);
-                $modal.find('select[name=city]').val( city);
+                $modal.find('select[name=city]').val(city);
                 $modal.find('textarea[name=address]').val(address);
                 $modal.find('textarea[name=resume]').val(resume);
                 $modal.find('input[name=startdate]').val(startdate);
@@ -250,15 +251,15 @@ define(function (require, exports, module) {
                                 name: function () {
                                     return $HospitalForm.find('input[name="name"]').val();
                                 },
-                                area: function () {
-                                    return $HospitalForm.find('select[name="area"]').val();
-                                },
-                                city: function () {
-                                    return $HospitalForm.find('select[name="city"]').val();
-                                },
-                                province: function () {
-                                    return $HospitalForm.find('select[name="province"]').val();
-                                }
+                                // area: function () {
+                                //     return $HospitalForm.find('select[name="area"]').val();
+                                // },
+                                // city: function () {
+                                //     return $HospitalForm.find('select[name="city"]').val();
+                                // },
+                                // province: function () {
+                                //     return $HospitalForm.find('select[name="province"]').val();
+                                // }
                             }
                         }
                     },
@@ -352,15 +353,15 @@ define(function (require, exports, module) {
                                 name: function () {
                                     return $ModifyForm.find('input[name="name"]').val();
                                 },
-                                area: function () {
-                                    return $ModifyForm.find('select[name="area"]').val();
-                                },
-                                city: function () {
-                                    return $ModifyForm.find('select[name="city"]').val();
-                                },
-                                province: function () {
-                                    return $ModifyForm.find('select[name="province"]').val();
-                                }
+                                // area: function () {
+                                //     return $ModifyForm.find('select[name="area"]').val();
+                                // },
+                                // city: function () {
+                                //     return $ModifyForm.find('select[name="city"]').val();
+                                // },
+                                // province: function () {
+                                //     return $ModifyForm.find('select[name="province"]').val();
+                                // }
                             }
                         }
                     },
@@ -408,7 +409,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
 
-
+                    $ModifyForm.find("input").prop("disabled",false);
                     var updatePath = ROOTPAth + '/admin/hospitals/modHospital';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
                         if (data.code === 1) {

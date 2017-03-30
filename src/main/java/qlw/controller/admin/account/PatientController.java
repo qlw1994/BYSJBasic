@@ -77,9 +77,10 @@ public class PatientController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView accountView(int pcode, int subcode, Long uid, HttpServletRequest request) {
+    public ModelAndView accountView(int pcode, int subcode, Long uid, String uname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/account/patient");
-            request.getSession().setAttribute("uid", uid);
+        request.getSession().setAttribute("uid", uid);
+        request.getSession().setAttribute("uname", uname);
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);

@@ -66,6 +66,7 @@ define(function (require, exports, module) {
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-type="${item.type}" data-sex="${item.sex}" data-idtype="${item.idtype}"  data-idnumber="${item.idnumber}" data-phone="${item.phone}" data-guardianname="${item.guardianname}" data-guardianidtype="${item.guardianidtype}" data-guardianidnumber="${item.guardianidnumber}"  data-birthday="${item.birthday}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/patientindex?pcode=1&subcode=2&patientid=${item.id}&patientname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span> 预约管理</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/paymentdetails/hospitalChosenindex?pcode=1&subcode=2&patientid=${item.id}&patientname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span> 支付列表</a>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
 
             '    </td>',
@@ -157,6 +158,7 @@ define(function (require, exports, module) {
 
                 $(formDom).find("input").prop("disabled", false);
                 $(formDom).find("select").prop("disabled", false);
+                $ModifyForm.find("input[name=name]").prop("disabled", true);
                 // $(event.relatedTarget)
             });
             //添加表单初始化
@@ -324,20 +326,20 @@ define(function (require, exports, module) {
             //表单验证-修改就诊人
             $ModifyForm.validate({
                 rules: {
-                    name: {
-                        required: true,
-                        // remote: { //自带远程验证存在的方法
-                        //     url: ROOTPAth + '/admin/patients/sameName',
-                        //     type: "POST",
-                        //     dataType: "json",
-                        //     data: {
-                        //         uid: uid,
-                        //         name: function () {
-                        //             return $ModifyForm.find('input[name="name"]').val();
-                        //         }
-                        //     }
-                        // }
-                    },
+                    // name: {
+                    //     required: true,
+                    //     // remote: { //自带远程验证存在的方法
+                    //     //     url: ROOTPAth + '/admin/patients/sameName',
+                    //     //     type: "POST",
+                    //     //     dataType: "json",
+                    //     //     data: {
+                    //     //         uid: uid,
+                    //     //         name: function () {
+                    //     //             return $ModifyForm.find('input[name="name"]').val();
+                    //     //         }
+                    //     //     }
+                    //     // }
+                    // },
                     phone: {
                         required: true,
                         ismobile: true
@@ -355,10 +357,10 @@ define(function (require, exports, module) {
                         required: "权限不能为空",
                         ismoblie: "手机格式不对"
                     },
-                    name: {
-                        required: "就诊人姓名不能为空",
-                        // remote: "就诊人姓名重复"
-                    },
+                    // name: {
+                    //     required: "就诊人姓名不能为空",
+                    //     // remote: "就诊人姓名重复"
+                    // },
                     sex: "请选择性别",
                     type:"请选择就诊人类型",
                     idnumber: "请输入证件号码",
@@ -390,7 +392,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-
+                    $ModifyForm.find("input").prop("disabled",false);
 
                     var updatePath = ROOTPAth + '/admin/patients/modPatient';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {

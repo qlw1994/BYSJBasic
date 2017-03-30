@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
-import qlw.manage.DrugorderManage;
-import qlw.manage.DrugorderdetailManage;
-import qlw.model.Drugorder;
-import qlw.model.Drugorderdetail;
+import qlw.manage.*;
+import qlw.model.*;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -25,6 +23,18 @@ public class DrugorderController extends BaseController {
     DrugorderManage drugorderManage;
     @Autowired
     DrugorderdetailManage drugorderdetailManage;
+    @Autowired
+    PaymentdetailManage paymentdetailManage;
+    @Autowired
+    DepartmentManage departmentManage;
+    @Autowired
+    HospitalManage hospitalManage;
+    @Autowired
+    DoctorManage doctorManage;
+    @Autowired
+    PatientManage patientManage;
+    @Autowired
+    UserManage userManage;
 
     /**
      * 药品订单列表数据源
@@ -33,7 +43,7 @@ public class DrugorderController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, long patientid,HttpServletRequest request) {
+    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, long patientid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");
@@ -75,9 +85,9 @@ public class DrugorderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientChosen")
-    public ModelAndView patientChosen(long doctorid, String doctorname,String service, HttpServletRequest request) {
+    public ModelAndView patientChosen(long doctorid, String doctorname, String service, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
-        request.setAttribute("service",service);
+        request.setAttribute("service", service);
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
         return mv;
@@ -102,6 +112,29 @@ public class DrugorderController extends BaseController {
             for (Drugorderdetail d : drugorderdetails) {
                 d.setDrugorderid(drugorder.getId());
                 drugorderdetailManage.save(d);
+
+                Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
+                Department department = departmentManage.getById(drugorder.getDepartmentid());
+                Doctor doctor = doctorManage.getDoctorById(drugorder.getDoctorid());
+                Patient patient = patientManage.getById(drugorder.getPatientid());
+                Users users = userManage.getUsersById(patient.getUid());
+                Paymentdetail paymentdetail = new Paymentdetail();
+                paymentdetail.setStatus(0);
+                paymentdetail.setDepartmentid(drugorder.getDepartmentid());
+                paymentdetail.setDepartmentname(department.getName());
+                paymentdetail.setHospitalid(hospital.getId());
+                paymentdetail.setHospitalname(hospital.getName());
+                paymentdetail.setDoctorid(doctor.getId());
+                paymentdetail.setDoctorname(doctor.getName());
+                paymentdetail.setCount(d.getAmount());
+                paymentdetail.setFormat(d.getFormat());
+                paymentdetail.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+                paymentdetail.setPatientid(drugorder.getPatientid());
+                paymentdetail.setPatientname(patient.getName());
+                paymentdetail.setUid(users.getId());
+                paymentdetail.setUname(users.getName());
+                paymentdetail.setMoney(d.getMoney());
+                paymentdetailManage.save(paymentdetail);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,9 +199,10 @@ public class DrugorderController extends BaseController {
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "删除成功";
         try {
-            Drugorder drugorder = drugorderManage.getById(id);
-            drugorder.setDeletedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            drugorderManage.update(drugorder);
+            departmentManage.delete(id);
+            //Drugorder drugorder = drugorderManage.getById(id);
+            //drugorder.setDeletedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+            //drugorderManage.update(drugorder);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "删除失败";

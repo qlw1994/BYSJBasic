@@ -6,7 +6,6 @@ import qlw.model.PaymentdetailExample;
 import qlw.util.annotation.BatisRepository;
 
 import java.util.List;
-
 @BatisRepository
 public interface PaymentdetailMapper {
     int countByExample(PaymentdetailExample example);
