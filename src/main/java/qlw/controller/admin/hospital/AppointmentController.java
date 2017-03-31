@@ -7,9 +7,11 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.AppointmentManage;
 import qlw.manage.NumberManage;
+import qlw.manage.SchedulingManage;
 import qlw.model.Appointment;
 import qlw.model.Numbers;
 import qlw.model.Paymentdetail;
+import qlw.model.Scheduling;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,8 @@ public class AppointmentController extends BaseController {
     AppointmentManage appointmentManage;
     @Autowired
     NumberManage numberManage;
+    @Autowired
+    SchedulingManage schedulingManage;
 
     /**
      * 预约列表数据源
@@ -105,6 +109,57 @@ public class AppointmentController extends BaseController {
     }
 
     /**
+     * 添加预约 排班表 预约到医生
+     *
+     * @param schedulingid
+     * @return
+     */
+    @RequestMapping(value = "new")
+    @ResponseBody
+    public Map<String, Object> newAppointment(Long schedulingid, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "添加成功";
+        try {
+            Scheduling scheduling = schedulingManage.getById(schedulingid);
+
+            String date = scheduling.getDate();
+            int timeflag = scheduling.getTimeflag();
+            int type = scheduling.getType();
+            Long departmentid = scheduling.getDepartmentid();
+            Paymentdetail paymentdetail = new Paymentdetail();
+            if (scheduling.() == 0) {
+                rtnMsg = "剩余可预约号源不足,添加失败";
+                rtnCode = ResultCode.ERROR;
+            } else {
+                Appointment appointment=new Appointment();
+                appointment.setDate(date);
+                appointment.setTimeflag(timeflag);
+                appointment.setType(type);
+                appointment.setDepartmentid(departmentid);
+                appointment.
+                numbers.setAppointleftcount(numbers.getAppointleftcount() - 1);
+                numberManage.update(numbers);
+                appointmentManage.save(appointment);
+            }
+            //如果挂号到专家 专家个人剩余号源减一
+            if (type == 1) {
+                Scheduling scheduling = schedulingManage.getByDateAndTimeflagAndDoctorid(date, timeflag, appointment.getDoctorid());
+                scheduling.setLeftnumber(scheduling.getLeftnumber() - 1);
+                schedulingManage.update(scheduling);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            rtnMsg = "添加失败";
+            rtnCode = ResultCode.ERROR;
+        }
+
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
+    }
+
+    /**
      * 添加预约
      *
      * @param appointment
@@ -119,9 +174,10 @@ public class AppointmentController extends BaseController {
         try {
             String date = appointment.getDate();
             int timeflag = appointment.getTimeflag();
+            int type = appointment.getType();
             Long departmentid = appointment.getDepartmentid();
-            Paymentdetail paymentdetail=new Paymentdetail();
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date);
+            Paymentdetail paymentdetail = new Paymentdetail();
+            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date, type);
             if (numbers.getAppointleftcount() == 0) {
                 rtnMsg = "剩余可预约号源不足,添加失败";
                 rtnCode = ResultCode.ERROR;
@@ -129,6 +185,12 @@ public class AppointmentController extends BaseController {
                 numbers.setAppointleftcount(numbers.getAppointleftcount() - 1);
                 numberManage.update(numbers);
                 appointmentManage.save(appointment);
+            }
+            //如果挂号到专家 专家个人剩余号源减一
+            if (type == 1) {
+                Scheduling scheduling = schedulingManage.getByDateAndTimeflagAndDoctorid(date, timeflag, appointment.getDoctorid());
+                scheduling.setLeftnumber(scheduling.getLeftnumber() - 1);
+                schedulingManage.update(scheduling);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -196,13 +258,20 @@ public class AppointmentController extends BaseController {
         try {
             Appointment appointment = appointmentManage.getById(id);
             appointment.setStatus(2);
+            int type = appointment.getType();
             appointmentManage.update(appointment);
             String date = appointment.getDate();
             int timeflag = appointment.getTimeflag();
             Long departmentid = appointment.getDepartmentid();
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date);
+            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date, type);
             numbers.setAppointleftcount(numbers.getAppointleftcount() + 1);
             numberManage.update(numbers);
+            //如果是专家需要在 专家个人号源上删除
+            if (type == 1) {
+                Scheduling scheduling = schedulingManage.getByDateAndTimeflagAndDoctorid(date, timeflag, appointment.getDoctorid());
+                scheduling.setLeftnumber(scheduling.getLeftnumber() + 1);
+                schedulingManage.update(scheduling);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "删除失败";
@@ -223,13 +292,13 @@ public class AppointmentController extends BaseController {
     public Map<String, Object> updateAppointment(Appointment appointment, Integer status) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "修改预约状态->挂号状态成功";
+        String rtnMsg = "修改预约状态成功";
         try {
             appointment.setStatus(status);
             appointmentManage.update(appointment);
         } catch (Exception e) {
             e.printStackTrace();
-            rtnMsg = "修改预约状态->挂号状态失败";
+            rtnMsg = "修改预约状态失败";
             rtnCode = ResultCode.ERROR;
         }
         result.put("message", rtnMsg);

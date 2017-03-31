@@ -15,37 +15,26 @@
             <div class="portlet-search clearfix">
                 <form class="form-inline" id="search-form">
                     <div class="form-group">
-                        <label >省份</label>
-                        <div class="col-md-8">
-                            <select id="priovince" class="form-control" name="province"></select>
-                        </div>
+                        <label>省份</label>
+                        <select id="priovince" class="form-control" name="province"></select>
                     </div>
                     <div class="form-group">
                         <label>城市</label>
-                        <div class="col-md-8">
-                            <select id="city" class="form-control" name="city"></select>
-                        </div>
+                        <select id="city" class="form-control" name="city"></select>
                     </div>
                     <div class="form-group">
                         <label>区县</label>
-                        <div class="col-md-8">
-                            <select id="area" class="form-control" name="area"></select>
-                        </div>
+                        <select id="area" class="form-control" name="area"></select>
                     </div>
                     <div class="form-group">
                         <label for="hospitalname"> 医院</label>
                         <div class="hospital_con">
-                            <input AUTOCOMPLETE="off" type="text" value="${hosname}" id="hospitalname"/>
+                            <input AUTOCOMPLETE="off" type="text" value="${hospitalname}" id="hospitalname"/>
                             <ul class="list" id="hospitalList">
                             </ul>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-info" id="search">查询</button>
-                    <div class="actions" style="float: right;">
-                        <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                                class="iconfont">&#xe612;</i> <span class="hidden-480">添加</span>
-                        </a>
-                    </div>
                 </form>
 
             </div>
@@ -54,116 +43,127 @@
     </div>
 </div>
 <div id="hospitals">
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6 item">
-    <div class="thumbnail">
-        <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
-        <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+    <div class="col-md-4 col-sm-6 item">
+        <div class="thumbnail">
+            <img src="${ctx}/res-build/img/avatar3_small.jpg" alt="">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                   role="button">Button</a></p>
+            </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 

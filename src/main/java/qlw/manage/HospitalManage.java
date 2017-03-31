@@ -26,17 +26,17 @@ public class HospitalManage extends BaseManage {
      * @param pageSize
      * @return
      */
-    public List<Hospital> list(Integer pageNumber, Integer pageSize,String province,String city,String area) {
+    public List<Hospital> list(Integer pageNumber, Integer pageSize, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         HospitalExample.Criteria criteria = example.createCriteria();
-        if(province!=null&&!"".equals(province)){
+        if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
         }
-        if(city!=null&&!"".equals(city)){
+        if (city != null && !"".equals(city)) {
             criteria.andCityEqualTo(city);
         }
-        if(area!=null&&!"".equals(area)){
+        if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
 
@@ -45,23 +45,23 @@ public class HospitalManage extends BaseManage {
 
     /**
      * 所有医院数量 按(省份 城市 地区）
+     *
      * @return
      */
-    public Integer count(String province,String city,String area) {
+    public Integer count(String province, String city, String area) {
         HospitalExample example = new HospitalExample();
         HospitalExample.Criteria criteria = example.createCriteria();
-        if(province!=null&&!"".equals(province)){
+        if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
         }
-        if(city!=null&&!"".equals(city)){
+        if (city != null && !"".equals(city)) {
             criteria.andCityEqualTo(city);
         }
-        if(area!=null&&!"".equals(area)){
+        if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
         return hospitalExMapper.countByExample(example);
     }
-
 
 
     /**
@@ -70,18 +70,18 @@ public class HospitalManage extends BaseManage {
      * @param name
      * @return
      */
-    public Integer countLike(String name,String province,String city,String area) {
+    public Integer countLike(String name, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
         HospitalExample.Criteria criteria = example.createCriteria();
         name = name + "%";
         criteria.andNameLike(name);
-        if(province!=null&&!"".equals(province)){
+        if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
         }
-        if(city!=null&&!"".equals(city)){
+        if (city != null && !"".equals(city)) {
             criteria.andCityEqualTo(city);
         }
-        if(area!=null&&!"".equals(area)){
+        if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
         return hospitalExMapper.countByExample(example);
@@ -94,18 +94,21 @@ public class HospitalManage extends BaseManage {
      * @param area
      * @return
      */
-    public List<Hospital> getLike(String name,String province,String city,String area) {
+    public List<Hospital> getLike(Integer pageNumber, Integer pageSize, String name, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
+        if (pageNumber != null && pageSize != null) {
+            example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        }
         HospitalExample.Criteria criteria = example.createCriteria();
         name = name + "%";
         criteria.andNameLike(name);
-        if(province!=null&&!"".equals(province)){
+        if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
         }
-        if(city!=null&&!"".equals(city)){
+        if (city != null && !"".equals(city)) {
             criteria.andCityEqualTo(city);
         }
-        if(area!=null&&!"".equals(area)){
+        if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
         List<Hospital> hospitals = hospitalExMapper.selectByExample(example);
@@ -117,23 +120,23 @@ public class HospitalManage extends BaseManage {
     }
 
     /**
-     *得到Hospital   按(省份 城市 地区）
+     * 得到Hospital   按(省份 城市 地区）
      *
      * @param area
      * @param name
      * @return
      */
-    public Hospital getByName( String name,String province,String city,String area) {
+    public Hospital getByName(String name, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
         HospitalExample.Criteria criteria = example.createCriteria();
         criteria.andNameEqualTo(name);
-        if(province!=null&&!"".equals(province)){
+        if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
         }
-        if(city!=null&&!"".equals(city)){
+        if (city != null && !"".equals(city)) {
             criteria.andCityEqualTo(city);
         }
-        if(area!=null&&!"".equals(area)){
+        if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
         List<Hospital> hospitals = hospitalExMapper.selectByExample(example);
@@ -152,17 +155,17 @@ public class HospitalManage extends BaseManage {
      * @param name
      * @return 存在返回true 否则false
      */
-    public Boolean haveSameName( String name,String province,String city,String area) {
+    public Boolean haveSameName(String name, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
         HospitalExample.Criteria criteria = example.createCriteria();
         criteria.andNameEqualTo(name);
-        if(province!=null&&!"".equals(province)){
+        if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
         }
-        if(city!=null&&!"".equals(city)){
+        if (city != null && !"".equals(city)) {
             criteria.andCityEqualTo(city);
         }
-        if(area!=null&&!"".equals(area)){
+        if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
         criteria.andStatusEqualTo(1);
@@ -227,11 +230,12 @@ public class HospitalManage extends BaseManage {
 
     /**
      * 按条件更新授权标签
+     *
      * @param hospital
      * @param example
      * @return
      */
-    public Integer updateByExampleSelective(Hospital hospital,HospitalExample example){
-       return hospitalExMapper.updateByExampleSelective(hospital,example);
+    public Integer updateByExampleSelective(Hospital hospital, HospitalExample example) {
+        return hospitalExMapper.updateByExampleSelective(hospital, example);
     }
 }

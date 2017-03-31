@@ -53,7 +53,7 @@ public class DoctorManage extends BaseManage {
      * @param departmentid
      * @return
      */
-    public List<Doctor> listByDepartment(Integer pageNumber, Integer pageSize, long departmentid) {
+    public List<Doctor> listByDepartment(Integer pageNumber, Integer pageSize, Long departmentid) {
         DoctorExample example = new DoctorExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         DoctorExample.Criteria criteria = example.createCriteria();
@@ -75,7 +75,7 @@ public class DoctorManage extends BaseManage {
      * @param hospitalid
      * @return
      */
-    public List<Doctor> listByHospital(Integer pageNumber, Integer pageSize, long hospitalid) {
+    public List<Doctor> listByHospital(Integer pageNumber, Integer pageSize, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         DoctorExample.Criteria criteria = example.createCriteria();
@@ -90,18 +90,42 @@ public class DoctorManage extends BaseManage {
     }
 
     /**
-     * 医生列表  按医院
+     * 医生列表  按医院 医生姓名
      *
      * @param hospitalid
      * @return
      */
-    public List<Doctor> getNameLikeByHospital(String name, long hospitalid) {
+    public List<Doctor> getNameLikeByHospital(String name, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         name = name + "% ";
         criteria.andNameLike(name);
         criteria.andDeletedateIsNull();
         criteria.andHospitalidEqualTo(hospitalid);
+        List<Doctor> doctors = doctorExMapper.selectByExample(example);
+        for (int i = 0; i < doctors.size(); i++) {
+            doctors.get(i).setHospital(hospitalExMapper.selectByPrimaryKey(doctors.get(i).getHospitalid()));
+            doctors.get(i).setDepartment(departmentExMapper.selectByPrimaryKey(doctors.get(i).getDepartmentid()));
+        }
+        return doctors;
+    }
+
+    /**
+     * 医生列表  按科室 医生姓名
+     *
+     * @param departmentid
+     * @return
+     */
+    public List<Doctor> getNameLikeByDepartment(Integer pageNumber, Integer pageSize, String name, Long departmentid) {
+        DoctorExample example = new DoctorExample();
+        if (pageNumber != null && pageSize != null) {
+            example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        }
+        DoctorExample.Criteria criteria = example.createCriteria();
+        name = name + "% ";
+        criteria.andNameLike(name);
+        criteria.andDeletedateIsNull();
+        criteria.andDepartmentidEqualTo(departmentid);
         List<Doctor> doctors = doctorExMapper.selectByExample(example);
         for (int i = 0; i < doctors.size(); i++) {
             doctors.get(i).setHospital(hospitalExMapper.selectByPrimaryKey(doctors.get(i).getHospitalid()));
@@ -129,7 +153,7 @@ public class DoctorManage extends BaseManage {
      * @param departmentid
      * @return
      */
-    public Integer countByDepartment(long departmentid) {
+    public Integer countByDepartment(Long departmentid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedateIsNull();
@@ -143,7 +167,7 @@ public class DoctorManage extends BaseManage {
      * @param hospitalid
      * @return
      */
-    public Integer countByHospital(long hospitalid) {
+    public Integer countByHospital(Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedateIsNull();
@@ -172,7 +196,7 @@ public class DoctorManage extends BaseManage {
      * @param account
      * @return
      */
-    public Integer countLikeByDepartment(String account, long departmentid) {
+    public Integer countLikeByDepartment(String account, Long departmentid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         account = account + "%";
@@ -188,7 +212,7 @@ public class DoctorManage extends BaseManage {
      * @param account
      * @return
      */
-    public Integer countLikeByHospital(String account, long hospitalid) {
+    public Integer countLikeByHospital(String account, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         account = account + "%";
@@ -204,13 +228,29 @@ public class DoctorManage extends BaseManage {
      * @param name
      * @return
      */
-    public Integer countNameLikeByHospital(String name, long hospitalid) {
+    public Integer countNameLikeByHospital(String name, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         name = name + "%";
         criteria.andNameLike(name);
         criteria.andDeletedateIsNull();
         criteria.andHospitalidEqualTo(hospitalid);
+        return doctorExMapper.countByExample(example);
+    }
+
+    /**
+     * 获得相似 name 数量 按科室 医生姓名
+     *
+     * @param name
+     * @return
+     */
+    public Integer countNameLikeByDepartment(String name, Long departmentid) {
+        DoctorExample example = new DoctorExample();
+        DoctorExample.Criteria criteria = example.createCriteria();
+        name = name + "%";
+        criteria.andNameLike(name);
+        criteria.andDeletedateIsNull();
+        criteria.andDepartmentidEqualTo(departmentid);
         return doctorExMapper.countByExample(example);
     }
 
@@ -244,8 +284,9 @@ public class DoctorManage extends BaseManage {
      * @param account
      * @return
      */
-    public List<Doctor> getDoctorLikeByDepartment(String account, long departmentid) {
+    public List<Doctor> getDoctorLikeByDepartment(String account, Long departmentid) {
         DoctorExample example = new DoctorExample();
+
         DoctorExample.Criteria criteria = example.createCriteria();
         account = account + "%";
         criteria.andAccountLike(account);
@@ -269,7 +310,7 @@ public class DoctorManage extends BaseManage {
      * @param account
      * @return
      */
-    public List<Doctor> getDoctorLikeByHospital(String account, long hospitalid) {
+    public List<Doctor> getDoctorLikeByHospital(String account, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         account = account + "%";
@@ -316,7 +357,7 @@ public class DoctorManage extends BaseManage {
      * @param account
      * @return
      */
-    public Doctor getDoctorByAccountAndDepartment(String account, long departmentid) {
+    public Doctor getDoctorByAccountAndDepartment(String account, Long departmentid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andAccountEqualTo(account);
@@ -339,7 +380,7 @@ public class DoctorManage extends BaseManage {
      * @param account
      * @return
      */
-    public Doctor getDoctorByAccountAndHospital(String account, long hospitalid) {
+    public Doctor getDoctorByAccountAndHospital(String account, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andAccountEqualTo(account);
@@ -363,7 +404,7 @@ public class DoctorManage extends BaseManage {
      * @param hospitalid
      * @return 相同true, 否则false
      */
-    public Boolean haveSameAccountAndHospital(String account, long hospitalid) {
+    public Boolean haveSameAccountAndHospital(String account, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andAccountEqualTo(account);
@@ -383,7 +424,7 @@ public class DoctorManage extends BaseManage {
      * @param hospitalid
      * @return 相同true, 否则false
      */
-    public Boolean haveSameName(String name, long hospitalid) {
+    public Boolean haveSameName(String name, Long hospitalid) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andNameEqualTo(name);

@@ -36,7 +36,7 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" ><td>${item.date}</td>',
             '{@/if}',
             '{@if item.status==1}',
-            '    <td><a class="btn btn-default btn-xs" href="' + ROOTPAth + '"></a>上班</td>',
+            '    <td><a class="btn btn-default btn-xs" href="' + ROOTPAth + '/admin/appointments/new?schedulingid=${item.id}"></a>上班</td>',
             '{@/if}',
             '{@if item.status==2}',
             '    <td >停诊</td>',

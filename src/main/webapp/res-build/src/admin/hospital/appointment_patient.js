@@ -28,18 +28,36 @@ define(function (require, exports, module) {
             '{@else}',
             '{@each data as item,index}',
             '{@if index%2==0}',
-            '<tr role="row" class="odd" data-departmentname="${item.departmentname}" data-doctorname="${item.doctorname}" data-serialnumber="${item.serialnumber}" data-regfee="${item.regfee}" data-status="${item.status}" data-date="${item.date}" data-timeflag="${item.timeflag}">',
+            '<tr role="row" class="odd" data-departmentname="${item.departmentname}" data-doctorname="${item.doctorname}" data-serialnumber="${item.serialnumber}" data-regfee="${item.regfee}" data-status="${item.status}" data-date="${item.date}" data-type="${item.type}" data-timeflag="${item.timeflag}">',
             '{@else}',
-            '<tr role="row" class="even" data-departmentname="${item.departmentname}" data-doctorname="${item.doctorname}" data-serialnumber="${item.serialnumber}" data-regfee="${item.regfee}" data-status="${item.status}" data-date="${item.date}" data-timeflag="${item.timeflag}">',
+            '<tr role="row" class="even" data-departmentname="${item.departmentname}" data-doctorname="${item.doctorname}" data-serialnumber="${item.serialnumber}" data-type="${item.type}" data-regfee="${item.regfee}" data-status="${item.status}" data-date="${item.date}" data-timeflag="${item.timeflag}">',
             '{@/if}',
             '    <td>${item.departmentname}</td>',
             '    <td>${item.doctorname}</td>',
             '    <td>${item.serialnumber}</td>',
             '    <td>${item.regfee}</td>',
             '{@if item.status==1}',
-            '    <td>专家</td>',
+            '    <td>预约</td>',
             '{@/if}',
             '{@if item.status==2}',
+            '    <td>取消</td>',
+            '{@/if}',
+            '{@if item.status==3}',
+            '    <td>爽约</td>',
+            '{@/if}',
+            '{@if item.status==4}',
+            '    <td>已取号</td>',
+            '{@/if}',
+            '{@if item.status==5}',
+            '    <td>未支付</td>',
+            '{@/if}',
+            '{@if item.status==6}',
+            '    <td>已支付</td>',
+            '{@/if}',
+            '{@if item.type==1}',
+            '    <td>专家</td>',
+            '{@/if}',
+            '{@if item.type==2}',
             '    <td>普通</td>',
             '{@/if}',
             '    <td>${item.date}</td>',
@@ -137,6 +155,23 @@ define(function (require, exports, module) {
                 $appointmentList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
+        },
+        deleteAppointment: function ($that) {
+            var id = $that.data("id");
+            var delPath = ROOTPAth + '/admin/appointments/delAppointment/' + id;
+            $.ajax({
+                url: delPath,
+                type: "POST",
+                success: function (data) {
+                    if (data.code === 1) {
+                        pageIndex.reset();
+                    } else {
+                        $("#ajax_fail").find("h4").html(data.message);
+                        $("#ajax_fail").modal("show")
+                    }
+                }
+            });
+
         }
     };
     Utilitiy.init();

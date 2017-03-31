@@ -38,7 +38,7 @@ public class SchedulingController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listScheduling( @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate,HttpServletRequest request) {
+    public Map<String, Object> listScheduling(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             Scheduling scheduling = new Scheduling();
@@ -182,14 +182,14 @@ public class SchedulingController extends BaseController {
     }
 
     /**
-     * 号源池生成
+     * 号源池生成 7天
      *
      * @return
      */
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/generateScheduling")
     @ResponseBody
-    public Map<String, Object> generateScheduling(Long doctorid, Long hospitalid, Long departmentid, int type, @RequestParam(value = "totalnumber", defaultValue = "50") Integer totalnumber) {
+    public Map<String, Object> generateScheduling(Long doctorid, Long hospitalid, Long departmentid, Integer type, @RequestParam(value = "totalnumber", defaultValue = "50") Integer totalnumber) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "号源生成成功";
@@ -206,7 +206,7 @@ public class SchedulingController extends BaseController {
 
             List<Fixedscheduling> fixedschedulings = fixedschedulingManage.getByWeek(doctorid, fweek);
             Fixedscheduling fixedscheduling = fixedschedulings.get(0);
-            if (fixedschedulings.get(0).getStatus()==1) {
+            if (fixedschedulings.get(0).getStatus() == 1) {
                 if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
                     Scheduling scheduling = new Scheduling();
                     scheduling.setDoctorid(doctorid);
@@ -220,7 +220,7 @@ public class SchedulingController extends BaseController {
                     scheduling.setTotalnumber(totalnumber);
                     schedulingManage.save(scheduling);
                 }
-                List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag());
+                List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag(), type);
                 if (numberss.size() > 0) {
                     Numbers numbers = numberss.get(0);
                     numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
@@ -240,8 +240,8 @@ public class SchedulingController extends BaseController {
                     numbers.setType(type);
                     numberManage.save(numbers);
                 }
-            }else{
-                int status=fixedscheduling.getStatus();
+            } else {
+                int status = fixedscheduling.getStatus();
                 if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
                     Scheduling scheduling = new Scheduling();
                     scheduling.setDoctorid(doctorid);
@@ -263,6 +263,7 @@ public class SchedulingController extends BaseController {
         return result;
 
     }
+
     /**
      * 号源池生成  每日生成一天
      *
@@ -279,49 +280,49 @@ public class SchedulingController extends BaseController {
 
         List<Date> dateList = new ArrayList<Date>();
         long ftime = nowDate.getTime();
-            Date fdate = new Date();
-            fdate.setTime(ftime + (6 * 24 * 3600000));
-            String fDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(fdate);
-            //周日 从0转换为7
-            int fweek = fdate.getDay() == 0 ? 7 : fdate.getDay();
+        Date fdate = new Date();
+        fdate.setTime(ftime + (6 * 24 * 3600000));
+        String fDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(fdate);
+        //周日 从0转换为7
+        int fweek = fdate.getDay() == 0 ? 7 : fdate.getDay();
 
-            List<Fixedscheduling> fixedschedulings = fixedschedulingManage.getByWeek(doctorid, fweek);
-            if (fixedschedulings.get(0).getStatus()==1) {
-                Fixedscheduling fixedscheduling = fixedschedulings.get(0);
-                if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
-                    Scheduling scheduling = new Scheduling();
-                    scheduling.setDoctorid(doctorid);
-                    scheduling.setDepartmentid(departmentid);
-                    scheduling.setHospitalid(hospitalid);
-                    scheduling.setDate(fDateStr);
-                    scheduling.setStatus(1);
-                    scheduling.setRegfee(fixedscheduling.getRegfee());
-                    scheduling.setTimeflag(fixedscheduling.getTimeflag());
-                    scheduling.setType(type);
-                    scheduling.setTotalnumber(totalnumber);
-                    schedulingManage.save(scheduling);
-                }
-                List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag());
-                if (numberss.size() > 0) {
-                    Numbers numbers = numberss.get(0);
-                    numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
-                    numbers.setOtherleftcount(numbers.getOtherleftcount() + totalnumber / 2);
-                    numbers.setTotalamount(numbers.getTotalamount() + totalnumber);
-                    numberManage.update(numbers);
-                } else {
-                    Numbers numbers = new Numbers();
-                    numbers.setDate(fDateStr);
-                    numbers.setStatus(1);
-                    numbers.setDepartmentid(departmentid);
-                    numbers.setHospitalid(hospitalid);
-                    numbers.setAppointleftcount(totalnumber / 2);
-                    numbers.setOtherleftcount(totalnumber / 2);
-                    numbers.setTotalamount(totalnumber);
-                    numbers.setTimeflag(fixedscheduling.getTimeflag());
-                    numbers.setType(type);
-                    numberManage.save(numbers);
-                }
+        List<Fixedscheduling> fixedschedulings = fixedschedulingManage.getByWeek(doctorid, fweek);
+        if (fixedschedulings.get(0).getStatus() == 1) {
+            Fixedscheduling fixedscheduling = fixedschedulings.get(0);
+            if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                Scheduling scheduling = new Scheduling();
+                scheduling.setDoctorid(doctorid);
+                scheduling.setDepartmentid(departmentid);
+                scheduling.setHospitalid(hospitalid);
+                scheduling.setDate(fDateStr);
+                scheduling.setStatus(1);
+                scheduling.setRegfee(fixedscheduling.getRegfee());
+                scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                scheduling.setType(type);
+                scheduling.setTotalnumber(totalnumber);
+                schedulingManage.save(scheduling);
             }
+            List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag(),type);
+            if (numberss.size() > 0) {
+                Numbers numbers = numberss.get(0);
+                numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
+                numbers.setOtherleftcount(numbers.getOtherleftcount() + totalnumber / 2);
+                numbers.setTotalamount(numbers.getTotalamount() + totalnumber);
+                numberManage.update(numbers);
+            } else {
+                Numbers numbers = new Numbers();
+                numbers.setDate(fDateStr);
+                numbers.setStatus(1);
+                numbers.setDepartmentid(departmentid);
+                numbers.setHospitalid(hospitalid);
+                numbers.setAppointleftcount(totalnumber / 2);
+                numbers.setOtherleftcount(totalnumber / 2);
+                numbers.setTotalamount(totalnumber);
+                numbers.setTimeflag(fixedscheduling.getTimeflag());
+                numbers.setType(type);
+                numberManage.save(numbers);
+            }
+        }
 
         result.put("message", rtnMsg);
         result.put("code", rtnCode);

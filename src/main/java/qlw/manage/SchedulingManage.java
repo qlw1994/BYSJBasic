@@ -6,8 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.ex.SchedulingExMapper;
 import qlw.model.Scheduling;
 import qlw.model.SchedulingExample;
+import qlw.util.MyUtils;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,12 +57,12 @@ public class SchedulingManage extends BaseManage {
     }
 
     /**
-     * 排班列表
+     * 排班列表  后7天
      *
      * @param scheduling
      * @return
      */
-    public List<Scheduling> lisOneDate(String date, Scheduling scheduling) {
+    public List<Scheduling> listNext7Day(Scheduling scheduling) {
         SchedulingExample example = new SchedulingExample();
         example.setOrderByClause("id desc");
         SchedulingExample.Criteria criteria = example.createCriteria();
@@ -74,7 +75,14 @@ public class SchedulingManage extends BaseManage {
         if (scheduling.getDepartmentid() != null && !scheduling.getDepartmentid().equals(init)) {
             criteria.andDepartmentidEqualTo(scheduling.getDepartmentid());
         }
-        criteria.andDateEqualTo(date);
+        Date now = new Date();
+        String nowDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(now);
+        Long fTime = now.getTime() + (6 * 24 * 3600000);
+        Date end = new Date();
+        end.setTime(fTime);
+        String endDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(end);
+        criteria.andDateLessThanOrEqualTo(endDateStr);
+        criteria.andDateGreaterThanOrEqualTo(nowDateStr);
         return schedulingExMapper.selectByExample(example);
     }
 
@@ -149,12 +157,13 @@ public class SchedulingManage extends BaseManage {
     public Scheduling getById(Long id) {
         return schedulingExMapper.selectByPrimaryKey(id);
     }
+
     /**
      * 根据date 和 timeflag doctorid获取排班
      *
      * @return
      */
-    public Scheduling getByDateAndTimeflagAndDoctorid(String date,int timeflag,Long doctorid) {
+    public Scheduling getByDateAndTimeflagAndDoctorid(String date, int timeflag, Long doctorid) {
         SchedulingExample example = new SchedulingExample();
         SchedulingExample.Criteria criteria = example.createCriteria();
         criteria.andTimeflagEqualTo(timeflag);
@@ -162,6 +171,7 @@ public class SchedulingManage extends BaseManage {
         criteria.andDoctoridEqualTo(doctorid);
         return schedulingExMapper.selectByExample(example).get(0);
     }
+
     /**
      * 根据date 和 tiemflag获取排班
      *

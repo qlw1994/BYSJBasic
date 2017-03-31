@@ -36,6 +36,7 @@ public class DepartmentManage extends BaseManage {
         criteria.andDeletedateIsNull();
         return departmentMapper.selectByExample(example);
     }
+
     public List<Department> listAll(Long hospitalid) {
         DepartmentExample example = new DepartmentExample();
         DepartmentExample.Criteria criteria = example.createCriteria();
@@ -77,8 +78,11 @@ public class DepartmentManage extends BaseManage {
      * @param hospitalid
      * @return
      */
-    public List<Department> getLike(String name, long hospitalid) {
+    public List<Department> getLike(Integer pageNumber, Integer pageSize, String name, long hospitalid) {
         DepartmentExample example = new DepartmentExample();
+        if (pageNumber != null && pageSize != null) {
+            example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        }
         DepartmentExample.Criteria criteria = example.createCriteria();
         name = name + "%";
         criteria.andNameLike(name);
@@ -99,7 +103,7 @@ public class DepartmentManage extends BaseManage {
      * @param name
      * @return
      */
-    public Department getByName( String name,long hospitalid) {
+    public Department getByName(String name, long hospitalid) {
         DepartmentExample example = new DepartmentExample();
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);
@@ -120,7 +124,7 @@ public class DepartmentManage extends BaseManage {
      * @param name
      * @return
      */
-    public Boolean haveSameName( String name,long hospitalid) {
+    public Boolean haveSameName(String name, long hospitalid) {
         DepartmentExample example = new DepartmentExample();
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);

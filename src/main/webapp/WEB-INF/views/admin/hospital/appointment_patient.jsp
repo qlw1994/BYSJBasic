@@ -66,6 +66,7 @@
                             <th class="sorting">医生名称</th>
                             <th class="sorting">就诊序号</th>
                             <th class="sorting">挂号费</th>
+                            <th class="sorting">预约类型</th>
                             <th class="sorting">预约状态</th>
                             <th class="sorting">预约日期</th>
                             <th class="sorting">预约时间</th>

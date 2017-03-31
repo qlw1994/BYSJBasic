@@ -1,5 +1,6 @@
 package qlw.manage;
 
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +31,23 @@ public class NumberManage extends BaseManage {
      */
     public List<Numbers> list(Integer pageNumber, Integer pageSize, String startDate, String endDate, Numbers numbers) {
         NumbersExample example = new NumbersExample();
-        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         NumbersExample.Criteria criteria = example.createCriteria();
+        if (pageNumber != null && pageSize != null && numbers.getType() != null) {
+            example.setOrderByClause(getPage("date ,timeflag ", pageNumber, pageSize));
+        } else if (pageNumber != null && pageSize != null) {
+            example.setOrderByClause(getPage("type, date, timeflag ", pageNumber, pageSize));
+        } else if (numbers.getType() != null) {
+            example.setOrderByClause("type, date, timeflag ");
+            criteria.andTypeEqualTo(numbers.getType());
+        }
+
         if (numbers.getHospitalid() != null && !numbers.getHospitalid().equals(init)) {
             criteria.andHospitalidEqualTo(numbers.getHospitalid());
         }
         if (numbers.getDepartmentid() != null && !numbers.getDepartmentid().equals(init)) {
             criteria.andDepartmentidEqualTo(numbers.getDepartmentid());
         }
+
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
             startDate += " 00:00:00";
             endDate += " 23:59:59";
@@ -134,12 +144,13 @@ public class NumberManage extends BaseManage {
      * @param date
      * @return
      */
-    public Numbers getByTimeflagAndDeptidAndDate(int timeflag, Long departmentid, String date) {
+    public Numbers getByTimeflagAndDeptidAndDate(int timeflag, Long departmentid, String date, Integer type) {
         NumbersExample example = new NumbersExample();
         NumbersExample.Criteria criteria = example.createCriteria();
         criteria.andTimeflagEqualTo(timeflag);
         criteria.andDepartmentidEqualTo(departmentid);
         criteria.andDateEqualTo(date);
+        criteria.andTypeEqualTo(type);
         return numbersMapper.selectByExample(example).get(0);
     }
 
@@ -223,11 +234,13 @@ public class NumberManage extends BaseManage {
      * @param timeflag
      * @return 存在true  否则 false
      */
-    public List<Numbers> getNumbersByDepartmentidAndtimeflagAndDate(Long departmentid, String date, int timeflag) {
+    public List<Numbers> getNumbersByDepartmentidAndtimeflagAndDate(Long departmentid, String date, Integer timeflag, Integer type) {
         NumbersExample example = new NumbersExample();
         NumbersExample.Criteria criteria = example.createCriteria();
         criteria.andDepartmentidEqualTo(departmentid);
         criteria.andDateEqualTo(date);
+        criteria.andTypeEqualTo(type);
+        criteria.andTypeEqualTo(type);
         criteria.andTimeflagEqualTo(timeflag);
         List<Numbers> numberss = numbersMapper.selectByExample(example);
         return numberss;

@@ -297,4 +297,27 @@ public abstract class MyUtils {
         }
         return list;
     }
+
+    /**
+     * 根据日期获得 后7天
+     * @param mdate
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static List<Date> next7date(Date mdate) {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(mdate);
+        calendar.add(Calendar.DAY_OF_YEAR,-1);
+        mdate=calendar.getTime();
+        int b = mdate.getDay();
+        Date fdate;
+        List<Date> list = new ArrayList<Date>();
+        Long fTime = mdate.getTime();
+        for (int a = 0; a <=6; a++) {
+            fdate = new Date();
+            fdate.setTime(fTime + (a * 24 * 3600000));
+            list.add(a-1, fdate);
+        }
+        return list;
+    }
 }

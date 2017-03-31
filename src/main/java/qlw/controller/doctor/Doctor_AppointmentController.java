@@ -7,8 +7,10 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.AppointmentManage;
 import qlw.manage.NumberManage;
+import qlw.manage.SchedulingManage;
 import qlw.model.Appointment;
 import qlw.model.Numbers;
+import qlw.model.Scheduling;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -28,6 +30,8 @@ public class Doctor_AppointmentController extends BaseController {
     AppointmentManage appointmentManage;
     @Autowired
     NumberManage numberManage;
+    @Autowired
+    SchedulingManage schedulingManage;
 
     /**
      * 预约列表数据源
@@ -93,8 +97,9 @@ public class Doctor_AppointmentController extends BaseController {
         try {
             String date = appointment.getDate();
             int timeflag = appointment.getTimeflag();
+            int type = appointment.getType();
             Long departmentid = appointment.getDepartmentid();
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date);
+            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date, type);
             if (numbers.getAppointleftcount() == 0) {
                 rtnMsg = "添加失败";
                 rtnCode = ResultCode.ERROR;
@@ -102,6 +107,12 @@ public class Doctor_AppointmentController extends BaseController {
                 numbers.setAppointleftcount(numbers.getAppointleftcount() - 1);
                 numberManage.update(numbers);
                 appointmentManage.save(appointment);
+            }
+            //如果挂号到专家 专家个人剩余号源减一
+            if (type == 1) {
+                Scheduling scheduling=schedulingManage.getByDateAndTimeflagAndDoctorid(date,timeflag,appointment.getDoctorid());
+                scheduling.setLeftnumber(scheduling.getLeftnumber()-1);
+                schedulingManage.update(scheduling);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -169,13 +180,20 @@ public class Doctor_AppointmentController extends BaseController {
         try {
             Appointment appointment = appointmentManage.getById(id);
             appointment.setStatus(2);
+            int type = appointment.getType();
             appointmentManage.update(appointment);
             String date = appointment.getDate();
             int timeflag = appointment.getTimeflag();
             Long departmentid = appointment.getDepartmentid();
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date);
+            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date, type);
             numbers.setAppointleftcount(numbers.getAppointleftcount() + 1);
             numberManage.update(numbers);
+            //如果是专家需要在 专家个人号源上删除
+            if (type == 1) {
+                Scheduling scheduling = schedulingManage.getByDateAndTimeflagAndDoctorid(date, timeflag, appointment.getDoctorid());
+                scheduling.setLeftnumber(scheduling.getLeftnumber() + 1);
+                schedulingManage.update(scheduling);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "删除失败";
