@@ -1,5 +1,6 @@
 package qlw.manage;
 
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,11 +54,14 @@ public class DoctorManage extends BaseManage {
      * @param departmentid
      * @return
      */
-    public List<Doctor> listByDepartment(Integer pageNumber, Integer pageSize, Long departmentid) {
+    public List<Doctor> listByDepartment(Integer pageNumber, Integer pageSize, Long departmentid, Integer type) {
         DoctorExample example = new DoctorExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedateIsNull();
+        if (type != null) {
+            criteria.andLevelEqualTo(type);
+        }
         criteria.andDepartmentidEqualTo(departmentid);
         List<Doctor> doctors = doctorExMapper.selectByExample(example);
         for (int i = 0; i < doctors.size(); i++) {
@@ -116,7 +120,7 @@ public class DoctorManage extends BaseManage {
      * @param departmentid
      * @return
      */
-    public List<Doctor> getNameLikeByDepartment(Integer pageNumber, Integer pageSize, String name, Long departmentid) {
+    public List<Doctor> getNameLikeByDepartment(Integer pageNumber, Integer pageSize, String name, Long departmentid, Integer type) {
         DoctorExample example = new DoctorExample();
         if (pageNumber != null && pageSize != null) {
             example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
@@ -126,6 +130,7 @@ public class DoctorManage extends BaseManage {
         criteria.andNameLike(name);
         criteria.andDeletedateIsNull();
         criteria.andDepartmentidEqualTo(departmentid);
+        criteria.andLevelEqualTo(type);
         List<Doctor> doctors = doctorExMapper.selectByExample(example);
         for (int i = 0; i < doctors.size(); i++) {
             doctors.get(i).setHospital(hospitalExMapper.selectByPrimaryKey(doctors.get(i).getHospitalid()));
@@ -148,14 +153,17 @@ public class DoctorManage extends BaseManage {
     }
 
     /**
-     * 统计医生数量 按科室
+     * 统计医生数量 按科室 ;(医生类型)
      *
      * @param departmentid
      * @return
      */
-    public Integer countByDepartment(Long departmentid) {
+    public Integer countByDepartment(Long departmentid, Integer type) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
+        if (type != null) {
+            criteria.andLevelEqualTo(type);
+        }
         criteria.andDeletedateIsNull();
         criteria.andDepartmentidEqualTo(departmentid);
         return doctorExMapper.countByExample(example);
@@ -244,11 +252,12 @@ public class DoctorManage extends BaseManage {
      * @param name
      * @return
      */
-    public Integer countNameLikeByDepartment(String name, Long departmentid) {
+    public Integer countNameLikeByDepartment(String name, Long departmentid, Integer type) {
         DoctorExample example = new DoctorExample();
         DoctorExample.Criteria criteria = example.createCriteria();
         name = name + "%";
         criteria.andNameLike(name);
+        criteria.andLevelEqualTo(type);
         criteria.andDeletedateIsNull();
         criteria.andDepartmentidEqualTo(departmentid);
         return doctorExMapper.countByExample(example);

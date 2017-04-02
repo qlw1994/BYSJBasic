@@ -30,7 +30,7 @@ public class UsersLoginController extends BaseController {
         return "users/userlogin";
     }
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/userindex/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(@RequestParam("account") String account, @RequestParam("password") String password, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
@@ -73,7 +73,7 @@ public class UsersLoginController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/user/logout")
+    @RequestMapping(value = "/userindex/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("user");
         return "users/index";

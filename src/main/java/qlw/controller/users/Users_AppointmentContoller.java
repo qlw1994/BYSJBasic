@@ -1,12 +1,18 @@
-package qlw.controller.admin.hospital;
+package qlw.controller.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
-import qlw.manage.*;
-import qlw.model.*;
+import qlw.manage.AppointmentManage;
+import qlw.manage.NumberManage;
+import qlw.manage.PatientManage;
+import qlw.manage.SchedulingManage;
+import qlw.model.Appointment;
+import qlw.model.Patient;
+import qlw.model.Paymentdetail;
+import qlw.model.Scheduling;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -17,11 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wiki on 2017/3/21.
+ * Created by wiki on 2017/4/2.
  */
+
 @Controller
-@RequestMapping(value = "/admin/appointments")
-public class AppointmentController extends BaseController {
+@RequestMapping(value = "/user/appointments")
+public class Users_AppointmentContoller extends BaseController {
     @Autowired
     AppointmentManage appointmentManage;
     @Autowired

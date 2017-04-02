@@ -68,9 +68,12 @@ public class PatientManage extends BaseManage {
      * @param name
      * @return
      */
-    public List<Patient> getLike(String name, long uid) {
+    public List<Patient> getLike(Integer pageNumber, Integer pageSize, String name, long uid) {
         PatientExample example = new PatientExample();
         PatientExample.Criteria criteria = example.createCriteria();
+        if(pageNumber!=null&&pageSize!=null){
+            example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        }
         name = name + "%";
         criteria.andNameEqualTo(name);
         criteria.andUidEqualTo(uid);

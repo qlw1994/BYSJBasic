@@ -1,4 +1,4 @@
-package qlw.controller.admin.account;
+package qlw.controller.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.PatientManage;
 import qlw.model.Patient;
+import qlw.model.Users;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -17,11 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wiki on 2017/3/11.
+ * Created by wiki on 2017/4/2.
  */
 @Controller
-@RequestMapping(value = "/admin/patients")
-public class PatientController extends BaseController {
+@RequestMapping(value = "/user/patients")
+public class Users_patientController extends BaseController {
     @Autowired
     PatientManage patientManage;
 
@@ -35,7 +36,8 @@ public class PatientController extends BaseController {
     public Map<String, Object> listPatient(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            long uid = Long.parseLong(request.getParameter("uid"));
+            Users users = (Users) request.getSession().getAttribute("user");
+            long uid = users.getId();
             result.put("total", patientManage.count(uid));
             result.put("data", patientManage.list(page, length, uid));
         } catch (Exception e) {
@@ -57,7 +59,8 @@ public class PatientController extends BaseController {
     public Map<String, Object> listPatientAll(HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            long uid = Long.parseLong(request.getParameter("uid"));
+            Users users = (Users) request.getSession().getAttribute("user");
+            long uid = users.getId();
             result.put("total", patientManage.count(uid));
             result.put("data", patientManage.listAll(uid));
         } catch (Exception e) {
@@ -69,37 +72,29 @@ public class PatientController extends BaseController {
         return result;
     }
 
-
-    /**
-     * 就诊人管理首页跳转
-     *
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/index")
-    public ModelAndView accountView(int pcode, int subcode, Long uid, String uname, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/account/patient");
-        request.getSession().setAttribute("uid", uid);
-        request.getSession().setAttribute("uname", uname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
+    @RequestMapping(value = "/patientChosen")
+    public ModelAndView indexView(Long hospitalid, String hospitalname, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/patient_chosen");
+        request.getSession().setAttribute("hospitalid", hospitalid);
+        request.getSession().setAttribute("hospitalname", hospitalname);
         mv.addObject("currentpage", 1);
         return mv;
     }
 
+
     /**
-     * 相似就诊人名称列表
+     * 相似就诊人名称列表 (可分页)
      *
      * @param name
      * @return
      */
     @RequestMapping(value = "/listPatientLike", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listPatientLike(String name, long uid) {
+    public Map<String, Object> listPatientLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, long uid) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", patientManage.countLike(name, uid));
-            result.put("data", patientManage.getLike(null, null, name, uid));
+            result.put("data", patientManage.getLike(page, length, name, uid));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -188,30 +183,30 @@ public class PatientController extends BaseController {
         return result;
     }
 
-    /**
-     * 删除账号
-     *
-     * @return
-     */
-    @RequestMapping(value = "delPatient/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> delPatient(@PathVariable("id") Long id) {
-        Map<String, Object> result = new HashMap<>();
-        Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "删除成功";
-        try {
-            Patient patient = patientManage.getById(id);
-            patient.setDeletedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            patientManage.update(patient);
-        } catch (Exception e) {
-            e.printStackTrace();
-            rtnMsg = "删除失败";
-            rtnCode = ResultCode.ERROR;
-        }
-        result.put("message", rtnMsg);
-        result.put("code", rtnCode);
-        return result;
-    }
+    ///**
+    // * 删除账号
+    // *
+    // * @return
+    // */
+    //@RequestMapping(value = "delPatient/{id}", method = RequestMethod.POST)
+    //@ResponseBody
+    //public Map<String, Object> delPatient(@PathVariable("id") Long id) {
+    //    Map<String, Object> result = new HashMap<>();
+    //    Integer rtnCode = ResultCode.SUCCESS;
+    //    String rtnMsg = "删除成功";
+    //    try {
+    //        Patient patient = patientManage.getById(id);
+    //        patient.setDeletedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+    //        patientManage.update(patient);
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //        rtnMsg = "删除失败";
+    //        rtnCode = ResultCode.ERROR;
+    //    }
+    //    result.put("message", rtnMsg);
+    //    result.put("code", rtnCode);
+    //    return result;
+    //}
 
 
     /**
@@ -223,7 +218,9 @@ public class PatientController extends BaseController {
     @RequestMapping(value = "/sameName", method = RequestMethod.POST)
     @ResponseBody
     public boolean hasSameName(Patient patient, HttpServletRequest request) {
-        boolean flag = patientManage.haveSameName(patient.getName(), patient.getIdnumber(), patient.getGuardianidnumber(), (Long) request.getSession().getAttribute("uid"));
+        Users users = (Users) request.getSession().getAttribute("user");
+        long uid = users.getId();
+        boolean flag = patientManage.haveSameName(patient.getName(), patient.getIdnumber(), patient.getGuardianidnumber(), uid);
         return !flag;
     }
 

@@ -40,6 +40,7 @@
                 <div class="form-body">
                     <input type="hidden" id="userid" name="uid">
                     <input type="hidden" id="patientid" name="patientid">
+                    <input type="hidden"  name="schedulingid" value="${schedulingid}">
                     <input type="hidden" name="hospitalid" value="${hospitalid}">
                     <input type="hidden" name="departmentid" value="${departmentid}">
                     <input type="hidden" name="doctorid" value="${doctorid}">
@@ -122,7 +123,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="closeDivlink" href=" ${ctx}/admin/appointments/doctorindex?pcode=2&subcode=1&doctorid=${doctorid} &doctorname=${doctorname}" class="btn btn-danger j-modal-closebtn">关闭</a>
+                <a id="closeDivlink" href=" ${ctx}/admin/appointments/patientchosen?pcode=2&subcode=1&schedulingid=${schedulingid}" class="btn btn-danger j-modal-closebtn">关闭</a>
             </div>
         </div>
     </div>

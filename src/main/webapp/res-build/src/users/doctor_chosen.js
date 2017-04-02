@@ -8,8 +8,8 @@ define(function (require, exports, module) {
     var juicer = require("juicer");
     var pageIndex;
     var hideTime = 500;
-    var $divdepartments = $("#departments");
-    var $departmentname = $("#departmentname");
+    var $divdoctors = $("#doctors");
+    var $doctorname = $("#doctorname");
     var pagelength = 10; //一页多少条；
     var $searchform = $("#search-form");
 
@@ -21,11 +21,11 @@ define(function (require, exports, module) {
             '{@each data as item,index}',
             '<div class="col-md-4 col-sm-6 item">',
             '<div class="thumbnail">',
-            // '<img class="img-thumbnail" src="${ctx}/res-build/img/avatar3_small.jpg" alt="${item.name}">',
+            '<img class="img-thumbnail" src="${ctx}/res-build/img/avatar3_small.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
             // '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a name="indexPT" href="' + ROOTPAth + '/user/doctors/doctorChosen?departmentid=${item.id}  &departmentname=${item.name}&type=2" class="btn btn-primary" role="button">普通</a><a name="indexZJ"  href="' + ROOTPAth + '/user/doctors/doctorChosen?departmentid=${item.id}&departmentname=${item.name}&type=1" class="btn btn-primary" role="button">专家</a></p>',
+            '<p><a name="indexPT" href="' + ROOTPAth + '/user/schedulings/index?doctorid=${item.id}&doctorname=${item.name}" class="btn btn-primary" role="button">预约</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'
@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var Utilitiy = {
         init: function () {
             tool.startPageLoading();
-            fillDepartment(1);
+            fillDoctor(1);
             this.bind();
 
         },
@@ -41,20 +41,20 @@ define(function (require, exports, module) {
             //页面到底部加载新数据
             $(window).scroll(function () {
                 if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-                    fillDepartmentLike(0);
+                    fillDoctorLike(0);
                 }
             });
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();
                 tool.startPageLoading();
-                fillDepartmentLike(1);
+                fillDoctorLike(1);
             });
 
             // 下拉框请求获取医院
-            $departmentname.keyup(function (e) {
+            $doctorname.keyup(function (e) {
                 if (e.keyCode != 40 && e.keyCode != 38) {
-                    get_departmentLike($departmentname);
+                    get_doctorLike($doctorname);
                 }
             }).focus(function () {
                 this.select();
@@ -80,7 +80,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
                     tool.startPageLoading();
-                    fillDepartmentLike(1);
+                    fillDoctorLike(1);
                 }
             });
 
@@ -88,19 +88,20 @@ define(function (require, exports, module) {
     }
 
 
-    function get_departmentLike(obj) {
+    function get_doctorLike(obj) {
         var t = setTimeout(function () {
             $.ajax({
-                url: ROOTPAth + '/user/departments/listLike',
+                url: ROOTPAth + '/user/doctors/listNameLikeByDepartment',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    hospitalid: hospitalid,
+                    departmentid: departmentid,
+                    type:type,
                     name: $(obj).val()
                 },
                 success: function (data) {
                     data = data.data;
-                    var $list = $("#departmentList");
+                    var $list = $("#doctorList");
                     $list.show();
                     $list.html("");
                     $.each(data, function (index, el) {
@@ -122,33 +123,37 @@ define(function (require, exports, module) {
                     });
                     $($list).find("li").click(function (event) {
                         $(obj).val($(this).text());
-                        // $("#departmentid").val($(this).data("id"));
+                        // $("#doctorid").val($(this).data("id"));
                         $list.hide();
                         // $searchform.validate().element($(obj));
                     });
-                },
+                }
+
+                ,
                 error: function (err) {
                     $("#ajax_fail").find("h4").text("模块加载用户列表失败");
                     $("#ajax_fail").modal("show")
                 }
-            });
+            })
+            ;
         }, 500);
     }
 
-    function fillDepartment(reset) {
+    function fillDoctor(reset) {
         if (reset == 1) {
             currentpage = 1;
         }
         $.ajax({
-            url: ROOTPAth + '/user/departments/list',
+            url: ROOTPAth + '/user/doctors/list',
             type: 'POST',
             dataType: 'json',
             data: function () {
                 var data = {
-                    hospitalid: hospitalid,
+                    departmentid: departmentid,
+                    type:type,
                     length: pagelength,
                     page: currentpage,
-                    name: $departmentname.val()
+                    name: $doctorname.val()
                 };
                 return data;
             },
@@ -160,7 +165,7 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    $divdepartments.append(listTpl.render(newData));
+                    $divdoctors.append(listTpl.render(newData));
                     // button_bind();
                     currentpage = currentpage * 1 + 1;
                 }
@@ -168,20 +173,21 @@ define(function (require, exports, module) {
         });
     }
 
-    function fillDepartmentLike(reset) {
+    function fillDoctorLike(reset) {
         if (reset == 1) {
             currentpage = 1;
         }
         $.ajax({
-            url: ROOTPAth + '/user/departments/listLike',
+            url: ROOTPAth + '/user/doctors/listNameLikeByDepartment',
             type: 'POST',
             dataType: 'json',
             data: function () {
                 var data = {
-                    hospitalid: hospitalid,
+                    departmentid: departmentid,
                     length: pagelength,
+                    type:type,
                     page: currentpage,
-                    name: $departmentname.val()
+                    name: $doctorname.val()
                 };
                 return data;
             },
@@ -194,9 +200,9 @@ define(function (require, exports, module) {
                         newData.data[i].currentpage = currentpage;
                     });
                     if (reset == 1) {
-                        $divdepartments.empty();
+                        $divdoctors.empty();
                     }
-                    $divdepartments.append(listTpl.render(newData));
+                    $divdoctors.append(listTpl.render(newData));
                     // button_bind();
                     currentpage = currentpage * 1 + 1;
                 }
@@ -211,7 +217,7 @@ define(function (require, exports, module) {
     //         $.each(indexPT, function (i, val) {
     //             // indexPT[i].attr("href", $(this).attr("href") + "$date=" + $("#appoint_date").val());
     //             indexPT[i].onClick(function () {
-    //                 window.location.href = $(this).data("href") + "?date=" + $("#appoint_date").val() + "&departmentid=" + $(this).data("departmentid") + "&departmentname=" + $(this).data("departmentname");
+    //                 window.location.href = $(this).data("href") + "?date=" + $("#appoint_date").val() + "&doctorid=" + $(this).data("doctorid") + "&doctorname=" + $(this).data("doctorname");
     //             })
     //         })
     //     }
@@ -220,7 +226,7 @@ define(function (require, exports, module) {
     //         $.each(indexZJ, function (i, val) {
     //             // indexZJ[i].attr("href", $(this).attr("href") + "$date=" + $("#appoint_date").val());
     //             indexZJ[i].onClick(function () {
-    //                 window.location.href = $(this).data("href") + "?date=" + $("#appoint_date").val() + "&departmentid=" + $(this).data("departmentid") + "&departmentname=" + $(this).data("departmentname");
+    //                 window.location.href = $(this).data("href") + "?date=" + $("#appoint_date").val() + "&doctorid=" + $(this).data("doctorid") + "&doctorname=" + $(this).data("doctorname");
     //             })
     //         })
     //     }

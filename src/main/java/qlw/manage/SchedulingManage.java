@@ -64,7 +64,7 @@ public class SchedulingManage extends BaseManage {
      */
     public List<Scheduling> listNext7Day(Scheduling scheduling) {
         SchedulingExample example = new SchedulingExample();
-        example.setOrderByClause("id desc");
+        example.setOrderByClause("timeflag, date");
         SchedulingExample.Criteria criteria = example.createCriteria();
         if (scheduling.getHospitalid() != null && !scheduling.getHospitalid().equals(init)) {
             criteria.andHospitalidEqualTo(scheduling.getHospitalid());
@@ -163,7 +163,7 @@ public class SchedulingManage extends BaseManage {
      *
      * @return
      */
-    public Scheduling getByDateAndTimeflagAndDoctorid(String date, int timeflag, Long doctorid) {
+    public Scheduling getByDateAndTimeflagAndDoctorid(String date, Integer timeflag, Long doctorid) {
         SchedulingExample example = new SchedulingExample();
         SchedulingExample.Criteria criteria = example.createCriteria();
         criteria.andTimeflagEqualTo(timeflag);
@@ -173,19 +173,22 @@ public class SchedulingManage extends BaseManage {
     }
 
     /**
-     * 根据date 和 tiemflag获取排班
+     * 根据date 和 tiemflag  （医生类型）获取排班
      *
      * @param date
      * @param timeflag
      * @return
      */
-    public Scheduling getByDateAndTimeflag(String date, int timeflag) {
+    public List<Scheduling> getByDateAndTimeflag(String date, Integer timeflag, Integer type) {
         SchedulingExample example = new SchedulingExample();
         SchedulingExample.Criteria criteria = example.createCriteria();
+        if (type != null) {
+            criteria.andTypeEqualTo(type);
+        }
         criteria.andTimeflagEqualTo(timeflag);
         criteria.andDateEqualTo(date);
         List<Scheduling> schedulings = schedulingExMapper.selectByExample(example);
-        return schedulings.get(0);
+        return schedulings;
     }
 
     /**

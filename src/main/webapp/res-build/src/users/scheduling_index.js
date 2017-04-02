@@ -36,7 +36,7 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" ><td>${item.date}</td>',
             '{@/if}',
             '{@if item.status==1}',
-            '    <td><a class="btn btn-default btn-xs" href="' + ROOTPAth + '/admin/appointments/patientchosen?pcode=2&subcode=1&schedulingid=${item.id}"></a>上班</td>',
+            '    <td><a class="btn btn-default btn-xs" href="' + ROOTPAth + '/user/appointments/newAppointment?schedulingid=${item.id}"></a>上班</td>',
             '{@/if}',
             '{@if item.status==2}',
             '    <td >停诊</td>',
@@ -74,12 +74,12 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/schedulings/list',
+                    url: ROOTPAth + '/user/schedulings/getSchedulings',
                     type: 'POST',
                     dataType: 'json',
                     data: function () {
                         var data = {
-                            hospitalid: hospitalid,
+                            doctorid: doctorid,
                             length: pagelength
                         };
                         return data;

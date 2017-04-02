@@ -23,7 +23,9 @@ public class Scheduling {
 
     private Integer totalnumber;
 
-    private Integer leftnumber;
+    private Integer otherleftcount;
+
+    private Integer appointleftcount;
 
     public Long getId() {
         return id;
@@ -105,11 +107,19 @@ public class Scheduling {
         this.totalnumber = totalnumber;
     }
 
-    public Integer getLeftnumber() {
-        return leftnumber;
+    public Integer getOtherleftcount() {
+        return otherleftcount;
     }
 
-    public void setLeftnumber(Integer leftnumber) {
-        this.leftnumber = leftnumber;
+    public void setOtherleftcount(Integer otherleftcount) {
+        this.otherleftcount = otherleftcount;
+    }
+
+    public Integer getAppointleftcount() {
+        return appointleftcount;
+    }
+
+    public void setAppointleftcount(Integer appointleftcount) {
+        this.appointleftcount = appointleftcount;
     }
 }

@@ -107,7 +107,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
                     $.ajax({
-                        url: ROOTPAth + "/admin/appointments/newAppoitment",
+                        url: ROOTPAth + "/admin/appointments/newAppointment",
                         dataType: "JSON",
                         type: "post",
                         data: $ModelForm.serialize(),
@@ -115,7 +115,9 @@ define(function (require, exports, module) {
                             if (res.code == 1) {
                                 $("#modal-box").find(".dialogtip-msg").html("预约成功");
                                 $("#modal-box").show();
-                                // window.location.href = ROOTPAth + "/admin/appointments/doctorindex?pcode=2&subcode=1&doctorid=" + doctorid + "&doctorname=" + doctorname;
+
+                                //跳转到医生 查询预约病人列表
+                                window.location.href = ROOTPAth + "/admin/appointments/doctorindex?pcode=2&subcode=1&doctorid=" + doctorid + "&doctorname=" + doctorname;
                             } else {
                                 $("#ajax_fail").find("h4").text(res.message);
                                 $("#ajax_fail").modal("show")

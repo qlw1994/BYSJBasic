@@ -12,7 +12,6 @@ import qlw.manage.DoctorManage;
 import qlw.manage.NumberManage;
 import qlw.manage.SchedulingManage;
 import qlw.model.Doctor;
-import qlw.model.Scheduling;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,19 +35,17 @@ public class Users_DoctorController extends BaseController {
     /**
      * 医院-科室-医生管理首页跳转
      *
-     * @param pcode
-     * @param subcode
+     * @param type         获取医生类型
      * @param departmentid
      * @param request
      * @return
      */
-    @RequestMapping(value = "/index")
-    public ModelAndView hospitalindexView(int pcode, int subcode, long departmentid, String departmentname, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/doctor");
+    @RequestMapping(value = "/doctorChosen")
+    public ModelAndView hospitalindexView(Integer type, Long departmentid, String departmentname, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/doctor_chosen");
         request.getSession().setAttribute("departmentid", departmentid);
         request.getSession().setAttribute("departmentname", departmentname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
+        request.setAttribute("type", type);
         mv.addObject("currentpage", 1);
         return mv;
     }
@@ -60,12 +57,11 @@ public class Users_DoctorController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDoctor(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+    public Map<String, Object> listDoctor(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,Long departmentid,Integer type, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            long departmentid = Long.parseLong(request.getParameter("departmentid"));
-            result.put("total", doctorManage.countByDepartment(departmentid));
-            result.put("data", doctorManage.listByDepartment(page, length, departmentid));
+            result.put("total", doctorManage.countByDepartment(departmentid,type));
+            result.put("data", doctorManage.listByDepartment(page, length, departmentid,type));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -84,11 +80,11 @@ public class Users_DoctorController extends BaseController {
      */
     @RequestMapping(value = "/listNameLikeByDepartment", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listNameLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, Long hospitalid) {
+    public Map<String, Object> listNameLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, Long departmentid,Integer type) {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("total", doctorManage.countNameLikeByDepartment(name, hospitalid));
-            result.put("data", doctorManage.getNameLikeByDepartment(page, length, name, hospitalid));
+            result.put("total", doctorManage.countNameLikeByDepartment(name, departmentid,type));
+            result.put("data", doctorManage.getNameLikeByDepartment(page, length, name, departmentid,type));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -130,29 +126,6 @@ public class Users_DoctorController extends BaseController {
             return true;
         }
         return false;
-    }
-
-    /**
-     * 获取之后7天的排班
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/getSchedulings")
-    @ResponseBody
-    public Map<String, Object> getNumbersnext7day(Long id) {
-        Map<String, Object> result = new HashMap<>();
-        Scheduling scheduling = new Scheduling();
-        scheduling.setDoctorid(id);
-        try {
-            result.put("total", 7);
-            result.put("data", schedulingManage.listNext7Day(scheduling));
-        } catch (Exception e) {
-            result.put("total", 0);
-            result.put("data", new ArrayList<>(0));
-            e.printStackTrace();
-        }
-        return result;
     }
 
 }

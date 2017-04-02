@@ -20,11 +20,11 @@ import java.util.Map;
  * Created by Administrator on 2016/5/24.
  */
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/userindex")
 public class UsersIndexController extends BaseController {
     @RequestMapping(value = "")
     public String admin() {
-        return "redirect:user/index";
+        return "redirect:userindex";
     }
 
     @RequestMapping(value = "index")

@@ -62,10 +62,10 @@ define(function (require, exports, module) {
              //	                form.submit(); // form validation success, call ajax form submit
                     var basePath = location.href.substring(0, location.href.lastIndexOf('/'));
 
-                    $.post(basePath + '/user/login', $form.serialize(), function (data) {
+                    $.post(basePath + '/userindex/login', $form.serialize(), function (data) {
 
                         if (data.code===1) {
-                            window.location.href = basePath + '/user/index';
+                            window.location.href = basePath + '/userindex';
                         } else {
                             $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
                         }

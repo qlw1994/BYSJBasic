@@ -715,63 +715,123 @@ public class SchedulingExample {
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberIsNull() {
-            addCriterion("leftnumber is null");
+        public Criteria andOtherleftcountIsNull() {
+            addCriterion("otherleftcount is null");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberIsNotNull() {
-            addCriterion("leftnumber is not null");
+        public Criteria andOtherleftcountIsNotNull() {
+            addCriterion("otherleftcount is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberEqualTo(Integer value) {
-            addCriterion("leftnumber =", value, "leftnumber");
+        public Criteria andOtherleftcountEqualTo(Integer value) {
+            addCriterion("otherleftcount =", value, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberNotEqualTo(Integer value) {
-            addCriterion("leftnumber <>", value, "leftnumber");
+        public Criteria andOtherleftcountNotEqualTo(Integer value) {
+            addCriterion("otherleftcount <>", value, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberGreaterThan(Integer value) {
-            addCriterion("leftnumber >", value, "leftnumber");
+        public Criteria andOtherleftcountGreaterThan(Integer value) {
+            addCriterion("otherleftcount >", value, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberGreaterThanOrEqualTo(Integer value) {
-            addCriterion("leftnumber >=", value, "leftnumber");
+        public Criteria andOtherleftcountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("otherleftcount >=", value, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberLessThan(Integer value) {
-            addCriterion("leftnumber <", value, "leftnumber");
+        public Criteria andOtherleftcountLessThan(Integer value) {
+            addCriterion("otherleftcount <", value, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberLessThanOrEqualTo(Integer value) {
-            addCriterion("leftnumber <=", value, "leftnumber");
+        public Criteria andOtherleftcountLessThanOrEqualTo(Integer value) {
+            addCriterion("otherleftcount <=", value, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberIn(List<Integer> values) {
-            addCriterion("leftnumber in", values, "leftnumber");
+        public Criteria andOtherleftcountIn(List<Integer> values) {
+            addCriterion("otherleftcount in", values, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberNotIn(List<Integer> values) {
-            addCriterion("leftnumber not in", values, "leftnumber");
+        public Criteria andOtherleftcountNotIn(List<Integer> values) {
+            addCriterion("otherleftcount not in", values, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberBetween(Integer value1, Integer value2) {
-            addCriterion("leftnumber between", value1, value2, "leftnumber");
+        public Criteria andOtherleftcountBetween(Integer value1, Integer value2) {
+            addCriterion("otherleftcount between", value1, value2, "otherleftcount");
             return (Criteria) this;
         }
 
-        public Criteria andLeftnumberNotBetween(Integer value1, Integer value2) {
-            addCriterion("leftnumber not between", value1, value2, "leftnumber");
+        public Criteria andOtherleftcountNotBetween(Integer value1, Integer value2) {
+            addCriterion("otherleftcount not between", value1, value2, "otherleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountIsNull() {
+            addCriterion("appointleftcount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountIsNotNull() {
+            addCriterion("appointleftcount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountEqualTo(Integer value) {
+            addCriterion("appointleftcount =", value, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountNotEqualTo(Integer value) {
+            addCriterion("appointleftcount <>", value, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountGreaterThan(Integer value) {
+            addCriterion("appointleftcount >", value, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("appointleftcount >=", value, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountLessThan(Integer value) {
+            addCriterion("appointleftcount <", value, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountLessThanOrEqualTo(Integer value) {
+            addCriterion("appointleftcount <=", value, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountIn(List<Integer> values) {
+            addCriterion("appointleftcount in", values, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountNotIn(List<Integer> values) {
+            addCriterion("appointleftcount not in", values, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountBetween(Integer value1, Integer value2) {
+            addCriterion("appointleftcount between", value1, value2, "appointleftcount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppointleftcountNotBetween(Integer value1, Integer value2) {
+            addCriterion("appointleftcount not between", value1, value2, "appointleftcount");
             return (Criteria) this;
         }
     }

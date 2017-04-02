@@ -22,6 +22,7 @@
     <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
     <result column="departmentname" property="departmentname" jdbcType="VARCHAR" />
     <result column="doctorname" property="doctorname" jdbcType="VARCHAR" />
+    <result column="patientname" property="patientname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -84,7 +85,7 @@
   <sql id="Base_Column_List" >
     id, patientid, uid, doctorid, schedulingid, regfee, committime, date, starttime, 
     endtime, timeflag, type, serialnumber, outnumber, status, hospitalid, departmentid, 
-    hospitalname, departmentname, doctorname
+    hospitalname, departmentname, doctorname, patientname
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.AppointmentExample" >
     select
@@ -123,14 +124,16 @@
       endtime, timeflag, type, 
       serialnumber, outnumber, status, 
       hospitalid, departmentid, hospitalname, 
-      departmentname, doctorname)
+      departmentname, doctorname, patientname
+      )
     values (#{id,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, 
       #{doctorid,jdbcType=BIGINT}, #{schedulingid,jdbcType=BIGINT}, #{regfee,jdbcType=DECIMAL}, 
       #{committime,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, 
       #{endtime,jdbcType=VARCHAR}, #{timeflag,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{serialnumber,jdbcType=VARCHAR}, #{outnumber,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{hospitalid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, #{hospitalname,jdbcType=VARCHAR}, 
-      #{departmentname,jdbcType=VARCHAR}, #{doctorname,jdbcType=VARCHAR})
+      #{departmentname,jdbcType=VARCHAR}, #{doctorname,jdbcType=VARCHAR}, #{patientname,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="qlw.model.Appointment" >
     insert into appointment
@@ -195,6 +198,9 @@
       <if test="doctorname != null" >
         doctorname,
       </if>
+      <if test="patientname != null" >
+        patientname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -256,6 +262,9 @@
       </if>
       <if test="doctorname != null" >
         #{doctorname,jdbcType=VARCHAR},
+      </if>
+      <if test="patientname != null" >
+        #{patientname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -328,6 +337,9 @@
       <if test="record.doctorname != null" >
         doctorname = #{record.doctorname,jdbcType=VARCHAR},
       </if>
+      <if test="record.patientname != null" >
+        patientname = #{record.patientname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -354,7 +366,8 @@
       departmentid = #{record.departmentid,jdbcType=BIGINT},
       hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
       departmentname = #{record.departmentname,jdbcType=VARCHAR},
-      doctorname = #{record.doctorname,jdbcType=VARCHAR}
+      doctorname = #{record.doctorname,jdbcType=VARCHAR},
+      patientname = #{record.patientname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -419,6 +432,9 @@
       <if test="doctorname != null" >
         doctorname = #{doctorname,jdbcType=VARCHAR},
       </if>
+      <if test="patientname != null" >
+        patientname = #{patientname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -442,7 +458,8 @@
       departmentid = #{departmentid,jdbcType=BIGINT},
       hospitalname = #{hospitalname,jdbcType=VARCHAR},
       departmentname = #{departmentname,jdbcType=VARCHAR},
-      doctorname = #{doctorname,jdbcType=VARCHAR}
+      doctorname = #{doctorname,jdbcType=VARCHAR},
+      patientname = #{patientname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

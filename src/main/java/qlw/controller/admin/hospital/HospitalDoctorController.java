@@ -52,12 +52,12 @@ public class HospitalDoctorController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDoctor(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+    public Map<String, Object> listDoctor(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,Integer type, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            long departmentid =  Long.parseLong(request.getParameter("departmentid"));
-            result.put("total", doctorManage.countByDepartment(departmentid));
-            result.put("data", doctorManage.listByDepartment(page, length, departmentid));
+            long departmentid = Long.parseLong(request.getParameter("departmentid"));
+            result.put("total", doctorManage.countByDepartment(departmentid, type));
+            result.put("data", doctorManage.listByDepartment(page, length, departmentid, type));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -132,6 +132,7 @@ public class HospitalDoctorController extends BaseController {
         result.put("code", ResultCode.SUCCESS);
         return result;
     }
+
     /**
      * 添加帐号
      *

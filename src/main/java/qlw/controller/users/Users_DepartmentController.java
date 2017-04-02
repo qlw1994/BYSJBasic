@@ -101,15 +101,15 @@ public class Users_DepartmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView accountView(Long hospitalid, String hospitalname, HttpServletRequest request) {
+    public ModelAndView accountView(Long patientid, String patientname, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("users/department");
         Date tomorrow = new Date();
         long ftime = tomorrow.getTime() + 1 * 24 * 3600000;
         tomorrow.setTime(ftime);
         String tomorrowStr = MyUtils.SIMPLE_DATE_FORMAT.format(tomorrow);
-        request.getSession().setAttribute("hospitalid", hospitalid);
-        request.getSession().setAttribute("hospitalname", hospitalname);
+        request.getSession().setAttribute("patientid", patientid);
+        request.getSession().setAttribute("patientname", patientname);
         request.getSession().setAttribute("nextdate", tomorrowStr);
         mv.addObject("currentpage", 1);
         return mv;

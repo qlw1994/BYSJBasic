@@ -14,7 +14,7 @@
         <div class="portlet">
             <div class="portlet-search clearfix">
                 <div class="caption">
-                    ${sessionScope.hospitalname}- 科室选择
+                    ${sessionScope.hospitalname}- ${sessionScope.departmentname}- 医生选择
                 </div>
                 <form class="form-inline" id="search-form">
                     <%--<div class="form-group">--%>
@@ -23,11 +23,10 @@
                     <%--name="date" value="${sessionScope.nextdate}"/>--%>
                     <%--</div>--%>
                     <div class="form-group">
-                        <label for="departmentname">科室名</label>
+                        <label for="doctorname">医生名</label>
                         <div class="hospital_con">
-                            <input AUTOCOMPLETE="off" name="name" type="text" value="${departmentname}"
-                                   id="departmentname"/>
-                            <ul class="list" id="departmentList">
+                            <input AUTOCOMPLETE="off" name="name" type="text" value="${doctorname}" id="doctorname"/>
+                            <ul class="list" id="doctorList">
                             </ul>
                         </div>
                     </div>
@@ -38,17 +37,20 @@
         </div>
     </div>
 </div>
-<div id="departments"></div>
+<div id="doctors"></div>
 </body>
 
 <content tag="jsconfig">
     <script type="text/javascript">
         var hospitalid =${hospitalid};
         var hospitalname = "${hospitalname}";
+        var departmentid =${departmentid};
+        var departmentname = "${departmentname}";
+        var type=${type};
         var currentpage = ${currentpage};
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/department"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/doctor_chosen"></script>
 
 </content>

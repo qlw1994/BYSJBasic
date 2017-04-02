@@ -43,6 +43,8 @@ public class Appointment {
 
     private String doctorname;
 
+    private String patientname;
+
     public Long getId() {
         return id;
     }
@@ -202,40 +204,12 @@ public class Appointment {
     public void setDoctorname(String doctorname) {
         this.doctorname = doctorname == null ? null : doctorname.trim();
     }
-    private Patient patient;
-    private Hospital hospital;
-    private Department department;
-    private Users users;
 
-    public Patient getPatient() {
-        return patient;
+    public String getPatientname() {
+        return patientname;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-    public Hospital getHospital() {
-        return hospital;
-    }
-
-    public void setHospital(Hospital hospital) {
-        this.hospital = hospital;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Users getUsers() {
-        return users;
-    }
-
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setPatientname(String patientname) {
+        this.patientname = patientname == null ? null : patientname.trim();
     }
 }

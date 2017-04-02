@@ -1394,6 +1394,76 @@ public class AppointmentExample {
             addCriterion("doctorname not between", value1, value2, "doctorname");
             return (Criteria) this;
         }
+
+        public Criteria andPatientnameIsNull() {
+            addCriterion("patientname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameIsNotNull() {
+            addCriterion("patientname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameEqualTo(String value) {
+            addCriterion("patientname =", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameNotEqualTo(String value) {
+            addCriterion("patientname <>", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameGreaterThan(String value) {
+            addCriterion("patientname >", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameGreaterThanOrEqualTo(String value) {
+            addCriterion("patientname >=", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameLessThan(String value) {
+            addCriterion("patientname <", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameLessThanOrEqualTo(String value) {
+            addCriterion("patientname <=", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameLike(String value) {
+            addCriterion("patientname like", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameNotLike(String value) {
+            addCriterion("patientname not like", value, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameIn(List<String> values) {
+            addCriterion("patientname in", values, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameNotIn(List<String> values) {
+            addCriterion("patientname not in", values, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameBetween(String value1, String value2) {
+            addCriterion("patientname between", value1, value2, "patientname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientnameNotBetween(String value1, String value2) {
+            addCriterion("patientname not between", value1, value2, "patientname");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

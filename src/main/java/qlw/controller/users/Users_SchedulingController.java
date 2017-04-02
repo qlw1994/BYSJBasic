@@ -68,17 +68,17 @@ public class Users_SchedulingController extends BaseController {
     }
 
     /**
-     * 排班管理首页跳转
+     * 排班管理首页跳转 (单个医生)
      *
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView ViewPT(Long departmentid, String departmentname,Integer type , HttpServletRequest request) {
+    public ModelAndView ViewPT(Long doctorid, String doctorname, Integer type, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("users/scheduling_index");
-
-        request.getSession().setAttribute("departmentid", departmentid);
-        request.getSession().setAttribute("departmentname", departmentname);
+        request.getSession().setAttribute("doctorid", doctorid);
+        request.getSession().setAttribute("doctorname", doctorname);
+        request.setAttribute("type", type);
         request.setAttribute("currentpage", 1);
         return mv;
     }
@@ -89,7 +89,7 @@ public class Users_SchedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/indexPT")
-    public ModelAndView ViewPT(Long departmentid, String departmentname,  HttpServletRequest request) {
+    public ModelAndView ViewPT(Long departmentid, String departmentname, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("users/numbers_indexPT");
 
@@ -105,7 +105,7 @@ public class Users_SchedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/indexZJ")
-    public ModelAndView ViewZJ(Long departmentid, String departmentname,HttpServletRequest request) {
+    public ModelAndView ViewZJ(Long departmentid, String departmentname, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("users/scheduling_indexZJ");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|EEE");
@@ -133,4 +133,26 @@ public class Users_SchedulingController extends BaseController {
         return null;
     }
 
+    /**
+     * 获取之后7天的排班
+     *
+     * @param doctorid
+     * @return
+     */
+    @RequestMapping(value = "/getSchedulings")
+    @ResponseBody
+    public Map<String, Object> getNumbersnext7day(Long doctorid) {
+        Map<String, Object> result = new HashMap<>();
+        Scheduling scheduling = new Scheduling();
+        scheduling.setDoctorid(doctorid);
+        try {
+            result.put("total", 7);
+            result.put("data", schedulingManage.listNext7Day(scheduling));
+        } catch (Exception e) {
+            result.put("total", 0);
+            result.put("data", new ArrayList<>(0));
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
