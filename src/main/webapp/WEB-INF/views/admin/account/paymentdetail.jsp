@@ -145,6 +145,17 @@
                                 </div>
                             </div>
                             <!-- END FORM-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success j-form-edit">
+                                    <i class="iconfont">&#xe61c;</i> 我要编辑
+                                </button>
+                                <button type="submit" class="btn btn-success j-form-save" style="display: none">
+                                    <i class="iconfont">&#xe62c;</i> 保存
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <%-- <button type="submit" class="btn btn-success">修改</button>
+                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -242,7 +253,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-container">
-                    <iframe id="html_con" src="${ctx}/admin/test/diagnosispayment/blank"
+                    <iframe id="html_con" src="${ctx}/admin/paymentdetails/blank"
                             style="width:560px;height:420px;"></iframe>
                 </div>
             </div>

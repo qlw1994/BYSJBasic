@@ -1,10 +1,13 @@
 package qlw.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import qlw.model.Appointment;
 import qlw.model.AppointmentExample;
+import qlw.util.annotation.BatisRepository;
 
+import java.util.List;
+
+@BatisRepository
 public interface AppointmentMapper {
     int countByExample(AppointmentExample example);
 

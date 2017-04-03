@@ -14,7 +14,7 @@
     <result column="endtime" property="endtime" jdbcType="VARCHAR" />
     <result column="timeflag" property="timeflag" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="serialnumber" property="serialnumber" jdbcType="VARCHAR" />
+    <result column="serialnumber" property="serialnumber" jdbcType="INTEGER" />
     <result column="outnumber" property="outnumber" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
@@ -130,7 +130,7 @@
       #{doctorid,jdbcType=BIGINT}, #{schedulingid,jdbcType=BIGINT}, #{regfee,jdbcType=DECIMAL}, 
       #{committime,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, 
       #{endtime,jdbcType=VARCHAR}, #{timeflag,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{serialnumber,jdbcType=VARCHAR}, #{outnumber,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{serialnumber,jdbcType=INTEGER}, #{outnumber,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{hospitalid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, #{hospitalname,jdbcType=VARCHAR}, 
       #{departmentname,jdbcType=VARCHAR}, #{doctorname,jdbcType=VARCHAR}, #{patientname,jdbcType=VARCHAR}
       )
@@ -240,7 +240,7 @@
         #{type,jdbcType=INTEGER},
       </if>
       <if test="serialnumber != null" >
-        #{serialnumber,jdbcType=VARCHAR},
+        #{serialnumber,jdbcType=INTEGER},
       </if>
       <if test="outnumber != null" >
         #{outnumber,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
         type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.serialnumber != null" >
-        serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
+        serialnumber = #{record.serialnumber,jdbcType=INTEGER},
       </if>
       <if test="record.outnumber != null" >
         outnumber = #{record.outnumber,jdbcType=VARCHAR},
@@ -359,7 +359,7 @@
       endtime = #{record.endtime,jdbcType=VARCHAR},
       timeflag = #{record.timeflag,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
-      serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
+      serialnumber = #{record.serialnumber,jdbcType=INTEGER},
       outnumber = #{record.outnumber,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       hospitalid = #{record.hospitalid,jdbcType=BIGINT},
@@ -409,7 +409,7 @@
         type = #{type,jdbcType=INTEGER},
       </if>
       <if test="serialnumber != null" >
-        serialnumber = #{serialnumber,jdbcType=VARCHAR},
+        serialnumber = #{serialnumber,jdbcType=INTEGER},
       </if>
       <if test="outnumber != null" >
         outnumber = #{outnumber,jdbcType=VARCHAR},
@@ -451,7 +451,7 @@
       endtime = #{endtime,jdbcType=VARCHAR},
       timeflag = #{timeflag,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
-      serialnumber = #{serialnumber,jdbcType=VARCHAR},
+      serialnumber = #{serialnumber,jdbcType=INTEGER},
       outnumber = #{outnumber,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       hospitalid = #{hospitalid,jdbcType=BIGINT},

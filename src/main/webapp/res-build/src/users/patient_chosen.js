@@ -28,7 +28,10 @@ define(function (require, exports, module) {
             '<h3>${item.name}</h3>',
             '<p>${item.idnumber}</p>',
             // '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">预约科室</a><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检查报告</a><a href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检验报告</a><a  href="' + ROOTPAth + '/user/drugorders/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">药品订单</a></p>',
+            '<p><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">预约科室</a><a  href="' + ROOTPAth + '/user/drugorders/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">药品订单</a></p>' +
+            '<a href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检验报告</a><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检查报告</a></p>'+
+            '<p><a href="' + ROOTPAth + '/user/paymentdetails/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">待支付列表</a><a  href="' + ROOTPAth + '/user/paymentdetails/indexpayed?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">已支付列表</a></p>',
+            '<p><a href="' + ROOTPAth + '/user/departmentqueues/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">队列当前就诊人序号</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'

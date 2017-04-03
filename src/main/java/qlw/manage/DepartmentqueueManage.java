@@ -47,6 +47,19 @@ public class DepartmentqueueManage extends BaseManage {
         return departmentqueueExMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 根据id获取科室队列
+     *
+     * @param departmentid
+     * @return
+     */
+    public Departmentqueue getByDepartmentid(Long departmentid) {
+        DepartmentqueueExample example = new DepartmentqueueExample();
+        DepartmentqueueExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentidEqualTo(departmentid);
+        return departmentqueueExMapper.selectByExample(example).get(0);
+    }
+
 
     /**
      * 修改科室队列信息

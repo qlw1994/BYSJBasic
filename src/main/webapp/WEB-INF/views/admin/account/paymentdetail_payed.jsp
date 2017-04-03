@@ -107,7 +107,7 @@
                 </button>
                 <h4 class="modal-title">支付详情</h4>
             </div>
-            <form class="form-horizontal" id="vDrugModifyForm">
+            <form class="form-horizontal" id="vPaymentdetailModifyForm">
 
                 <div class="modal-body">
                     <div class="portlet-body form j-disabled-item">
@@ -134,6 +134,11 @@
                                 </div>
                             </div>
                             <!-- END FORM-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <%-- <button type="submit" class="btn btn-success">修改</button>
+                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,5 +196,5 @@
         var hospitalid = ${hospitalid};
     </script>
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/paymentdatail.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/paymentdatail_payed.js"></script>
 </content>

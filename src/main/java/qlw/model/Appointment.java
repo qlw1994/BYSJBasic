@@ -27,7 +27,7 @@ public class Appointment {
 
     private Integer type;
 
-    private String serialnumber;
+    private Integer serialnumber;
 
     private String outnumber;
 
@@ -141,12 +141,12 @@ public class Appointment {
         this.type = type;
     }
 
-    public String getSerialnumber() {
+    public Integer getSerialnumber() {
         return serialnumber;
     }
 
-    public void setSerialnumber(String serialnumber) {
-        this.serialnumber = serialnumber == null ? null : serialnumber.trim();
+    public void setSerialnumber(Integer serialnumber) {
+        this.serialnumber = serialnumber;
     }
 
     public String getOutnumber() {

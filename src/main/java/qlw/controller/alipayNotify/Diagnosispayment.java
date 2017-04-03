@@ -187,7 +187,7 @@ public class Diagnosispayment extends BaseController {
                 model.put("patientname", patientname);
                 model.put("paynumber", paynumber);
                 model.put("invoicenumber", invoicenumber);
-                modelAndView = new ModelAndView("admin/account/paysuccess", model);
+                modelAndView = new ModelAndView("users/paysuccess", model);
             }
         } else {
             log.info("===========alipay return 验证失败==========");

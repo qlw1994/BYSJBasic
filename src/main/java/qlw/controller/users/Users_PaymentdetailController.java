@@ -1,4 +1,4 @@
-package qlw.controller.admin.hospital;
+package qlw.controller.users;
 
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -23,16 +23,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by wiki on 2017/3/26.
+ * Created by wiki on 2017/4/3.
  */
 @Controller
-@RequestMapping(value = "/admin/paymentdetails")
-public class PaymentdetailController extends BaseController {
+@RequestMapping(value = "/user/paymentdetails")
+public class Users_PaymentdetailController extends BaseController {
     @Autowired
     PaymentdetailManage paymentdetailManage;
     @Autowired
     AlipayaccountManage alipayaccountManage;
-    protected static final Logger log = LoggerFactory.getLogger(PaymentdetailController.class);
+    protected static final Logger log = LoggerFactory.getLogger(Users_PaymentdetailController.class);
     private DateFormat format_yyyyMMddHHmmssSSS = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
     /**
@@ -80,59 +80,28 @@ public class PaymentdetailController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(Long hospitalid, String hospitalname, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/account/paymentdetail");
-        request.getSession().setAttribute("hospitalid", hospitalid);
-        request.getSession().setAttribute("hospitalname", hospitalname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
+    public ModelAndView View(Long patientid, String patientname, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/paymentdetail");
+        request.getSession().setAttribute("patientname", patientname);
+        request.getSession().setAttribute("patientid", patientid);
         mv.addObject("currentpage", 1);
         return mv;
     }
+
 
     /**
      * 支付管理首页跳转
      *
      * @return
      */
-    @RequestMapping(value = "/hospitalChosenindex")
-    public ModelAndView ViewhospitalChosenindex(Long patientid, String patientname, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/account/payment_hospital_chosen");
-        request.getSession().setAttribute("patientid", patientid);
+    @RequestMapping(value = "/indexpayed")
+    public ModelAndView Viewpayed(Long patientid, String patientname, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/paymentdetail_payed");
         request.getSession().setAttribute("patientname", patientname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
+        request.getSession().setAttribute("patientid", patientid);
         mv.addObject("currentpage", 1);
         return mv;
     }
-
-    /**
-     * 添加支付
-     *
-     * @param paymentdetail
-     * @return
-     */
-    @RequestMapping(value = "newPaymentdetail")
-    @ResponseBody
-    public Map<String, Object> addPaymentdetail(Paymentdetail paymentdetail, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-        Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "添加成功";
-        try {
-
-            paymentdetail.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            paymentdetailManage.save(paymentdetail);
-        } catch (Exception e) {
-            e.printStackTrace();
-            rtnMsg = "添加失败";
-            rtnCode = ResultCode.ERROR;
-        }
-
-        result.put("message", rtnMsg);
-        result.put("code", rtnCode);
-        return result;
-    }
-
     /**
      * 支付查询
      *
@@ -150,52 +119,6 @@ public class PaymentdetailController extends BaseController {
         return null;
     }
 
-
-    /**
-     * 修改支付
-     *
-     * @return
-     */
-    @RequestMapping(value = "modPaymentdetail", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> updatePaymentdetail(Paymentdetail paymentdetail) {
-        Map<String, Object> result = new HashMap<>();
-        Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "修改成功";
-        try {
-            paymentdetailManage.update(paymentdetail);
-        } catch (Exception e) {
-            e.printStackTrace();
-            rtnMsg = "修改失败";
-            rtnCode = ResultCode.ERROR;
-        }
-        result.put("message", rtnMsg);
-        result.put("code", rtnCode);
-        return result;
-    }
-
-    /**
-     * 删除支付
-     *
-     * @return
-     */
-    @RequestMapping(value = "delPaymentdetail/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> delPaymentdetail(@PathVariable("id") Long id) {
-        Map<String, Object> result = new HashMap<>();
-        Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "删除成功";
-        try {
-            paymentdetailManage.delete(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            rtnMsg = "删除失败";
-            rtnCode = ResultCode.ERROR;
-        }
-        result.put("message", rtnMsg);
-        result.put("code", rtnCode);
-        return result;
-    }
 
     /**
      * 预结算
@@ -226,7 +149,7 @@ public class PaymentdetailController extends BaseController {
      */
     @RequestMapping(value = "blank")
     public ModelAndView toBlankPage(Long hospitalid, Long patientid) {
-        ModelAndView mv = new ModelAndView("admin/account/blank");
+        ModelAndView mv = new ModelAndView("users/blank");
 
         return mv;
     }

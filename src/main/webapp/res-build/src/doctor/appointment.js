@@ -59,6 +59,7 @@ define(function (require, exports, module) {
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/checkreport/index?pcode=1&subcode=3&patientid=${item.patientid}&patientname=${item.patientname}&uid=${item.uid}" ><span class="iconfont iconfont-xs">&#xe617;</span>检查报告</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/inspect/inedx?pcode=1&subcode=3patientid=${item.patientid}&patientname=${item.patientname}&uid=${item.uid}" ><span class="iconfont iconfont-xs">&#xe617;</span>检验报告</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/appointments/index?pcode=1&subcode=3&patientid=${item.patientid}&patientname=${item.patientname}" ><span class="iconfont iconfont-xs">&#xe617;</span>开药订单</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/appointments/modAppointmentStatus?pcode=1&subcode=3&id=${item.id}&status=7" " ><span class="iconfont iconfont-xs">&#xe617;</span>诊断完毕</a>',
             '{@/if}',
             '    </td>',
             '</tr>',

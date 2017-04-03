@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
-import qlw.manage.AppointmentManage;
-import qlw.manage.NumberManage;
-import qlw.manage.SchedulingManage;
+import qlw.manage.*;
 import qlw.model.Appointment;
+import qlw.model.Departmentqueue;
+import qlw.model.Departmentqueuedetail;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -33,6 +33,10 @@ public class Doctor_AppointmentController extends BaseController {
     NumberManage numberManage;
     @Autowired
     SchedulingManage schedulingManage;
+    @Autowired
+    DepartmentqueueManage departmentqueueManage;
+    @Autowired
+    DepartmentqueuedetailManage departmentqueuedetailManage;
 
     /**
      * 预约列表数据源
@@ -135,14 +139,43 @@ public class Doctor_AppointmentController extends BaseController {
     public Map<String, Object> updateAppointment(Long id, Integer status) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "修改预约状态->挂号状态成功";
+        String rtnMsg = "修改预约状态成功";
         try {
             Appointment appointment = appointmentManage.getById(id);
             appointment.setStatus(status);
-            appointmentManage.update(appointment);
+            Departmentqueue departmentqueue = departmentqueueManage.getByDepartmentid(appointment.getDepartmentid());
+            Departmentqueuedetail departmentqueuedetail = new Departmentqueuedetail();
+            //确认取号
+            if (status.equals(new Integer(4))) {
+                if (departmentqueue.getNowcount().equals(new Integer(0))) {
+                    departmentqueue.setNowcount(1);
+
+
+                    departmentqueuedetail.setNumber(1);
+                    appointment.setSerialnumber(1);
+                } else {
+                    departmentqueue.setNowcount(departmentqueue.getNowcount() + 1);
+                    Integer nowNowcount = departmentqueue.getNowcount();
+                    departmentqueuedetail.setNumber(nowNowcount);
+
+                }
+                departmentqueuedetail.setDepartmentqueueid(departmentqueue.getId());
+                departmentqueuedetail.setPatientid(appointment.getPatientid());
+                departmentqueuedetail.setPatientname(appointment.getPatientname());
+                appointmentManage.update(appointment);
+                departmentqueuedetailManage.save(departmentqueuedetail);
+                departmentqueueManage.update(departmentqueue);
+            }
+            //诊断完毕队列更新
+            else if (status.equals(new Integer(7))) {
+                departmentqueue.setNowcount(departmentqueue.getNowcount() - 1);
+                departmentqueuedetailManage.deleteByPatienid(appointment.getPatientid());
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            rtnMsg = "修改预约状态->挂号状态失败";
+            rtnMsg = "修改预约状态失败";
             rtnCode = ResultCode.ERROR;
         }
         result.put("message", rtnMsg);
@@ -160,12 +193,12 @@ public class Doctor_AppointmentController extends BaseController {
     public Map<String, Object> clearAppointment(Long hospitalid, int timeflag) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "修改预约状态->挂号状态成功";
+        String rtnMsg = "修改预约状态成功";
         try {
             appointmentManage.clearAppointrment(hospitalid, timeflag);
         } catch (Exception e) {
             e.printStackTrace();
-            rtnMsg = "修改预约状态->挂号状态失败";
+            rtnMsg = "修改预约状态失败";
             rtnCode = ResultCode.ERROR;
         }
         result.put("message", rtnMsg);
