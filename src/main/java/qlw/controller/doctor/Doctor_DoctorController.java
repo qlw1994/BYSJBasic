@@ -259,7 +259,49 @@ public class Doctor_DoctorController extends BaseController {
         result.put("code", rtnCode);
         return result;
     }
+    /**
+     * 相似医生名称列表 按科室
+     *
+     * @param account
+     * @returns
+     */
+    @RequestMapping(value = "/listDoctorLikeByDepartment", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> listDoctorLikeByDepartment(String account, long departmentid) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("total", doctorManage.countLikeByDepartment(account, departmentid));
+            result.put("data", doctorManage.getDoctorLikeByDepartment(account, departmentid));
+        } catch (Exception e) {
+            result.put("total", 0);
+            result.put("data", new ArrayList<>(0));
+            e.printStackTrace();
+        }
+        result.put("code", ResultCode.SUCCESS);
+        return result;
+    }
 
+    /**
+     * 相似医生名称列表 按医院
+     *
+     * @param account
+     * @returns
+     */
+    @RequestMapping(value = "/listDoctorLikeByHospital", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> listDoctorLikeByHospital(String account, long hospitalid) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("total", doctorManage.countLikeByHospital(account, hospitalid));
+            result.put("data", doctorManage.getDoctorLikeByHospital(account, hospitalid));
+        } catch (Exception e) {
+            result.put("total", 0);
+            result.put("data", new ArrayList<>(0));
+            e.printStackTrace();
+        }
+        result.put("code", ResultCode.SUCCESS);
+        return result;
+    }
     /**
      * 科室名称是否存在
      *

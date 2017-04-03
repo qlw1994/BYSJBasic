@@ -19,6 +19,8 @@
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="createdate" property="createdate" jdbcType="VARCHAR"/>
         <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
+        <result column="departmentname" property="departmentname" jdbcType="VARCHAR" />
+        <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
         <association property="department" javaType="qlw.model.Department">
             <id column="id" property="id" jdbcType="BIGINT"/>
             <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
@@ -130,6 +132,12 @@
             <if test="deletedate != null">
                 deletedate,
             </if>
+            <if test="hospitalname != null">
+                deletedate,
+            </if>
+            <if test="departmentname != null">
+                deletedate,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -183,6 +191,12 @@
             <if test="deletedate != null">
                 #{deletedate,jdbcType=VARCHAR},
             </if>
+            <if test="hospitalname != null">
+                #{createdate,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentname != null">
+                #{deletedate,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
     <select id="selectByExampleEx" resultMap="ResultMap" parameterType="qlw.model.DoctorExample">
@@ -190,7 +204,7 @@
         <if test="distinct">
             distinct
         </if>
-        d.id, d.departmentid, d.hospitalid, d.code, d.name, d.sex, d.age, d.job, d.level, d.resume, d.headpath, d.idtype, d.idnumber, d.account, d.password, d.createdate, d.deletedate, h.id, h.code, h.name, h.level, h.address, h.resume, h.startdate,h. enddate, h.imgpath,h. province,h. city,h. area, h.status,de. id, de.hospitalid, de.code,de. name, de.createdate,de. deletedate
+        d.id, d.departmentid,d.hospitalname,d.departmentname, d.hospitalid, d.code, d.name, d.sex, d.age, d.job, d.level, d.resume, d.headpath, d.idtype, d.idnumber, d.account, d.password, d.createdate, d.deletedate, h.id, h.code, h.name, h.level, h.address, h.resume, h.startdate,h. enddate, h.imgpath,h. province,h. city,h. area, h.status,de. id, de.hospitalid, de.code,de. name, de.createdate,de. deletedate
         from
         <include refid="leftJoin"/>
         <if test="_parameter != null">

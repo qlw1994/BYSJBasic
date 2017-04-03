@@ -35,6 +35,10 @@ public class Doctor {
 
     private String deletedate;
 
+    private String departmentname;
+
+    private String hospitalname;
+
     public Long getId() {
         return id;
     }
@@ -169,6 +173,22 @@ public class Doctor {
 
     public void setDeletedate(String deletedate) {
         this.deletedate = deletedate == null ? null : deletedate.trim();
+    }
+
+    public String getDepartmentname() {
+        return departmentname;
+    }
+
+    public void setDepartmentname(String departmentname) {
+        this.departmentname = departmentname == null ? null : departmentname.trim();
+    }
+
+    public String getHospitalname() {
+        return hospitalname;
+    }
+
+    public void setHospitalname(String hospitalname) {
+        this.hospitalname = hospitalname == null ? null : hospitalname.trim();
     }
     private Department department;
 

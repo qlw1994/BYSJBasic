@@ -13,6 +13,7 @@
         <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
         <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
         <result column="departmentid" property="departmentid" jdbcType="BIGINT"/>
+        <result column="needpay" property="needpay" jdbcType="INT"/>
         <association property="hospital" javaType="qlw.model.Hospital">
             <id column="id" property="id" jdbcType="BIGINT"/>
             <result column="code" property="code" jdbcType="VARCHAR"/>
@@ -137,6 +138,9 @@
             <if test="departmentid != null" >
                 departmentid,
             </if>
+            <if test="needpay != null" >
+                needpay,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -171,6 +175,9 @@
             </if>
             <if test="departmentid != null" >
                 #{departmentid,jdbcType=BIGINT},
+            </if>
+            <if test="needpay != null" >
+                #{needpay,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>

@@ -33,12 +33,13 @@ public class Doctor_DrugorderController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, long patientid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, Long patientid, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");
             Drugorder drugorder = new Drugorder();
             drugorder.setPatientid(patientid);
+            drugorder.setHospitalid(hospitalid);
             result.put("total", drugorderManage.count(startDate, endDate, drugorder));
             result.put("data", drugorderManage.list(page, length, startDate, endDate, drugorder));
         } catch (Exception e) {
@@ -49,6 +50,7 @@ public class Doctor_DrugorderController extends BaseController {
         result.put("code", ResultCode.SUCCESS);
         return result;
     }
+
     /**
      * 药品订单列表数据源   当日
      *
@@ -56,10 +58,10 @@ public class Doctor_DrugorderController extends BaseController {
      */
     @RequestMapping(value = "listToday", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorderToday(Long patientid,Long doctorid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorderToday(Long patientid, Long doctorid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            String dateStr=MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
+            String dateStr = MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
             Drugorder drugorder = new Drugorder();
             drugorder.setPatientid(patientid);
             drugorder.setDoctorid(doctorid);
@@ -73,6 +75,7 @@ public class Doctor_DrugorderController extends BaseController {
         result.put("code", ResultCode.SUCCESS);
         return result;
     }
+
     /**
      * 药品订单管理首页跳转
      *
@@ -91,7 +94,7 @@ public class Doctor_DrugorderController extends BaseController {
         mv.addObject("currentpage", 1);
         return mv;
     }
-    
+
 
     /**
      * 添加药品订单
@@ -107,6 +110,7 @@ public class Doctor_DrugorderController extends BaseController {
         String rtnMsg = "添加成功";
         try {
             drugorder.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+            drugorder.setNeedpay(drugorder.getTotal());
             drugorderManage.saveBackId(drugorder);
             List<Drugorderdetail> drugorderdetails = drugorder.getDrugorderdetails();
             for (Drugorderdetail d : drugorderdetails) {
@@ -189,4 +193,28 @@ public class Doctor_DrugorderController extends BaseController {
         return result;
     }
 
+    /**
+     * 修改药品订单状态
+     *
+     * @return
+     */
+    @RequestMapping(value = "modDrugorderStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateAppointment(Long id, Integer status) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "修改状态成功";
+        try {
+            Drugorder drugorder = drugorderManage.getById(id);
+            drugorder.setStatus(status);
+            drugorderManage.update(drugorder);
+        } catch (Exception e) {
+            e.printStackTrace();
+            rtnMsg = "修改状态失败";
+            rtnCode = ResultCode.ERROR;
+        }
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
+    }
 }

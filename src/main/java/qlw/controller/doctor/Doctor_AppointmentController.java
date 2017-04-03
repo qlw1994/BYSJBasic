@@ -2,15 +2,16 @@ package qlw.controller.doctor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.AppointmentManage;
 import qlw.manage.NumberManage;
 import qlw.manage.SchedulingManage;
 import qlw.model.Appointment;
-import qlw.model.Numbers;
-import qlw.model.Scheduling;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -83,49 +84,6 @@ public class Doctor_AppointmentController extends BaseController {
     }
 
     /**
-     * 添加预约
-     *
-     * @param appointment
-     * @return
-     */
-    @RequestMapping(value = "newAppointment")
-    @ResponseBody
-    public Map<String, Object> addAppointment(Appointment appointment, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-        Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "添加成功";
-        try {
-            String date = appointment.getDate();
-            int timeflag = appointment.getTimeflag();
-            int type = appointment.getType();
-            Long departmentid = appointment.getDepartmentid();
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date, type);
-            if (numbers.getAppointleftcount() == 0) {
-                rtnMsg = "添加失败";
-                rtnCode = ResultCode.ERROR;
-            } else {
-                numbers.setAppointleftcount(numbers.getAppointleftcount() - 1);
-                numberManage.update(numbers);
-                appointmentManage.save(appointment);
-            }
-            //如果挂号到专家 专家个人剩余号源减一
-            if (type == 1) {
-                Scheduling scheduling=schedulingManage.getByDateAndTimeflagAndDoctorid(date,timeflag,appointment.getDoctorid());
-                scheduling.setLeftnumber(scheduling.getLeftnumber()-1);
-                schedulingManage.update(scheduling);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            rtnMsg = "添加失败";
-            rtnCode = ResultCode.ERROR;
-        }
-
-        result.put("message", rtnMsg);
-        result.put("code", rtnCode);
-        return result;
-    }
-
-    /**
      * 预约查询
      *
      * @param
@@ -166,43 +124,6 @@ public class Doctor_AppointmentController extends BaseController {
     //    return result;
     //}
 
-    /**
-     * 删除预约
-     *
-     * @return
-     */
-    @RequestMapping(value = "delAppointment/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> delAppointment(@PathVariable("id") Long id) {
-        Map<String, Object> result = new HashMap<>();
-        Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "删除成功";
-        try {
-            Appointment appointment = appointmentManage.getById(id);
-            appointment.setStatus(2);
-            int type = appointment.getType();
-            appointmentManage.update(appointment);
-            String date = appointment.getDate();
-            int timeflag = appointment.getTimeflag();
-            Long departmentid = appointment.getDepartmentid();
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, date, type);
-            numbers.setAppointleftcount(numbers.getAppointleftcount() + 1);
-            numberManage.update(numbers);
-            //如果是专家需要在 专家个人号源上删除
-            if (type == 1) {
-                Scheduling scheduling = schedulingManage.getByDateAndTimeflagAndDoctorid(date, timeflag, appointment.getDoctorid());
-                scheduling.setLeftnumber(scheduling.getLeftnumber() + 1);
-                schedulingManage.update(scheduling);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            rtnMsg = "删除失败";
-            rtnCode = ResultCode.ERROR;
-        }
-        result.put("message", rtnMsg);
-        result.put("code", rtnCode);
-        return result;
-    }
 
     /**
      * 修改预约状态
@@ -211,11 +132,12 @@ public class Doctor_AppointmentController extends BaseController {
      */
     @RequestMapping(value = "modAppointmentStatus", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateAppointment(Appointment appointment, Integer status) {
+    public Map<String, Object> updateAppointment(Long id, Integer status) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "修改预约状态->挂号状态成功";
         try {
+            Appointment appointment = appointmentManage.getById(id);
             appointment.setStatus(status);
             appointmentManage.update(appointment);
         } catch (Exception e) {

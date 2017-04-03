@@ -57,11 +57,14 @@ define(function (require, exports, module) {
             '{@/if}',
             '{@if item.status==2}',
             '    <td>已取药</td>',
-            '{@/if}',
+
             '    <td class=" heading">',
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}" data-advice="${item.advice}" data-status="${item.status}"><span class="iconfont iconfont-xs">&#xe62d;</span>修改</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugorderdetails/index?pcode=2&subcode=1&drugorderid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span> 查看详情</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/drugorderdetails/index?pcode=1&subcode=3&drugorderid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span> 查看详情</a>',
+            '{@if item.status==1}',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/drugorders/modDrugorderStatus?pcode=1&subcode=3&id=${item.id}&status=2" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取药</a>',
+            '{@/if}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
 
             '    </td>',
@@ -93,7 +96,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/drugorders/listToday',
+                    url: ROOTPAth + '/doctor/drugorders/listToday',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -246,7 +249,7 @@ define(function (require, exports, module) {
                     'drugorderdetails[0].drugname': {
                         required: true,
                         remote: {
-                            url: ROOTPAth + '/admin/drugs/hasName',
+                            url: ROOTPAth + '/doctor/drugs/hasName',
                             type: "POST",
                             dataType: "json",
                             data: {
@@ -293,7 +296,7 @@ define(function (require, exports, module) {
                         //手动输入药品全名需要查询药品信息
                         if ($("#add_drugId_" + index).val() == "" && !label.closest('.form-group').hasClass('has-error')) {
                             $.ajax({
-                                url: ROOTPAth + '/admin/drugs/drugInfoByName',
+                                url: ROOTPAth + '/doctor/drugs/drugInfoByName',
                                 type: "POST",
                                 dataType: "json",
                                 data: {
@@ -327,7 +330,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-                    var savePath = ROOTPAth + '/admin/drugorders/newDrugorder';
+                    var savePath = ROOTPAth + '/doctor/drugorders/newDrugorder';
                     $DrugorderForm.find("input").prop("disabled", false);
                     $.ajax({
                         type: "POST",
@@ -400,7 +403,7 @@ define(function (require, exports, module) {
                 submitHandler: function () {
 
 
-                    var updatePath = ROOTPAth + '/admin/drugorders/modDrugorder';
+                    var updatePath = ROOTPAth + '/doctor/drugorders/modDrugorder';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
                         if (data.code === 1) {
                             $('#modifyModal').modal('hide');
@@ -472,7 +475,7 @@ define(function (require, exports, module) {
                 $("#add_drugName" + newTotal).rules("add", {
                     required: true,
                     remote: {
-                        url: ROOTPAth + '/admin/drugs/hasName',
+                        url: ROOTPAth + '/doctor/drugs/hasName',
                         type: "POST",
                         dataType: "json",
                         data: {
@@ -514,7 +517,7 @@ define(function (require, exports, module) {
         },
         deleteDrugorder: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/drugorders/delDrugorder/' + id;
+            var delPath = ROOTPAth + '/doctor/drugorders/delDrugorder/' + id;
             $.ajax({
                 url: delPath,
                 type: "POST",
@@ -537,7 +540,7 @@ define(function (require, exports, module) {
     function get_drugs_addModel(obj) {
         var t = setTimeout(function () {
             $.ajax({
-                url: ROOTPAth + '/admin/drugs/listDrugLike',
+                url: ROOTPAth + '/doctor/drugs/listDrugLike',
                 type: 'POST',
                 dataType: 'json',
                 data: {

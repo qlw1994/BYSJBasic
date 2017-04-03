@@ -71,12 +71,12 @@ public class Diagnosispayment extends BaseController {
                         log.info(key + ":" + mydata_map.get(key).toString());
                     }
                     log.info("=============notify  数据解密 end ===================");
-                    if (mydata_map.size() != 8) {
-                        log.info("notify-----------数据损坏--------------------");
-                        res.put("code", ResultCode.ERROR);
-                        res.put("message", "数据损坏");
-                        return res;
-                    }
+                    //if (mydata_map.size() != 8) {
+                    //    log.info("notify-----------数据损坏--------------------");
+                    //    res.put("code", ResultCode.ERROR);
+                    //    res.put("message", "数据损坏");
+                    //    return res;
+                    //}
                     //数据提取
                     String paymentdetailids = mydata_map.get("paymentdetailids");
                     int paytype = Integer.parseInt(mydata_map.get("paytype"));
@@ -99,7 +99,6 @@ public class Diagnosispayment extends BaseController {
                     request.setAttribute("paynumber", paynumber);
                     //request.setAttribute("totalmoney", totalmoney);
                     request.setAttribute("invoicenumber", invoicenumber);
-
 
                     boolean resflag = paymentdetailManage.paymentConfirm(paymentdetailids, paytype, paynumber, invoicenumber);
                     log.info("paymentConfirm-----------resflag：" + resflag + "--------------------");

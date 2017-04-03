@@ -100,30 +100,30 @@
                     </div>
                     <%--门诊医生功能--%>
                     <%--<c:if test='${job == "门诊部"}'>--%>
-                        <ul class="page-sidebar-menu-ul">
-                            <li class="menu-item <c:if test='${pcode == 1}'>open active</c:if>">
-                                <a href="javascript:" class="menu-item-a">
-                                    <i class="iconfont">&#xe604;</i>
-                                    <span class="title">个人中心</span>
-                                    <span class="selected"></span>
-                                    <i class="iconfont arrow"></i>
-                                </a>
-                                <ul class="sub-menu sub-menu-hide" data-code="RMsg">
-                                    <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
-                                        <a class="ajaxify" href='${ctx}/doctor/sysusers/index?pcode=1&subcode=1'>个人信息</a>
-                                    </li>
-                                    <li class="sub-menu-item <c:if test='${subcode==2}'>sub-active</c:if>">
-                                        <a class="ajaxify" href='${ctx}/doctor/users/index?pcode=1&subcode=2'>日程表管理</a>
-                                    </li>
-                                    <li class="sub-menu-item <c:if test='${subcode==3}'>sub-active</c:if>">
-                                        <a class="ajaxify" href='${ctx}/doctor/doctors/index?pcode=1&subcode=3'>预约病人查询</a>
-                                    </li>
-                                    <li class="sub-menu-item <c:if test='${subcode==4}'>sub-active</c:if>">
-                                        <a class="ajaxify" href='${ctx}/doctor/doctors/index?pcode=1&subcode=3'>开药订单</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <%--<ul class="page-sidebar-menu-ul">--%>
+                            <%--<li class="menu-item <c:if test='${pcode == 1}'>open active</c:if>">--%>
+                                <%--<a href="javascript:" class="menu-item-a">--%>
+                                    <%--<i class="iconfont">&#xe604;</i>--%>
+                                    <%--<span class="title">个人中心</span>--%>
+                                    <%--<span class="selected"></span>--%>
+                                    <%--<i class="iconfont arrow"></i>--%>
+                                <%--</a>--%>
+                                <%--<ul class="sub-menu sub-menu-hide" data-code="RMsg">--%>
+                                    <%--<li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">--%>
+                                        <%--<a class="ajaxify" href='${ctx}/doctor/sysusers/index?pcode=1&subcode=1'>个人信息</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li class="sub-menu-item <c:if test='${subcode==2}'>sub-active</c:if>">--%>
+                                        <%--<a class="ajaxify" href='${ctx}/doctor/users/index?pcode=1&subcode=2'>日程表管理</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li class="sub-menu-item <c:if test='${subcode==3}'>sub-active</c:if>">--%>
+                                        <%--<a class="ajaxify" href='${ctx}/doctor/doctors/index?pcode=1&subcode=3'>预约病人查询</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li class="sub-menu-item <c:if test='${subcode==4}'>sub-active</c:if>">--%>
+                                        <%--<a class="ajaxify" href='${ctx}/doctor/doctors/index?pcode=1&subcode=3'>开药订单</a>--%>
+                                    <%--</li>--%>
+                                <%--</ul>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
                     <%--</c:if>--%>
                     <%--&lt;%&ndash;挂号部&ndash;%&gt;--%>
                     <%--<c:if test='${pcode == "挂号部"}'>--%>

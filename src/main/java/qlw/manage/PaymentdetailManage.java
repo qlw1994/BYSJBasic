@@ -3,12 +3,14 @@ package qlw.manage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import qlw.mapper.DrugorderMapper;
 import qlw.mapper.PaymentdetailMapper;
-import qlw.model.PatientExample;
-import qlw.model.Paymentdetail;
-import qlw.model.PaymentdetailExample;
+import qlw.model.*;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wiki on 2017/3/23.
@@ -18,6 +20,10 @@ import java.util.List;
 public class PaymentdetailManage extends BaseManage {
     @Autowired
     PaymentdetailMapper paymentdetailMapper;
+    @Autowired
+    DrugorderManage drugorderManage;
+    @Autowired
+    DrugorderdetailManage drugorderdetailManage;
 
     public List<Paymentdetail> list(Integer pageNumber, Integer pageSize, String startdate, String enddate, Paymentdetail paymentdetail) {
         PaymentdetailExample example = new PaymentdetailExample();
@@ -273,7 +279,22 @@ public class PaymentdetailManage extends BaseManage {
             PaymentdetailExample.Criteria criteria = example.createCriteria();
             criteria.andIdEqualTo(Long.parseLong(paymentdetailids[i]));
             paymentdetailMapper.updateByExampleSelective(paymentdetail, example);
+            Paymentdetail paymentdetail_store = paymentdetailMapper.selectByPrimaryKey(Long.parseLong(paymentdetailids[i]));
+            //记录药品订单编号
+            if (paymentdetail_store.getProjecttype().equals(0)) {
+                Drugorderdetail drugorderdetail = drugorderdetailManage.getById(paymentdetail_store.getProjectid());
+                Drugorder drugorder = drugorderManage.getById(drugorderdetail.getDrugorderid());
+                drugorder.setNeedpay(drugorder.getNeedpay() - 1);
+                //检查药品订单中是否全部支付完毕  (默认全部支付 即药品订单改为支付状态)
+                if (drugorder.getNeedpay().equals(0)) {
+                    drugorder.setStatus(1);
+                }
+                drugorderManage.update(drugorder);
+            }
+
         }
+
+
         return true;
     }
 }

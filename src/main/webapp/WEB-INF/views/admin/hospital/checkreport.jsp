@@ -64,7 +64,7 @@
                             <th class="sorting">检查部位</th>
                             <th class="sorting">检查方法</th>
                             <th class="sorting">检查时间</th>
-                            <th class="sorting">检查表状态</th>
+                            <%--<th class="sorting">检查表状态</th>--%>
                             <th class="sorting">诊断意见</th>
                             <th class="sorting">医嘱项</th>
                             <th class="sorting">操作</th>

@@ -208,7 +208,7 @@ public class PaymentdetailController extends BaseController {
     public Map<String, Object> paymentBudget(String paymentdetailids, String totalmoney, String invoicenumber) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "删除成功";
+        String rtnMsg = "成功";
         Map<String, String> data = new HashMap<>();
         data.put("paymentdetailids", paymentdetailids);
         data.put("totalmoney", totalmoney);

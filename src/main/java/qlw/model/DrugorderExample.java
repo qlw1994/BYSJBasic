@@ -794,6 +794,66 @@ public class DrugorderExample {
             addCriterion("departmentid not between", value1, value2, "departmentid");
             return (Criteria) this;
         }
+
+        public Criteria andNeedpayIsNull() {
+            addCriterion("needpay is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayIsNotNull() {
+            addCriterion("needpay is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayEqualTo(Integer value) {
+            addCriterion("needpay =", value, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayNotEqualTo(Integer value) {
+            addCriterion("needpay <>", value, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayGreaterThan(Integer value) {
+            addCriterion("needpay >", value, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayGreaterThanOrEqualTo(Integer value) {
+            addCriterion("needpay >=", value, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayLessThan(Integer value) {
+            addCriterion("needpay <", value, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayLessThanOrEqualTo(Integer value) {
+            addCriterion("needpay <=", value, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayIn(List<Integer> values) {
+            addCriterion("needpay in", values, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayNotIn(List<Integer> values) {
+            addCriterion("needpay not in", values, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayBetween(Integer value1, Integer value2) {
+            addCriterion("needpay between", value1, value2, "needpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andNeedpayNotBetween(Integer value1, Integer value2) {
+            addCriterion("needpay not between", value1, value2, "needpay");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

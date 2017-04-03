@@ -1,6 +1,7 @@
 package qlw.mapper.ex;
 
 import qlw.mapper.DrugorderdetailMapper;
+import qlw.model.Drugorderdetail;
 import qlw.util.annotation.BatisRepository;
 
 /**
@@ -8,5 +9,5 @@ import qlw.util.annotation.BatisRepository;
  */
 @BatisRepository
 public interface DrugorderdetailExMapper extends DrugorderdetailMapper {
-
+    long insertBackId(Drugorderdetail drugorderdetail);
 }

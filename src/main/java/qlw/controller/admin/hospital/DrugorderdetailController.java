@@ -94,9 +94,10 @@ public class DrugorderdetailController extends BaseController {
             Long drugorderid = drugorderdetail.getDrugorderid();
             Drugorder drugorder = drugorderManage.getById(drugorderid);
             drugorder.setTotal(drugorder.getTotal() + 1);
+            drugorder.setNeedpay(drugorder.getTotal());
             drugorder.setMoney(drugorder.getMoney().add(drugorderdetail.getMoney()));
             drugorderManage.update(drugorder);
-            drugorderdetailManage.save(drugorderdetail);
+            drugorderdetailManage.saveBackId(drugorderdetail);
 
             Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
             Department department = departmentManage.getById(drugorder.getDepartmentid());
@@ -119,6 +120,8 @@ public class DrugorderdetailController extends BaseController {
             paymentdetail.setUid(users.getId());
             paymentdetail.setUname(users.getName());
             paymentdetail.setMoney(drugorderdetail.getMoney());
+            paymentdetail.setProjecttype(0);//支付的是药品
+            paymentdetail.setProjectid(drugorderdetail.getId());// 药品详情编号
             paymentdetailManage.save(paymentdetail);
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,6 +227,7 @@ public class DrugorderdetailController extends BaseController {
             Drugorderdetail drugorderdetail = drugorderdetailManage.getById(id);
             Drugorder drugorder = drugorderManage.getById(drugorderdetail.getDrugorderid());
             drugorder.setTotal(drugorder.getTotal() - 1);
+            drugorder.setNeedpay(drugorder.getTotal());
             //删除支付
             Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
             Department department = departmentManage.getById(drugorder.getDepartmentid());

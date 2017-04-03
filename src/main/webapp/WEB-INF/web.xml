@@ -42,6 +42,7 @@
   </filter-mapping>
 
   <!-- 后台过滤器-->
+  <!--管理员-->
   <filter>
     <filter-name>adminFilter</filter-name>
     <filter-class>qlw.util.AdminFilter</filter-class>
@@ -49,6 +50,15 @@
   <filter-mapping>
     <filter-name>adminFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+  <!--医生-->
+  <filter>
+    <filter-name>doctorFilter</filter-name>
+    <filter-class>qlw.util.DoctorFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>doctorFilter</filter-name>
+    <url-pattern>/doctor/*</url-pattern>
   </filter-mapping>
 
 

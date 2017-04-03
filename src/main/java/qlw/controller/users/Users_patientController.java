@@ -75,6 +75,8 @@ public class Users_patientController extends BaseController {
     @RequestMapping(value = "/patientChosen")
     public ModelAndView indexView(Long hospitalid, String hospitalname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("users/patient_chosen");
+        Users users = (Users) request.getSession().getAttribute("user");
+        request.getSession().setAttribute("uid", users.getId());
         request.getSession().setAttribute("hospitalid", hospitalid);
         request.getSession().setAttribute("hospitalname", hospitalname);
         mv.addObject("currentpage", 1);

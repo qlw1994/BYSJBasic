@@ -221,7 +221,7 @@ define(function (require, exports, module) {
                         processData: false,
                         success:function (data) {
                             if (data.code === 1) {
-                                $('#modifyModal').modal('hide');
+                                // $('#modifyModal').modal('hide');
                                 $addRoletipModal.find(".dialogtip-msg").html("文件上传成功");
                                 $addRoletipModal.modal('show');
                                 pageIndex.reset();

@@ -28,7 +28,7 @@ define(function (require, exports, module) {
             '<h3>${item.name}</h3>',
             '<p>${item.idnumber}</p>',
             // '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a name="indexPT" href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">选择</a></p>',
+            '<p><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">预约科室</a><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检查报告</a><a href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检验报告</a><a  href="' + ROOTPAth + '/user/drugorders/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">药品订单</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'
@@ -53,7 +53,18 @@ define(function (require, exports, module) {
                 tool.startPageLoading();
                 fillPatientLike(1);
             });
-
+            //添加表单初始化
+            $addModal.on('show.bs.modal', function (event) {
+                $PatientForm[0].reset();
+                $PatientForm.find("input").removeAttr("aria-describedby");
+                $PatientForm.find("input").removeAttr("aria-invalid");
+                $PatientForm.find("input").removeAttr("aria-required");
+                $PatientForm.find("select").removeAttr("aria-describedby");
+                $PatientForm.find("select").removeAttr("aria-invalid");
+                $PatientForm.find("select").removeAttr("aria-required");
+                $PatientForm.find("div").removeClass("has-error");
+                $PatientForm.find("span").remove();
+            })
             // 下拉框请求获取医院
             $patientname.keyup(function (e) {
                 if (e.keyCode != 40 && e.keyCode != 38) {

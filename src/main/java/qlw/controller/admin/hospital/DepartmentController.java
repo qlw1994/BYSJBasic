@@ -55,7 +55,7 @@ public class DepartmentController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", departmentManage.countLike(name, hospitalid));
-            result.put("data", departmentManage.getLike(name, hospitalid));
+            result.put("data", departmentManage.getLike(null,null,name, hospitalid));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));

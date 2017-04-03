@@ -299,11 +299,10 @@
         var patientid =${patientid};
         var patientname = '${patientname}';
         var doctorid =${doctorid};
-        var doctorname = '${docotorname}';
+        var doctorname = '${doctorname}';
         var hospitalid =${hospitalid};
         var hospitalname = '${hospitalname}';
         var uid =${uid};
-        var service=${service};
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="admin/hospital/inspectionreport.js"></script>

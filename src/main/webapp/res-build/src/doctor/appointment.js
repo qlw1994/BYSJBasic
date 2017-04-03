@@ -54,8 +54,10 @@ define(function (require, exports, module) {
 
             '    <td class=" heading">',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/appointments/modAppointmentStatus?pcode=1&subcode=3&id=${item.id}&status=4"$uid=${item.uid} ><span class="iconfont iconfont-xs">&#xe617;</span>确认取号</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/appointments/modAppointmentStatus?pcode=1&subcode=3&id=${item.id}&status=4" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取号</a>',
             '{@if item.status==4}',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/checkreport/index?pcode=1&subcode=3&patientid=${item.patientid}&patientname=${item.patientname}&uid=${item.uid}" ><span class="iconfont iconfont-xs">&#xe617;</span>检查报告</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/inspect/inedx?pcode=1&subcode=3patientid=${item.patientid}&patientname=${item.patientname}&uid=${item.uid}" ><span class="iconfont iconfont-xs">&#xe617;</span>检验报告</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/appointments/index?pcode=1&subcode=3&patientid=${item.patientid}&patientname=${item.patientname}" ><span class="iconfont iconfont-xs">&#xe617;</span>开药订单</a>',
             '{@/if}',
             '    </td>',

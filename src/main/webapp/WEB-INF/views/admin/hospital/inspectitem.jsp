@@ -19,7 +19,7 @@
         <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <><a href="#">检验单</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">检验单</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">检验单详情</a></li>
     </ul>
 </div>
@@ -30,7 +30,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i> ${hospitalname}-${departmentname}-${doctorname}-${patientname} 检验单
+                    <i class="iconfont">&#xe619;</i> ${hospitalname}-${departmentname}-${doctorname}-${patientname}- 检验单详情
                 </div>
                 <div class="actions">
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
@@ -236,7 +236,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/inspectitems/index?pcode=2&subcode=1&drugorderid=${drugorderid}"
+                <a href="${ctx}/admin/inspectitems/index?pcode=2&subcode=1&inspectionid=${inspectionid}"
                    class="btn btn-success">返回列表</a>
 
             </div>

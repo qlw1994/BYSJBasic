@@ -43,12 +43,13 @@ public class DrugorderController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, long patientid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, Long patientid, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");
             Drugorder drugorder = new Drugorder();
             drugorder.setPatientid(patientid);
+            drugorder.setHospitalid(hospitalid);
             result.put("total", drugorderManage.count(startDate, endDate, drugorder));
             result.put("data", drugorderManage.list(page, length, startDate, endDate, drugorder));
         } catch (Exception e) {
@@ -107,6 +108,9 @@ public class DrugorderController extends BaseController {
         String rtnMsg = "添加成功";
         try {
             drugorder.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+
+            drugorder.setNeedpay(drugorder.getTotal());
+
             drugorderManage.saveBackId(drugorder);
             List<Drugorderdetail> drugorderdetails = drugorder.getDrugorderdetails();
             for (Drugorderdetail d : drugorderdetails) {

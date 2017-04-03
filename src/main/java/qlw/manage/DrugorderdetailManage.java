@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.ex.DrugorderdetailExMapper;
+import qlw.model.Drugorder;
+import qlw.model.DrugorderExample;
 import qlw.model.Drugorderdetail;
 import qlw.model.DrugorderdetailExample;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,14 +77,28 @@ public class DrugorderdetailManage extends BaseManage{
     /**
      * 保存药品详情
      *
-     * @param cities
+     * @param drugdetail
      * @return
      */
-    public Drugorderdetail save(Drugorderdetail cities) {
-        long i = drugorderdetailExMapper.insert(cities);
+    public Drugorderdetail save(Drugorderdetail drugdetail) {
+        long i = drugorderdetailExMapper.insert(drugdetail);
         if (i > 0) {
-            return cities;
+            return drugdetail;
         }
         return null;
     }
+    /**
+     * 保存药品详情
+     *
+     * @param drugdetail
+     * @return
+     */
+    public Drugorderdetail saveBackId(Drugorderdetail drugdetail) {
+        long i = drugorderdetailExMapper.insertBackId(drugdetail);
+        if (i > 0) {
+            return drugdetail;
+        }
+        return null;
+    }
+
 }

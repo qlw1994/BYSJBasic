@@ -26,6 +26,8 @@ public class Drugorder {
 
     private Long departmentid;
 
+    private Integer needpay;
+
     public Long getId() {
         return id;
     }
@@ -114,6 +116,13 @@ public class Drugorder {
         this.departmentid = departmentid;
     }
 
+    public Integer getNeedpay() {
+        return needpay;
+    }
+
+    public void setNeedpay(Integer needpay) {
+        this.needpay = needpay;
+    }
     Hospital hospital;
     Department department;
     List<Drugorderdetail> drugorderdetails;

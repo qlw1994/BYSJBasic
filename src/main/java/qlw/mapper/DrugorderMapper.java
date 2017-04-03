@@ -1,13 +1,10 @@
 package qlw.mapper;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import qlw.model.Drugorder;
 import qlw.model.DrugorderExample;
-import qlw.util.annotation.BatisRepository;
 
-import java.util.List;
-
-@BatisRepository
 public interface DrugorderMapper {
     int countByExample(DrugorderExample example);
 

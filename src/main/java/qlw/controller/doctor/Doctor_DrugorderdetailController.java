@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
-import qlw.manage.DrugorderManage;
-import qlw.manage.DrugorderdetailManage;
-import qlw.model.Drugorder;
-import qlw.model.Drugorderdetail;
+import qlw.manage.*;
+import qlw.model.*;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +25,18 @@ public class Doctor_DrugorderdetailController extends BaseController{
     DrugorderManage drugorderManage;
     @Autowired
     DrugorderdetailManage drugorderdetailManage;
-
+    @Autowired
+    PaymentdetailManage paymentdetailManage;
+    @Autowired
+    DepartmentManage departmentManage;
+    @Autowired
+    HospitalManage hospitalManage;
+    @Autowired
+    DoctorManage doctorManage;
+    @Autowired
+    PatientManage patientManage;
+    @Autowired
+    UserManage userManage;
     /**
      * 药品订单详情列表数据源
      *
@@ -82,6 +91,7 @@ public class Doctor_DrugorderdetailController extends BaseController{
             long drugorderid = drugorderdetail.getDrugorderid();
             Drugorder drugorder = drugorderManage.getById(drugorderid);
             drugorder.setTotal(drugorder.getTotal() + 1);
+            drugorder.setNeedpay(drugorder.getTotal());
             drugorder.setMoney(drugorder.getMoney().add(drugorderdetail.getMoney()));
             drugorderManage.update(drugorder);
             drugorderdetailManage.save(drugorderdetail);
@@ -156,6 +166,31 @@ public class Doctor_DrugorderdetailController extends BaseController{
             Drugorderdetail drugorderdetail = drugorderdetailManage.getById(id);
             Drugorder drugorder = drugorderManage.getById(drugorderdetail.getDrugorderid());
             drugorder.setTotal(drugorder.getTotal() - 1);
+            drugorder.setNeedpay(drugorder.getTotal());
+
+            //删除支付
+            Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
+            Department department = departmentManage.getById(drugorder.getDepartmentid());
+            Doctor doctor = doctorManage.getDoctorById(drugorder.getDoctorid());
+            Patient patient = patientManage.getById(drugorder.getPatientid());
+            Users users = userManage.getUsersById(patient.getUid());
+            Paymentdetail paymentdetail = new Paymentdetail();
+            paymentdetail.setMoney(drugorderdetail.getMoney());
+            paymentdetail.setPatientid(drugorder.getPatientid());
+            paymentdetail.setPatientname(patient.getName());
+            paymentdetail.setUid(users.getId());
+            paymentdetail.setUname(users.getName());
+            paymentdetail.setDepartmentid(department.getId());
+            paymentdetail.setDepartmentname(department.getName());
+            paymentdetail.setDoctorid(doctor.getId());
+            paymentdetail.setDoctorname(doctor.getName());
+            paymentdetail.setHospitalid(hospital.getId());
+            paymentdetail.setHospitalname(hospital.getName());
+            paymentdetail.setCount(drugorderdetail.getAmount());
+            paymentdetail.setFormat(drugorderdetail.getFormat());
+            paymentdetail.setCreatedate(drugorder.getCreatedate());
+            paymentdetailManage.deleteByPaymentdetail(paymentdetail);
+
             if (drugorder.getTotal() == 0) {
                 drugorderdetailManage.delete(id);
                 drugorderManage.delete(drugorder.getId());

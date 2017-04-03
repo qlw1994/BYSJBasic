@@ -49,6 +49,10 @@ public class Paymentdetail {
 
     private String hospitalname;
 
+    private Long projectid;
+
+    private Integer projecttype;
+
     public Long getId() {
         return id;
     }
@@ -231,5 +235,66 @@ public class Paymentdetail {
 
     public void setHospitalname(String hospitalname) {
         this.hospitalname = hospitalname == null ? null : hospitalname.trim();
+    }
+
+    public Long getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(Long projectid) {
+        this.projectid = projectid;
+    }
+
+    public Integer getProjecttype() {
+        return projecttype;
+    }
+
+    public void setProjecttype(Integer projecttype) {
+        this.projecttype = projecttype;
+    }
+    private Users users;
+    private Department department;
+    private Hospital hospital;
+    private Patient patient;
+    private Doctor doctor;
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 }
