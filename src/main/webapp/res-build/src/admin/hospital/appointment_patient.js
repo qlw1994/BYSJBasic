@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center">',
+            '<td colspan="9" style="text-align:center">',
             '暂无记录,请添加',
             '</td>',
 
@@ -114,6 +114,7 @@ define(function (require, exports, module) {
                         return data;
                     },
                     success: function (res) {
+                        tool.stopPageLoading();
                         var newData = $.extend({}, res);
                         $.each(newData.data, function (i, val) {
 

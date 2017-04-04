@@ -203,7 +203,7 @@ define(function (require, exports, module) {
     $('#starttime').datepicker({
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,
-        yearRange: "-100:+0",
+        // yearRange: "-100:+0",
         changeMonth: true,
         changeYear: true,
         inline: true
@@ -212,7 +212,7 @@ define(function (require, exports, module) {
 
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,
-        yearRange: "-100:+0",
+        // yearRange: "-100:+0",
         changeMonth: true,
         changeYear: true,
         inline: true

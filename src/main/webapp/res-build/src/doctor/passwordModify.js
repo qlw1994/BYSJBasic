@@ -2,28 +2,7 @@ define(function (require, exports, module) {
     require("res-build/res/plugin/jquery-validation-1.13.1/dist/jquery.validate.min.js");
     require("res-build/res/plugin/bs-confirmation/bootstrap-confirmation.js");
     require("res-build/res/module/underscore/underscore.js");
-    $(function () {
-        $.ajax({
-            url: ROOTPAth + '/admin/initDate',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                starttime: $("#date1").val(),
-                endtime: $("#date2").val(),
-            }
-        }).done(function (res) {
-        }).fail(function (err) {
-            $("#ajax_fail").modal("show")
-        });
-        $.ajax({
-            url: ROOTPAth + '/admin/hospitals/reflashHospital',
-            type: 'POST',
-            dataType: 'json',
-        }).done(function (res) {
-        }).fail(function (err) {
-            $("#ajax_fail").modal("show")
-        });
-    })
+
     var $modifyModal = $("#modifyModal-index");
     var $ModifyForm = $("#vPasswordForm-index");
     var $userid = $("#id-index");

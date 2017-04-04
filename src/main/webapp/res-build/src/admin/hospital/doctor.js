@@ -36,13 +36,15 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" data-name="${item.name}">',
             '<tr role="row" class="odd" data-account="${item.account}">',
             '<tr role="row" class="odd" data-sex="${item.sex}">',
-            '<tr role="row" class="odd" data-createdate="${item.createdate}">',
+            '<tr role="row" class="odd" data-level="${item.level}">',
+            '<tr role="row" class="odd" data-job="${item.job}">',
 
             '{@else}',
             '<tr role="row" class="even" data-name="${item.name}">',
             '<tr role="row" class="even" data-account="${item.account}">',
             '<tr role="row" class="even" data-sex="${item.sex}">',
-            '<tr role="row" class="even" data-createdate="${item.createdate}">',
+            '<tr role="row" class="even" data-level="${item.level}">',
+            '<tr role="row" class="even" data-job="${item.job}">',
 
             '{@/if}',
             '    <td>${item.name}</td>',
@@ -54,7 +56,13 @@ define(function (require, exports, module) {
             '<td>女</td>',
             '{@/if}',
             '    <td>${item.department.name}</td>',
-            '    <td>${item.createdate}</td>',
+            '{@if item.level==1}',
+            '    <td>专家</td>',
+            '{@/if}',
+            '{@if item.level==2}',
+            '<td>普通</td>',
+            '{@/if}',
+            '    <td>${item.job}</td>',
 
             '    <td class=" heading">',
 
@@ -68,8 +76,9 @@ define(function (require, exports, module) {
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/checkreports/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=checkreports/index"><span class="iconfont iconfont-xs">&#xe617;</span>检查表管理</a>',
             '<br/>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/inspectionreports/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=inspectionreports/index" ><span class="iconfont iconfont-xs">&#xe617;</span>检验表管理</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/schedulings/index?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>预约挂号</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/doctorindex?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>预约查询</a>',
-            ' <button type="button"  class="btn btn-default btn-xs j-gen" data-id="${item.id}" data-type="${item.type}"><span class="iconfont iconfont-xs">&#xe617;</span>生成号源</button>',
+            ' <button type="button"  class="btn btn-default btn-xs j-gen" data-id="${item.id}" data-type="${item.level}" data-hospitalid="${item.hospitalid}" data-departmentid="${item.departmentid}"><span class="iconfont iconfont-xs">&#xe617;</span>生成号源</button>',
 
             '    </td>',
             '</tr>',
@@ -203,7 +212,7 @@ define(function (require, exports, module) {
                 $DoctorForm.find("select").removeAttr("aria-required");
                 $DoctorForm.find("div").removeClass("has-error");
                 $DoctorForm.find("span").remove();
-                $("#add_name").prop("disabled", true);
+                // $("#add_name").prop("disabled", true);
             })
             //修改表单初始化
             $modifyModal.on('show.bs.modal', function (event) {
@@ -527,8 +536,8 @@ define(function (require, exports, module) {
                 url: delPath,
                 type: "POST",
                 data: {
-                    hsopitalid: hospitalid,
-                    departmentid: departmentid,
+                    hospitalid:  $that.data("hospitalid"),
+                    departmentid: $that.data("departmentid"),
                     doctorid: id,
                     type: $that.data("type"),
 

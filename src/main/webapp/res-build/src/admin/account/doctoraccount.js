@@ -169,8 +169,11 @@ define(function (require, exports, module) {
                 $(formDom).find(".j-form-save").show();
 
                 $(formDom).find("input").prop("disabled", false);
+                $(formDom).find("textarea").prop("disabled", false);
+                $(formDom).find("select").prop("disabled", false);
                 $ModifyForm.find("input[name=hospitalname]").prop("disabled", true)
                 $ModifyForm.find("input[name=account]").prop("disabled", true)
+                $ModifyForm.find("input[name=departmentname]").prop("disabled", true)
                 $ModifyForm.find("input[name=name]").prop("disabled", true);
             });
             //修改表单初始化
@@ -212,7 +215,7 @@ define(function (require, exports, module) {
                 $modal.find('input[name=sex]').eq(sex-1).attr("checked","checked");
                 $modal.find('select[name=idtype]').val(idtype)
                 $modal.find('input[name=idnumber]').val(idnumber);
-                $modal.find('select[name=level]').eq(level-1).attr("checked","checked");
+                $modal.find('select[name=level]').val(level);
                 $modal.find('input[name=age]').val(age);
                 $modal.find('input[name=job]').val(job);
                 $modal.find('textarea[name=resume]').val(resume);

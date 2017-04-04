@@ -144,7 +144,7 @@
             <div class="modal-body">
                 <div class="table-container">
                     <table class="table table-striped table-bordered table-hover dataTable no-footer"
-                           id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
+                           id="datatable_ajax2" aria-describedby="datatable_ajax_info" role="grid">
                         <thead>
                         <tr role="row">
                             <th class="sorting" style="width:80px;">名称</th>

@@ -100,7 +100,8 @@
     <script type="text/javascript">
         var currentpage = ${currentpage};
         var hospitalid = ${hospitalid};
-        var hospitalname = ${hospitalname};
+        var hospitalname = "${hospitalname}";
+        var doctorid =${doctorid};
     </script>
 
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/scheduling.js"></script>

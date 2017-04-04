@@ -33,11 +33,11 @@
                     <i class="iconfont">&#xe619;</i> ${hospitalname}-${departmentname}-${doctorname}-${patientname}-
                     预约管理
                 </div>
-                <div class="actions">
-                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                            class="iconfont">&#xe612;</i> <span class="hidden-480">添加预约</span>
-                    </a>
-                </div>
+                <%--<div class="actions">--%>
+                    <%--<a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i--%>
+                            <%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加预约</span>--%>
+                    <%--</a>--%>
+                <%--</div>--%>
             </div>
             <div class="portlet-body" id="appointment-list">
                 <div class="table-pages clearfix">
@@ -145,5 +145,5 @@
         var patientid = ${patientid};
     </script>
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/appointment.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/appointment_patient"></script>
 </content>

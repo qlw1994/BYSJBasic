@@ -81,19 +81,19 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品名</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="drugname" contenteditable="false">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="drugname" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品规格</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format" contenteditable="false">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品单价</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_price" name="price" disabled="disabled" contenteditable="false">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_price" name="price" disabled="disabled" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -135,6 +135,6 @@
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/department"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/drugorderdetail"></script>
 
 </content>

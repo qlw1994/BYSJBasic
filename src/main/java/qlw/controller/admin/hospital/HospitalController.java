@@ -52,7 +52,7 @@ public class HospitalController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", hospitalManage.countLike(name, province, city, area));
-            result.put("data", hospitalManage.getLike(name, province, city, area));
+            result.put("data", hospitalManage.getLike(null, null, name, province, city, area));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));

@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center">',
+            '<td colspan="8" style="text-align:center">',
             '暂无记录,请添加',
             '</td>',
 
@@ -72,7 +72,7 @@ define(function (require, exports, module) {
 
             '    <td class=" heading">',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/modAppointmentStatus?pcode=2&subcode=1&id=${item.id}&status=4" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取号</a>',
+            ' <button class="btn btn-default btn-xs  j-disable j-quereng"  data-id=${item.id} data-status="4" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取号</button>',
             // ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/modAppointmentStatus?pcode=2&subcode=1&id=${item.id}&status=6" ><span class="iconfont iconfont-xs">&#xe617;</span>已支付</a>',
             '    </td>',
             '</tr>',
@@ -108,16 +108,20 @@ define(function (require, exports, module) {
                     dataType: 'json',
                     data: function () {
                         var data = {
-                            patientid: patientid,
+                            doctorid: doctorid,
                             length: pagelength
                         };
                         return data;
                     },
                     success: function (res) {
+                        tool.stopPageLoading();
                         var newData = $.extend({}, res);
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].serialnumber == null) {
+                                newData.data[i].serialnumber = "无";
+                            }
                         });
                         tool.stopPageLoading();
                         $appointmentList.find(".page-info-num").text(res.data.length);
@@ -131,6 +135,15 @@ define(function (require, exports, module) {
                             onConfirm: function (event, element) {
                                 event.preventDefault();
                                 self.deleteAppointment($(element));
+                            }
+                        });
+                        $table.find(".j-quereng").confirmation({
+                            title: "确定吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.modAppointment($(element));
                             }
                         });
                         //$table.find("tbody").empty().append("");
@@ -162,6 +175,28 @@ define(function (require, exports, module) {
             $.ajax({
                 url: delPath,
                 type: "POST",
+                success: function (data) {
+                    if (data.code === 1) {
+                        pageIndex.reset();
+                    } else {
+                        $("#ajax_fail").find("h4").html(data.message);
+                        $("#ajax_fail").modal("show")
+                    }
+                }
+            });
+
+        },
+        modAppointment: function ($that) {
+            var id = $that.data("id");
+            var status = $that.data("status");
+            var Path = ROOTPAth + '/admin/appointments/modAppointmentStatus/';
+            $.ajax({
+                url: Path,
+                type: "POST",
+                data: {
+                    id: id,
+                    status: status
+                },
                 success: function (data) {
                     if (data.code === 1) {
                         pageIndex.reset();

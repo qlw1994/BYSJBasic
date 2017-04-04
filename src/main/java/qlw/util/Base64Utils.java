@@ -3,9 +3,6 @@ package qlw.util;
 /**
  * Created by wiki on 2017/3/27.
  */
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import java.io.UnsupportedEncodingException;
 
 public class Base64Utils {
@@ -23,7 +20,7 @@ public class Base64Utils {
         }
 
         if(b != null) {
-            s = (new BASE64Encoder()).encode(b);
+            s = (new qlw.util.BASE64Encoder()).encode(b);
         }
 
         return s;
@@ -33,7 +30,7 @@ public class Base64Utils {
         Object b = null;
         String result = null;
         if(s != null) {
-            BASE64Decoder decoder = new BASE64Decoder();
+            qlw.util.BASE64Decoder decoder = new BASE64Decoder();
 
             try {
                 byte[] b1 = decoder.decodeBuffer(s);

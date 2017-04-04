@@ -177,6 +177,7 @@ define(function (require, exports, module) {
                 $HospitalForm.find("textarea").removeAttr("aria-required");
                 $HospitalForm.find("div").removeClass("has-error");
                 $HospitalForm.find("span").remove();
+                new PCAS("province", "city", "area");
             })
             //修改表单初始化
             $modifyModal.on('show.bs.modal', function (event) {
@@ -219,7 +220,7 @@ define(function (require, exports, module) {
                 $modal.find('textarea[name=resume]').val(resume);
                 $modal.find('input[name=startdate]').val(startdate);
                 $modal.find('input[name=enddate]').val(enddate);
-
+                new PCAS("modprovince", "modcity", "modarea",province,city,area);
                 $modal.find(".j-form-save").hide();
                 $modal.find(".j-form-edit").show();
             });
@@ -447,22 +448,19 @@ define(function (require, exports, module) {
         },
     };
 
-    new PCAS("province", "city", "area");
-    new PCAS("modprovince", "modcity", "modarea");
+
+
 
     $('#mod_startdate').datepicker({
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,
-        yearRange: "-100:+0",
         changeMonth: true,
         changeYear: true,
         inline: true
     });
     $('#mod_enddate').datepicker({
-
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,
-        yearRange: "-100:+0",
         changeMonth: true,
         changeYear: true,
         inline: true

@@ -89,7 +89,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">就诊人出生日期</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_birthday" name="birthday" contenteditable="false" disabled="disabled">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_birthday" name="birthday" readonly disabled="disabled">
                                 </div>
                             </div>
                             <div class="form-group">

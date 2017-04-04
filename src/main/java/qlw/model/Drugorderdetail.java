@@ -101,4 +101,5 @@ public class Drugorderdetail {
     public void setDrug(Drug drug) {
         this.drug = drug;
     }
+
 }

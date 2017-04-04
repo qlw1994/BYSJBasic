@@ -13,7 +13,7 @@
         <result column="deletedate" property="deletedate" jdbcType="VARCHAR"/>
         <result column="hospitalid" property="hospitalid" jdbcType="BIGINT"/>
         <result column="departmentid" property="departmentid" jdbcType="BIGINT"/>
-        <result column="needpay" property="needpay" jdbcType="INT"/>
+        <result column="needpay" property="needpay" jdbcType="INTEGER"/>
         <association property="hospital" javaType="qlw.model.Hospital">
             <id column="id" property="id" jdbcType="BIGINT"/>
             <result column="code" property="code" jdbcType="VARCHAR"/>

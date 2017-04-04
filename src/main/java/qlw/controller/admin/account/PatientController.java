@@ -32,10 +32,9 @@ public class PatientController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listPatient(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+    public Map<String, Object> listPatient(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Long uid,HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            long uid = Long.parseLong(request.getParameter("uid"));
             result.put("total", patientManage.count(uid));
             result.put("data", patientManage.list(page, length, uid));
         } catch (Exception e) {

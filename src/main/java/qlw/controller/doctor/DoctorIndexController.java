@@ -32,6 +32,7 @@ public class DoctorIndexController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("doctor/index");
         return modelAndView;
     }
+
     /**
      * 初始化日期
      *
@@ -53,7 +54,6 @@ public class DoctorIndexController extends BaseController {
         result.put("code", rtnCode);
         return result;
     }
-
 
 
     private void initController(String starttime, String endtime, HttpServletRequest request) {

@@ -6,7 +6,7 @@ define(function (require, exports, module) {
             this.bind();
         },
         bind: function () {
-            var self=this;
+            var self = this;
 
             $loginForm.validate({
                 errorElement: 'span', //default input error message container
@@ -59,17 +59,31 @@ define(function (require, exports, module) {
             });
         },
         postData: function ($form) {
-             //	                form.submit(); // form validation success, call ajax form submit
-                    var basePath = location.href.substring(0, location.href.lastIndexOf('/'));
+            //	                form.submit(); // form validation success, call ajax form submit
+            var basePath = location.href.substring(0, location.href.lastIndexOf('/'));
 
-                    $.post(basePath + '/doctor/login', $form.serialize(), function (data) {
+            $.post(basePath + '/doctor/login', $form.serialize(), function (data) {
 
-                        if (data.code===1) {
-                            window.location.href = basePath + '/doctor/index';
-                        } else {
-                            $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
+                if (data.code === 1) {
+                    //初始化日期
+                    $.ajax({
+                        url: ROOTPAth + '/doctor/initDate',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            starttime: $("#date1").val(),
+                            endtime: $("#date2").val(),
                         }
+                    }).done(function (res) {
+                    }).fail(function (err) {
+                        $("#ajax_fail").modal("show")
                     });
+
+                    window.location.href = basePath + '/doctor/index';
+                } else {
+                    $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
+                }
+            });
 
         }
     };

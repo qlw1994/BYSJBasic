@@ -15,7 +15,21 @@ define(function (require, exports, module) {
     var $addRoletipModal = $('#modal-box');
     var pagelength = 10; //一页多少条；
     var $searchform = $("#search-form");
-
+    //初始化日期
+    $(function () {
+        $.ajax({
+            url: ROOTPAth + '/doctor/initDate',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                starttime: $("#date1").val(),
+                endtime: $("#date2").val(),
+            }
+        }).done(function (res) {
+        }).fail(function (err) {
+            $("#ajax_fail").modal("show")
+        });
+    })
     var listTpl = juicer(
         [
             '{@if total == 0}',
@@ -24,7 +38,7 @@ define(function (require, exports, module) {
             '{@each data as item,index}',
             '<div class="col-md-4 col-sm-6 item">',
             '<div class="thumbnail">',
-            '<img class="img-thumbnail" src="${ctx}/res-build/img/avatar3_small.jpg" alt="${item.name}">',
+            '<img class="img-thumbnail" width="140px" height="140px" src="${ctx}/res-build/img/hospital.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
             '<textarea name="resume">${item.resume}</textarea>',
@@ -210,7 +224,7 @@ define(function (require, exports, module) {
             }
         });
     }
-
     new PCAS("province", "city", "area");
+
     Utilitiy.init();
 })

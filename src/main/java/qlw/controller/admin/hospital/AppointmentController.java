@@ -30,7 +30,10 @@ public class AppointmentController extends BaseController {
     SchedulingManage schedulingManage;
     @Autowired
     PatientManage patientManage;
-
+    @Autowired
+    DepartmentqueueManage departmentqueueManage;
+    @Autowired
+    DepartmentqueuedetailManage departmentqueuedetailManage;
 
     /**
      * 预约列表数据源
@@ -137,35 +140,47 @@ public class AppointmentController extends BaseController {
         String rtnMsg = "添加成功";
         try {
             Scheduling scheduling = schedulingManage.getById(schedulingid);
-            Patient patient = patientManage.getById(patientid);
-            String date = scheduling.getDate();
-            int timeflag = scheduling.getTimeflag();
-            int type = scheduling.getType();
-            Long departmentid = scheduling.getDepartmentid();
-            Paymentdetail paymentdetail = new Paymentdetail();
-            if (scheduling.getAppointleftcount() == 0) {
-                rtnMsg = "剩余可预约号源不足,添加失败";
+            if (appointmentManage.patientHasAppointment(patientid)) {
+
+                rtnMsg = "该用户存在其他未完成的预约";
                 rtnCode = ResultCode.ERROR;
             } else {
+                Patient patient = patientManage.getById(patientid);
+                String date = scheduling.getDate();
+                int timeflag = scheduling.getTimeflag();
+                int type = scheduling.getType();
+                Long departmentid = scheduling.getDepartmentid();
+                Paymentdetail paymentdetail = new Paymentdetail();
+                if (scheduling.getAppointleftcount() == 0) {
+                    rtnMsg = "剩余可预约号源不足,添加失败";
+                    rtnCode = ResultCode.ERROR;
+                } else {
+                    String departmentname = (String) request.getSession().getAttribute("departmentname");
+                    String hospitalname = (String) request.getSession().getAttribute("hospitalname");
+                    String doctorname = (String) request.getSession().getAttribute("doctorname");
+                    Appointment appointment = new Appointment();
 
-                Appointment appointment = new Appointment();
-                appointment.setDate(date);
-                appointment.setTimeflag(timeflag);
-                appointment.setType(type);
-                appointment.setDepartmentid(departmentid);
-                appointment.setPatientid(patientid);
-                appointment.setPatientname(patient.getName());
-                appointment.setHospitalid(scheduling.getHospitalid());
-                appointment.setCommittime(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-                appointment.setDoctorid(scheduling.getDoctorid());
-                appointment.setUid(patient.getUid());
-                appointment.setStatus(1);
-                appointment.setRegfee(scheduling.getRegfee());
-                appointment.setSchedulingid(scheduling.getId());
-                scheduling.setAppointleftcount(scheduling.getAppointleftcount() - 1);
+                    appointment.setDepartmentname(departmentname);
+                    appointment.setHospitalname(hospitalname);
+                    appointment.setDoctorname(doctorname);
+                    appointment.setDate(date);
+                    appointment.setTimeflag(timeflag);
+                    appointment.setType(type);
+                    appointment.setDepartmentid(departmentid);
+                    appointment.setPatientid(patientid);
+                    appointment.setPatientname(patient.getName());
+                    appointment.setHospitalid(scheduling.getHospitalid());
+                    appointment.setCommittime(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+                    appointment.setDoctorid(scheduling.getDoctorid());
+                    appointment.setUid(patient.getUid());
+                    appointment.setStatus(1);
+                    appointment.setRegfee(scheduling.getRegfee());
+                    appointment.setSchedulingid(scheduling.getId());
+                    scheduling.setAppointleftcount(scheduling.getAppointleftcount() - 1);
 
-                schedulingManage.update(scheduling);
-                appointmentManage.save(appointment);
+                    schedulingManage.update(scheduling);
+                    appointmentManage.save(appointment);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -336,15 +351,45 @@ public class AppointmentController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "modAppointmentStatus", method = RequestMethod.POST)
+    @RequestMapping(value = "modAppointmentStatus")
     @ResponseBody
-    public Map<String, Object> updateAppointment(Appointment appointment, Integer status) {
+    public Map<String, Object> updateAppointment(Long id, Integer status) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "修改预约状态成功";
         try {
+            Appointment appointment = appointmentManage.getById(id);
             appointment.setStatus(status);
-            appointmentManage.update(appointment);
+            Departmentqueue departmentqueue = departmentqueueManage.getByDepartmentid(appointment.getDepartmentid());
+            Departmentqueuedetail departmentqueuedetail = new Departmentqueuedetail();
+            //确认取号
+            if (status.equals(new Integer(4))) {
+                if (departmentqueue.getNowcount().equals(new Integer(0))) {
+                    departmentqueue.setNowcount(1);
+
+
+                    departmentqueuedetail.setNumber(1);
+                    appointment.setSerialnumber(1);
+                } else {
+                    departmentqueue.setNowcount(departmentqueue.getNowcount() + 1);
+                    Integer nowNowcount = departmentqueue.getNowcount();
+                    departmentqueuedetail.setNumber(nowNowcount);
+
+                }
+                departmentqueuedetail.setDepartmentqueueid(departmentqueue.getId());
+                departmentqueuedetail.setPatientid(appointment.getPatientid());
+                departmentqueuedetail.setPatientname(appointment.getPatientname());
+                appointmentManage.update(appointment);
+                departmentqueuedetailManage.save(departmentqueuedetail);
+                departmentqueueManage.update(departmentqueue);
+            }
+            //诊断完毕队列更新
+            else if (status.equals(new Integer(7))) {
+                departmentqueue.setNowcount(departmentqueue.getNowcount() - 1);
+                departmentqueuedetailManage.deleteByPatienid(appointment.getPatientid());
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "修改预约状态失败";

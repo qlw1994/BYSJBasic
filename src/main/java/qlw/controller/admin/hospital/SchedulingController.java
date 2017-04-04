@@ -9,7 +9,6 @@ import qlw.manage.FixedschedulingManage;
 import qlw.manage.NumberManage;
 import qlw.manage.SchedulingManage;
 import qlw.model.Fixedscheduling;
-import qlw.model.Numbers;
 import qlw.model.Scheduling;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
@@ -38,7 +37,7 @@ public class SchedulingController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listScheduling(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, HttpServletRequest request) {
+    public Map<String, Object> listScheduling(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "100") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             Scheduling scheduling = new Scheduling();
@@ -74,16 +73,17 @@ public class SchedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(long docotorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView View(long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("admin/hospital/scheduling");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss|EEE");
 
-        request.getSession().setAttribute("docotorid", docotorid);
+        request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
 
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
+        mv.addObject("currentpage", 1);
         return mv;
     }
 
@@ -205,58 +205,64 @@ public class SchedulingController extends BaseController {
             int fweek = fdate.getDay() == 0 ? 7 : fdate.getDay();
 
             List<Fixedscheduling> fixedschedulings = fixedschedulingManage.getByWeek(doctorid, fweek);
-            Fixedscheduling fixedscheduling = fixedschedulings.get(0);
-            if (fixedschedulings.get(0).getStatus() == 1) {
-                if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
-                    Scheduling scheduling = new Scheduling();
-                    scheduling.setDoctorid(doctorid);
-                    scheduling.setDepartmentid(departmentid);
-                    scheduling.setHospitalid(hospitalid);
-                    scheduling.setDate(fDateStr);
-                    scheduling.setStatus(1);
-                    scheduling.setRegfee(fixedscheduling.getRegfee());
-                    scheduling.setTimeflag(fixedscheduling.getTimeflag());
-                    scheduling.setType(type);
-                    scheduling.setTotalnumber(totalnumber);
-                    schedulingManage.save(scheduling);
-                }
-                List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag(), type);
-                if (numberss.size() > 0) {
-                    Numbers numbers = numberss.get(0);
-                    numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
-                    numbers.setOtherleftcount(numbers.getOtherleftcount() + totalnumber / 2);
-                    numbers.setTotalamount(numbers.getTotalamount() + totalnumber);
-                    numberManage.update(numbers);
+            //Fixedscheduling fixedscheduling = fixedschedulings.get(0);
+            for (Fixedscheduling fixedscheduling : fixedschedulings) {
+                if (fixedscheduling.getStatus() == 1) {
+                    if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                        Scheduling scheduling = new Scheduling();
+                        scheduling.setDoctorid(doctorid);
+                        scheduling.setDepartmentid(departmentid);
+                        scheduling.setHospitalid(hospitalid);
+                        scheduling.setDate(fDateStr);
+                        scheduling.setStatus(1);
+                        scheduling.setRegfee(fixedscheduling.getRegfee());
+                        scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                        scheduling.setType(type);
+                        scheduling.setTotalnumber(totalnumber);
+                        scheduling.setAppointleftcount(totalnumber / 2);
+                        scheduling.setOtherleftcount(totalnumber / 2);
+                        schedulingManage.save(scheduling);
+                    }
+                    //List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag(), type);
+                    //if (numberss.size() > 0) {
+                    //    Numbers numbers = numberss.get(0);
+                    //    numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
+                    //    numbers.setOtherleftcount(numbers.getOtherleftcount() + totalnumber / 2);
+                    //    numbers.setTotalamount(numbers.getTotalamount() + totalnumber);
+                    //    numberManage.update(numbers);
+                    //} else {
+                    //    Numbers numbers = new Numbers();
+                    //    numbers.setDate(fDateStr);
+                    //    numbers.setStatus(1);
+                    //    numbers.setDepartmentid(departmentid);
+                    //    numbers.setHospitalid(hospitalid);
+                    //    numbers.setAppointleftcount(totalnumber / 2);
+                    //    numbers.setOtherleftcount(totalnumber / 2);
+                    //    numbers.setTotalamount(totalnumber);
+                    //    numbers.setTimeflag(fixedscheduling.getTimeflag());
+                    //    numbers.setType(type);
+                    //    numberManage.save(numbers);
+                    //}
                 } else {
-                    Numbers numbers = new Numbers();
-                    numbers.setDate(fDateStr);
-                    numbers.setStatus(1);
-                    numbers.setDepartmentid(departmentid);
-                    numbers.setHospitalid(hospitalid);
-                    numbers.setAppointleftcount(totalnumber / 2);
-                    numbers.setOtherleftcount(totalnumber / 2);
-                    numbers.setTotalamount(totalnumber);
-                    numbers.setTimeflag(fixedscheduling.getTimeflag());
-                    numbers.setType(type);
-                    numberManage.save(numbers);
-                }
-            } else {
-                int status = fixedscheduling.getStatus();
-                if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
-                    Scheduling scheduling = new Scheduling();
-                    scheduling.setDoctorid(doctorid);
-                    scheduling.setDepartmentid(departmentid);
-                    scheduling.setHospitalid(hospitalid);
-                    scheduling.setDate(fDateStr);
-                    scheduling.setStatus(status);
-                    scheduling.setRegfee(fixedscheduling.getRegfee());
-                    scheduling.setTimeflag(fixedscheduling.getTimeflag());
-                    scheduling.setType(type);
-                    scheduling.setTotalnumber(0);
-                    schedulingManage.save(scheduling);
+                    int status = fixedscheduling.getStatus();
+                    if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                        Scheduling scheduling = new Scheduling();
+                        scheduling.setDoctorid(doctorid);
+                        scheduling.setDepartmentid(departmentid);
+                        scheduling.setHospitalid(hospitalid);
+                        scheduling.setDate(fDateStr);
+                        scheduling.setStatus(status);
+                        scheduling.setRegfee(fixedscheduling.getRegfee());
+                        scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                        scheduling.setType(type);
+                        scheduling.setTotalnumber(0);
+                        scheduling.setAppointleftcount(0);
+                        scheduling.setOtherleftcount(0);
+
+                        schedulingManage.save(scheduling);
+                    }
                 }
             }
-
         }
         result.put("message", rtnMsg);
         result.put("code", rtnCode);
@@ -287,43 +293,64 @@ public class SchedulingController extends BaseController {
         int fweek = fdate.getDay() == 0 ? 7 : fdate.getDay();
 
         List<Fixedscheduling> fixedschedulings = fixedschedulingManage.getByWeek(doctorid, fweek);
-        if (fixedschedulings.get(0).getStatus() == 1) {
-            Fixedscheduling fixedscheduling = fixedschedulings.get(0);
-            if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
-                Scheduling scheduling = new Scheduling();
-                scheduling.setDoctorid(doctorid);
-                scheduling.setDepartmentid(departmentid);
-                scheduling.setHospitalid(hospitalid);
-                scheduling.setDate(fDateStr);
-                scheduling.setStatus(1);
-                scheduling.setRegfee(fixedscheduling.getRegfee());
-                scheduling.setTimeflag(fixedscheduling.getTimeflag());
-                scheduling.setType(type);
-                scheduling.setTotalnumber(totalnumber);
-                schedulingManage.save(scheduling);
-            }
-            List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag(),type);
-            if (numberss.size() > 0) {
-                Numbers numbers = numberss.get(0);
-                numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
-                numbers.setOtherleftcount(numbers.getOtherleftcount() + totalnumber / 2);
-                numbers.setTotalamount(numbers.getTotalamount() + totalnumber);
-                numberManage.update(numbers);
+        //Fixedscheduling fixedscheduling = fixedschedulings.get(0);
+        for (Fixedscheduling fixedscheduling : fixedschedulings) {
+            if (fixedscheduling.getStatus() == 1) {
+                if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                    Scheduling scheduling = new Scheduling();
+                    scheduling.setDoctorid(doctorid);
+                    scheduling.setDepartmentid(departmentid);
+                    scheduling.setHospitalid(hospitalid);
+                    scheduling.setDate(fDateStr);
+                    scheduling.setStatus(1);
+                    scheduling.setRegfee(fixedscheduling.getRegfee());
+                    scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                    scheduling.setType(type);
+                    scheduling.setTotalnumber(totalnumber);
+                    scheduling.setAppointleftcount(totalnumber / 2);
+                    scheduling.setOtherleftcount(totalnumber / 2);
+                    schedulingManage.save(scheduling);
+                }
+                //List<Numbers> numberss = numberManage.getNumbersByDepartmentidAndtimeflagAndDate(departmentid, fDateStr, fixedscheduling.getTimeflag(),type);
+                //if (numberss.size() > 0) {
+                //    Numbers numbers = numberss.get(0);
+                //    numbers.setAppointleftcount(numbers.getAppointleftcount() + totalnumber / 2);
+                //    numbers.setOtherleftcount(numbers.getOtherleftcount() + totalnumber / 2);
+                //    numbers.setTotalamount(numbers.getTotalamount() + totalnumber);
+                //    numberManage.update(numbers);
+                //} else {
+                //    Numbers numbers = new Numbers();
+                //    numbers.setDate(fDateStr);
+                //    numbers.setStatus(1);
+                //    numbers.setDepartmentid(departmentid);
+                //    numbers.setHospitalid(hospitalid);
+                //    numbers.setAppointleftcount(totalnumber / 2);
+                //    numbers.setOtherleftcount(totalnumber / 2);
+                //    numbers.setTotalamount(totalnumber);
+                //    numbers.setTimeflag(fixedscheduling.getTimeflag());
+                //    numbers.setType(type);
+                //    numberManage.save(numbers);
+                //}
             } else {
-                Numbers numbers = new Numbers();
-                numbers.setDate(fDateStr);
-                numbers.setStatus(1);
-                numbers.setDepartmentid(departmentid);
-                numbers.setHospitalid(hospitalid);
-                numbers.setAppointleftcount(totalnumber / 2);
-                numbers.setOtherleftcount(totalnumber / 2);
-                numbers.setTotalamount(totalnumber);
-                numbers.setTimeflag(fixedscheduling.getTimeflag());
-                numbers.setType(type);
-                numberManage.save(numbers);
+                int status = fixedscheduling.getStatus();
+                if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                    Scheduling scheduling = new Scheduling();
+                    scheduling.setDoctorid(doctorid);
+                    scheduling.setDepartmentid(departmentid);
+                    scheduling.setHospitalid(hospitalid);
+                    scheduling.setDate(fDateStr);
+                    scheduling.setStatus(status);
+                    scheduling.setRegfee(fixedscheduling.getRegfee());
+                    scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                    scheduling.setType(type);
+                    scheduling.setTotalnumber(0);
+                    scheduling.setAppointleftcount(0);
+                    scheduling.setOtherleftcount(0);
+
+                    schedulingManage.save(scheduling);
+                }
             }
         }
-
         result.put("message", rtnMsg);
         result.put("code", rtnCode);
         return result;

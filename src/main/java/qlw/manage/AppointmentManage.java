@@ -13,7 +13,9 @@ import qlw.model.Numbers;
 import qlw.model.Scheduling;
 import qlw.util.MyUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,19 +45,19 @@ public class AppointmentManage extends BaseManage {
         AppointmentExample example = new AppointmentExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         AppointmentExample.Criteria criteria = example.createCriteria();
-        if (appointment.getUid() != null && !appointment.getUid().equals(init)) {
+        if (appointment.getUid() != null) {
             criteria.andUidEqualTo(appointment.getUid());
         }
-        if (appointment.getHospitalid() != null && !appointment.getHospitalid().equals(init)) {
+        if (appointment.getHospitalid() != null) {
             criteria.andHospitalidEqualTo(appointment.getHospitalid());
         }
-        if (appointment.getDepartmentid() != null && !appointment.getDepartmentid().equals(init)) {
+        if (appointment.getDepartmentid() != null) {
             criteria.andDepartmentidEqualTo(appointment.getDepartmentid());
         }
-        if (appointment.getPatientid() != null && !appointment.getPatientid().equals(init)) {
+        if (appointment.getPatientid() != null) {
             criteria.andPatientidEqualTo(appointment.getPatientid());
         }
-        if (appointment.getDoctorid() != null && !appointment.getDoctorid().equals(init)) {
+        if (appointment.getDoctorid() != null) {
             criteria.andDoctoridEqualTo(appointment.getDoctorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
@@ -65,10 +67,11 @@ public class AppointmentManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andDateLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andDateGreaterThanOrEqualTo(startDate);
         }
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andDateGreaterThanOrEqualTo(startDate);
+        //}
         return appointmentMapper.selectByExample(example);
     }
 
@@ -84,19 +87,19 @@ public class AppointmentManage extends BaseManage {
         AppointmentExample example = new AppointmentExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         AppointmentExample.Criteria criteria = example.createCriteria();
-        if (appointment.getUid() != null && !appointment.getUid().equals(init)) {
+        if (appointment.getUid() != null) {
             criteria.andUidEqualTo(appointment.getUid());
         }
-        if (appointment.getHospitalid() != null && !appointment.getHospitalid().equals(init)) {
+        if (appointment.getHospitalid() != null) {
             criteria.andHospitalidEqualTo(appointment.getHospitalid());
         }
-        if (appointment.getDepartmentid() != null && !appointment.getDepartmentid().equals(init)) {
+        if (appointment.getDepartmentid() != null) {
             criteria.andDepartmentidEqualTo(appointment.getDepartmentid());
         }
-        if (appointment.getPatientid() != null && !appointment.getPatientid().equals(init)) {
+        if (appointment.getPatientid() != null) {
             criteria.andPatientidEqualTo(appointment.getPatientid());
         }
-        if (appointment.getDoctorid() != null && !appointment.getDoctorid().equals(init)) {
+        if (appointment.getDoctorid() != null) {
             criteria.andDoctoridEqualTo(appointment.getDoctorid());
         }
         criteria.andDateEqualTo(date);
@@ -114,19 +117,19 @@ public class AppointmentManage extends BaseManage {
     public Integer count(String startDate, String endDate, Appointment appointment) {
         AppointmentExample example = new AppointmentExample();
         AppointmentExample.Criteria criteria = example.createCriteria();
-        if (appointment.getUid() != null && !appointment.getUid().equals(init)) {
+        if (appointment.getUid() != null) {
             criteria.andUidEqualTo(appointment.getUid());
         }
-        if (appointment.getHospitalid() != null && !appointment.getHospitalid().equals(init)) {
+        if (appointment.getHospitalid() != null) {
             criteria.andHospitalidEqualTo(appointment.getHospitalid());
         }
-        if (appointment.getDepartmentid() != null && !appointment.getDepartmentid().equals(init)) {
+        if (appointment.getDepartmentid() != null) {
             criteria.andDepartmentidEqualTo(appointment.getDepartmentid());
         }
-        if (appointment.getPatientid() != null && !appointment.getPatientid().equals(init)) {
+        if (appointment.getPatientid() != null) {
             criteria.andPatientidEqualTo(appointment.getPatientid());
         }
-        if (appointment.getDoctorid() != null && !appointment.getDoctorid().equals(init)) {
+        if (appointment.getDoctorid() != null) {
             criteria.andDoctoridEqualTo(appointment.getDoctorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
@@ -136,10 +139,11 @@ public class AppointmentManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andDateLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andDateGreaterThanOrEqualTo(startDate);
         }
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andDateGreaterThanOrEqualTo(startDate);
+        //}
         return appointmentMapper.countByExample(example);
     }
 
@@ -225,6 +229,29 @@ public class AppointmentManage extends BaseManage {
     }
 
     /**
+     * 检查当前就诊人是否存在未完成的预约
+     *
+     * @param patientid
+     * @return
+     */
+    public boolean patientHasAppointment(Long patientid) {
+        AppointmentExample example = new AppointmentExample();
+        AppointmentExample.Criteria criteria = example.createCriteria();
+        criteria.andPatientidEqualTo(patientid);
+        List<Integer> integers = new ArrayList<>();
+        integers.add(2);//取消
+        integers.add(3);//爽约
+        integers.add(7);//诊断完毕
+        criteria.andStatusNotIn(integers);
+        List<Appointment> appointments = appointmentMapper.selectByExample(example);
+        if (appointments.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 按医院清理当日过期 预约
      *
      * @param hospital
@@ -241,14 +268,15 @@ public class AppointmentManage extends BaseManage {
         List<Appointment> appointments = appointmentMapper.selectByExample(example);
         for (Appointment appoint : appointments) {
             Long doctorid = appoint.getDoctorid();
-            Long departmentid = appoint.getDepartmentid();
+            //Long departmentid = appoint.getDepartmentid();
             Scheduling scheduling = schedulingManage.getByDateAndTimeflagAndDoctorid(dateStr, timeflag, doctorid);
-            scheduling.setLeftnumber(scheduling.getLeftnumber() + 1);
+            scheduling.setOtherleftcount(scheduling.getOtherleftcount() + 1);
+            scheduling.setAppointleftcount(0);
             schedulingManage.update(scheduling);
-            Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, dateStr);
-            numbers.setAppointleftcount(0);
-            numbers.setOtherleftcount(numbers.getOtherleftcount() + 1);
-            numberManage.update(numbers);
+            //Numbers numbers = numberManage.getByTimeflagAndDeptidAndDate(timeflag, departmentid, dateStr);
+            //numbers.setAppointleftcount(0);
+            //numbers.setOtherleftcount(numbers.getOtherleftcount() + 1);
+            //numberManage.update(numbers);
         }
         appointment.setStatus(3);
         long i = appointmentMapper.updateByExampleSelective(appointment, example);

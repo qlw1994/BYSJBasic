@@ -20,7 +20,7 @@
         <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">排班查询</a></li>
+        <li><a href="#">排班查询</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">提交预约就诊人选择</a></li>
     </ul>
 </div>
@@ -153,8 +153,8 @@
         var hospitalid = ${hospitalid};
         var departmentid =${departmentid};
         var doctorid =${doctorid};
-        var doctorname =${doctorname};
+        var doctorname ="${doctorname}";
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/appointment_patient_chosen.js"></script>
+            data-init="admin/hospital/appointment_patient_chosen"></script>
 </content>

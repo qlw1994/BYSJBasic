@@ -29,11 +29,11 @@
                 <div class="caption">
                     <i class="iconfont">&#xe619;</i> 医生
                 </div>
-                <div class="actions">
-                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                            class="iconfont">&#xe612;</i> <span class="hidden-480">添加医生帐户</span>
-                    </a>
-                </div>
+                <%--<div class="actions">--%>
+                    <%--<a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i--%>
+                            <%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加医生帐户</span>--%>
+                    <%--</a>--%>
+                <%--</div>--%>
             </div>
             <div class="portlet-body" id="account-list">
                 <div class="table-pages clearfix">
@@ -166,10 +166,12 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">医生级别</label>
                                 <div class="col-md-8">
-                                    <label class="radio-inline">  <input type="radio"  value="1" disabled="disabled"
-                                                                         name="type">专家</label>
-                                    <label class="radio-inline">  <input type="radio"  value="2" disabled="disabled"
-                                                                         name="type">普通</label>
+                                <select  name="level" disabled="disabled" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="1">专家</option>
+                                    <option value="2">普通</option>
+
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -189,7 +191,7 @@
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"
                                            disabled="disabled"
-                                           name="password_again">
+                                           name="idnumber">
                                 </div>
                             </div>
                             <div class="form-group">

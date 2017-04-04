@@ -32,58 +32,59 @@
                 <div class="caption">
                     <i class="iconfont">&#xe619;</i>${hospitalname}-${departmentname}-${doctorname}- 预约管理
                 </div>
-                <div class="portlet-body" id="appointment-list">
-                    <div class="table-pages clearfix">
-                        <div class="table-page clearfix"></div>
-                        <div class="page-length">
-                            <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
-                                                                          class="j-length input-xsmall input-sm input-inline">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="75">75</option>
-                            <option value="100">100</option>
-                        </select> 条记录
-                        </div>
-                        <div class="page-info" role="status" aria-live="polite">
-                            <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <table class="table table-striped table-bordered table-hover dataTable no-footer"
-                               id="datatable_ajax">
 
-                            <thead>
-                            <tr role="row">
-                                <th class="sorting">就诊人姓名</th>
-                                <th class="sorting">就诊序号</th>
-                                <th class="sorting">挂号费</th>
-                                <th class="sorting">预约类型</th>
-                                <th class="sorting">预约状态</th>
-                                <th class="sorting">预约日期</th>
-                                <th class="sorting">预约时间</th>
-                                <th class="sorting">操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+            </div>
+            <div class="portlet-body" id="appointment-list">
+                <div class="table-pages clearfix">
+                    <div class="table-page clearfix"></div>
+                    <div class="page-length">
+                        <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
+                                                                      class="j-length input-xsmall input-sm input-inline">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="75">75</option>
+                        <option value="100">100</option>
+                    </select> 条记录
                     </div>
-                    <div class="table-pages clearfix">
-                        <div class="table-page clearfix"></div>
-                        <div class="page-length">
-                            <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
-                                                                          class="j-length input-xsmall input-sm input-inline">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="75">75</option>
-                            <option value="100">100</option>
-                        </select> 条记录
-                        </div>
-                        <div class="page-info" role="status" aria-live="polite">
-                            <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
-                        </div>
+                    <div class="page-info" role="status" aria-live="polite">
+                        <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer"
+                           id="datatable_ajax">
+
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting">就诊人姓名</th>
+                            <th class="sorting">就诊序号</th>
+                            <th class="sorting">挂号费</th>
+                            <th class="sorting">预约类型</th>
+                            <th class="sorting">预约状态</th>
+                            <th class="sorting">预约日期</th>
+                            <th class="sorting">预约时间</th>
+                            <th class="sorting">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-pages clearfix">
+                    <div class="table-page clearfix"></div>
+                    <div class="page-length">
+                        <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
+                                                                      class="j-length input-xsmall input-sm input-inline">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="75">75</option>
+                        <option value="100">100</option>
+                    </select> 条记录
+                    </div>
+                    <div class="page-info" role="status" aria-live="polite">
+                        <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
                     </div>
                 </div>
             </div>
@@ -134,10 +135,11 @@
 </body>
 <content tag="jsconfig">
     <script type="text/javascript">
+        var doctorid ='${doctorid}';
         var currentpage = ${currentpage};
         var hospitalid = ${hospitalid};
     </script>
 
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/appointment_doctor.js"></script>
+            data-init="admin/hospital/appointment_doctor"></script>
 </content>

@@ -140,5 +140,5 @@
         var hospitalid = ${hospitalid};
     </script>
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/appointment_doctor.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/appointment_department"></script>
 </content>

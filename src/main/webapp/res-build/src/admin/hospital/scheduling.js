@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
-    var pagelength = 10; //一页多少条；
+    var pagelength = 100; //一页多少条；
     $('body').tooltip({
         selector: '.has-tooltip'
     });
@@ -36,10 +36,10 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" ><td>${item.date}</td>',
             '{@/if}',
             '{@if item.status==1}',
-            '    <td><a class="btn btn-default btn-xs" href="' + ROOTPAth + '/admin/appointments/patientchosen?pcode=2&subcode=1&schedulingid=${item.id}"></a>上班</td>',
+            '    <td><a class="btn btn-default btn-xs" style="color: green" href="' + ROOTPAth + '/admin/appointments/patientchosen?pcode=2&subcode=1&schedulingid=${item.id}">上班</a></td>',
             '{@/if}',
             '{@if item.status==2}',
-            '    <td >停诊</td>',
+            '    <td style="color:red;">停诊</td>',
             '{@/if}',
             '{@if item.status==0}',
             '    <td >休息</td>',
@@ -79,7 +79,7 @@ define(function (require, exports, module) {
                     dataType: 'json',
                     data: function () {
                         var data = {
-                            hospitalid: hospitalid,
+                            doctorid: doctorid,
                             length: pagelength
                         };
                         return data;

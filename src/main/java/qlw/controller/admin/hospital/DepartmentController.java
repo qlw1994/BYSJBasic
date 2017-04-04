@@ -7,8 +7,10 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.DepartmentManage;
 import qlw.manage.DepartmentqueueManage;
+import qlw.manage.HospitalManage;
 import qlw.model.Department;
 import qlw.model.Departmentqueue;
+import qlw.model.Hospital;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -25,6 +27,8 @@ public class DepartmentController extends BaseController {
     DepartmentManage departmentManage;
     @Autowired
     DepartmentqueueManage departmentqueueManage;
+    @Autowired
+    HospitalManage hospitalManage;
 
     /**
      * 科室列表数据源
@@ -55,7 +59,7 @@ public class DepartmentController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", departmentManage.countLike(name, hospitalid));
-            result.put("data", departmentManage.getLike(null,null,name, hospitalid));
+            result.put("data", departmentManage.getLike(null, null, name, hospitalid));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -87,6 +91,15 @@ public class DepartmentController extends BaseController {
                 department.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
                 departmentManage.save(department);
             }
+            Hospital hospital = hospitalManage.getById(department.getHospitalid());
+            Departmentqueue departmentqueue = new Departmentqueue();
+            departmentqueue.setNowcount(0);
+            departmentqueue.setDepartmentid(department.getId());
+            departmentqueue.setDepartmentname(department.getName());
+            departmentqueue.setHospitalid(department.getHospitalid());
+            departmentqueue.setHospitalname(hospital.getName());
+            departmentqueue.setAvgtime(15);
+            departmentqueueManage.save(departmentqueue);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "添加失败";

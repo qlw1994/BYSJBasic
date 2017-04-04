@@ -243,9 +243,9 @@ define(function (require, exports, module) {
                     type:"required",
                     idtype: "required",
                     idnumber: "required",
-                    guardianname: "required",
-                    guardianidtype: "required",
-                    guardianidnumber: "required",
+                    // guardianname: "required",
+                    // guardianidtype: "required",
+                    // guardianidnumber: "required",
                 },
                 messages: {
                     phone: {
@@ -260,9 +260,9 @@ define(function (require, exports, module) {
                     type:"请选择就诊人类型",
                     idnumber: "请输入证件号码",
                     idtype: "请选择证件类型",
-                    guardianname: "监护人姓名不能为空",
-                    guardianidtype: "请选择监护人证件类型",
-                    guardianidnumber: "请输入监护人证件号码",
+                    // guardianname: "监护人姓名不能为空",
+                    // guardianidtype: "请选择监护人证件类型",
+                    // guardianidnumber: "请输入监护人证件号码",
 
                 },
                 errorElement: 'span', //default input error message container
@@ -348,9 +348,9 @@ define(function (require, exports, module) {
                     type:"required",
                     idtype: "required",
                     idnumber: "required",
-                    guardianname: "required",
-                    guardianidtype: "required",
-                    guardianidnumber: "required",
+                    // guardianname: "required",
+                    // guardianidtype: "required",
+                    // guardianidnumber: "required",
                 },
                 messages: {
                     phone: {
@@ -365,9 +365,9 @@ define(function (require, exports, module) {
                     type:"请选择就诊人类型",
                     idnumber: "请输入证件号码",
                     idtype: "请选择证件类型",
-                    guardianname: "监护人姓名不能为空",
-                    guardianidtype: "请选择监护人证件类型",
-                    guardianidnumber: "请输入监护人证件号码",
+                    // guardianname: "监护人姓名不能为空",
+                    // guardianidtype: "请选择监护人证件类型",
+                    // guardianidnumber: "请输入监护人证件号码",
 
                 },
                 errorElement: 'span', //default input error message container
@@ -430,12 +430,11 @@ define(function (require, exports, module) {
 
         },
     };
-    Utilitiy.init();
     $('#add_birthday').datepicker({
 
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,
-        yearRange: "-100:+0",
+        // yearRange: "-100:+0",
         changeMonth: true,
         changeYear: true,
         inline: true
@@ -444,9 +443,11 @@ define(function (require, exports, module) {
 
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,
-        yearRange: "-100:+0",
+        // yearRange: "-100:+0",
         changeMonth: true,
         changeYear: true,
         inline: true
     });
+    Utilitiy.init();
+
 });

@@ -64,7 +64,8 @@
                             <th class="sorting">医生账号</th>
                             <th class="sorting">医生性别</th>
                             <th class="sorting">医生科室</th>
-                            <th class="sorting_desc">创建日期</th>
+                            <th class="sorting">医生等级</th>
+                            <th class="sorting_desc">医生职务</th>
                             <th class="sorting">操作</th>
 
                         </tr>
@@ -120,7 +121,7 @@
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" name="hospitalname" value="${hospitalname}"
                                            class="form-control"
-                                           disabled="disabled">
+                                           readonly>
 
                                 </div>
                             </div>
@@ -128,7 +129,7 @@
                                 <label class="col-md-3 control-label">科室</label>
                                 <div class="col-md-8">
                                     <input type="hidden" name="departmentid" value="${departmentid}">
-                                    <input type="text" AUTOCOMPLETE="off" name="departmentname" disabled="disabled"
+                                    <input type="text" AUTOCOMPLETE="off" name="departmentname" readonly
                                            class="form-control"
                                            value="${departmentname}">
 
@@ -312,19 +313,19 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">医生级别</label>
-                                <div class="col-md-4">
-                                    <label class="radio-inline"> <input type="radio" value="1" disabled="disabled"
-                                                                        name="type">专家</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="radio-inline"> <input type="radio" value="2" disabled="disabled"
-                                                                        name="type">普通</label>
+                                <div class="col-md-8">
+                                <select  name="level" disabled="disabled" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="1">专家</option>
+                                    <option value="2">普通</option>
+
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">证件类型</label>
                                 <div class="col-md-8">
-                                    <select id="mod_idtype" name="idtype" disabled="disabled">
+                                    <select id="mod_idtype" name="idtype" disabled="disabled" class="form-control">
                                         <option value="">请选择</option>
                                         <option value="1">二代身份证</option>
                                         <option value="2">港澳居民身份证</option>
@@ -337,8 +338,7 @@
                                 <label class="col-md-3 control-label">证件号码</label>
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"
-                                           disabled="disabled"
-                                           name="idnumber">
+                                           disabled="disabled" name="idnumber">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -385,7 +385,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/hospitalDoctors/index?pcode=2&subcode=1&hospitalid=${hospitalid}&hospitalname=${hospitalname}&departmentid=${departmentid}&departmentname=${departmentname}}"
+                <a href="${ctx}/admin/hospitalDoctors/index?pcode=2&subcode=1&hospitalid=${hospitalid}&hospitalname=${hospitalname}&departmentid=${departmentid}&departmentname=${departmentname}"
                    class="btn btn-success">返回列表</a>
 
             </div>

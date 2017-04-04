@@ -256,14 +256,14 @@
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_startdate"
                                            name="startdate"
-                                           contenteditable="false"   disabled="disabled" placeholder="授权开始时间">
+                                           readonly   disabled="disabled" placeholder="授权开始时间">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">授权结束时间</label>
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" name="enddate"
-                                           contenteditable="false"   id="mod_enddate"
+                                           readonly   id="mod_enddate"
                                            disabled="disabled" placeholder="授权结束时间">
                                 </div>
                             </div>

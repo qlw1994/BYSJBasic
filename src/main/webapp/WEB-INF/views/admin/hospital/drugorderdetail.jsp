@@ -122,14 +122,14 @@
                                 <label class="col-md-3 control-label">药品规格</label>
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" name="format"
-                                       contenteditable="false"    placeholder="药品规格">
+                                       readonly    placeholder="药品规格">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品单价</label>
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_price" name="price"
-                                         contenteditable="false"  placeholder="药品单价">
+                                         readonly  placeholder="药品单价">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -182,19 +182,19 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品名</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="drugname" contenteditable="false">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="drugname" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品规格</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format" contenteditable="false">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品单价</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_price" name="price" disabled="disabled" contenteditable="false">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_price" name="price" disabled="disabled" readonly>
                                 </div>
                             </div>
                             <div class="form-group">

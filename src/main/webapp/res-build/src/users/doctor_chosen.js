@@ -21,7 +21,7 @@ define(function (require, exports, module) {
             '{@each data as item,index}',
             '<div class="col-md-4 col-sm-6 item">',
             '<div class="thumbnail">',
-            '<img class="img-thumbnail" src="${ctx}/res-build/img/avatar3_small.jpg" alt="${item.name}">',
+            '<img class="img-thumbnail" width="140px" height="140px" src="${ctx}/res-build/img/avatar3_small.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
             // '<textarea name="resume">${item.resume}</textarea>',
@@ -236,7 +236,6 @@ define(function (require, exports, module) {
     //
     //     dateFormat: "yy-mm-dd",
     //     selectOtherMonths: true,
-    //     yearRange: "-100:+0",
     //     changeMonth: true,
     //     changeYear: true,
     //     inline: true
