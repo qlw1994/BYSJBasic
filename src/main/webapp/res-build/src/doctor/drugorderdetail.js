@@ -137,7 +137,7 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
             //添加界面关闭,下拉框消失
-            $addModal.on("hide.bs.modal", function (event) {
+            $addModal.on("hide.modal", function (event) {
                 $addModal.find(".list").hide();
             });
             //我要编辑
@@ -149,7 +149,7 @@ define(function (require, exports, module) {
                 // $(event.relatedTarget)
             });
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $DrugorderdetailForm[0].reset();
                 $DrugorderdetailForm.find("input").removeAttr("aria-describedby");
                 $DrugorderdetailForm.find("input").removeAttr("aria-invalid");
@@ -158,7 +158,7 @@ define(function (require, exports, module) {
                 $DrugorderdetailForm.find("span").remove();
             })
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $($modifyModal).find("input").prop("disabled", true);
                 $modal.find("input").removeAttr("aria-describedby");

@@ -143,11 +143,11 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
             //添加界面关闭,下拉框消失
-            $addModal.on("hide.bs.modal", function (event) {
+            $addModal.on("hide.modal", function (event) {
                 $addModal.find(".list").hide();
             });
             //修改界面关闭,下拉框消失
-            $modifyModal.on("hide.bs.modal", function (event) {
+            $modifyModal.on("hide.modal", function (event) {
                 $modifyModal.find(".list").hide();
             });
             //我要编辑
@@ -161,7 +161,7 @@ define(function (require, exports, module) {
                 // $(event.relatedTarget)
             });
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $CheckreportForm[0].reset();
                 $CheckreportForm.find("input").removeAttr("aria-describedby");
                 $CheckreportForm.find("input").removeAttr("aria-invalid");
@@ -176,7 +176,7 @@ define(function (require, exports, module) {
                 $CheckreportForm.find("span").remove();
             })
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $modal.find("input").prop("disabled", true);
                 $modal.find("textarea").prop("disabled", true);

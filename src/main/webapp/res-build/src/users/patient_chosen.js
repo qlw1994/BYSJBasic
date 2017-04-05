@@ -57,7 +57,7 @@ define(function (require, exports, module) {
                 fillPatientLike(1);
             });
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $PatientForm[0].reset();
                 $PatientForm.find("input").removeAttr("aria-describedby");
                 $PatientForm.find("input").removeAttr("aria-invalid");

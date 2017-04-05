@@ -153,7 +153,7 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var invoicenumber = button.data("invoicenumber");
@@ -167,7 +167,7 @@ define(function (require, exports, module) {
                 // $modal.find(".j-form-edit").show();
             });
             //预结算
-            $('#viewPaymentBudgetModal').on('show.bs.modal', function (event) {
+            $('#viewPaymentBudgetModal').on('show.modal', function (event) {
                 if ($table.find("input[name='checkitem']:checked").length == 0) {
                     $("#ajax_fail").find("h4").html("至少选择一项支付");
                     $("#ajax_fail").modal("show")

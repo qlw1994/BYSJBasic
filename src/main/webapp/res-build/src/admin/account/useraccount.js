@@ -167,7 +167,7 @@ define(function (require, exports, module) {
                 // $(event.relatedTarget)
             });
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $UserForm[0].reset();
                 $UserForm.find("input").removeAttr("aria-describedby");
                 $UserForm.find("input").removeAttr("aria-invalid");
@@ -179,7 +179,7 @@ define(function (require, exports, module) {
                 $UserForm.find("span").remove();
             })
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $($modifyModal).find("input").prop("disabled", true);
                 $modal.find("input").removeAttr("aria-describedby");

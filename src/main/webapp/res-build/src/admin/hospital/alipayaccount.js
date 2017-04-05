@@ -154,7 +154,7 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
             //添加页面初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $AlipayForm[0].reset();
                 $AlipayForm.find("input").removeAttr("aria-describedby");
                 $AlipayForm.find("input").removeAttr("aria-invalid");
@@ -166,7 +166,7 @@ define(function (require, exports, module) {
                 $AlipayForm.find("span").remove();
             })
             //修改页面初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 $ModifyForm.find("input").removeAttr("aria-describedby");
                 $ModifyForm.find("input").removeAttr("aria-invalid");
                 $ModifyForm.find("input").removeAttr("aria-required");

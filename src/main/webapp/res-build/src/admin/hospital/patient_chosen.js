@@ -4,7 +4,7 @@ define(function (require, exports, module) {
 
     function initPatientAcc() {
         //添加界面关闭,下拉框消失
-        $ModelForm.on("hide.bs.modal", function (event) {
+        $ModelForm.on("hide.modal", function (event) {
             $ModelForm.find(".list").hide();
         });
         $("#service").val(service);

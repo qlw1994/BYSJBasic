@@ -153,7 +153,7 @@ $ModifyForm.on("click", ".j-form-edit", function (event) {
     // $(event.relatedTarget)
 });
 //添加表单初始化
-$addModal.on('show.bs.modal', function (event) {
+$addModal.on('show.modal', function (event) {
     $DepartmentForm[0].reset();
     $DepartmentForm.find("input").removeAttr("aria-describedby");
     $DepartmentForm.find("input").removeAttr("aria-invalid");
@@ -162,7 +162,7 @@ $addModal.on('show.bs.modal', function (event) {
     $DepartmentForm.find("span").remove();
 })
 //修改表单初始化
-$modifyModal.on('show.bs.modal', function (event) {
+$modifyModal.on('show.modal', function (event) {
     var $modal = $ModifyForm;
     $modal.find("input").prop("disabled", true);
     $modal.find("input").removeAttr("aria-describedby");

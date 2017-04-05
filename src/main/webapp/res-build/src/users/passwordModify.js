@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         bind: function () {
             var self = this;
             //修改页面初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 $ModifyForm.find("input").removeAttr("aria-describedby");
                 $ModifyForm.find("input").removeAttr("aria-invalid");
                 $ModifyForm.find("input").removeAttr("aria-required");

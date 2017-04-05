@@ -127,7 +127,7 @@ define(function (require, exports, module) {
             });
 
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $modal.find("input").prop("disabled", true);
                 $modal.find("input").removeAttr("aria-describedby");

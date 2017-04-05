@@ -162,7 +162,7 @@ define(function (require, exports, module) {
                 // $(event.relatedTarget)
             });
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $SysuserForm[0].reset();
                 $SysuserForm.find("input").removeAttr("aria-describedby");
                 $SysuserForm.find("input").removeAttr("aria-invalid");
@@ -171,7 +171,7 @@ define(function (require, exports, module) {
                 $SysuserForm.find("span").remove();
             })
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $($modifyModal).find("input").prop("disabled", true);
                 $modal.find("input").removeAttr("aria-describedby");

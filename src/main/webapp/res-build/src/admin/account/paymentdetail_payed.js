@@ -156,7 +156,7 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var invoicenumber = button.data("invoicenumber");

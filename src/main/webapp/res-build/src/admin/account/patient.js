@@ -162,7 +162,7 @@ define(function (require, exports, module) {
                 // $(event.relatedTarget)
             });
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $PatientForm[0].reset();
                 $PatientForm.find("input").removeAttr("aria-describedby");
                 $PatientForm.find("input").removeAttr("aria-invalid");
@@ -174,7 +174,7 @@ define(function (require, exports, module) {
                 $PatientForm.find("span").remove();
             })
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $modal[0].reset();
                 $modal.find("input").prop("disabled", true);

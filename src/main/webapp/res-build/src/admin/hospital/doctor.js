@@ -180,7 +180,7 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
             //修改界面关闭,下拉框消失
-            $modifyModal.on("hide.bs.modal", function (event) {
+            $modifyModal.on("hide.modal", function (event) {
                 $modifyModal.find(".list").hide();
             });
             //我要编辑
@@ -199,7 +199,7 @@ define(function (require, exports, module) {
                 $DoctorForm.validate().element($("#add_account"));
             })
             //添加表单初始化
-            $addModal.on('show.bs.modal', function (event) {
+            $addModal.on('show.modal', function (event) {
                 $DoctorForm[0].reset();
                 $DoctorForm.find("input").removeAttr("aria-describedby");
                 $DoctorForm.find("input").removeAttr("aria-invalid");
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
                 // $("#add_name").prop("disabled", true);
             })
             //修改表单初始化
-            $modifyModal.on('show.bs.modal', function (event) {
+            $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $($modifyModal).find("input").prop("disabled", true);
                 $($modifyModal).find("select").prop("disabled", true);
