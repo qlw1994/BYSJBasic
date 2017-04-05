@@ -60,17 +60,45 @@ public class DepartmentqueueManage extends BaseManage {
         return departmentqueueExMapper.selectByExample(example).get(0);
     }
 
+    /**
+     * 根据id获取科室队列
+     *
+     * @param departmentid
+     * @return 存在返回true 否则返回false
+     */
+    public boolean hasQueue(Long departmentid) {
+        DepartmentqueueExample example = new DepartmentqueueExample();
+        DepartmentqueueExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentidEqualTo(departmentid);
+        if (departmentqueueExMapper.selectByExample(example).size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 修改科室队列信息
      *
-     * @param drug
+     * @param departmentqueue
      * @return
      */
-    public Integer update(Departmentqueue drug) {
-        return departmentqueueExMapper.updateByPrimaryKeySelective(drug);
+    public Integer update(Departmentqueue departmentqueue) {
+        return departmentqueueExMapper.updateByPrimaryKeySelective(departmentqueue);
     }
 
+    /**
+     * 修改科室队列信息
+     *
+     * @param departmentqueue
+     * @return
+     */
+    public Integer resetQueue(Departmentqueue departmentqueue) {
+        DepartmentqueueExample example = new DepartmentqueueExample();
+        DepartmentqueueExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIsNotNull();
+        return departmentqueueExMapper.updateByExample(departmentqueue, example);
+    }
 
     /**
      * 删除科室队列

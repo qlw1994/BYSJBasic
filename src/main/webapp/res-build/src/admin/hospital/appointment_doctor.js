@@ -17,7 +17,7 @@ define(function (require, exports, module) {
 
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="8" style="text-align:center">',
             '暂无记录,请添加',
@@ -53,6 +53,9 @@ define(function (require, exports, module) {
             '{@if item.status==6}',
             '    <td>已支付</td>',
             '{@/if}',
+            '{@if item.status==7}',
+            '    <td>诊断完毕</td>',
+            '{@/if}',
             '{@if item.type==1}',
             '    <td>专家</td>',
             '{@/if}',
@@ -71,8 +74,16 @@ define(function (require, exports, module) {
             '{@/if}',
 
             '    <td class=" heading">',
+            '{@if item.status==1}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             ' <button class="btn btn-default btn-xs  j-disable j-quereng"  data-id=${item.id} data-status="4" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取号</button>',
+            '{@/if}',
+            '{@if item.status==4}',
+            // ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/checkreports/index?pcode=2&subcode=1&patientid=${item.patientid}&patientname=${item.patientname}&uid=${item.uid}" ><span class="iconfont iconfont-xs">&#xe617;</span>检查报告</a>',
+            // ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/inspectionreports/inedx?pcode=2&subcode=1patientid=${item.patientid}&patientname=${item.patientname}&uid=${item.uid}" ><span class="iconfont iconfont-xs">&#xe617;</span>检验报告</a>',
+            // ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/index?pcode=2&subcode=1&patientid=${item.patientid}&patientname=${item.patientname}" ><span class="iconfont iconfont-xs">&#xe617;</span>开药订单</a>',
+            ' <button class="btn btn-default btn-xs j-disable j-end"  data-id=${item.id} data-status="7" ><span class="iconfont iconfont-xs">&#xe617;</span>诊断完毕</a>',
+            '{@/if}',
             // ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/modAppointmentStatus?pcode=2&subcode=1&id=${item.id}&status=6" ><span class="iconfont iconfont-xs">&#xe617;</span>已支付</a>',
             '    </td>',
             '</tr>',
@@ -120,7 +131,7 @@ define(function (require, exports, module) {
 
                             newData.data[i].currentpage = pageIndex.current;
                             if (newData.data[i].serialnumber == null) {
-                                newData.data[i].serialnumber = "无";
+                                newData.data[i].serialnumber = "未取号";
                             }
                         });
                         tool.stopPageLoading();
@@ -138,6 +149,15 @@ define(function (require, exports, module) {
                             }
                         });
                         $table.find(".j-quereng").confirmation({
+                            title: "确定吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.modAppointment($(element));
+                            }
+                        });
+                        $table.find(".j-end").confirmation({
                             title: "确定吗？",
                             btnOkLabel: "确定",
                             btnCancelLabel: "取消",
@@ -176,7 +196,7 @@ define(function (require, exports, module) {
                 url: delPath,
                 type: "POST",
                 success: function (data) {
-                    if (data.code === 1) {
+                    if (data.code == 1) {
                         pageIndex.reset();
                     } else {
                         $("#ajax_fail").find("h4").html(data.message);
@@ -198,7 +218,7 @@ define(function (require, exports, module) {
                     status: status
                 },
                 success: function (data) {
-                    if (data.code === 1) {
+                    if (data.code == 1) {
                         pageIndex.reset();
                     } else {
                         $("#ajax_fail").find("h4").html(data.message);

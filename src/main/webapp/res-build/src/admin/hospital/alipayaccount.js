@@ -81,18 +81,7 @@ define(function (require, exports, module) {
             }
         },
 
-        deleteAlipay: function ($that) {
-            var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/alipayaccounts/deleteAlipayaccount/' + id;
-            $.ajax({
-                url: delPath,
-                type: "POST",
-                success: function (data) {
-                    pageIndex.reset();
-                }
-            });
 
-        },
         bind: function () {
             var self = this;
             //列表分页
@@ -392,7 +381,18 @@ define(function (require, exports, module) {
                 }
             });
 
-        }
+        }   , deleteAlipay: function ($that) {
+            var id = $that.data("id");
+            var delPath = ROOTPAth + '/admin/alipayaccounts/deleteAlipayaccount/' + id;
+            $.ajax({
+                url: delPath,
+                type: "POST",
+                success: function (data) {
+                    pageIndex.reset();
+                }
+            });
+
+        },
     }
 
 

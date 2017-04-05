@@ -180,7 +180,29 @@ public class SchedulingController extends BaseController {
         result.put("code", rtnCode);
         return result;
     }
-
+    /**
+     * 获取之后7天的排班
+     *
+     * @param doctorid
+     * @return
+     */
+    @RequestMapping(value = "/getSchedulings")
+    @ResponseBody
+    public Map<String, Object> getNumbersnext7day(Long doctorid) {
+        Map<String, Object> result = new HashMap<>();
+        Scheduling scheduling = new Scheduling();
+        scheduling.setDoctorid(doctorid);
+        try {
+            List<Scheduling> schedulingList= schedulingManage.listNext7Day(scheduling);
+            result.put("total", schedulingList.size());
+            result.put("data", schedulingList);
+        } catch (Exception e) {
+            result.put("total", 0);
+            result.put("data", new ArrayList<>(0));
+            e.printStackTrace();
+        }
+        return result;
+    }
     /**
      * 号源池生成 7天
      *
@@ -197,7 +219,7 @@ public class SchedulingController extends BaseController {
 
         List<Date> dateList = new ArrayList<Date>();
         long ftime = nowDate.getTime();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i <= 7; i++) {
             Date fdate = new Date();
             fdate.setTime(ftime + (i * 24 * 3600000));
             String fDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(fdate);
@@ -287,7 +309,7 @@ public class SchedulingController extends BaseController {
         List<Date> dateList = new ArrayList<Date>();
         long ftime = nowDate.getTime();
         Date fdate = new Date();
-        fdate.setTime(ftime + (6 * 24 * 3600000));
+        fdate.setTime(ftime + (7 * 24 * 3600000));
         String fDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(fdate);
         //周日 从0转换为7
         int fweek = fdate.getDay() == 0 ? 7 : fdate.getDay();

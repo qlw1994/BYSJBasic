@@ -3,12 +3,14 @@
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <content tag="cssconfig">
+    <link rel="stylesheet" type="text/css" href="${ctx}/res-build/res/echarts/css/css.css">
+    <link rel="stylesheet" href="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/css/jquery-ui-1.10.3.custom.css"/>
     <link href="${ctx}/res-build/css/sys.css" rel="stylesheet" type="text/css"/>
-
     <link href="${ctx}/res-build/res/module/ajaxpage/css/page.css" rel="stylesheet" type="text/css"/>
 </content>
 
 <body>
+<h3 class="page-title">""</h3>
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
@@ -27,7 +29,7 @@
                     <div class="form-group">
                         <label for="starttime">开始日期</label>
                         <div class="hospital_con">
-                            <input AUTOCOMPLETE="off" name="startdate" type="text" value="${startime}"
+                            <input AUTOCOMPLETE="off" name="startdate" type="text" value="${starttime}"
                                    id="starttime"/>
 
                         </div>
@@ -41,7 +43,7 @@
                     <button type="submit" class="btn btn-info" id="search">查询</button>
                 </form>
             </div>
-            <div class="portlet-body" id="inspectionreport-list">
+            <div class="portlet-body" id="inspectionreport-list" style="background-color: white">
                 <div class="table-pages clearfix">
                     <div class="table-page clearfix"></div>
                     <div class="page-length">
@@ -181,6 +183,6 @@
     </script>
     <script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/department"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/inspectionreport"></script>
 
 </content>

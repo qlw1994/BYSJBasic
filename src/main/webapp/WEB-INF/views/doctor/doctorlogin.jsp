@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <title>管理平台</title>
+    <title>医生平台</title>
     <link href="${ctx}/res-build/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
 
 <!-- BEGIN LOGO -->
 <div class="logo">
-    管理平台
+    医生平台
 </div>
 <!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -53,16 +53,16 @@
 
             <div class="input-icon">
                 <i class="iconfont">&#xe601;</i>
-                <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名"
+                <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名" value="doctor1"
                        name="account" aria-required="true" aria-invalid="false">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">密码</label>
+            <label class="control-label visible-ie8 visible-ie9" >密码</label>
 
             <div class="input-icon">
                 <i class="iconfont">&#xe609;</i>
-                <input class="form-control placeholder-no-fix valid" type="password" autocomplete="off" placeholder="密码"
+                <input class="form-control placeholder-no-fix valid" type="password" value="1" autocomplete="off" placeholder="密码"
                        name="password" aria-required="true" aria-invalid="false">
             </div>
         </div>
@@ -83,6 +83,10 @@
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
+<script type="text/javascript">
+    var ROOTPAth = "${ctx}";
+</script>
+
 <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="doctor/login"></script>
 
 <%--<script type="text/javascript">

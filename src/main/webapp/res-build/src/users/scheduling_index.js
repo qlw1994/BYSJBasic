@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
-    var pagelength = 10; //一页多少条；
+    var pagelength = 100; //一页多少条；
     $('body').tooltip({
         selector: '.has-tooltip'
     });
@@ -24,8 +24,8 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="3" style="text-align:center">',
-            '暂无记录,请添加',
+            '<td colspan="3" style="text-align:center;background-color: white">',
+            '暂无记录',
             '</td>',
 
             '</tr>',
@@ -36,10 +36,10 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" ><td>${item.date}</td>',
             '{@/if}',
             '{@if item.status==1}',
-            '    <td><a class="btn btn-default btn-xs" href="' + ROOTPAth + '/user/appointments/newAppointment?schedulingid=${item.id}"></a>上班</td>',
+            '    <td><button class="btn btn-default btn-xs j-YY" style="color: green" data-schedulingid=${item.id}>上班</button></td>',
             '{@/if}',
             '{@if item.status==2}',
-            '    <td >停诊</td>',
+            '    <td style="color:red;">停诊</td>',
             '{@/if}',
             '{@if item.status==0}',
             '    <td >休息</td>',
@@ -77,23 +77,34 @@ define(function (require, exports, module) {
                     url: ROOTPAth + '/user/schedulings/getSchedulings',
                     type: 'POST',
                     dataType: 'json',
-                    data: function () {
-                        var data = {
-                            doctorid: doctorid,
-                            length: pagelength
-                        };
-                        return data;
+                    data: {
+                        doctorid: doctorid,
+                        length: pagelength
+
                     },
                     success: function (res) {
                         var newData = $.extend({}, res);
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].serialnumber == null) {
+                                newData.data[i].serialnumber = "未取号";
+                            }
+
                         });
                         tool.stopPageLoading();
                         $drugList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
+                        $table.find(".j-YY").confirmation({
+                            title: "确定预约吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.newAppointment($(element));
+                            }
+                        });
                     }
                 },
                 pageName: "page",
@@ -116,6 +127,30 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
 
+
+        }, newAppointment: function ($that) {
+            var schedulingid = $that.data("schedulingid");
+
+            var Path = ROOTPAth + '/user/appointments/newAppointment/';
+            $.ajax({
+                url: Path,
+                type: "POST",
+                dataType: "json",
+                data: {
+                    schedulingid: schedulingid,
+                    patientid: patientid
+                },
+                success: function (data) {
+                    if (data.code == 1) {
+                        $addRoletipModal.find(".dialogtip-msg").html("预约成功");
+                        $addRoletipModal.modal('show');
+                    }
+                    else {
+                        $("#ajax_fail").find("h4").html(data.message);
+                        $("#ajax_fail").modal("show")
+                    }
+                }
+            });
 
         },
     };

@@ -49,10 +49,10 @@ public class Doctor_AppointmentController extends BaseController {
                                                Long patientid, String startdate, Long doctorid, String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            if (startdate == null && startdate.equals("")) {
+            if (startdate != null && !startdate.equals("")) {
                 startdate = MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
             }
-            if (enddate == null && enddate.equals("")) {
+            if (enddate != null &&!enddate.equals("")) {
                 enddate = MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
             }
             Appointment appointment = new Appointment();
@@ -77,7 +77,7 @@ public class Doctor_AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView ViewDoctor(long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewDoctor(Long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("doctor/appointment");
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
@@ -149,8 +149,6 @@ public class Doctor_AppointmentController extends BaseController {
             if (status.equals(new Integer(4))) {
                 if (departmentqueue.getNowcount().equals(new Integer(0))) {
                     departmentqueue.setNowcount(1);
-
-
                     departmentqueuedetail.setNumber(1);
                     appointment.setSerialnumber(1);
                 } else {
@@ -162,17 +160,23 @@ public class Doctor_AppointmentController extends BaseController {
                 departmentqueuedetail.setDepartmentqueueid(departmentqueue.getId());
                 departmentqueuedetail.setPatientid(appointment.getPatientid());
                 departmentqueuedetail.setPatientname(appointment.getPatientname());
-                appointmentManage.update(appointment);
+
                 departmentqueuedetailManage.save(departmentqueuedetail);
-                departmentqueueManage.update(departmentqueue);
+
             }
-            //诊断完毕队列更新
+            //诊断完毕 队列更新
             else if (status.equals(new Integer(7))) {
-                departmentqueue.setNowcount(departmentqueue.getNowcount() - 1);
                 departmentqueuedetailManage.deleteByPatienid(appointment.getPatientid());
-
+                //队列中和还有人
+                if (!departmentqueue.getNowcount().equals(new Integer(0))) {
+                    departmentqueuedetail = departmentqueuedetailManage.getNext(departmentqueue.getId());
+                    departmentqueue.setNowcount(departmentqueuedetail.getNumber());
+                }
+                //队列没有人  当前序号为0
+                else {
+                    departmentqueue.setNowcount(0);
+                }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "修改预约状态失败";

@@ -44,9 +44,15 @@ define(function (require, exports, module) {
 
                 $(formDom).find("input").prop("disabled", false);
                 $DoctorForm.find("input[name=hospitalname]").prop("disabled", true)
+                $DoctorForm.find("input[name=departmentname]").prop("disabled", true)
                 $DoctorForm.find("input[name=account]").prop("disabled", true)
             });
-
+            $("#closeDivlink").click(
+                function () {
+                    $DoctorForm.find(".j-form-edit").show();
+                    $DoctorForm.find(".j-form-save").hide();
+            }
+            )
             //修改表单中科室列表
             $DoctorForm.find("input[name=departmentname]").keyup(function (e) {
                 if (e.keyCode != 40 && e.keyCode != 38) {
@@ -80,8 +86,8 @@ define(function (require, exports, module) {
                     resume: "required",
                     level: "required",
                     departmentname: {
-                        required:true,
-                        remote:{
+                        required: true,
+                        remote: {
                             url: ROOTPAth + '/doctor/doctors/hasDepartmentName',
                             type: "POST",
                             dataType: "json",
@@ -108,8 +114,8 @@ define(function (require, exports, module) {
                     resume: "请输入医生简介",
                     level: "请输入医生级别",
                     departmentname: {
-                        required:"请输入科室",
-                        remote:"不存在部门"
+                        required: "请输入科室",
+                        remote: "不存在部门"
                     },
                     password: "密码不能为空",
                     password_again: "两次输入密码不一致"
@@ -145,6 +151,9 @@ define(function (require, exports, module) {
                             $('#modifyModal').modal('hide');
                             $addRoletipModal.find(".dialogtip-msg").html("账号修改成功");
                             $addRoletipModal.modal('show');
+                            $DoctorForm.find("input").prop("disabled", true);
+                            $DoctorForm.find("textarea").prop("disabled", true);
+                            $DoctorForm.find("select").prop("disabled", true);
                             pageIndex.reset();
                         }
                         else {
@@ -157,61 +166,25 @@ define(function (require, exports, module) {
             });
 
         },
-        deleteDoctor: function ($that) {
-            var id = $that.data("id");
-            var delPath = ROOTPAth + '/doctor/doctors/delDoctor/' + id;
-            $.ajax({
-                url: delPath,
-                type: "POST",
-                success: function (data) {
-                    if (data.code === 1) {
-                        pageIndex.reset();
-                    } else {
-                        $("#ajax_fail").find("h4").html(data.message);
-                        $("#ajax_fail").modal("show")
-                    }
-                }
-            });
-
-        },
-        resetPWD: function ($that) {
-            var id = $that.data("id");
-            var delPath = ROOTPAth + '/doctor/doctors/resetPWD/' + id;
-            $.ajax({
-                url: delPath,
-                type: "POST",
-                success: function (data) {
-                    if (data.code === 1) {
-                        $addRoletipModal.find(".dialogtip-msg").html("密码重置成功");
-                        $addRoletipModal.modal('show');
-                        pageIndex.reset();
-                    } else {
-                        $("#ajax_fail").find("h4").html(data.message);
-                        $("#ajax_fail").modal("show")
-                    }
-                }
-            });
-        },
     };
 
     function loadDoctor() {
         $.ajax({
-            url: ROOTPAth + '/doctor/doctors/getDoctorInfo',
-                type: 'POST',
-                dataType: 'json',
-                data: {
+            url: ROOTPAth + '/doctor/doctors/doctorInfo',
+            type: 'POST',
+            dataType: 'json',
+            data: {
                 id: doctorid
             },
-            success: function (res) {
+            success: function (data) {
                 tool.stopPageLoading();
-                data=res.data;
                 $DoctorForm.find('input[name=id]').val(data.id);
                 $DoctorForm.find('input[name=account]').val(data.account);
                 $DoctorForm.find('input[name=name]').val(data.name);
                 $DoctorForm.find('input[name=sex]').eq(data.sex - 1).attr("checked", "checked");
                 $DoctorForm.find('select[name=idtype]').val(data.idtype)
                 $DoctorForm.find('input[name=idnumber]').val(data.idnumber);
-                $DoctorForm.find('select[name=level]').val(data.level)
+                $DoctorForm.find('input[name=level]').eq(data.level - 1).attr("checked", "checked");
                 $DoctorForm.find('input[name=age]').val(data.age);
                 $DoctorForm.find('input[name=job]').val(data.job);
                 $DoctorForm.find('textarea[name=resume]').val(data.resume);
@@ -220,6 +193,7 @@ define(function (require, exports, module) {
             }
         })
     }
+
     function get_department_modModel(obj) {
         var t = setTimeout(function () {
             $.ajax({

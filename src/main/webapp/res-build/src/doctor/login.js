@@ -62,24 +62,22 @@ define(function (require, exports, module) {
             //	                form.submit(); // form validation success, call ajax form submit
             var basePath = location.href.substring(0, location.href.lastIndexOf('/'));
 
-            $.post(basePath + '/doctor/login', $form.serialize(), function (data) {
+            $.post(basePath + '/doctorindex/login', $form.serialize(), function (data) {
 
-                if (data.code === 1) {
+                if (data.code == 1) {
                     //初始化日期
                     $.ajax({
                         url: ROOTPAth + '/doctor/initDate',
                         type: 'POST',
                         dataType: 'json',
-                        data: {
-                            starttime: $("#date1").val(),
-                            endtime: $("#date2").val(),
-                        }
                     }).done(function (res) {
+                        window.location.href = basePath + '/doctor/index';
+
                     }).fail(function (err) {
                         $("#ajax_fail").modal("show")
                     });
 
-                    window.location.href = basePath + '/doctor/index';
+
                 } else {
                     $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
                 }

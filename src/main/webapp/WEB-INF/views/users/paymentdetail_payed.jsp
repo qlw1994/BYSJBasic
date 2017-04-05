@@ -3,12 +3,14 @@
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <content tag="cssconfig">
+    <link rel="stylesheet" type="text/css" href="${ctx}/res-build/res/echarts/css/css.css">
+    <link rel="stylesheet" href="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/css/jquery-ui-1.10.3.custom.css"/>
     <link href="${ctx}/res-build/css/sys.css" rel="stylesheet" type="text/css"/>
-
     <link href="${ctx}/res-build/res/module/ajaxpage/css/page.css" rel="stylesheet" type="text/css"/>
 </content>
 
 <body>
+<h3 class="page-title">""</h3>
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
@@ -21,7 +23,7 @@
         </div>
     </div>
 </div>
-<div class="portlet-body" id="paymentdatail-list">
+<div class="portlet-body" id="paymentdatail-list" style="background-color: white">
     <div class="table-pages clearfix">
         <div class="table-page clearfix"></div>
         <div class="page-length">

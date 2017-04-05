@@ -10,13 +10,12 @@
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">个人中心</h3>
+<h3 class="page-title">预约病人查询</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页<i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">个人中心</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">预约病人查询</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">药品订单管理</a></li>
     </ul>
@@ -28,7 +27,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i>${sessionScope.doctor.hospital.name}-${sessionScope.doctor.department.name}-${sessionScope.doctor.name}-${patientname} - 药品订单
+                    <i class="iconfont">&#xe619;</i>${sessionScope.doctor.hospitalname}-${sessionScope.doctor.departmentname}-${sessionScope.doctor.name}-${patientname} - 药品订单
                 </div>
                 <div class="actions">
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
@@ -299,10 +298,13 @@
         var patientname = '${patientname}';
         var doctorid =${sessionScope.doctor.id};
         var doctorname = '${sessionScope.doctor.name}';
-        var hospitalid =${sessionScope.doctor.hospital.id};
-        var hospitalname = '${sessionScope.doctor.hospital.name}';
+        var hospitalid =${sessionScope.doctor.hospitalid};
+        var hospitalname = '${sessionScope.doctor.hospitalname}';
         var uid =${uid};
     </script>
+    <script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="doctor/drugorder.js"></script>
 </content>

@@ -63,7 +63,6 @@ define(function (require, exports, module) {
         init: function () {
 
             tool.startPageLoading();
-            $("#service").val(service);
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
@@ -84,7 +83,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/doctor/inspectreports/list',
+                    url: ROOTPAth + '/doctor/inspectionreports/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -291,7 +290,7 @@ define(function (require, exports, module) {
             //         error.insertAfter(element);
             //     },
             //     submitHandler: function () {
-            //         var savePath = ROOTPAth + '/doctor/inspectreports/newInspectreport';
+            //         var savePath = ROOTPAth + '/doctor/inspectionreports/newInspectreport';
             //         $InspectreportForm.find("input").prop("disabled", false);
             //         $.ajax({
             //             type: "POST",
@@ -403,7 +402,7 @@ define(function (require, exports, module) {
             //     submitHandler: function () {
             //
             //
-            //         var updatePath = ROOTPAth + '/doctor/inspectreports/modInspectreport';
+            //         var updatePath = ROOTPAth + '/doctor/inspectionreports/modInspectreport';
             //         $.post(updatePath, $ModifyForm.serialize(), function (data) {
             //             if (data.code === 1) {
             //                 $('#modifyModal').modal('hide');
@@ -502,7 +501,7 @@ define(function (require, exports, module) {
         },
         // deleteInspectreport: function ($that) {
         //     var id = $that.data("id");
-        //     var delPath = ROOTPAth + '/doctor/inspectreports/delInspectreport/' + id;
+        //     var delPath = ROOTPAth + '/doctor/inspectionreports/delInspectreport/' + id;
         //     $.ajax({
         //         url: delPath,
         //         type: "POST",

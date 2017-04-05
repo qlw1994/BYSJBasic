@@ -37,7 +37,7 @@ public class DoctorLoginController extends BaseController {
         return "doctor/doctorlogin";
     }
 
-    @RequestMapping(value = "/doctor/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/doctorindex/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(@RequestParam("account") String account, @RequestParam("password") String password, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
@@ -84,7 +84,7 @@ public class DoctorLoginController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/doctor/logout")
+    @RequestMapping(value = "/doctorindex/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("doctor");
         return "doctor/doctorlogin";

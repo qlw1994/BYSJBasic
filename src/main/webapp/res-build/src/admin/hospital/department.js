@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="3" style="text-align:center">',
             '暂无记录,请添加',
@@ -46,6 +46,7 @@ define(function (require, exports, module) {
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/hospitalDoctors/index?pcode=2&subcode=1&departmentid=${item.id}&departmentname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>医生管理</a>',
+            ' <button type="button" class="btn btn-default btn-xs j-disable j-queue" data-toggle="confirmation"  data-placement="top" data-departmentid="${item.id}"><span class="iconfont iconfont-xs">&#xe617;</span>生成队列</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '    </td>',
             '</tr>',
@@ -103,7 +104,15 @@ define(function (require, exports, module) {
                                 self.deleteDepartment($(element));
                             }
                         });
-                        //$table.find("tbody").empty().append("");
+                        $table.find(".j-queue").confirmation({
+                            title: "确定吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.newQueue($(element));
+                            }
+                        });
                     }
                 },
                 pageName
@@ -305,7 +314,7 @@ $ModifyForm.validate({
 
         var updatePath = ROOTPAth + '/admin/departments/modDepartment';
         $.post(updatePath, $ModifyForm.serialize(), function (data) {
-            if (data.code === 1) {
+            if (data.code == 1) {
                 $('#modifyModal').modal('hide');
                 $addRoletipModal.find(".dialogtip-msg").html("科室修改成功");
                 $addRoletipModal.modal('show');
@@ -328,7 +337,7 @@ deleteDepartment: function ($that) {
         url: delPath,
         type: "POST",
         success: function (data) {
-            if (data.code === 1) {
+            if (data.code == 1) {
                 pageIndex.reset();
             } else {
                 $("#ajax_fail").find("h4").html(data.message);
@@ -337,7 +346,29 @@ deleteDepartment: function ($that) {
         }
     });
 
-}
+},
+            newQueue: function ($that) {
+                var departmentid = $that.data("departmentid");
+                var delPath = ROOTPAth + '/admin/departmentqueues/newQueue/'
+                $.ajax({
+                    url: delPath,
+                    type: "POST",
+                    data:{
+                        departmentid:departmentid,
+                    },
+                    success: function (data) {
+                        if (data.code == 1) {
+                            $addRoletipModal.find(".dialogtip-msg").html("科室队列生成成功");
+                            $addRoletipModal.modal('show');
+                            pageIndex.reset();
+                        } else {
+                            $("#ajax_fail").find("h4").html(data.message);
+                            $("#ajax_fail").modal("show")
+                        }
+                    }
+                });
+
+            }
 }
 ;
 Utilitiy.init();

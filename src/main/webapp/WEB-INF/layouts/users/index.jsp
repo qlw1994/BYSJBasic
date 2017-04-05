@@ -29,11 +29,11 @@
 <body>
 <div id="page" class="page-header-fixed">
     <!-- B:page-header -->
-    <c:if test='${not empty sessionScope.user}'>
+    <c:if test='${not empty sessionScope.user.id}'>
         <div class="page-header clearfix header-fixed">
             <div class="page-header-inner">
                 <div class="page-logo">
-                    <a href="${ctx}/user/index">
+                    <a href="${ctx}/userindex/index">
                         智慧医疗用户平台
                     </a>
                 </div>
@@ -88,7 +88,7 @@
             </div>
         </div>
     </c:if>
-    <c:if test='${empty sessionScope.user}'>
+    <c:if test='${empty sessionScope.user.id}'>
         <div class="page-header clearfix header-fixed">
             <div class="page-header-inner">
                 <div class="page-logo">
@@ -131,9 +131,9 @@
     </c:if>
 
 
-                    <sitemesh:body/>
+    <sitemesh:body/>
 
-        <!-- E:page-content -->
+    <!-- E:page-content -->
 
 
     <!-- E:page-header -->
@@ -219,7 +219,7 @@
     <div class="page-footer clearfix " style="background-color:white;bottom:5%;right:0%;position:fixed;">
         <div class="page-footer-tools">
                 <span class="go-top">
-                    <a href="#" ><i class="iconfont">&#xe602;</i></a>
+                    <a href="#"><i class="iconfont">&#xe602;</i></a>
                 </span>
         </div>
     </div>

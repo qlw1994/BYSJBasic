@@ -64,8 +64,8 @@ define(function (require, exports, module) {
 
                     $.post(basePath + '/userindex/login', $form.serialize(), function (data) {
 
-                        if (data.code===1) {
-                            window.location.href = basePath + '/userindex';
+                        if (data.code==1) {
+                            window.location.href = basePath + '/userindex/index';
                         } else {
                             $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
                         }

@@ -366,8 +366,6 @@ public class AppointmentController extends BaseController {
             if (status.equals(new Integer(4))) {
                 if (departmentqueue.getNowcount().equals(new Integer(0))) {
                     departmentqueue.setNowcount(1);
-
-
                     departmentqueuedetail.setNumber(1);
                     appointment.setSerialnumber(1);
                 } else {
@@ -379,17 +377,25 @@ public class AppointmentController extends BaseController {
                 departmentqueuedetail.setDepartmentqueueid(departmentqueue.getId());
                 departmentqueuedetail.setPatientid(appointment.getPatientid());
                 departmentqueuedetail.setPatientname(appointment.getPatientname());
-                appointmentManage.update(appointment);
+
                 departmentqueuedetailManage.save(departmentqueuedetail);
-                departmentqueueManage.update(departmentqueue);
+
             }
-            //诊断完毕队列更新
+            //诊断完毕 队列更新
             else if (status.equals(new Integer(7))) {
-                departmentqueue.setNowcount(departmentqueue.getNowcount() - 1);
                 departmentqueuedetailManage.deleteByPatienid(appointment.getPatientid());
-
+                //队列中和还有人
+                if (!departmentqueue.getNowcount().equals(new Integer(0))) {
+                    departmentqueuedetail = departmentqueuedetailManage.getNext(departmentqueue.getId());
+                    departmentqueue.setNowcount(departmentqueuedetail.getNumber());
+                }
+                //队列没有人  当前序号为0
+                else {
+                    departmentqueue.setNowcount(0);
+                }
             }
-
+            departmentqueueManage.update(departmentqueue);
+            appointmentManage.update(appointment);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "修改预约状态失败";

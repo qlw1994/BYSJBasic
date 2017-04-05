@@ -24,14 +24,16 @@ import java.util.Map;
 public class UsersIndexController extends BaseController {
     @RequestMapping(value = "")
     public String admin() {
-        return "redirect:userindex";
+        return "redirect:userindex/index";
     }
 
-    @RequestMapping(value = "index")
+    @RequestMapping(value = "/index")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("users/index");
+        modelAndView.addObject("currentpage", 1);
         return modelAndView;
     }
+
     /**
      * 初始化日期
      *
@@ -53,7 +55,6 @@ public class UsersIndexController extends BaseController {
         result.put("code", rtnCode);
         return result;
     }
-
 
 
     private void initController(String starttime, String endtime, HttpServletRequest request) {

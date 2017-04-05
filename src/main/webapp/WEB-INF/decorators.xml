@@ -12,5 +12,6 @@
 	</decorator>
 	<decorator name="users" page="users/index.jsp">
 		<pattern>/user/*</pattern>
+		<pattern>/userindex/*</pattern>
 	</decorator>
 </decorators>

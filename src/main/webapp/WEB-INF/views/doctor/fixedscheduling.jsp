@@ -28,7 +28,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="iconfont">
-                        &#xe619;</i>${sessionScope.doctor.hospital.name}-${sessionScope.doctor.department.name}- ${sessionScope.doctor.name}-
+                        &#xe619;</i>${sessionScope.doctor.hospitalname}-${sessionScope.doctor.departmentname}- ${sessionScope.doctor.name}-
                     日程表管理
                 </div>
                 <div class="actions">
@@ -87,7 +87,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/doctor/fixedschedulings/index?pcode=1&subcode=2&hospitalid=${sessionScope.doctor.hospital.id}&hospitalname=${sessionScope.doctor.hospital.name}&doctorid=${sessionScopedoctor.id}&doctorname=${sessionScope.doctor.name}"
+                <a href="${ctx}/doctor/fixedschedulings/index?pcode=1&subcode=2&hospitalid=${sessionScope.doctor.hospitalid}&hospitalname=${sessionScope.doctor.hospitalname}&doctorid=${sessionScopedoctor.id}&doctorname=${sessionScope.doctor.name}"
                    class="btn btn-success">返回列表</a>
 
             </div>
@@ -118,9 +118,9 @@
     <script type="text/javascript">
         var currentpage = ${currentpage};
         var doctorid = ${sessionScope.doctor.id};
-
+        var hospitalid="${sessionScope.doctor.hospitalid}"
     </script>
 
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="doctor/fixedscheduling.js"></script>
+            data-init="doctor/fixedscheduling"></script>
 </content>

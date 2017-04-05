@@ -57,7 +57,7 @@ public class Doctor_DoctorController extends BaseController {
      */
     @RequestMapping(value = "/index")
     public ModelAndView accountView(int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/account/doctoraccount");
+        ModelAndView mv = new ModelAndView("doctor/doctor");
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);

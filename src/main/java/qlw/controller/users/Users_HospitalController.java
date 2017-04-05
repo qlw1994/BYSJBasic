@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by wiki on 2017/3/30.
  */
 @Controller
-@RequestMapping(value = "/user/hospitals")
+@RequestMapping(value = "/userindex/hospitals")
 public class Users_HospitalController extends BaseController {
     @Autowired
     HospitalManage hospitalManage;

@@ -353,11 +353,14 @@
         var patientid =${patientid};
         var patientname = '${patientname}';
         var doctorid =${sessionScope.doctor.id};
-        var doctorname = '${sessionScope.doctor.docotorname}';
+        var doctorname = '${sessionScope.doctor.name}';
         var hospitalid =${sessionScope.doctor.hospitalid};
         var hospitalname = '${sessionScope.doctor.hospitalname}';
         var uid =${uid};
     </script>
+    <script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="users/checkreport"></script>
+            data-init="doctor/checkreport"></script>
 </content>

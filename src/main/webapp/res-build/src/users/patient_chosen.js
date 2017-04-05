@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var listTpl = juicer(
         [
             '{@if total == 0}',
-            '<center><h1>暂无记录,请添加</h1></center>',
+            '<center style="background-color: white"><h1>暂无记录</h1></center>',
             '{@else}',
             '{@each data as item,index}',
             '<div class="col-md-4 col-sm-6 item">',
@@ -26,12 +26,12 @@ define(function (require, exports, module) {
             '<img  class="img-thumbnail" width="140px" height="140px" src="${ctx}/res-build/img/user.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
-            '<p>${item.idnumber}</p>',
+            '<p>证件号码：&nbsp;${item.idnumber}</p>',
             // '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">预约科室</a><a  href="' + ROOTPAth + '/user/drugorders/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">药品订单</a></p>' +
-            '<a href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检验报告</a><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检查报告</a></p>'+
-            '<p><a href="' + ROOTPAth + '/user/paymentdetails/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">待支付列表</a><a  href="' + ROOTPAth + '/user/paymentdetails/indexpayed?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">已支付列表</a></p>',
-            '<p><a href="' + ROOTPAth + '/user/departmentqueues/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">队列当前就诊人序号</a></p>',
+            '<p><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">预约科室</a>&nbsp;<a  href="' + ROOTPAth + '/user/drugorders/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">药品订单</a></p>' +
+            '<a href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检验报告</a>&nbsp;<a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检查报告</a></p>' +
+            '<p><a href="' + ROOTPAth + '/user/paymentdetails/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">待支付列表</a>&nbsp;<a  href="' + ROOTPAth + '/user/paymentdetails/indexpayed?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">已支付列表</a></p>',
+            '<p><a href="' + ROOTPAth + '/user/appointments/patientindex?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">历史预约记录</a>&nbsp;<a href="' + ROOTPAth + '/user/departmentqueues/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">队列当前就诊人序号</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'
@@ -76,6 +76,11 @@ define(function (require, exports, module) {
             }).focus(function () {
                 this.select();
             });
+            //手机验证规则
+            jQuery.validator.addMethod("ismobile", function (value, element) {
+                var mobile = /^1[3|4|5|7|8]\d{9}$/;
+                return this.optional(element) || (mobile.test(value));
+            }, "手机格式不对");
             //表单验证-查询医院
             $searchform.validate({
                 rules: {},
@@ -105,17 +110,6 @@ define(function (require, exports, module) {
                 rules: {
                     name: {
                         required: true,
-                        // remote: { //自带远程验证存在的方法
-                        //     url: ROOTPAth + '/admin/patients/sameName',
-                        //     type: "POST",
-                        //     dataType: "json",
-                        //     data: {
-                        //         uid: uid,
-                        //         name: function () {
-                        //             return $PatientForm.find('input[name="name"]').val();
-                        //         }
-                        //     }
-                        // }
                     },
                     phone: {
                         required: true,
@@ -125,9 +119,9 @@ define(function (require, exports, module) {
                     type: "required",
                     idtype: "required",
                     idnumber: "required",
-                    guardianname: "required",
-                    guardianidtype: "required",
-                    guardianidnumber: "required",
+                    // guardianname: "required",
+                    // guardianidtype: "required",
+                    // guardianidnumber: "required",
                 },
                 messages: {
                     phone: {
@@ -136,15 +130,14 @@ define(function (require, exports, module) {
                     },
                     name: {
                         required: "就诊人姓名不能为空",
-                        // remote: "就诊人姓名重复"
                     },
                     sex: "请选择性别",
                     type: "请选择就诊人类型",
                     idnumber: "请输入证件号码",
                     idtype: "请选择证件类型",
-                    guardianname: "监护人姓名不能为空",
-                    guardianidtype: "请选择监护人证件类型",
-                    guardianidnumber: "请输入监护人证件号码",
+                    // guardianname: "监护人姓名不能为空",
+                    // guardianidtype: "请选择监护人证件类型",
+                    // guardianidnumber: "请输入监护人证件号码",
 
                 },
                 errorElement: 'span', //default input error message container
@@ -185,7 +178,7 @@ define(function (require, exports, module) {
                             tool.stopPageLoading();
                             if (data.code == 1) {
                                 $addModal.modal("hide");
-                                $addRoletipModal.find(".dialogtip-msg").html("账号添加成功");
+                                $addRoletipModal.find(".dialogtip-msg").html("就诊人添加成功");
                                 $addRoletipModal.modal('show');
                                 fillPatient(1);
                             }
@@ -213,12 +206,11 @@ define(function (require, exports, module) {
     function get_patientLike(obj) {
         var t = setTimeout(function () {
             $.ajax({
-                url: ROOTPAth + '/user/patients/listNameLikeByDepartment',
+                url: ROOTPAth + '/user/patients/listPatientLike',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    departmentid: departmentid,
-                    type: type,
+                    uid: uid,
                     name: $(obj).val()
                 },
                 success: function (data) {
@@ -269,15 +261,12 @@ define(function (require, exports, module) {
             url: ROOTPAth + '/user/patients/list',
             type: 'POST',
             dataType: 'json',
-            data: function () {
-                var data = {
-                    departmentid: departmentid,
-                    type: type,
-                    length: pagelength,
-                    page: currentpage,
-                    name: $patientname.val()
-                };
-                return data;
+            data: {
+                uid: uid,
+                length: pagelength,
+                page: currentpage,
+                name: $patientname.val()
+
             },
             success: function (res) {
                 console.log(res);
@@ -287,9 +276,23 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    $divpatients.append(listTpl.render(newData));
-                    // button_bind();
-                    currentpage = currentpage * 1 + 1;
+                    if (res.code == 1) {
+                        var newData = $.extend({}, res);
+                        $.each(newData.data, function (i, val) {
+                            newData.data[i].currentpage = currentpage;
+                        });
+                        if (reset == 1) {
+                            $divpatients.empty();
+                            $divpatients.append(listTpl.render(newData));
+                        }
+                        else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                            Toast("没有更多数据了", 2000);
+                        }
+                        else {
+                            $divpatients.append(listTpl.render(newData));
+                            currentpage = currentpage * 1 + 1;
+                        }
+                    }
                 }
             }
         });
@@ -300,18 +303,14 @@ define(function (require, exports, module) {
             currentpage = 1;
         }
         $.ajax({
-            url: ROOTPAth + '/user/patients/listNameLikeByDepartment',
+            url: ROOTPAth + '/user/patients/listPatientLike',
             type: 'POST',
             dataType: 'json',
-            data: function () {
-                var data = {
-                    departmentid: departmentid,
-                    length: pagelength,
-                    type: type,
-                    page: currentpage,
-                    name: $patientname.val()
-                };
-                return data;
+            data: {
+                uid: uid,
+                length: pagelength,
+                page: currentpage,
+                name: $patientname.val()
             },
             success: function (res) {
                 console.log(res);
@@ -321,46 +320,52 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    if (reset == 1) {
-                        $divpatients.empty();
+                    if (res.code == 1) {
+                        var newData = $.extend({}, res);
+                        $.each(newData.data, function (i, val) {
+                            newData.data[i].currentpage = currentpage;
+                        });
+                        if (reset == 1) {
+                            $divpatients.empty();
+                            $divpatients.append(listTpl.render(newData));
+                        }
+                        else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                            Toast("没有更多数据了", 2000);
+                        }
+                        else {
+                            $divpatients.append(listTpl.render(newData));
+                            currentpage = currentpage * 1 + 1;
+                        }
                     }
-                    $divpatients.append(listTpl.render(newData));
-                    // button_bind();
-                    currentpage = currentpage * 1 + 1;
                 }
             }
         });
     }
 
+    //自定义弹框
+    function Toast(msg, duration) {
+        duration = isNaN(duration) ? 3000 : duration;
+        var m = document.createElement('div');
+        m.innerHTML = msg;
+        m.style.cssText = "width:60%; min-width:150px; background:#000; opacity:0.5; height:40px; color:#fff; line-height:40px; text-align:center; border-radius:5px; position:fixed; top:80%; left:20%; z-index:999999; font-weight:bold;";
+        document.body.appendChild(m);
+        setTimeout(function () {
+            var d = 0.5;
+            m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+            m.style.opacity = '0';
+            setTimeout(function () {
+                document.body.removeChild(m)
+            }, d * 1000);
+        }, duration);
+    }
 
-    // function button_bind() {
-    //     var indexPT = document.getElementsByName("indexPT");
-    //     for (var i = 0; i < indexPT.length; i++) {
-    //         $.each(indexPT, function (i, val) {
-    //             // indexPT[i].attr("href", $(this).attr("href") + "$date=" + $("#appoint_date").val());
-    //             indexPT[i].onClick(function () {
-    //                 window.location.href = $(this).data("href") + "?date=" + $("#appoint_date").val() + "&patientid=" + $(this).data("patientid") + "&patientname=" + $(this).data("patientname");
-    //             })
-    //         })
-    //     }
-    //     var indexZJ = document.getElementsByName("indexZJ");
-    //     for (var j = 0; j < indexZJ.length; j++) {
-    //         $.each(indexZJ, function (i, val) {
-    //             // indexZJ[i].attr("href", $(this).attr("href") + "$date=" + $("#appoint_date").val());
-    //             indexZJ[i].onClick(function () {
-    //                 window.location.href = $(this).data("href") + "?date=" + $("#appoint_date").val() + "&patientid=" + $(this).data("patientid") + "&patientname=" + $(this).data("patientname");
-    //             })
-    //         })
-    //     }
-    // }
-    // //
-    // $('#appoint_date').datepicker({
-    //
-    //     dateFormat: "yy-mm-dd",
-    //     selectOtherMonths: true,
-    //     changeMonth: true,
-    //     changeYear: true,
-    //     inline: true
-    // });
+    $('#add_birthday').datepicker({
+
+        dateFormat: "yy-mm-dd",
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        inline: true
+    });
     Utilitiy.init();
 })

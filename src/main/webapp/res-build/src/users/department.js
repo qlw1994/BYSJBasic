@@ -16,16 +16,16 @@ define(function (require, exports, module) {
     var listTpl = juicer(
         [
             '{@if total == 0}',
-            '<center><h1>暂无记录,请添加</h1></center>',
+            '<center style="background-color: white"><h1>暂无记录</h1></center>',
             '{@else}',
             '{@each data as item,index}',
-            '<div class="col-md-4 col-sm-6 item">',
+            '<div style="padding-top: 1%" class="col-md-2 col-sm-4 item">',
             '<div class="thumbnail">',
             // '<img class="img-thumbnail" src="${ctx}/res-build/img/avatar3_small.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
             // '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a name="indexPT" href="' + ROOTPAth + '/user/doctors/doctorChosen?departmentid=${item.id}  &departmentname=${item.name}&type=2" class="btn btn-primary" role="button">普通</a><a name="indexZJ"  href="' + ROOTPAth + '/user/doctors/doctorChosen?departmentid=${item.id}&departmentname=${item.name}&type=1" class="btn btn-primary" role="button">专家</a></p>',
+            '<p><a  href="' + ROOTPAth + '/user/doctors/doctorChosen?departmentid=${item.id}  &departmentname=${item.name}&type=2" class="btn btn-primary" role="button">普通</a>&nbsp;&nbsp;<a  href="' + ROOTPAth + '/user/doctors/doctorChosen?departmentid=${item.id}&departmentname=${item.name}&type=1" class="btn btn-primary" role="button">专家</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'
@@ -143,14 +143,11 @@ define(function (require, exports, module) {
             url: ROOTPAth + '/user/departments/list',
             type: 'POST',
             dataType: 'json',
-            data: function () {
-                var data = {
+            data: {
                     hospitalid: hospitalid,
                     length: pagelength,
                     page: currentpage,
-                    name: $departmentname.val()
-                };
-                return data;
+
             },
             success: function (res) {
                 console.log(res);
@@ -160,9 +157,17 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    $divdepartments.append(listTpl.render(newData));
-                    // button_bind();
-                    currentpage = currentpage * 1 + 1;
+                    if (reset == 1) {
+                        $divdepartments.empty();
+                        $divdepartments.append(listTpl.render(newData));
+                    }
+                    else if(res.total<=pagelength||currentpage*1*pagelength>=res.total){
+                        Toast("没有更多数据了", 2000);
+                    }
+                    else {
+                        $divdepartments.append(listTpl.render(newData));
+                        currentpage = currentpage * 1 + 1;
+                    }
                 }
             }
         });
@@ -176,14 +181,12 @@ define(function (require, exports, module) {
             url: ROOTPAth + '/user/departments/listLike',
             type: 'POST',
             dataType: 'json',
-            data: function () {
-                var data = {
+            data: {
                     hospitalid: hospitalid,
                     length: pagelength,
                     page: currentpage,
                     name: $departmentname.val()
-                };
-                return data;
+
             },
             success: function (res) {
                 console.log(res);
@@ -195,15 +198,35 @@ define(function (require, exports, module) {
                     });
                     if (reset == 1) {
                         $divdepartments.empty();
+                        $divdepartments.append(listTpl.render(newData));
                     }
-                    $divdepartments.append(listTpl.render(newData));
-                    // button_bind();
-                    currentpage = currentpage * 1 + 1;
+                    else if(res.total<=pagelength||currentpage*1*pagelength>=res.total){
+                        Toast("没有更多数据了", 2000);
+                    }
+                    else {
+                        $divdepartments.append(listTpl.render(newData));
+                        currentpage = currentpage * 1 + 1;
+                    }
                 }
             }
         });
     }
-
+    //自定义弹框
+    function Toast(msg, duration) {
+        duration = isNaN(duration) ? 3000 : duration;
+        var m = document.createElement('div');
+        m.innerHTML = msg;
+        m.style.cssText = "width:60%; min-width:150px; background:#000; opacity:0.5; height:40px; color:#fff; line-height:40px; text-align:center; border-radius:5px; position:fixed; top:80%; left:20%; z-index:999999; font-weight:bold;";
+        document.body.appendChild(m);
+        setTimeout(function () {
+            var d = 0.5;
+            m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+            m.style.opacity = '0';
+            setTimeout(function () {
+                document.body.removeChild(m)
+            }, d * 1000);
+        }, duration);
+    }
 
     // function button_bind() {
     //     var indexPT = document.getElementsByName("indexPT");

@@ -92,7 +92,7 @@ public class Users_patientController extends BaseController {
      */
     @RequestMapping(value = "/listPatientLike", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listPatientLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, long uid) {
+    public Map<String, Object> listPatientLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, Long uid) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", patientManage.countLike(name, uid));

@@ -76,7 +76,7 @@
                         </div>--%>
                     </li>
                     <li class="top-tools-item top-logout" id="top-logout">
-                        <a href="${ctx}/doctor/logout" class="top-tools-item-a j-top-logout">
+                        <a href="${ctx}/doctorindex/logout" class="top-tools-item-a j-top-logout">
                             <i class="iconfont">&#xe61e;</i>
                             <span class="tool-name">退出</span>
                         </a>
@@ -142,11 +142,27 @@
                                 <li class="sub-menu-item <c:if test='${subcode==2}'>sub-active</c:if>">
                                     <a class="ajaxify" href='${ctx}/doctor/fixedschedulings/index?pcode=1&subcode=2'>日程表管理</a>
                                 </li>
-                                <li class="sub-menu-item <c:if test='${subcode==3}'>sub-active</c:if>">
-                                    <a class="ajaxify" href='${ctx}/doctor/appointments/index?pcode=1&subcode=3'>预约病人查询</a>
-                                </li>
                                 <%--<li class="sub-menu-item <c:if test='${subcode==4}'>sub-active</c:if>">--%>
                                     <%--<a class="ajaxify" href='${ctx}/doctor/doctors/index?pcode=1&subcode=3'>开药订单</a>--%>
+                                <%--</li>--%>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="page-sidebar-menu-ul">
+                        <li class="menu-item <c:if test='${pcode == 2}'>open active</c:if>">
+                            <a href="javascript:" class="menu-item-a">
+                                <i class="iconfont">&#xe604;</i>
+                                <span class="title">功能</span>
+                                <span class="selected"></span>
+                                <i class="iconfont arrow"></i>
+                            </a>
+                            <ul class="sub-menu sub-menu-hide" data-code="RMsg">
+
+                                <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
+                                    <a class="ajaxify" href='${ctx}/doctor/appointments/index?pcode=2&subcode=1'>预约病人查询</a>
+                                </li>
+                                <%--<li class="sub-menu-item <c:if test='${subcode==4}'>sub-active</c:if>">--%>
+                                <%--<a class="ajaxify" href='${ctx}/doctor/doctors/index?pcode=1&subcode=3'>开药订单</a>--%>
                                 <%--</li>--%>
                             </ul>
                         </li>

@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <title>管理平台</title>
+    <title>用户平台</title>
     <link href="${ctx}/res-build/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
@@ -53,7 +53,7 @@
 
             <div class="input-icon">
                 <i class="iconfont">&#xe601;</i>
-                <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名"
+                <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名" value="user1"
                        name="account" aria-required="true" aria-invalid="false">
             </div>
         </div>
@@ -62,7 +62,7 @@
 
             <div class="input-icon">
                 <i class="iconfont">&#xe609;</i>
-                <input class="form-control placeholder-no-fix valid" type="password" autocomplete="off" placeholder="密码"
+                <input class="form-control placeholder-no-fix valid" type="password" autocomplete="off" placeholder="密码" value="111"
                        name="password" aria-required="true" aria-invalid="false">
             </div>
         </div>
@@ -83,6 +83,9 @@
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
+<script type="text/javascript">
+    var ROOTPAth = "${ctx}";
+</script>
 <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/login"></script>
 
 <%--<script type="text/javascript">

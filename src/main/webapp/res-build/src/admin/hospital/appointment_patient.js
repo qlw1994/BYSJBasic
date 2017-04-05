@@ -54,6 +54,9 @@ define(function (require, exports, module) {
             '{@if item.status==6}',
             '    <td>已支付</td>',
             '{@/if}',
+            '{@if item.status==7}',
+            '    <td>诊断完毕</td>',
+            '{@/if}',
             '{@if item.type==1}',
             '    <td>专家</td>',
             '{@/if}',
@@ -119,6 +122,9 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].serialnumber == null) {
+                                newData.data[i].serialnumber = "未取号";
+                            }
                         });
                         tool.stopPageLoading();
                         $appointmentList.find(".page-info-num").text(res.data.length);

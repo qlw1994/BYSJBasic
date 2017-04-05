@@ -56,7 +56,7 @@ public class PatientManage extends BaseManage {
         PatientExample example = new PatientExample();
         PatientExample.Criteria criteria = example.createCriteria();
         name = name + "%";
-        criteria.andNameEqualTo(name);
+        criteria.andNameLike(name);
         criteria.andUidEqualTo(uid);
         criteria.andDeletedateIsNull();
         return patientMapper.countByExample(example);
@@ -75,7 +75,7 @@ public class PatientManage extends BaseManage {
             example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         }
         name = name + "%";
-        criteria.andNameEqualTo(name);
+        criteria.andNameLike(name);
         criteria.andUidEqualTo(uid);
         criteria.andDeletedateIsNull();
         List<Patient> patient = patientMapper.selectByExample(example);

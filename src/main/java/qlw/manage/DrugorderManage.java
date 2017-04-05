@@ -61,9 +61,10 @@ public class DrugorderManage extends BaseManage {
      * @param drugorder
      * @return
      */
-    public List<Drugorder> listOneDay(String date, Drugorder drugorder) {
+    public List<Drugorder> listOneDay(Integer pageNumber, Integer pageSize,String date, Drugorder drugorder) {
         DrugorderExample example = new DrugorderExample();
         DrugorderExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         if (drugorder.getHospitalid() != null && !drugorder.getHospitalid().equals(init)) {
             criteria.andHospitalidEqualTo(drugorder.getHospitalid());
         }

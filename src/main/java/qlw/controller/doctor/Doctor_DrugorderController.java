@@ -58,7 +58,7 @@ public class Doctor_DrugorderController extends BaseController {
      */
     @RequestMapping(value = "listToday", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorderToday(Long patientid, Long doctorid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorderToday(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Long patientid, Long doctorid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             String dateStr = MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
@@ -66,7 +66,7 @@ public class Doctor_DrugorderController extends BaseController {
             drugorder.setPatientid(patientid);
             drugorder.setDoctorid(doctorid);
             result.put("total", drugorderManage.countOneDay(dateStr, drugorder));
-            result.put("data", drugorderManage.listOneDay(dateStr, drugorder));
+            result.put("data", drugorderManage.listOneDay(page,length,dateStr, drugorder));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -82,11 +82,9 @@ public class Doctor_DrugorderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long patientid, String patientname, HttpServletRequest request) {
+    public ModelAndView View(int pcode, int subcode, Long patientid, String patientname,Long uid, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("doctor/drugorder");
-        if (request.getParameter("uid") != null) {
-            request.getSession().setAttribute("uid", Long.parseLong(request.getParameter("uid")));
-        }
+        request.getSession().setAttribute("uid", uid);
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
         mv.addObject("pcode", pcode);

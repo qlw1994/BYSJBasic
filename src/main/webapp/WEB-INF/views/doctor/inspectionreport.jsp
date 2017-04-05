@@ -16,7 +16,7 @@
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页 <i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">系统配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">预约病人查询</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">检验单管理</a></li>
     </ul>
 </div>
@@ -271,7 +271,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/doctor/inspectionreports/index?pcode=1&subcode=3&uid=${uid}&patientid=${patientid}"
+                <a href="${ctx}/doctor/inspectionreports/index?pcode=2&subcode=1&uid=${uid}&patientid=${patientid}"
                    class="btn btn-success">返回列表</a>
 
             </div>
@@ -309,6 +309,9 @@
         var hospitalname = '${sessionScope.doctor.hospitalname}';
         var uid =${uid};
     </script>
+    <script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/inspectionreport.js"></script>
+            data-init="doctor/inspectionreport"></script>
 </content>

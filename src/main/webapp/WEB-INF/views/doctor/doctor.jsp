@@ -10,14 +10,14 @@
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">账户管理</h3>
+<h3 class="page-title">个人中心</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页 <i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">账户管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医生</a></li>
+        <li><a href="#">个人中心</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">个人信息</a></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
@@ -31,11 +31,11 @@
             <div class="caption">
                 <i id="title_info_zone" class="fa fa-comments">个人信息修改</i>
             </div>
-            <div class="actions">
-                <button class="btn btn-success btn-sm" id="resetPassword" > <i
-                        class="iconfont">&#xe612;</i> <span class="hidden-480" data-id="${sessionScope.doctor.id}">重置密码</span>
-                </button>
-            </div>
+            <%--<div class="actions">--%>
+                <%--<button class="btn btn-success btn-sm" id="resetPassword" > <i--%>
+                        <%--class="iconfont">&#xe612;</i> <span class="hidden-480" data-id="${sessionScope.doctor.id}">重置密码</span>--%>
+                <%--</button>--%>
+            <%--</div>--%>
         </div>
         <div class="portlet-body form">
             <form class="form-horizontal" id="vDoctorForm">
@@ -56,14 +56,14 @@
                                 <label class="col-md-3 control-label">医院</label>
                                 <div class="col-md-8">
                                     <input type="hidden" name="hospitalid">
-                                    <input type="text"  AUTOCOMPLETE="off" name="hospitalname" disabled="disabled">
+                                    <input type="text"  AUTOCOMPLETE="off" name="hospitalname" value="${sessionScope.doctor.hospitalname}" disabled="disabled">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">科室</label>
                                 <div class="col-md-8">
                                     <input type="hidden" name="departmentid">
-                                    <input type="text"  AUTOCOMPLETE="off" name="departmentname" disabled="disabled">
+                                    <input type="text"  AUTOCOMPLETE="off" name="departmentname"  disabled="disabled" value="${sessionScope.doctor.departmentname}" >
                                     <ul class="list" id="mod_departmentList">
                                     </ul>
                                 </div>
@@ -103,9 +103,9 @@
                                 <label class="col-md-3 control-label">医生级别</label>
                                 <div class="col-md-8">
                                     <label class="radio-inline">  <input type="radio"  value="1" disabled="disabled"
-                                                                         name="type">专家</label>
+                                                                         name="level">专家</label>
                                     <label class="radio-inline">  <input type="radio"  value="2" disabled="disabled"
-                                                                         name="type">普通</label>
+                                                                         name="level">普通</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,7 +125,7 @@
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"
                                            disabled="disabled"
-                                           name="password_again">
+                                           name="idnumber">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -146,7 +146,7 @@
                         <button type="submit" class="btn btn-success j-form-save" style="display: none">
                             <i class="iconfont">&#xe62c;</i> 保存
                         </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
                         <%-- <button type="submit" class="btn btn-success">修改</button>
                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
                     </div>
@@ -173,7 +173,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="closeDivlink" class="btn btn-danger j-modal-closebtn">关闭</a>
+                <a id="closeDivlink" class="btn btn-danger j-modal-closebtn" data-dismiss="modal">关闭</a>
             </div>
         </div>
     </div>
@@ -201,6 +201,7 @@
 <content tag="jsconfig">
     <script type="text/javascript">
         var doctorid = ${sessionScope.doctor.id};
+        var hospitalid="${sessionScope.doctor.hospitalid}"
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="doctor/doctor.js"></script>
 </content>

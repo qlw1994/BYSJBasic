@@ -3,18 +3,20 @@
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <content tag="cssconfig">
+    <link rel="stylesheet" type="text/css" href="${ctx}/res-build/res/echarts/css/css.css">
+    <link rel="stylesheet" href="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/css/jquery-ui-1.10.3.custom.css"/>
     <link href="${ctx}/res-build/css/sys.css" rel="stylesheet" type="text/css"/>
-
     <link href="${ctx}/res-build/res/module/ajaxpage/css/page.css" rel="stylesheet" type="text/css"/>
 </content>
 
 <body>
+<h3 class="page-title">""</h3>
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-search clearfix">
                 <div class="caption">
-                   就诊人选择
+                    就诊人选择
                 </div>
                 <form class="form-inline" id="search-form">
                     <%--<div class="form-group">--%>
@@ -31,9 +33,10 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-info" id="search">查询</button>
+
                 </form>
-                <div class="actions">
-                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                <div class="actions" >
+                    <a style="margin-top: -4%;float: right" class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
                             class="iconfont">&#xe612;</i> <span class="hidden-480">添加就诊人</span>
                     </a>
                 </div>
@@ -42,7 +45,7 @@
         </div>
     </div>
 </div>
-<div id="patients"></div>
+<div id="patients" style="background-color: white"></div>
 
 <div class="modal fade" id="addModal">
     <div class="modal-dialog">
@@ -69,38 +72,39 @@
                                 <label class="col-md-3 control-label">就诊人类型</label>
 
                                 <div class="col-md-8">
-                                    <label class="radio-inline">  <input type="radio"  value="1"
-                                                                         name="type">成人</label>
+                                    <label class="radio-inline"> <input type="radio" value="1"
+                                                                        name="type">成人</label>
 
-                                    <label class="radio-inline"> <input type="radio"  value="2"
+                                    <label class="radio-inline"> <input type="radio" value="2"
                                                                         name="type">儿童</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">就诊人性别</label>
                                 <div class="col-md-8">
-                                    <label class="radio-inline">  <input type="radio"  value="1"
-                                                                         name="sex">男</label>
+                                    <label class="radio-inline"> <input type="radio" value="1"
+                                                                        name="sex">男</label>
 
-                                    <label class="radio-inline"> <input type="radio"  value="2"
+                                    <label class="radio-inline"> <input type="radio" value="2"
                                                                         name="sex">女</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">就诊人出生日期</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_birthday" name="birthday" readonly disabled="disabled">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_birthday"
+                                           name="birthday" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">证件类型</label>
                                 <div class="col-md-8">
-                                    <select  name="idtype" class="form-control">
-                                        <option  value="" selected="selected">请选择</option>
-                                        <option  value="1">二代身份证</option>
-                                        <option  value="2">港澳居民身份证</option>
-                                        <option  value="3">台湾居民身份证</option>
-                                        <option  value="4">护照</option>
+                                    <select name="idtype" class="form-control">
+                                        <option value="" selected="selected">请选择</option>
+                                        <option value="1">二代身份证</option>
+                                        <option value="2">港澳居民身份证</option>
+                                        <option value="3">台湾居民身份证</option>
+                                        <option value="4">护照</option>
                                     </select>
                                 </div>
                             </div>
@@ -121,12 +125,12 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">监护人证件类型</label>
                                 <div class="col-md-8">
-                                    <select  name="guardianidtype" class="form-control">
-                                        <option  value="" selected="selected">请选择</option>
-                                        <option  value="1">二代身份证</option>
-                                        <option  value="2">港澳居民身份证</option>
-                                        <option  value="3">台湾居民身份证</option>
-                                        <option  value="4">护照</option>
+                                    <select name="guardianidtype" class="form-control">
+                                        <option value="" selected="selected">请选择</option>
+                                        <option value="1">二代身份证</option>
+                                        <option value="2">港澳居民身份证</option>
+                                        <option value="3">台湾居民身份证</option>
+                                        <option value="4">护照</option>
                                     </select>
                                 </div>
                             </div>
@@ -163,124 +167,124 @@
 </div>
 <!-- /.modal -->
 <%--<div class="modal fade" id="modifyModal">--%>
-    <%--<div class="modal-dialog">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<button type="button" class="close" data-dismiss="modal">--%>
-                    <%--<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>--%>
-                <%--</button>--%>
-                <%--<h4 class="modal-title">修改就诊人</h4>--%>
-            <%--</div>--%>
-            <%--<form class="form-horizontal" id="vPatientModifyForm">--%>
+<%--<div class="modal-dialog">--%>
+<%--<div class="modal-content">--%>
+<%--<div class="modal-header">--%>
+<%--<button type="button" class="close" data-dismiss="modal">--%>
+<%--<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>--%>
+<%--</button>--%>
+<%--<h4 class="modal-title">修改就诊人</h4>--%>
+<%--</div>--%>
+<%--<form class="form-horizontal" id="vPatientModifyForm">--%>
 
-                <%--<div class="modal-body">--%>
-                    <%--<div class="portlet-body form j-disabled-item">--%>
-                        <%--<div class="form-body">--%>
-                            <%--<input type="hidden" name="id">--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">姓名</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<input type="text" AUTOCOMPLETE="off" class="form-control" name="name"--%>
-                                           <%--placeholder="姓名" disabled="disabled">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">就诊人类型</label>--%>
+<%--<div class="modal-body">--%>
+<%--<div class="portlet-body form j-disabled-item">--%>
+<%--<div class="form-body">--%>
+<%--<input type="hidden" name="id">--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">姓名</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<input type="text" AUTOCOMPLETE="off" class="form-control" name="name"--%>
+<%--placeholder="姓名" disabled="disabled">--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">就诊人类型</label>--%>
 
-                                <%--<div class="col-md-8">--%>
-                                    <%--<label class="radio-inline">  <input type="radio"  value="1" disabled="disabled"--%>
-                                                                         <%--name="type">成人</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<label class="radio-inline">  <input type="radio"  value="1" disabled="disabled"--%>
+<%--name="type">成人</label>--%>
 
-                                    <%--<label class="radio-inline"> <input type="radio"  value="2" disabled="disabled"--%>
-                                                                        <%--name="type">儿童</label>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">就诊人性别</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<label class="radio-inline">  <input type="radio"  value="1"--%>
-                                                                         <%--name="sex" disabled="disabled">男</label>--%>
-                                    <%--<label class="radio-inline">  <input type="radio" value="2"--%>
-                                                                         <%--name="sex" disabled="disabled">女</label>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">就诊人出生日期</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_birthday" name="birthday" contenteditable="false" disabled="disabled">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">证件类型</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<select  name="idtype" class="form-control" disabled="disabled">--%>
-                                        <%--<option  value="1">二代身份证</option>--%>
-                                        <%--<option  value="2">港澳居民身份证</option>--%>
-                                        <%--<option  value="3">台湾居民身份证</option>--%>
-                                        <%--<option  value="4">护照</option>--%>
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">证件号码</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"--%>
-                                           <%--name="idnumber" disabled="disabled">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">监护人姓名</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="监护人姓名"--%>
-                                           <%--name="guardianname" disabled="disabled">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">监护人证件类型</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<select  name="guardianidtype" class="form-control" disabled="disabled">--%>
-                                        <%--<option  value="1">二代身份证</option>--%>
-                                        <%--<option  value="2">港澳居民身份证</option>--%>
-                                        <%--<option  value="3">台湾居民身份证</option>--%>
-                                        <%--<option  value="4">护照</option>--%>
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">监护人证件号码</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"--%>
-                                           <%--name="guardianidnumber" disabled="disabled">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+<%--<label class="radio-inline"> <input type="radio"  value="2" disabled="disabled"--%>
+<%--name="type">儿童</label>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">就诊人性别</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<label class="radio-inline">  <input type="radio"  value="1"--%>
+<%--name="sex" disabled="disabled">男</label>--%>
+<%--<label class="radio-inline">  <input type="radio" value="2"--%>
+<%--name="sex" disabled="disabled">女</label>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">就诊人出生日期</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<input type="text" AUTOCOMPLETE="off" class="form-control" id="mod_birthday" name="birthday" contenteditable="false" disabled="disabled">--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">证件类型</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<select  name="idtype" class="form-control" disabled="disabled">--%>
+<%--<option  value="1">二代身份证</option>--%>
+<%--<option  value="2">港澳居民身份证</option>--%>
+<%--<option  value="3">台湾居民身份证</option>--%>
+<%--<option  value="4">护照</option>--%>
+<%--</select>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">证件号码</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"--%>
+<%--name="idnumber" disabled="disabled">--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">监护人姓名</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="监护人姓名"--%>
+<%--name="guardianname" disabled="disabled">--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">监护人证件类型</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<select  name="guardianidtype" class="form-control" disabled="disabled">--%>
+<%--<option  value="1">二代身份证</option>--%>
+<%--<option  value="2">港澳居民身份证</option>--%>
+<%--<option  value="3">台湾居民身份证</option>--%>
+<%--<option  value="4">护照</option>--%>
+<%--</select>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">监护人证件号码</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"--%>
+<%--name="guardianidnumber" disabled="disabled">--%>
+<%--</div>--%>
+<%--</div>--%>
 
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">手机号码</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="手机号码"--%>
-                                           <%--name="phone" disabled="disabled">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<!-- END FORM-->--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="modal-footer">--%>
-                        <%--<button type="button" class="btn btn-success j-form-edit">--%>
-                            <%--<i class="iconfont">&#xe61c;</i> 我要编辑--%>
-                        <%--</button>--%>
-                        <%--<button type="submit" class="btn btn-success j-form-save" style="display: none">--%>
-                            <%--<i class="iconfont">&#xe62c;</i> 保存--%>
-                        <%--</button>--%>
-                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
-                        <%--&lt;%&ndash; <button type="submit" class="btn btn-success">修改</button>--%>
-                     <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>&ndash;%&gt;--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</form>--%>
-        <%--</div>--%>
-        <%--<!-- /.modal-content -->--%>
-    <%--</div>--%>
-    <%--<!-- /.modal-dialog -->--%>
+<%--<div class="form-group">--%>
+<%--<label class="col-md-3 control-label">手机号码</label>--%>
+<%--<div class="col-md-8">--%>
+<%--<input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="手机号码"--%>
+<%--name="phone" disabled="disabled">--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<!-- END FORM-->--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="modal-footer">--%>
+<%--<button type="button" class="btn btn-success j-form-edit">--%>
+<%--<i class="iconfont">&#xe61c;</i> 我要编辑--%>
+<%--</button>--%>
+<%--<button type="submit" class="btn btn-success j-form-save" style="display: none">--%>
+<%--<i class="iconfont">&#xe62c;</i> 保存--%>
+<%--</button>--%>
+<%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+<%--&lt;%&ndash; <button type="submit" class="btn btn-success">修改</button>--%>
+<%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>&ndash;%&gt;--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</form>--%>
+<%--</div>--%>
+<%--<!-- /.modal-content -->--%>
+<%--</div>--%>
+<%--<!-- /.modal-dialog -->--%>
 <%--</div>--%>
 <div class="modal fade bs-example-modal-sm" id="modal-box" tabindex="-1" role="dialog"
      aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -297,7 +301,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/patients/index?pcode=1&subcode=2&uid=${uid}"
+                <a href="${ctx}/user/patients/patientChosen?hospitalid=${hospitalid}&hospitalname=${hospitalname}"
                    class="btn btn-success">返回列表</a>
 
             </div>
@@ -327,9 +331,10 @@
 <content tag="jsconfig">
     <script type="text/javascript">
         var currentpage = ${currentpage};
+        var uid =${sessionScope.user.id};
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
-    <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>
+    <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/patient_chosen"></script>
 
 </content>

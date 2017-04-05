@@ -74,7 +74,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/schedulings/list',
+                    url: ROOTPAth + '/admin/schedulings/getSchedulings',
                     type: 'POST',
                     dataType: 'json',
                     data: function () {

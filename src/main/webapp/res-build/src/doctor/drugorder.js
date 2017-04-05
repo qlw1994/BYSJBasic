@@ -25,7 +25,7 @@ define(function (require, exports, module) {
 
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="6" style="text-align:center">',
             '暂无记录,请添加',
@@ -57,13 +57,13 @@ define(function (require, exports, module) {
             '{@/if}',
             '{@if item.status==2}',
             '    <td>已取药</td>',
-
+            '{@/if}',
             '    <td class=" heading">',
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}" data-advice="${item.advice}" data-status="${item.status}"><span class="iconfont iconfont-xs">&#xe62d;</span>修改</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/drugorderdetails/index?pcode=1&subcode=3&drugorderid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span> 查看详情</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/drugorderdetails/index?pcode=2&subcode=1&drugorderid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span> 查看详情</a>',
             '{@if item.status==1}',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/doctor/drugorders/modDrugorderStatus?pcode=1&subcode=3&id=${item.id}&status=2" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取药</a>',
+            ' <button class="btn btn-default btn-xs j-QR"  data-id=${item.id} data-status="2" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取药</button>',
             '{@/if}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
 
@@ -79,7 +79,6 @@ define(function (require, exports, module) {
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
-            $("#service").val(service);
             if (returnUrl == -1 || returnUrl == "") {
                 pageIndex.resetgoto(1);
             } else {
@@ -101,7 +100,7 @@ define(function (require, exports, module) {
                     dataType: 'json',
                     data: {
                         patientid: patientid,
-                        doctor:doctorid,
+                        doctorid:doctorid,
                         length: pagelength
 
                     },
@@ -123,6 +122,15 @@ define(function (require, exports, module) {
                             onConfirm: function (event, element) {
                                 event.preventDefault();
                                 self.deleteDrugorder($(element));
+                            }
+                        });
+                        $table.find(".j-QR").confirmation({
+                            title: "确定吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.modDrugorder($(element));
                             }
                         });
                     }
@@ -405,7 +413,7 @@ define(function (require, exports, module) {
 
                     var updatePath = ROOTPAth + '/doctor/drugorders/modDrugorder';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
-                        if (data.code === 1) {
+                        if (data.code == 1) {
                             $('#modifyModal').modal('hide');
                             $addRoletipModal.find(".dialogtip-msg").html("订单修改成功");
                             $addRoletipModal.modal('show');
@@ -522,7 +530,7 @@ define(function (require, exports, module) {
                 url: delPath,
                 type: "POST",
                 success: function (data) {
-                    if (data.code === 1) {
+                    if (data.code == 1) {
                         $addRoletipModal.find(".dialogtip-msg").html(data.message);
                         $addRoletipModal.modal('show');
                         pageIndex.reset();
@@ -534,7 +542,28 @@ define(function (require, exports, module) {
             });
 
         },
+        modDrugorder: function ($that) {
+            var id = $that.data("id");
+            var status = $that.data("status");
+            var Path = ROOTPAth + '/doctor/drugorders/modDrugorderStatus/';
+            $.ajax({
+                url: Path,
+                type: "POST",
+                data: {
+                    id: id,
+                    status: status
+                },
+                success: function (data) {
+                    if (data.code == 1) {
+                        pageIndex.reset();
+                    } else {
+                        $("#ajax_fail").find("h4").html(data.message);
+                        $("#ajax_fail").modal("show")
+                    }
+                }
+            });
 
+        }
     };
 
     function get_drugs_addModel(obj) {
@@ -582,6 +611,8 @@ define(function (require, exports, module) {
                 },
             });
         }, 500);
+
+
     }
 
     Utilitiy.init();

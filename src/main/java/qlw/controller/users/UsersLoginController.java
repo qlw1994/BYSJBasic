@@ -76,6 +76,6 @@ public class UsersLoginController extends BaseController {
     @RequestMapping(value = "/userindex/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("user");
-        return "users/index";
+        return "userindex/index";
     }
 }

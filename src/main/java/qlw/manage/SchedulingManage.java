@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.ex.SchedulingExMapper;
 import qlw.model.Scheduling;
 import qlw.model.SchedulingExample;
+import qlw.model.Sysusers;
 import qlw.util.MyUtils;
 
 import java.util.Date;
@@ -64,7 +65,7 @@ public class SchedulingManage extends BaseManage {
      */
     public List<Scheduling> listNext7Day(Scheduling scheduling) {
         SchedulingExample example = new SchedulingExample();
-        example.setOrderByClause("timeflag, date");
+        example.setOrderByClause("date, timeflag");
         SchedulingExample.Criteria criteria = example.createCriteria();
         if (scheduling.getHospitalid() != null && !scheduling.getHospitalid().equals(init)) {
             criteria.andHospitalidEqualTo(scheduling.getHospitalid());
@@ -77,12 +78,12 @@ public class SchedulingManage extends BaseManage {
         }
         Date now = new Date();
         String nowDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(now);
-        Long fTime = now.getTime() + (6 * 24 * 3600000);
+        Long fTime = now.getTime() + (7 * 24 * 3600000);
         Date end = new Date();
         end.setTime(fTime);
         String endDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(end);
         criteria.andDateLessThanOrEqualTo(endDateStr);
-        criteria.andDateGreaterThanOrEqualTo(nowDateStr);
+        criteria.andDateGreaterThan(nowDateStr);
         return schedulingExMapper.selectByExample(example);
     }
 

@@ -11,11 +11,30 @@
 
 <body>
 <h3 class="page-title">""</h3>
-<div class="row" style="background-color: white">
+<div class="row">
     <div class="col-md-12">
         <div class="portlet">
-            <div class="portlet-search clearfix" id="h1_text">
-                <center><h1></h1></center>
+            <div class="portlet-search clearfix">
+                <div class="caption">
+                    ${sessionScope.hospitalname}- 已支付
+                </div>
+                <form class="form-inline" id="search-form">
+                    <%--<div class="form-group">--%>
+                    <%--<label>预约时间</label>--%>
+                    <%--<input type="text" id="appoint_date" autocomplete="off" readonly class="form-control"--%>
+                    <%--name="date" value="${sessionScope.nextdate}"/>--%>
+                    <%--</div>--%>
+                    <div class="form-group">
+                        <label for="departmentname">科室名</label>
+                        <div class="hospital_con">
+                            <input AUTOCOMPLETE="off" name="name" type="text" value="${departmentname}"
+                                   id="departmentname"/>
+                            <ul class="list" id="departmentList">
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-info" id="search">查询</button>
+                </form>
             </div>
 
         </div>
@@ -25,13 +44,12 @@
 
 <content tag="jsconfig">
     <script type="text/javascript">
-        var patientid =${patientid};
         var hospitalid =${hospitalid};
         var hospitalname = "${hospitalname}";
         var currentpage = ${currentpage};
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/departmentqueue"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/department"></script>
 
 </content>

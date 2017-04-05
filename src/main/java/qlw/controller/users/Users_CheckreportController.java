@@ -80,7 +80,7 @@ public class Users_CheckreportController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View( long patientid, String patientname, HttpServletRequest
+    public ModelAndView View( Long patientid, String patientname, HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("users/checkreport");
         request.getSession().setAttribute("patientid", patientid);

@@ -105,15 +105,31 @@ public class DepartmentqueuedetailManage extends BaseManage {
     /**
      * 保存科室队列详情
      *
-     * @param drugdetail
+     * @param departmentqueuedetail
      * @return
      */
-    public Departmentqueuedetail save(Departmentqueuedetail drugdetail) {
-        long i = departmentqueuedetailMapper.insert(drugdetail);
+    public Departmentqueuedetail save(Departmentqueuedetail departmentqueuedetail) {
+        long i = departmentqueuedetailMapper.insert(departmentqueuedetail);
         if (i > 0) {
-            return drugdetail;
+            return departmentqueuedetail;
         }
         return null;
     }
+
+    /**
+     * 获取科室队列中下一个人
+     *
+     * @param departmentqueueid
+     * @return
+     */
+    public Departmentqueuedetail getNext(Long departmentqueueid) {
+        DepartmentqueuedetailExample example = new DepartmentqueuedetailExample();
+        DepartmentqueuedetailExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause(getPage("id asc", 1, 1));
+        criteria.andDepartmentqueueidEqualTo(departmentqueueid);
+        Departmentqueuedetail departmentqueuedetail = departmentqueuedetailMapper.selectByExample(example).get(0);
+        return departmentqueuedetail;
+    }
+
 
 }

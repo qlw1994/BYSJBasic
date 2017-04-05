@@ -9,10 +9,7 @@ import qlw.manage.AppointmentManage;
 import qlw.manage.NumberManage;
 import qlw.manage.PatientManage;
 import qlw.manage.SchedulingManage;
-import qlw.model.Appointment;
-import qlw.model.Patient;
-import qlw.model.Paymentdetail;
-import qlw.model.Scheduling;
+import qlw.model.*;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -72,13 +69,12 @@ public class Users_AppointmentContoller extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientindex")
-    public ModelAndView ViewPatient(long patientid, String patientname, Long uid, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/appointment_patient");
-        request.getSession().setAttribute("uid", uid);
+    public ModelAndView ViewPatient(long patientid, String patientname, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/appointment_patient");
+        Users users = (Users) request.getSession().getAttribute("user");
+        request.getSession().setAttribute("uid", users.getId());
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);
         return mv;
     }
@@ -99,38 +95,6 @@ public class Users_AppointmentContoller extends BaseController {
     }
 
     /**
-     * 预约管理首页跳转  医生版
-     *
-     * @return
-     */
-    @RequestMapping(value = "/doctorindex")
-    public ModelAndView ViewDoctor(long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/appointment_doctor");
-        request.getSession().setAttribute("doctorid", doctorid);
-        request.getSession().setAttribute("doctorname", doctorname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
-        mv.addObject("currentpage", 1);
-        return mv;
-    }
-
-    /**
-     * 预约管理首页跳转  科室
-     *
-     * @return
-     */
-    @RequestMapping(value = "/departmentindex")
-    public ModelAndView ViewDepartment(long departmentid, String departmentname, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/appointment_department");
-        request.getSession().setAttribute("departmentid", departmentid);
-        request.getSession().setAttribute("departmentname", departmentname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
-        mv.addObject("currentpage", 1);
-        return mv;
-    }
-
-    /**
      * 添加预约 （普通挂号也能指定医生）
      *
      * @param schedulingid
@@ -144,35 +108,47 @@ public class Users_AppointmentContoller extends BaseController {
         String rtnMsg = "添加成功";
         try {
             Scheduling scheduling = schedulingManage.getById(schedulingid);
-            Patient patient = patientManage.getById(patientid);
-            String date = scheduling.getDate();
-            int timeflag = scheduling.getTimeflag();
-            int type = scheduling.getType();
-            Long departmentid = scheduling.getDepartmentid();
-            Paymentdetail paymentdetail = new Paymentdetail();
-            if (scheduling.getAppointleftcount() == 0) {
-                rtnMsg = "剩余可预约号源不足,添加失败";
+            if (appointmentManage.patientHasAppointment(patientid)) {
+
+                rtnMsg = "该用户存在其他未完成的预约";
                 rtnCode = ResultCode.ERROR;
             } else {
+                Patient patient = patientManage.getById(patientid);
+                String date = scheduling.getDate();
+                int timeflag = scheduling.getTimeflag();
+                int type = scheduling.getType();
+                Long departmentid = scheduling.getDepartmentid();
+                Paymentdetail paymentdetail = new Paymentdetail();
+                if (scheduling.getAppointleftcount() == 0) {
+                    rtnMsg = "剩余可预约号源不足,添加失败";
+                    rtnCode = ResultCode.ERROR;
+                } else {
+                    String departmentname = (String) request.getSession().getAttribute("departmentname");
+                    String hospitalname = (String) request.getSession().getAttribute("hospitalname");
+                    String doctorname = (String) request.getSession().getAttribute("doctorname");
+                    Appointment appointment = new Appointment();
 
-                Appointment appointment = new Appointment();
-                appointment.setDate(date);
-                appointment.setTimeflag(timeflag);
-                appointment.setType(type);
-                appointment.setDepartmentid(departmentid);
-                appointment.setPatientid(patientid);
-                appointment.setPatientname(patient.getName());
-                appointment.setHospitalid(scheduling.getHospitalid());
-                appointment.setCommittime(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-                appointment.setDoctorid(scheduling.getDoctorid());
-                appointment.setUid(patient.getUid());
-                appointment.setStatus(1);
-                appointment.setRegfee(scheduling.getRegfee());
-                appointment.setSchedulingid(scheduling.getId());
-                scheduling.setAppointleftcount(scheduling.getAppointleftcount() - 1);
+                    appointment.setDepartmentname(departmentname);
+                    appointment.setHospitalname(hospitalname);
+                    appointment.setDoctorname(doctorname);
+                    appointment.setDate(date);
+                    appointment.setTimeflag(timeflag);
+                    appointment.setType(type);
+                    appointment.setDepartmentid(departmentid);
+                    appointment.setPatientid(patientid);
+                    appointment.setPatientname(patient.getName());
+                    appointment.setHospitalid(scheduling.getHospitalid());
+                    appointment.setCommittime(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+                    appointment.setDoctorid(scheduling.getDoctorid());
+                    appointment.setUid(patient.getUid());
+                    appointment.setStatus(1);
+                    appointment.setRegfee(scheduling.getRegfee());
+                    appointment.setSchedulingid(scheduling.getId());
+                    scheduling.setAppointleftcount(scheduling.getAppointleftcount() - 1);
 
-                schedulingManage.update(scheduling);
-                appointmentManage.save(appointment);
+                    schedulingManage.update(scheduling);
+                    appointmentManage.save(appointment);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,8 +23,8 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center">',
-            '暂无记录,请添加',
+            '<td colspan="6" style="text-align:center;background-color: white" >',
+            '暂无记录',
             '</td>',
 
             '</tr>',

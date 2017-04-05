@@ -23,7 +23,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center">',
+            '<td colspan="7" style="text-align:center">',
             '暂无记录,请添加',
             '</td>',
 
@@ -76,7 +76,6 @@ define(function (require, exports, module) {
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
-            $("#service").val(service);
             if (returnUrl == -1 || returnUrl == "") {
                 pageIndex.resetgoto(1);
             } else {

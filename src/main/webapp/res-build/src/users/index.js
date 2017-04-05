@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     //初始化日期
     $(function () {
         $.ajax({
-            url: ROOTPAth + '/doctor/initDate',
+            url: ROOTPAth + '/userindex/initDate',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -33,16 +33,16 @@ define(function (require, exports, module) {
     var listTpl = juicer(
         [
             '{@if total == 0}',
-            '<center><h1>暂无记录,请添加</h1></center>',
+            '<center style="background-color: white"><h1>暂无记录</h1></center>',
             '{@else}',
             '{@each data as item,index}',
-            '<div class="col-md-4 col-sm-6 item">',
+            '<div class="col-md-4 col-sm-6 item" style="padding-top: 1%">',
             '<div class="thumbnail">',
-            '<img class="img-thumbnail" width="140px" height="140px" src="${ctx}/res-build/img/hospital.jpg" alt="${item.name}">',
+            '<img class="img-thumbnail" width="250px" height="140px" src="${ctx}/res-build/img/hospital.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
-            '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a href="' + ROOTPAth + '/user/departments/index?hospitalid=${item.id}&hospitalname=${item.name}" class="btn btn-primary" role="button">预约挂号</a></p>',
+            '<textarea style="resize:none" readonly  class="form-control" name="resume">${item.resume}</textarea>',
+            '<p><a href="' + ROOTPAth + '/user/patients/patientChosen?hospitalid=${item.id}&hospitalname=${item.name}" class="btn btn-primary" role="button">预约挂号</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
             //页面到底部加载新数据
             $(window).scroll(function () {
                 if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-                    fillHospitalLike(0);
+                    fillHospital(0);
                 }
             });
             //点击查询
@@ -108,7 +108,7 @@ define(function (require, exports, module) {
     function get_hospitalLike(obj) {
         var t = setTimeout(function () {
             $.ajax({
-                url: ROOTPAth + '/user/hospitals/listLike',
+                url: ROOTPAth + '/userindex/hospitals/listLike',
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -159,53 +159,16 @@ define(function (require, exports, module) {
             currentpage = 1;
         }
         $.ajax({
-            url: ROOTPAth + '/user/hospitals/list',
+            url: ROOTPAth + '/userindex/hospitals/list',
             type: 'POST',
             dataType: 'json',
-            data: function () {
-                var data = {
-                    province: $("#province").val(),
-                    city: $("#city").val(),
-                    area: $("#area").val(),
-                    length: pagelength,
-                    page: currentpage,
-                    name: $hospitalname.val()
-                };
-                return data;
-            },
-            success: function (res) {
-                console.log(res);
-                tool.stopPageLoading();
-                if (res.code == 1) {
-                    var newData = $.extend({}, res);
-                    $.each(newData.data, function (i, val) {
-                        newData.data[i].currentpage = currentpage;
-                    });
-                    $divhospitals.append(listTpl.render(newData));
-                    currentpage = currentpage * 1 + 1;
-                }
-            }
-        });
-    }
-
-    function fillHospitalLike(reset) {
-        if (reset == 1) {
-            currentpage = 1;
-        }
-        $.ajax({
-            url: ROOTPAth + '/user/hospitals/listLike',
-            type: 'POST',
-            dataType: 'json',
-            data: function () {
-                var data = {
-                    province: $("#province").val(),
-                    city: $("#city").val(),
-                    area: $("#area").val(),
-                    length: pagelength,
-                    page: currentpage,
-                    name: $hospitalname.val()
-                };
-                return data;
+            data: {
+                province: $("#province").val(),
+                city: $("#city").val(),
+                area: $("#area").val(),
+                length: pagelength,
+                page: currentpage,
+                name: $hospitalname.val()
             },
             success: function (res) {
                 console.log(res);
@@ -217,14 +180,79 @@ define(function (require, exports, module) {
                     });
                     if (reset == 1) {
                         $divhospitals.empty();
+                        $divhospitals.append(listTpl.render(newData));
                     }
-                    $divhospitals.append(listTpl.render(newData));
-                    currentpage = currentpage * 1 + 1;
+                    else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                        Toast("没有更多数据了", 2000);
+                    }
+                    else {
+                        $divhospitals.append(listTpl.render(newData));
+                        currentpage = currentpage * 1 + 1;
+                    }
+
                 }
             }
         });
     }
+
+    function fillHospitalLike(reset) {
+        if (reset == 1) {
+            currentpage = 1;
+        }
+        $.ajax({
+            url: ROOTPAth + '/userindex/hospitals/listLike',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                province: $("#province").val(),
+                city: $("#city").val(),
+                area: $("#area").val(),
+                length: pagelength,
+                page: currentpage,
+                name: $hospitalname.val()
+            },
+            success: function (res) {
+                console.log(res);
+                tool.stopPageLoading();
+                if (res.code == 1) {
+                    var newData = $.extend({}, res);
+                    $.each(newData.data, function (i, val) {
+                        newData.data[i].currentpage = currentpage;
+                    });
+                    if (reset == 1) {
+                        $divhospitals.empty();
+                        $divhospitals.append(listTpl.render(newData));
+                    }
+                    else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                        Toast("没有更多数据了", 2000);
+                    }
+                    else {
+                        $divhospitals.append(listTpl.render(newData));
+                        currentpage = currentpage * 1 + 1;
+                    }
+
+                }
+            }
+        });
+    }
+
     new PCAS("province", "city", "area");
+    //自定义弹框
+    function Toast(msg, duration) {
+        duration = isNaN(duration) ? 3000 : duration;
+        var m = document.createElement('div');
+        m.innerHTML = msg;
+        m.style.cssText = "width:60%; min-width:150px; background:#000; opacity:0.5; height:40px; color:#fff; line-height:40px; text-align:center; border-radius:5px; position:fixed; top:80%; left:20%; z-index:999999; font-weight:bold;";
+        document.body.appendChild(m);
+        setTimeout(function () {
+            var d = 0.5;
+            m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+            m.style.opacity = '0';
+            setTimeout(function () {
+                document.body.removeChild(m)
+            }, d * 1000);
+        }, duration);
+    }
 
     Utilitiy.init();
 })

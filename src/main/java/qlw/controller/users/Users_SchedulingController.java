@@ -2,7 +2,10 @@ package qlw.controller.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.FixedschedulingManage;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -146,8 +150,9 @@ public class Users_SchedulingController extends BaseController {
         Scheduling scheduling = new Scheduling();
         scheduling.setDoctorid(doctorid);
         try {
-            result.put("total", 7);
-            result.put("data", schedulingManage.listNext7Day(scheduling));
+            List<Scheduling> schedulingList= schedulingManage.listNext7Day(scheduling);
+            result.put("total", schedulingList.size());
+            result.put("data", schedulingList);
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));

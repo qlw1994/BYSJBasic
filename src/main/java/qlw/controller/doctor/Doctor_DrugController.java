@@ -3,7 +3,6 @@ package qlw.controller.doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.DrugManage;
 import qlw.model.Drug;
@@ -45,22 +44,6 @@ public class Doctor_DrugController extends BaseController {
         }
         result.put("code", ResultCode.SUCCESS);
         return result;
-    }
-
-    /**
-     * 药品管理首页跳转
-     *
-     * @return
-     */
-    @RequestMapping(value = "/index")
-    public ModelAndView View(Long hospitalid, String hospitalname, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/drug");
-        request.getSession().setAttribute("hospitalid", hospitalid);
-        request.getSession().setAttribute("hospitalname", hospitalname);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
-        mv.addObject("currentpage", 1);
-        return mv;
     }
 
     /**
