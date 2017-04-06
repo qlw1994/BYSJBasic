@@ -182,14 +182,18 @@ define(function (require, exports, module) {
             //自定义validate验证输入的数字小数点位数不能大于两位
             jQuery.validator.addMethod("minNumber", function (value, element) {
                 var returnVal = false;
+                var score = /^[0-9]*$/;
                 var ArrMen = value.split(".");    //截取字符串
+                if (!score.test(ArrMen[0]) || !score.test(ArrMen[1])||ArrMen[0]=="") {
+                    return false;
+                }
                 if (ArrMen.length == 2) {
-                    if (ArrMen[1].length = 2) {    //判断小数点后面的字符串长度
+                    if (ArrMen[1].length == 2) {    //判断小数点后面的字符串长度
                         returnVal = true;
                     }
                 }
                 return returnVal;
-            }, "小数点后最多为两位");         //验证错误信息
+            }, "请保留两位小数");         //验证错误信息
             //表单验证-添加用户
             $DrugForm.validate({
                 rules: {

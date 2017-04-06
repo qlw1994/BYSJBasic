@@ -93,7 +93,9 @@ public class DepartmentController extends BaseController {
             }
             Hospital hospital = hospitalManage.getById(department.getHospitalid());
             Departmentqueue departmentqueue = new Departmentqueue();
-            departmentqueue.setNowcount(0);
+            departmentqueue.setNownumber(0);
+            departmentqueue.setNowtotal(0);
+            departmentqueue.setTodaytotal(0);
             departmentqueue.setDepartmentid(department.getId());
             departmentqueue.setDepartmentname(department.getName());
             departmentqueue.setHospitalid(department.getHospitalid());
@@ -226,7 +228,9 @@ public class DepartmentController extends BaseController {
                 departmentqueue.setDepartmentid(department.getId());
                 departmentqueue.setDepartmentname(department.getName());
                 departmentqueue.setHospitalname(hospitalname);
-                departmentqueue.setNowcount(0);
+                departmentqueue.setNowtotal(0);
+                departmentqueue.setNownumber(0);
+                departmentqueue.setTodaytotal(0);
                 departmentqueue.setAvgtime(15);
                 departmentqueueManage.save(departmentqueue);
             }

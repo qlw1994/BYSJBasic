@@ -37,7 +37,9 @@ public class DepartmentqueueController extends BaseController {
     @RequestMapping(value = "reset")
     public boolean resetQueue() {
         Departmentqueue departmentqueue = new Departmentqueue();
-        departmentqueue.setNowcount(0);
+        departmentqueue.setNowtotal(0);
+        departmentqueue.setNownumber(0);
+        departmentqueue.setTodaytotal(0);
         try {
             departmentqueueManage.resetQueue(departmentqueue);
             return true;
@@ -67,7 +69,9 @@ public class DepartmentqueueController extends BaseController {
             } else {
                 Hospital hospital = hospitalManage.getById(department.getHospitalid());
                 Departmentqueue departmentqueue = new Departmentqueue();
-                departmentqueue.setNowcount(0);
+                departmentqueue.setNowtotal(0);
+                departmentqueue.setNownumber(0);
+                departmentqueue.setTodaytotal(0);
                 departmentqueue.setDepartmentid(department.getId());
                 departmentqueue.setDepartmentname(department.getName());
                 departmentqueue.setHospitalid(department.getHospitalid());

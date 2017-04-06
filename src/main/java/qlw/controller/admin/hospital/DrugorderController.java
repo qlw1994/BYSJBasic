@@ -124,6 +124,9 @@ public class DrugorderController extends BaseController {
                 Users users = userManage.getUsersById(patient.getUid());
                 Paymentdetail paymentdetail = new Paymentdetail();
                 paymentdetail.setStatus(0);
+
+                paymentdetail.setPayname(d.getDrugname());
+
                 paymentdetail.setDepartmentid(drugorder.getDepartmentid());
                 paymentdetail.setDepartmentname(department.getName());
                 paymentdetail.setHospitalid(hospital.getId());

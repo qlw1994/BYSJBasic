@@ -197,21 +197,27 @@ define(function (require, exports, module) {
                 var score = /^[0-9]*$/;
                 if (score.test($(this).val())) {
                     $("#add_money").val((1.00 * $(this).val() * $("#add_price").val()).toFixed(2));
-                };
+                }
+                ;
             });
             //修改 -- 药品数量变化
             $("#mod").bind("input onpropertychange", function (e) {
                 var score = /^[0-9]*$/;
                 if (score.test($(this).val())) {
                     $("#mod_money").val((1.00 * $(this).val() * $("#mod_price").val()).toFixed(2));
-                };
+                }
+                ;
             });
             //保留两位小数
             jQuery.validator.addMethod("minNumber", function (value, element) {
                 var returnVal = false;
+                var score = /^[0-9]*$/;
                 var ArrMen = value.split(".");    //截取字符串
+                if (!score.test(ArrMen[0]) || !score.test(ArrMen[1]||ArrMen[0]=="")) {
+                    return false;
+                }
                 if (ArrMen.length == 2) {
-                    if (ArrMen[1].length = 2) {    //判断小数点后面的字符串长度
+                    if (ArrMen[1].length == 2) {    //判断小数点后面的字符串长度
                         returnVal = true;
                     }
                 }
@@ -219,8 +225,8 @@ define(function (require, exports, module) {
             }, "小数点后最多为两位");         //验证错误信息
             // 自定义验证自然数方法
             $.validator.addMethod("isPositive", function (value, element) {
-                var score = /^[1-9]*$/;
-                return score.test(value);
+                var score = /^[0-9]*$/;
+                return score.test(value)&&value!=0;
             }, $.validator.format("请输入正确数值!"));
             //表单验证-添加订单详情
             $DrugorderdetailForm.validate({

@@ -24,7 +24,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="5" style="text-align:center">',
+            '<td colspan="6" style="text-align:center">',
             '暂无记录,请添加',
             '</td>',
 
@@ -36,21 +36,19 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" data-accountname="${item.accountname}">',
             '<tr role="row" class="odd" data-pid="${item.pid}">',
             '<tr role="row" class="odd" data-appid="${item.appid}">',
-            '<tr role="row" class="odd" data-subhoscode="${item.subhoscode}">',
-            '<tr role="row" class="odd" data-subhosname="${item.subhosname}">',
+            '<tr role="row" class="odd" data-publickey="${item.publickey}">',
+            '<tr role="row" class="odd" data-privatekey="${item.privatekey}">',
 
             '{@else}',
             '<tr role="row" class="even" data-accountname="${item.accountname}">',
             '<tr role="row" class="even" data-pid="${item.pid}">',
             '<tr role="row" class="even" data-appid="${item.appid}">',
-            '<tr role="row" class="even" data-subhoscode="${item.subhoscode}">',
-            '<tr role="row" class="even" data-subhosname="${item.subhosname}">',
+            '<tr role="row" class="even" data-publickey="${item.publickey}">',
+            '<tr role="row" class="even" data-privatekey="${item.privatekey}">',
             '{@/if}',
             '    <td>${item.accountname}</td>',
             '    <td>${item.pid}</td>',
             '    <td>${item.appid}</td>',
-            '    <td>${item.subhoscode}</td>',
-            '    <td>${item.subhosname}</td>',
             '    <td class=" heading">',
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal" data-id="${item.id}" data-accountname="${item.accountname}" data-pid="${item.pid}" data-checkkey="${item.checkkey}" data-publickey="${item.publickey}" data-privatekey="${item.privatekey}" data-appid="${item.appid}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             //  '{@if item.id!==1}',
@@ -188,7 +186,6 @@ define(function (require, exports, module) {
                 var privatekey = button.data("privatekey");
                 var id = button.data("id");
 
-                $ModifyForm.find(".modal-body").before(hidden_input);
                 $ModifyForm.find('input[name=accountname]').val(accountname);
                 $ModifyForm.find('input[name=pid]').val(pid);
                 $ModifyForm.find('input[name=appid]').val(appid);
@@ -234,7 +231,7 @@ define(function (require, exports, module) {
                          }*/
                     },
                     pid: "required",
-                    appid: "required",
+                    // appid: "required",
                     checkkey: "required",
                     publickey: "required",
                     privatekey: "required",
@@ -246,7 +243,7 @@ define(function (require, exports, module) {
                         /*   remote: "支付宝账户名重复"*/
                     },
                     pid: "PID不能为空",
-                    appid: "APPID不能为空",
+                    // appid: "APPID不能为空",
                     checkkey: "安全校验码不能为空",
                     publickey: "支付宝公钥不能为空",
                     privatekey: "支付宝私钥不能为空",
@@ -270,7 +267,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-                    var savePath = ROOTPAth + '/admin/alipayaccounts/saveAlipayaccount';
+                    var savePath = ROOTPAth + '/admin/alipayaccounts/newAlipayaccount';
                     $.ajax({
                         type: "POST",
                         url: savePath,
@@ -323,7 +320,7 @@ define(function (require, exports, module) {
                          }*/
                     },
                     pid: "required",
-                    appid: "required",
+                    // appid: "required",
                     checkkey: "required",
                     publickey: "required",
                     privatekey: "required",
@@ -334,7 +331,7 @@ define(function (require, exports, module) {
                         // remote: "与旧账户名相同"
                     },
                     pid: "PID不能为空",
-                    appid: "APPID不能为空",
+                    // appid: "APPID不能为空",
                     checkkey: "安全校验码不能为空",
                     publickey: "支付宝公钥不能为空",
                     privatekey: "支付宝私钥不能为空",

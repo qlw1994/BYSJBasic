@@ -54,7 +54,7 @@ define(function (require, exports, module) {
 
             '    <td class=" heading">',
 
-            ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-format="${item.format}"  data-drugname="${item.drugname}" data-price="${item.price}" data-amount="${item.amount}" data-drugid="${item.drugid}"  data-money="${item.money}"  ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
+            // ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-format="${item.format}"  data-drugname="${item.drugname}" data-price="${item.price}" data-amount="${item.amount}" data-drugid="${item.drugid}"  data-money="${item.money}"  ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
 
             '    </td>',
@@ -209,9 +209,13 @@ define(function (require, exports, module) {
             //保留两位小数
             jQuery.validator.addMethod("minNumber", function (value, element) {
                 var returnVal = false;
+                var score = /^[0-9]*$/;
                 var ArrMen = value.split(".");    //截取字符串
+                if (!score.test(ArrMen[0]) || !score.test(ArrMen[1]||ArrMen[0]=="")) {
+                    return false;
+                }
                 if (ArrMen.length == 2) {
-                    if (ArrMen[1].length = 2) {    //判断小数点后面的字符串长度
+                    if (ArrMen[1].length == 2) {    //判断小数点后面的字符串长度
                         returnVal = true;
                     }
                 }
@@ -219,8 +223,8 @@ define(function (require, exports, module) {
             }, "小数点后最多为两位");         //验证错误信息
             // 自定义验证自然数方法
             $.validator.addMethod("isPositive", function (value, element) {
-                var score = /^[1-9]*$/;
-                return score.test(value);
+                var score = /^[0-9]*$/;
+                return score.test(value)&&value!=0;
             }, $.validator.format("请输入正确数值!"));
             //表单验证-添加订单详情
             $DrugorderdetailForm.validate({

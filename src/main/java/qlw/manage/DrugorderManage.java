@@ -48,10 +48,11 @@ public class DrugorderManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andCreatedateGreaterThanOrEqualTo(startDate);
         }
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andCreatedateGreaterThanOrEqualTo(startDate);
+        //}
         return drugorderExMapper.selectByExample(example);
     }
 
@@ -109,10 +110,11 @@ public class DrugorderManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andCreatedateGreaterThanOrEqualTo(startDate);
         }
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andCreatedateGreaterThanOrEqualTo(startDate);
+        //}
         return drugorderExMapper.countByExample(example);
     }
 

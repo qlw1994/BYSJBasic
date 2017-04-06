@@ -142,5 +142,32 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20160212" level="project" />
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: alipay-sdk:java20170307171631:1.0">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/mylib/alipay-sdk-java20170307171631.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: alipay-sdk:java20170307171631-source:1.0">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/mylib/alipay-sdk-java20170307171631-source.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: commons:logging-1.1.1:1.0">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/mylib/commons-logging-1.1.1-sources.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

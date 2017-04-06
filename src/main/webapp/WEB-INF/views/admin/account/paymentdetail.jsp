@@ -30,79 +30,83 @@
                 <div class="caption">
                     <i class="iconfont">&#xe619;</i> ${uname}-${patientname}- 支付列表
                 </div>
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label>发票号码</label>
-                        <input id="invoicenumber" type="text" name="invoicenumber" AUTOCOMPLETE="off"
-                               placeholder="发票号码">
-                    </div>
-                </form>
-                <div class="page-bar-actions">
-                    <a id="toPayBtn" class="btn btn-success btn-sm" data-toggle="modal"
-                       data-target="#viewPaymentBudgetModal"
-                       href="#"><span class="hidden-480">去支付</span>
-                    </a>
-                </div>
+                <div class="actions">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>发票号码</label>
+                            <input id="invoicenumber" type="text" name="invoicenumber" AUTOCOMPLETE="off"
+                                   placeholder="发票号码">
+                        </div>
 
+                    </form>
+                    <div class="page-bar-actions" style="padding-top: 12%">
+                        <button id="toPayBtn" class="btn btn-success btn-sm"
+                                <%--data-toggle="modal"--%>
+                           <%--data-target="#viewPaymentBudgetModal"--%>
+                          ><span class="hidden-480">去支付</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="portlet-body" id="paymentdatail-list">
-            <div class="table-pages clearfix">
-                <div class="table-page clearfix"></div>
-                <div class="page-length">
-                    <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
-                                                                  class="j-length input-xsmall input-sm input-inline">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select> 条记录
-                </div>
-                <div class="page-info" role="status" aria-live="polite">
-                    <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
-                </div>
+
+    </div>
+    <div class="portlet-body" id="paymentdatail-list">
+        <div class="table-pages clearfix">
+            <div class="table-page clearfix"></div>
+            <div class="page-length">
+                <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
+                                                              class="j-length input-xsmall input-sm input-inline">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+            </select> 条记录
             </div>
-            <div class="table-container">
-                <table class="table table-striped table-bordered table-hover dataTable no-footer"
-                       id="datatable_ajax">
-
-                    <thead>
-                    <tr role="row">
-
-                        <th class="sorting">支付名称</th>
-                        <th class="sorting">规格</th>
-                        <th class="sorting">数量</th>
-                        <th class="sorting">金额</th>
-                        <th class="sorting">医生姓名</th>
-                        <th class="sorting">科室名</th>
-                        <th class="sorting">医院名</th>
-                        <th class="sorting">订单状态</th>
-                        <th class="sorting">支付方式</th>
-                        <th class="sorting">创建日期</th>
-                        <th class="sorting">操作</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="page-info" role="status" aria-live="polite">
+                <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
             </div>
-            <div class="table-pages clearfix">
-                <div class="table-page clearfix"></div>
-                <div class="page-length">
-                    <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
-                                                                  class="j-length input-xsmall input-sm input-inline">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select> 条记录
-                </div>
-                <div class="page-info" role="status" aria-live="polite">
-                    <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
-                </div>
+        </div>
+        <div class="table-container">
+            <table class="table table-striped table-bordered table-hover dataTable no-footer"
+                   id="datatable_ajax">
+
+                <thead>
+                <tr role="row">
+
+                    <th class="sorting">支付名称</th>
+                    <th class="sorting">规格</th>
+                    <th class="sorting">数量</th>
+                    <th class="sorting">金额</th>
+                    <th class="sorting">医生姓名</th>
+                    <th class="sorting">科室名</th>
+                    <th class="sorting">医院名</th>
+                    <th class="sorting">订单状态</th>
+                    <th class="sorting">支付方式</th>
+                    <th class="sorting">创建日期</th>
+                    <th class="sorting">操作</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-pages clearfix">
+            <div class="table-page clearfix"></div>
+            <div class="page-length">
+                <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
+                                                              class="j-length input-xsmall input-sm input-inline">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+            </select> 条记录
+            </div>
+            <div class="page-info" role="status" aria-live="polite">
+                <span class="seperator">|</span> 总共获取 <span class="page-info-num"></span> 条记录
             </div>
         </div>
     </div>
@@ -219,7 +223,7 @@
             <div class="modal-body">
                 <div class="table-container">
                     <table class="table table-striped table-bordered table-hover dataTable no-footer"
-                           id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
+                           id="datatable_ajax2" aria-describedby="datatable_ajax_info" role="grid">
                         <thead>
                         <tr role="row">
                             <th class="sorting" style="width:80px;">名称</th>
@@ -270,6 +274,7 @@
     <script type="text/javascript">
         var currentpage = ${currentpage};
         var hospitalid = ${hospitalid};
+        var hospitalname="${hospitalname}";
         var uid =${uid};
         var uname = "${uname}";
         var patientid =${patientid};
@@ -279,5 +284,5 @@
     <script type="text/javascript" src="${ctx}/res-build/res/js/JsBarcode.all.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/res/js/JsBarcode.code128.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/paymentdatail.js"></script>
+            data-init="admin/account/paymentdetail"></script>
 </content>

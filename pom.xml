@@ -310,6 +310,35 @@
       <artifactId>commons-httpclient</artifactId>
       <version>3.1</version>
     </dependency>
+
+    <dependency>
+      <groupId>alipay-sdk</groupId>
+      <artifactId>java20170307171631</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:/Users/wiki/.m2/repository/mylib/alipay-sdk-java20170307171631.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>alipay-sdk</groupId>
+      <artifactId>java20170307171631-source</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:/Users/wiki/.m2/repository/mylib/alipay-sdk-java20170307171631-source.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>commons</groupId>
+      <artifactId>logging-1.1.1</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:/Users/wiki/.m2/repository/mylib/commons-logging-1.1.1.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>commons</groupId>
+      <artifactId>logging-1.1.1</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:/Users/wiki/.m2/repository/mylib/commons-logging-1.1.1-sources.jar</systemPath>
+    </dependency>
   </dependencies>
   <build>
     <finalName>BYSJ</finalName>

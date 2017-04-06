@@ -424,63 +424,63 @@ public class DepartmentqueueExample {
             return (Criteria) this;
         }
 
-        public Criteria andNowcountIsNull() {
-            addCriterion("nowcount is null");
+        public Criteria andNowtotalIsNull() {
+            addCriterion("nowtotal is null");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountIsNotNull() {
-            addCriterion("nowcount is not null");
+        public Criteria andNowtotalIsNotNull() {
+            addCriterion("nowtotal is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountEqualTo(Integer value) {
-            addCriterion("nowcount =", value, "nowcount");
+        public Criteria andNowtotalEqualTo(Integer value) {
+            addCriterion("nowtotal =", value, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountNotEqualTo(Integer value) {
-            addCriterion("nowcount <>", value, "nowcount");
+        public Criteria andNowtotalNotEqualTo(Integer value) {
+            addCriterion("nowtotal <>", value, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountGreaterThan(Integer value) {
-            addCriterion("nowcount >", value, "nowcount");
+        public Criteria andNowtotalGreaterThan(Integer value) {
+            addCriterion("nowtotal >", value, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("nowcount >=", value, "nowcount");
+        public Criteria andNowtotalGreaterThanOrEqualTo(Integer value) {
+            addCriterion("nowtotal >=", value, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountLessThan(Integer value) {
-            addCriterion("nowcount <", value, "nowcount");
+        public Criteria andNowtotalLessThan(Integer value) {
+            addCriterion("nowtotal <", value, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountLessThanOrEqualTo(Integer value) {
-            addCriterion("nowcount <=", value, "nowcount");
+        public Criteria andNowtotalLessThanOrEqualTo(Integer value) {
+            addCriterion("nowtotal <=", value, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountIn(List<Integer> values) {
-            addCriterion("nowcount in", values, "nowcount");
+        public Criteria andNowtotalIn(List<Integer> values) {
+            addCriterion("nowtotal in", values, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountNotIn(List<Integer> values) {
-            addCriterion("nowcount not in", values, "nowcount");
+        public Criteria andNowtotalNotIn(List<Integer> values) {
+            addCriterion("nowtotal not in", values, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountBetween(Integer value1, Integer value2) {
-            addCriterion("nowcount between", value1, value2, "nowcount");
+        public Criteria andNowtotalBetween(Integer value1, Integer value2) {
+            addCriterion("nowtotal between", value1, value2, "nowtotal");
             return (Criteria) this;
         }
 
-        public Criteria andNowcountNotBetween(Integer value1, Integer value2) {
-            addCriterion("nowcount not between", value1, value2, "nowcount");
+        public Criteria andNowtotalNotBetween(Integer value1, Integer value2) {
+            addCriterion("nowtotal not between", value1, value2, "nowtotal");
             return (Criteria) this;
         }
 
@@ -541,6 +541,126 @@ public class DepartmentqueueExample {
 
         public Criteria andAvgtimeNotBetween(Integer value1, Integer value2) {
             addCriterion("avgtime not between", value1, value2, "avgtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalIsNull() {
+            addCriterion("todaytotal is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalIsNotNull() {
+            addCriterion("todaytotal is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalEqualTo(Integer value) {
+            addCriterion("todaytotal =", value, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalNotEqualTo(Integer value) {
+            addCriterion("todaytotal <>", value, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalGreaterThan(Integer value) {
+            addCriterion("todaytotal >", value, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalGreaterThanOrEqualTo(Integer value) {
+            addCriterion("todaytotal >=", value, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalLessThan(Integer value) {
+            addCriterion("todaytotal <", value, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalLessThanOrEqualTo(Integer value) {
+            addCriterion("todaytotal <=", value, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalIn(List<Integer> values) {
+            addCriterion("todaytotal in", values, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalNotIn(List<Integer> values) {
+            addCriterion("todaytotal not in", values, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalBetween(Integer value1, Integer value2) {
+            addCriterion("todaytotal between", value1, value2, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andTodaytotalNotBetween(Integer value1, Integer value2) {
+            addCriterion("todaytotal not between", value1, value2, "todaytotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberIsNull() {
+            addCriterion("nownumber is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberIsNotNull() {
+            addCriterion("nownumber is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberEqualTo(Integer value) {
+            addCriterion("nownumber =", value, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberNotEqualTo(Integer value) {
+            addCriterion("nownumber <>", value, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberGreaterThan(Integer value) {
+            addCriterion("nownumber >", value, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberGreaterThanOrEqualTo(Integer value) {
+            addCriterion("nownumber >=", value, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberLessThan(Integer value) {
+            addCriterion("nownumber <", value, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberLessThanOrEqualTo(Integer value) {
+            addCriterion("nownumber <=", value, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberIn(List<Integer> values) {
+            addCriterion("nownumber in", values, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberNotIn(List<Integer> values) {
+            addCriterion("nownumber not in", values, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberBetween(Integer value1, Integer value2) {
+            addCriterion("nownumber between", value1, value2, "nownumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andNownumberNotBetween(Integer value1, Integer value2) {
+            addCriterion("nownumber not between", value1, value2, "nownumber");
             return (Criteria) this;
         }
     }

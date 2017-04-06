@@ -19,7 +19,7 @@ define(function (require, exports, module) {
             $("#patientname").change(function () {
                 var option = $(this).children('option:selected');
                 $("#patientid").val(option.data("patientid"));
-                $ModelForm.find("input[name=sex]").eq(option.data("sex") - 1).attr("checked", "checked");
+                $ModelForm.find("input[name=sex]").eq(option.data("sex") - 1).prop("checked", "checked");
                 $ModelForm.find("select[name=idtype]").val(option.data("idtype"));
                 $ModelForm.find("input[name=idnumber]").val(option.data("idnumber"));
                 $ModelForm.find("input[name=birthday]").val(option.data("birthday"));
@@ -101,7 +101,10 @@ define(function (require, exports, module) {
                         $("#patientname").empty();
                         $("#patientname").append("<option data-patientid='' value=''>请选择</option>")
                         $("#patientname").prop("disabled", true);
-
+                        $ModelForm.find("input[name=birthday]").val("");
+                        $ModelForm.find("select[name=idtype]").val("");
+                        $ModelForm.find("input[name=idnumber]").val("");
+                        $ModelForm.find("input[name=sex]:checked").prop('checked',false);
                     }
                     error.insertAfter(element);
                 },

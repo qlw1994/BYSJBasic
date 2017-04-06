@@ -70,7 +70,7 @@ define(function (require, exports, module) {
 
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/departments/index?pcode=2&subcode=1&hospitalid=${item.id}&hospitalname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>科室管理</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugs/index?pcode=2&subcode=1&hospitalid=${item.id}&hospitalname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>药品管理</a>',
-
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/alipayaccounts/index?pcode=2&subcode=1&hospitalid=${item.id}&hospitalname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>支付账号管理</a>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '    </td>',
             '</tr>',

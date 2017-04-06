@@ -8,7 +8,7 @@ define(function (require, exports, module) {
     var pageIndex;
 
     var $table = $("#datatable_ajax");
-    var $paymentdatailList = $("#paymentdatail-list");
+    var $paymentdetailList = $("#paymentdetail-list");
     var $PaymentdatailForm = $('#vPaymentdatailForm');
     var $ModifyForm = $("#vPaymentdatailModifyForm");
     var $modifyModal = $('#modifyModal');
@@ -99,25 +99,29 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/paymentdatails/list',
+                    url: ROOTPAth + '/admin/paymentdetails/list',
                     type: 'POST',
                     dataType: 'json',
-                    data: function () {
-                        var data = {
-                            hospitalid: hospitalid,
-                            patientid: patientid,
-                            length: pagelength
-                        };
-                        return data;
+                    data: {
+                        hospitalid: hospitalid,
+                        patientid: patientid,
+                        length: pagelength
+
                     },
                     success: function (res) {
                         var newData = $.extend({}, res);
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].paytype == null) {
+                                newData.data[i].paytype = "";
+                            }
+                            if (newData.data[i].payname == null) {
+                                newData.data[i].payname = "";
+                            }
                         });
                         tool.stopPageLoading();
-                        $paymentdatailList.find(".page-info-num").text(res.data.length);
+                        $paymentdetailList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除权限
@@ -145,11 +149,11 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $paymentdatailList.on("change", ".j-length", function () {
+            $paymentdetailList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $paymentdatailList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $paymentdetailList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
             //修改表单初始化
@@ -166,42 +170,61 @@ define(function (require, exports, module) {
                 // $modal.find(".j-form-save").hide();
                 // $modal.find(".j-form-edit").show();
             });
-            //预结算
-            $('#viewPaymentBudgetModal').on('show.modal', function (event) {
-                if ($table.find("input[name='checkitem']:checked").length == 0) {
+            $("#toPayBtn").click(function () {
+                var invoicenumber = $("#invoicenumber").val();
+                if (invoicenumber == undefined || invoicenumber == "") {
+                    $("#ajax_fail").find("h4").html("请输入发票号码");
+                    $("#ajax_fail").modal("show");
+                } else if ($table.find("input[name='checkitem']:checked").length == 0) {
                     $("#ajax_fail").find("h4").html("至少选择一项支付");
                     $("#ajax_fail").modal("show")
-                } else {
-                    var invoicenumber = $("#invoicenumber").val();
-                    if (invoicenumber == undefined || invoicenumber == "") {
-                        $("#ajax_fail").find("h4").html("请输入发票号码");
-                        $("#ajax_fail").modal("show")
-                    }
-                    else {
-                        $("#invoicenumber").prop("readonly", true);
-                        var paymentdetailids = "";
-                        var totalmoney = 0;
-                        $table.find("input[name='checkitem']:checkbox:checked").each(function () {
-                            paymentdetailids = paymentdetailids + "|" + $(this).val();
-                            totalmoney = totalmoney * 1 + $(this).data("money") * 1;
-                        });
-                        tool.startPageLoading();
-                        $.ajax({
-                            url: ROOTPAth + "/admin/paymentdetails/paymentBudget",
-                            type: "Post",
-                            dataType: "json",
-                            data: {
-                                paymentdetailids: paymentdetailids,
-                                totalmoney: totalmoney,
-                                invoicenumber: invoicenumber
-                            },
-                            success: function (res) {
-                                tool.stopPageLoading();
-                                fillBudget(res);
-                            }
-                        });
-                    }
                 }
+                else {
+                    $('#viewPaymentBudgetModal').modal("show");
+                }
+            })
+            //预结算
+            $('#viewPaymentBudgetModal').on('show.modal', function (event) {
+                // if ($table.find("input[name='checkitem']:checked").length == 0) {
+                //     $("#ajax_fail").find("h4").html("至少选择一项支付");
+                //     $("#ajax_fail").modal("show")
+                // } else {
+                // var invoicenumber = $("#invoicenumber").val();
+                // if (invoicenumber == undefined || invoicenumber == "") {
+                //     $("#ajax_fail").find("h4").html("请输入发票号码");
+                //     $("#ajax_fail").modal("show");
+                //     return;
+                // }
+                // else {
+                $("#invoicenumber").prop("readonly", true);
+                var paymentdetailids = "";
+                var totalmoney = 0;
+                $table.find("input[name='checkitem']:checkbox:checked").each(function () {
+                    if (paymentdetailids != "") {
+                        paymentdetailids = paymentdetailids + "|" + $(this).val();
+                        totalmoney = totalmoney * 1 + $(this).data("money") * 1;
+                    } else {
+                        paymentdetailids = $(this).val();
+                        totalmoney = totalmoney * 1 + $(this).data("money") * 1;
+                    }
+                });
+                tool.startPageLoading();
+                $.ajax({
+                    url: ROOTPAth + "/admin/paymentdetails/paymentBudget",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        paymentdetailids: paymentdetailids,
+                        totalmoney: totalmoney,
+                        invoicenumber: $("#invoicenumber").val()
+                    },
+                    success: function (res) {
+                        tool.stopPageLoading();
+                        fillBudget(res);
+                    }
+                });
+                // }
+                // }
 
             });
 
@@ -209,7 +232,7 @@ define(function (require, exports, module) {
 
         deletePaymentdatail: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/paymentdatails/delPaymentdatail/' + id;
+            var delPath = ROOTPAth + '/admin/paymentdetails/delPaymentdatail/' + id;
             $.ajax({
                 url: delPath,
                 type: "POST",
@@ -233,11 +256,11 @@ define(function (require, exports, module) {
         if (data) {
             text += '</tr><tr role="row" class="odd">';
             text += '<td><b>金额</b></td>';
-            text += '<td>' + (data.money) + '&nbsp;<input type="hidden" id="budget_money" value="' + data.money + '"/></td>';
+            text += '<td>' + (data.totalmoney) + '&nbsp;<input type="hidden" id="budget_money" value="' + data.totalmoney + '"/></td>';
             text += '</tr><tr role="row" class="even">';
             text += '<td><b>发票</b></td>';
             // text += '<td>' + data.invoicenumber + '&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/></td>';
-            text += '<td id="td_invoicenumber">&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/></td>';
+            text += '<td id="td_invoicenumber">&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/>'+data.invoicenumber+'</td>';
             text += '</tr><tr role="row" class="odd">';
             text += '<td><b>支付方式</b></td>';
             text += '<td><label>'
@@ -252,11 +275,14 @@ define(function (require, exports, module) {
             text = '<tr><td colspan="2">没有找到相关记录</td></tr>';
         }
         $('#budget_content').html(text);
-        getcode("td_invoicenumber", data.invoicenumber);
+        // getcode("td_invoicenumber", data.invoicenumber);
+
     }
+
 
     //选择支付方式后继续支付
     $('#btnContinuePay').click(function () {
+        $('#viewPaymentBudgetModal').modal("hide");
         var paytype = $('input[name="paytype"]').val();
         var paymentdetailids = "";
         var totalmoney = 0;
@@ -301,16 +327,16 @@ define(function (require, exports, module) {
     });
     // 生成条形码
     function getcode(id, str) {
-        var id = id + ""; //转换成字符串
-        var barcode = document.getElementById(id),
-            str = str + "", //转换成字符串
-            options = {
-                format: "CODE128",
-                displayValue: true,
-                fontSize: 14,
-                height: 100
-            };
-        JsBarcode(barcode, str, options);
+        // var barcode = document.getElementById(id);
+        var options = {
+            format: "CODE128",
+            displayValue: true,
+            fontSize: 14,
+            height: 100
+        };
+        // JsBarcode(barcode, str, options);
+
+        $('#'+id).JsBarcode(str,options);//jQuery
     }
 
     Utilitiy.init();

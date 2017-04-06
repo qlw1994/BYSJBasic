@@ -42,15 +42,12 @@ public class PaymentdetailManage extends BaseManage {
             criteria.andHospitalidEqualTo(paymentdetail.getHospitalid());
         }
         if (startdate != null && !"".equals(startdate) && enddate != null && !"".equals(enddate)) {
-            startdate += " 00:00:00";
-            enddate += " 23:59:59";
+            //startdate += " 00:00:00";
+            //enddate += " 23:59:59";
             criteria.andCreatedateBetween(startdate, enddate);
         } else if (enddate != null && !"".equals(enddate)) {
-            enddate += " 23:59:59";
+            //enddate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(enddate);
-        } else {
-            startdate += " 00:00:00";
-            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
         }
         return paymentdetailMapper.selectByExample(example);
     }
@@ -78,10 +75,11 @@ public class PaymentdetailManage extends BaseManage {
         } else if (enddate != null && !"".equals(enddate)) {
             enddate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(enddate);
-        } else {
-            startdate += " 00:00:00";
-            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
         }
+        //else {
+        //    startdate += " 00:00:00";
+        //    criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        //}
         criteria.andStatusEqualTo(1);
         return paymentdetailMapper.selectByExample(example);
     }
@@ -108,10 +106,11 @@ public class PaymentdetailManage extends BaseManage {
         } else if (enddate != null && !"".equals(enddate)) {
             enddate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(enddate);
-        } else {
-            startdate += " 00:00:00";
-            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
         }
+        //else {
+        //    startdate += " 00:00:00";
+        //    criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        //}
         return paymentdetailMapper.countByExample(example);
     }
 
@@ -137,10 +136,11 @@ public class PaymentdetailManage extends BaseManage {
         } else if (enddate != null && !"".equals(enddate)) {
             enddate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(enddate);
-        } else {
-            startdate += " 00:00:00";
-            criteria.andCreatedateGreaterThanOrEqualTo(startdate);
         }
+        //else {
+        //    startdate += " 00:00:00";
+        //    criteria.andCreatedateGreaterThanOrEqualTo(startdate);
+        //}
         criteria.andStatusEqualTo(1);
         return paymentdetailMapper.countByExample(example);
     }

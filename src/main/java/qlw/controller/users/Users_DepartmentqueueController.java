@@ -40,7 +40,7 @@ public class Users_DepartmentqueueController extends BaseController {
         } else {
             Departmentqueue departmentqueue = departmentqueueManage.getById(departmentqueuedetail.getDepartmentqueueid());
             result.put("total", 1);
-            result.put("data", departmentqueue.getNowcount());
+            result.put("data", departmentqueue.getNownumber());
         }
         return result;
     }

@@ -7,8 +7,10 @@
     <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
     <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
     <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
-    <result column="nowcount" property="nowcount" jdbcType="INTEGER" />
+    <result column="nowtotal" property="nowtotal" jdbcType="INTEGER" />
     <result column="avgtime" property="avgtime" jdbcType="INTEGER" />
+    <result column="todaytotal" property="todaytotal" jdbcType="INTEGER" />
+    <result column="nownumber" property="nownumber" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, departmentname, departmentid, hospitalname, hospitalid, nowcount, avgtime
+    id, departmentname, departmentid, hospitalname, hospitalid, nowtotal, avgtime, todaytotal, 
+    nownumber
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.DepartmentqueueExample" >
     select
@@ -103,11 +106,13 @@
   </delete>
   <insert id="insert" parameterType="qlw.model.Departmentqueue" >
     insert into departmentqueue (id, departmentname, departmentid, 
-      hospitalname, hospitalid, nowcount, 
-      avgtime)
+      hospitalname, hospitalid, nowtotal, 
+      avgtime, todaytotal, nownumber
+      )
     values (#{id,jdbcType=BIGINT}, #{departmentname,jdbcType=VARCHAR}, #{departmentid,jdbcType=BIGINT}, 
-      #{hospitalname,jdbcType=VARCHAR}, #{hospitalid,jdbcType=BIGINT}, #{nowcount,jdbcType=INTEGER}, 
-      #{avgtime,jdbcType=INTEGER})
+      #{hospitalname,jdbcType=VARCHAR}, #{hospitalid,jdbcType=BIGINT}, #{nowtotal,jdbcType=INTEGER}, 
+      #{avgtime,jdbcType=INTEGER}, #{todaytotal,jdbcType=INTEGER}, #{nownumber,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="qlw.model.Departmentqueue" >
     insert into departmentqueue
@@ -127,11 +132,17 @@
       <if test="hospitalid != null" >
         hospitalid,
       </if>
-      <if test="nowcount != null" >
-        nowcount,
+      <if test="nowtotal != null" >
+        nowtotal,
       </if>
       <if test="avgtime != null" >
         avgtime,
+      </if>
+      <if test="todaytotal != null" >
+        todaytotal,
+      </if>
+      <if test="nownumber != null" >
+        nownumber,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -150,11 +161,17 @@
       <if test="hospitalid != null" >
         #{hospitalid,jdbcType=BIGINT},
       </if>
-      <if test="nowcount != null" >
-        #{nowcount,jdbcType=INTEGER},
+      <if test="nowtotal != null" >
+        #{nowtotal,jdbcType=INTEGER},
       </if>
       <if test="avgtime != null" >
         #{avgtime,jdbcType=INTEGER},
+      </if>
+      <if test="todaytotal != null" >
+        #{todaytotal,jdbcType=INTEGER},
+      </if>
+      <if test="nownumber != null" >
+        #{nownumber,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -182,11 +199,17 @@
       <if test="record.hospitalid != null" >
         hospitalid = #{record.hospitalid,jdbcType=BIGINT},
       </if>
-      <if test="record.nowcount != null" >
-        nowcount = #{record.nowcount,jdbcType=INTEGER},
+      <if test="record.nowtotal != null" >
+        nowtotal = #{record.nowtotal,jdbcType=INTEGER},
       </if>
       <if test="record.avgtime != null" >
         avgtime = #{record.avgtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.todaytotal != null" >
+        todaytotal = #{record.todaytotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.nownumber != null" >
+        nownumber = #{record.nownumber,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -200,8 +223,10 @@
       departmentid = #{record.departmentid,jdbcType=BIGINT},
       hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
       hospitalid = #{record.hospitalid,jdbcType=BIGINT},
-      nowcount = #{record.nowcount,jdbcType=INTEGER},
-      avgtime = #{record.avgtime,jdbcType=INTEGER}
+      nowtotal = #{record.nowtotal,jdbcType=INTEGER},
+      avgtime = #{record.avgtime,jdbcType=INTEGER},
+      todaytotal = #{record.todaytotal,jdbcType=INTEGER},
+      nownumber = #{record.nownumber,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -221,11 +246,17 @@
       <if test="hospitalid != null" >
         hospitalid = #{hospitalid,jdbcType=BIGINT},
       </if>
-      <if test="nowcount != null" >
-        nowcount = #{nowcount,jdbcType=INTEGER},
+      <if test="nowtotal != null" >
+        nowtotal = #{nowtotal,jdbcType=INTEGER},
       </if>
       <if test="avgtime != null" >
         avgtime = #{avgtime,jdbcType=INTEGER},
+      </if>
+      <if test="todaytotal != null" >
+        todaytotal = #{todaytotal,jdbcType=INTEGER},
+      </if>
+      <if test="nownumber != null" >
+        nownumber = #{nownumber,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -236,8 +267,10 @@
       departmentid = #{departmentid,jdbcType=BIGINT},
       hospitalname = #{hospitalname,jdbcType=VARCHAR},
       hospitalid = #{hospitalid,jdbcType=BIGINT},
-      nowcount = #{nowcount,jdbcType=INTEGER},
-      avgtime = #{avgtime,jdbcType=INTEGER}
+      nowtotal = #{nowtotal,jdbcType=INTEGER},
+      avgtime = #{avgtime,jdbcType=INTEGER},
+      todaytotal = #{todaytotal,jdbcType=INTEGER},
+      nownumber = #{nownumber,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

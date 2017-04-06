@@ -147,15 +147,33 @@ public class Doctor_AppointmentController extends BaseController {
             Departmentqueuedetail departmentqueuedetail = new Departmentqueuedetail();
             //确认取号
             if (status.equals(new Integer(4))) {
-                if (departmentqueue.getNowcount().equals(new Integer(0))) {
-                    departmentqueue.setNowcount(1);
+                //第一人来挂号的人
+                if (departmentqueue.getNowtotal().equals(new Integer(0)) && departmentqueue.getTodaytotal().equals(new Integer(0))) {
+                    departmentqueue.setNowtotal(1);
+                    departmentqueue.setNownumber(1);
+                    departmentqueue.setTodaytotal(1);
                     departmentqueuedetail.setNumber(1);
                     appointment.setSerialnumber(1);
-                } else {
-                    departmentqueue.setNowcount(departmentqueue.getNowcount() + 1);
-                    Integer nowNowcount = departmentqueue.getNowcount();
-                    departmentqueuedetail.setNumber(nowNowcount);
+                }
+                //队伍空 但不是第一个来挂号的人
+                else if (departmentqueue.getNowtotal().equals(new Integer(0))) {
+                    departmentqueue.setNowtotal(1);
+                    //今天历史人数
+                    Integer todaytotal = departmentqueue.getTodaytotal();
+                    departmentqueuedetail.setNumber(todaytotal + 1);
+                    appointment.setSerialnumber(todaytotal + 1);
+                    departmentqueue.setTodaytotal(todaytotal + 1);
 
+                    departmentqueue.setNownumber(todaytotal + 1);
+                }
+                //队伍不为空
+                else {
+                    departmentqueue.setNowtotal(departmentqueue.getNowtotal() + 1);
+                    //今天历史人数
+                    Integer todaytotal = departmentqueue.getTodaytotal();
+                    departmentqueuedetail.setNumber(todaytotal + 1);
+                    appointment.setSerialnumber(todaytotal + 1);
+                    departmentqueue.setTodaytotal(todaytotal + 1);
                 }
                 departmentqueuedetail.setDepartmentqueueid(departmentqueue.getId());
                 departmentqueuedetail.setPatientid(appointment.getPatientid());
@@ -166,17 +184,22 @@ public class Doctor_AppointmentController extends BaseController {
             }
             //诊断完毕 队列更新
             else if (status.equals(new Integer(7))) {
+
                 departmentqueuedetailManage.deleteByPatienid(appointment.getPatientid());
+                departmentqueue.setNowtotal(departmentqueue.getNowtotal()-1);
                 //队列中和还有人
-                if (!departmentqueue.getNowcount().equals(new Integer(0))) {
+                if (!departmentqueue.getNowtotal().equals(new Integer(0))) {
                     departmentqueuedetail = departmentqueuedetailManage.getNext(departmentqueue.getId());
-                    departmentqueue.setNowcount(departmentqueuedetail.getNumber());
+                    departmentqueue.setNownumber(departmentqueuedetail.getNumber());
+                    departmentqueue.setTodaytotal(departmentqueue.getTodaytotal() + 1);
                 }
-                //队列没有人  当前序号为0
+                //队列没有人
                 else {
-                    departmentqueue.setNowcount(0);
+                    departmentqueue.setNownumber(0);
                 }
             }
+            departmentqueueManage.update(departmentqueue);
+            appointmentManage.update(appointment);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "修改预约状态失败";

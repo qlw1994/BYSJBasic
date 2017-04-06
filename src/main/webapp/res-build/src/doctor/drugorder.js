@@ -247,8 +247,8 @@ define(function (require, exports, module) {
             });
             // 自定义验证自然数方法
             $.validator.addMethod("isPositive", function (value, element) {
-                var score = /^[1-9]*$/;
-                return score.test(value);
+                var score = /^[0-9]*$/;
+                return score.test(value)&&value!=0;
             }, $.validator.format("请输入正确数值!"));
             //表单验证-添加订单
             $DrugorderForm.validate({
@@ -432,50 +432,50 @@ define(function (require, exports, module) {
                 $add_total.val($add_total.val() * 1 + 1);
                 var newTotal = $add_total.val();
                 $(this).closest(".form-group").prepend(
-                    '<div class="form-group" id="add_drugName_"' + newTotal + '>' +
+                    '<div class="form-group" id="add_drugName_' + newTotal + '">' +
                     '    <label class="col-md-3 control-label">药品名称</label>' +
                     '    <div class="col-md-8">' +
                     '   <input type="text" class="form-control" AUTOCOMPLETE="off"' +
-                    'id="add_drugName"' + newTotal + ' name="drugorderdetails[' + newTotal * 1 - 1 + '].drugname" placeholder="药品名称">' +
+                    'id="add_drugName' + newTotal + '" name="drugorderdetails[' + (newTotal * 1 - 1) + '].drugname" placeholder="药品名称">' +
                     '    <ul id="add_drugList' + newTotal + '" class="list">' +
                     '    </ul>' +
                     '    </div>' +
                     '    </div>' +
-                    '    <input type="hidden" id="add_drugId_' + newTotal + '" name="drugorderdetails' + newTotal * 1 - 1 + '.drugid">' +
+                    '    <input type="hidden" id="add_drugId_' + newTotal + '" name="drugorderdetails[' + (newTotal * 1 - 1) + '].drugid">' +
                     '    <div class="form-group" id="add_drugAmount_' + newTotal + '">' +
                     '    <label class="col-md-3 control-label">药品数量</label>' +
                     '    <div class="col-md-8">' +
                     '    <input type="text" class="form-control" AUTOCOMPLETE="off"' +
                     'id="add_drugAmount' + newTotal + '" disabled="disabled"' +
-                    ' name="drugorderdetails' + newTotal * 1 - 1 + '.amount" placeholder="药品数量">' +
+                    ' name="drugorderdetails[' + (newTotal * 1 - 1) + '].amount" placeholder="药品数量">' +
                     '    </div>' +
                     '    </div>' +
                     '    <div class="form-group" id="add_drugMoney_' + newTotal + '">' +
                     '    <label class="col-md-3 control-label">药品总价</label>' +
                     '    <div class="col-md-8">' +
                     '    <input type="text" class="form-control" disabled="disabled" id="add_drugMoney' + newTotal + '"' +
-                    'name="drugorderdetails' + newTotal * 1 - 1 + '.money">' +
+                    'name="drugorderdetails[' + (newTotal * 1 - 1) + '].money">' +
                     '    </div>' +
                     '    </div>' +
                     '    <div class="form-group" id="add_drugFormat_' + newTotal + '">' +
                     '    <label class="col-md-3 control-label">药品规格</label>' +
                     '    <div class="col-md-8">' +
                     '    <input type="text" class="form-control" id="add_drugFormat' + newTotal + '"' +
-                    'name="drugorderdetails' + newTotal * 1 - 1 + '.format" disabled="disabled">' +
+                    'name="drugorderdetails[' + (newTotal * 1 - 1) + '].format" disabled="disabled">' +
                     '    </div>' +
                     '    </div>' +
                     '    <div class="form-group" id="add_drugPrice_' + newTotal + '">' +
                     '    <label class="col-md-3 control-label">药品单价</label>' +
                     '    <div class="col-md-8">' +
                     '    <input type="text" class="form-control" id="add_drugPrice' + newTotal + '"' +
-                    'name="drugorderdetails' + newTotal * 1 - 1 + '.price" disabled="disabled">' +
+                    'name="drugorderdetails[' + (newTotal * 1 - 1) + '].price" disabled="disabled">' +
                     '    </div>' +
                     '    </div>'
                 )
                 //添加modal下拉框请求获取商品
                 $("#add_drugName" + newTotal).keyup(function (e) {
                     if (e.keyCode != 40 && e.keyCode != 38) {
-                        get_drugs_addModel($("#gcode_" + newTotal));
+                        get_drugs_addModel($("#add_drugName" + newTotal));
                     }
                 }).focus(function () {
                     this.select();
@@ -489,7 +489,7 @@ define(function (require, exports, module) {
                         data: {
                             hospitalid: hospitalid,
                             name: function () {
-                                return $DrugorderForm.find('input[name="drugorderdetails[0].drugname"]').val();
+                                return $DrugorderForm.find('input[name="drugorderdetails['+(newTotal*1-1)+'].drugname"]').val();
                             }
                         }
                     },

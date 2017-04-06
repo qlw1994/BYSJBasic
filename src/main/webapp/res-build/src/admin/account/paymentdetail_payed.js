@@ -8,7 +8,7 @@ define(function (require, exports, module) {
     var pageIndex;
 
     var $table = $("#datatable_ajax");
-    var $paymentdatailList = $("#paymentdatail-list");
+    var $paymentdetailList = $("#paymentdetail-list");
     var $PaymentdatailForm = $('#vPaymentdatailForm');
     var $ModifyForm = $("#vPaymentdatailModifyForm");
     var $modifyModal = $('#modifyModal');
@@ -100,7 +100,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/paymentdatails/list',
+                    url: ROOTPAth + '/admin/paymentdetails/list',
                     type: 'POST',
                     dataType: 'json',
                     data: function () {
@@ -120,7 +120,7 @@ define(function (require, exports, module) {
                             newData.data[i].currentpage = pageIndex.current;
                         });
                         tool.stopPageLoading();
-                        $paymentdatailList.find(".page-info-num").text(res.data.length);
+                        $paymentdetailList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除权限
@@ -148,11 +148,11 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $paymentdatailList.on("change", ".j-length", function () {
+            $paymentdetailList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $paymentdatailList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $paymentdetailList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
             //修改表单初始化
@@ -173,7 +173,7 @@ define(function (require, exports, module) {
 
         deletePaymentdatail: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/paymentdatails/delPaymentdatail/' + id;
+            var delPath = ROOTPAth + '/admin/paymentdetails/delPaymentdatail/' + id;
             $.ajax({
                 url: delPath,
                 type: "POST",

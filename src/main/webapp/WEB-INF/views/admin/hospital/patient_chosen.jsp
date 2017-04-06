@@ -38,7 +38,7 @@
                     <input type="hidden" id="patientid" name="patientid">
                     <div class="form-group">
                         <label class="col-md-3 control-label">选择服务</label>
-                        <div class="col-md-7">
+                        <div class="col-md-3">
                           <select id="service" name="service"  class="form-control" disabled="disabled">
                               <option value="">请选择</option>
                               <option value="drugorders/index">药品订单管理</option>

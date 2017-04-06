@@ -6,7 +6,6 @@ import qlw.model.DepartmentqueueExample;
 import qlw.util.annotation.BatisRepository;
 
 import java.util.List;
-
 @BatisRepository
 public interface DepartmentqueueMapper {
     int countByExample(DepartmentqueueExample example);

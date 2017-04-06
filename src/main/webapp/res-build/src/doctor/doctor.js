@@ -63,8 +63,8 @@ define(function (require, exports, module) {
             });
             //自定义验证大于0方法
             $.validator.addMethod("isPositive", function (value, element) {
-                var score = /^[1-9]*$/;
-                return this.optional(element) || (score.test(value));
+                var score = /^[0-9]*$/;
+                return score.test(value)&&value!=0;
             }, $.validator.format("请输入正确的年龄!"));
             //表单验证-修改用户
             $DoctorForm.validate({

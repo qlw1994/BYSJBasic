@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 public class AlipayConfig {
 
     public static String ALIPAY_GATEWAY_NEW = "http://wappaygw.alipay.com/service/rest.htm?";
-
     // 支付类型 ，无需修改
     public static String payment_type = "1";
 
@@ -27,11 +26,10 @@ public class AlipayConfig {
     public static String service = "alipay.wap.create.direct.pay.by.user";
 
     // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-//    public static String notify_url = "http://115.236.19.147:13680/diagnosispayH5/paymentConfirm";
-    public static String notify_url = " http://115.236.19.147:13680/diagnosispayH5/paymentConfirm4Ali";
+    public static String notify_url = "";
    
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    public static String return_url = "http://115.236.19.147:13680/api/diagnosispayH5/return_url";
+    public static String return_url = "";
 
     // 签名方式
     public static String sign_type = "MD5";

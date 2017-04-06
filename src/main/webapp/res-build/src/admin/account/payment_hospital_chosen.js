@@ -79,7 +79,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
 
-                    window.location.href = ROOTPAth + "/admin/paymentdetails/index?pcode=1&subcode=2&patientid=" + patientid + "&patientname=" + patientname + "&hospitalid=" + $("#hospitalid").val() + "$hospitalname=" + $("#hospitalname").val();
+                    window.location.href = ROOTPAth + "/admin/paymentdetails/index?pcode=1&subcode=2&patientid=" + patientid + "&patientname=" + patientname + "&hospitalid=" + $("#hospitalid").val() + "&hospitalname=" + $("#hospitalname").val();
 
 
                 }

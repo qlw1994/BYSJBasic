@@ -88,5 +88,5 @@
         var patientname = "${patientname}";
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/account/paymentdetail_hospital_chosen.js"></script>
+            data-init="admin/account/payment_hospital_chosen"></script>
 </content>

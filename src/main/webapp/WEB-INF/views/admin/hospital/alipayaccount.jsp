@@ -10,12 +10,12 @@
 </content>
 <body id="body">
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">系统配置</h3>
+<h3 class="page-title">医院配置</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> <a href="index.html">主页</a> <i class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">系统配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">医院管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">支付宝帐号</a></li>
     </ul>
@@ -28,6 +28,11 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="iconfont">&#xe619;</i> ${hospitalname}- 支付宝帐号
+                </div>
+                <div class="actions">
+                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                            class="iconfont">&#xe612;</i> <span class="hidden-480">添加账号</span>
+                    </a>
                 </div>
             </div>
 
@@ -57,8 +62,6 @@
                         <th class="sorting">支付宝帐号</th>
                         <th class="sorting">PID</th>
                         <th class="sorting">APPID</th>
-                        <th class="sorting">subhoscode</th>
-                        <th class="sorting">subhosname</th>
                         <th class="sorting">操作</th>
                     </tr>
                     </thead>
@@ -143,20 +146,7 @@
                                               placeholder="商户私钥"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">subhoscode</label>
-                                <div class="col-md-8">
-                                    <input AUTOCOMPLETE="off" type="text" class="form-control" name="subhoscode"
-                                           placeholder="subhoscode">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">subhosname</label>
-                                <div class="col-md-8">
-                                    <input AUTOCOMPLETE="off" type="text" class="form-control" name="subhosname"
-                                           placeholder="subhosname">
-                                </div>
-                            </div>
+
                         </div>
                         <!-- END FORM-->
                     </div>
@@ -239,20 +229,6 @@
                                               placeholder="商户私钥"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">subhoscode</label>
-                                <div class="col-md-8">
-                                    <input AUTOCOMPLETE="off" type="text" class="form-control" name="subhoscode"
-                                           placeholder="subhoscode">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">subhosname</label>
-                                <div class="col-md-8">
-                                    <input AUTOCOMPLETE="off" type="text" class="form-control" name="subhosname"
-                                           placeholder="subhosname">
-                                </div>
-                            </div>
                             <!-- END FORM-->
                         </div>
                     </div>
@@ -326,5 +302,5 @@
         var hospitalid =${hospitalid};
         var hospitalname = "${hospitalname}";
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/alipay.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/alipayaccount"></script>
 </content>

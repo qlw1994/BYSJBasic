@@ -1,7 +1,5 @@
 package qlw.model;
 
-import java.util.List;
-
 public class Departmentqueue {
     private Long id;
 
@@ -13,9 +11,13 @@ public class Departmentqueue {
 
     private Long hospitalid;
 
-    private Integer nowcount;
+    private Integer nowtotal;
 
     private Integer avgtime;
+
+    private Integer todaytotal;
+
+    private Integer nownumber;
 
     public Long getId() {
         return id;
@@ -57,12 +59,12 @@ public class Departmentqueue {
         this.hospitalid = hospitalid;
     }
 
-    public Integer getNowcount() {
-        return nowcount;
+    public Integer getNowtotal() {
+        return nowtotal;
     }
 
-    public void setNowcount(Integer nowcount) {
-        this.nowcount = nowcount;
+    public void setNowtotal(Integer nowtotal) {
+        this.nowtotal = nowtotal;
     }
 
     public Integer getAvgtime() {
@@ -73,13 +75,19 @@ public class Departmentqueue {
         this.avgtime = avgtime;
     }
 
-    private List<Departmentqueuedetail> departmentqueuedetails;
-
-    public List<Departmentqueuedetail> getDepartmentqueuedetails() {
-        return departmentqueuedetails;
+    public Integer getTodaytotal() {
+        return todaytotal;
     }
 
-    public void setDepartmentqueuedetails(List<Departmentqueuedetail> departmentqueuedetails) {
-        this.departmentqueuedetails = departmentqueuedetails;
+    public void setTodaytotal(Integer todaytotal) {
+        this.todaytotal = todaytotal;
+    }
+
+    public Integer getNownumber() {
+        return nownumber;
+    }
+
+    public void setNownumber(Integer nownumber) {
+        this.nownumber = nownumber;
     }
 }
