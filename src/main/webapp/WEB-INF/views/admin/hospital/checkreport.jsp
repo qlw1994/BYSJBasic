@@ -112,6 +112,7 @@
                             <input type="hidden" name="patientid" value="${patientid}"/>
                             <input type="hidden" name="hospitalid" value="${hospitalid}"/>
                             <input type="hidden" name="departmentid" value="${departmentid}"/>
+                            <input type="hidden" id="add_auditorid" name="auditorid" />
                             <input type="hidden" id="add_date" name="date" class="form-control">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">检查表状态</label>
@@ -164,7 +165,7 @@
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off"
                                            id="add_auditor"
-                                           name="auditor" placeholder="审核人账号">
+                                           name="auditoraccount" placeholder="审核人账号">
                                     <ul class="list" id="add_auditorList">
 
                                     </ul>
@@ -217,6 +218,7 @@
                     <div class="portlet-body form j-disabled-item">
                         <div class="form-body">
                             <input type="hidden" name="id">
+                            <input type="hidden" id="mod_auditorid" name="auditorid" />
                             <input type="hidden" id="mod_date" name="date">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">检查表状态</label>
@@ -267,7 +269,7 @@
                                 <label class="col-md-3 control-label">审核人账号</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off" id="mod_auditor"
-                                           name="auditor" placeholder="审核人账号" disabled="disabled">
+                                           name="auditoraccount" placeholder="审核人账号" disabled="disabled">
                                     <ul class="list" id="mod_auditorList">
 
                                     </ul>
@@ -360,8 +362,10 @@
         var hospitalid =${hospitalid};
         var hospitalname = '${hospitalname}';
         var uid =${uid};
-        var service=${service};
     </script>
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/checkreport.js"></script>
+            data-init="admin/hospital/checkreport"></script>
 </content>

@@ -8,9 +8,9 @@ define(function (require, exports, module) {
     var pageIndex;
 
     var $table = $("#datatable_ajax");
-    var $paymentdatailList = $("#paymentdatail-list");
-    var $PaymentdatailForm = $('#vPaymentdatailForm');
-    var $ModifyForm = $("#vPaymentdatailModifyForm");
+    var $paymentdetailList = $("#paymentdetail-list");
+    var $paymentdetailForm = $('#vpaymentdetailForm');
+    var $ModifyForm = $("#vpaymentdetailModifyForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
@@ -63,7 +63,12 @@ define(function (require, exports, module) {
             '    <td>${item.doctorname}</td>',
             '    <td>${item.departmentname}</td>',
             '    <td>${item.hospitalname}</td>',
-            '    <td>${item.status}</td>',
+            '{@if item.status==0}',
+            '    <td>未支付</td>',
+            '{@/if}',
+            '{@if item.status==1}',
+            '    <td>已支付</td>',
+            '{@/if}',
             '    <td>${item.paytype}</td>',
             '    <td>${item.createdate}</td>',
             '    <td class=" heading">',
@@ -99,7 +104,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/user/paymentdatails/list',
+                    url: ROOTPAth + '/user/paymentdetails/list',
                     type: 'POST',
                     dataType: 'json',
                     data: function () {
@@ -117,9 +122,15 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].paytype == null) {
+                                newData.data[i].paytype = "未支付";
+                            }
+                            if (newData.data[i].payname == null) {
+                                newData.data[i].payname = "";
+                            }
                         });
                         tool.stopPageLoading();
-                        $paymentdatailList.find(".page-info-num").text(res.data.length);
+                        $paymentdetailList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                     }
@@ -136,11 +147,11 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $paymentdatailList.on("change", ".j-length", function () {
+            $paymentdetailList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $paymentdatailList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $paymentdetailList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
             //修改表单初始化

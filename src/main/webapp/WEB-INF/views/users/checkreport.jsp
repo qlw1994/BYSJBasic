@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
-            <div class="portlet-title">
+            <div class="portlet-title" style="background-color: white">
                 <div class="caption">
                     ${sessionScope.hospitalname}- 检查报告
                 </div>

@@ -317,5 +317,6 @@
     <script type="text/javascript">
         var currentpage = ${currentpage};
     </script>
+    <script type="text/javascript" src="${ctx}/res-build/res/js/jQuery.md5.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/account/useraccount.js"></script>
 </content>

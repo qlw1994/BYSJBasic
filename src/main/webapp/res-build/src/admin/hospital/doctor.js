@@ -67,18 +67,20 @@ define(function (require, exports, module) {
             '    <td class=" heading">',
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-account="${item.account}" data-sex="${item.sex}" data-idtype="${item.idtype}"  data-idnumber="${item.idnumber}" data-departmentid="${item.departmentid}" data-hospitalid="${item.hospitalid}" data-job="${item.job}" data-age="${item.age}" data-level="${item.level}"  data-resume="${item.resume}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
-
             ' <button  type="button" class="btn btn-danger btn-xs j-disable resetPWD" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe604;</span>重置密码</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '<br/>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/fixedschedulings/index?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>排班管理</a>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugorders/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=drugorders/index" ><span class="iconfont iconfont-xs">&#xe617;</span>药品订单管理</a>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/checkreports/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=checkreports/index"><span class="iconfont iconfont-xs">&#xe617;</span>检查表管理</a>',
+            ' <button type="button"  class="btn btn-default btn-xs j-gen" data-id="${item.id}" data-type="${item.level}" data-hospitalid="${item.hospitalid}" data-departmentid="${item.departmentid}"><span class="iconfont iconfont-xs">&#xe617;</span>生成号源</button>',
             '<br/>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/inspectionreports/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=inspectionreports/index" ><span class="iconfont iconfont-xs">&#xe617;</span>检验表管理</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/schedulings/index?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>预约挂号</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/doctorindex?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>预约查询</a>',
-            ' <button type="button"  class="btn btn-default btn-xs j-gen" data-id="${item.id}" data-type="${item.level}" data-hospitalid="${item.hospitalid}" data-departmentid="${item.departmentid}"><span class="iconfont iconfont-xs">&#xe617;</span>生成号源</button>',
+            '<br/>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugorders/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=drugorders/index" ><span class="iconfont iconfont-xs">&#xe617;</span>药品订单管理</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/checkreports/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=checkreports/index"><span class="iconfont iconfont-xs">&#xe617;</span>检查表管理</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/inspectionreports/patientChosen?pcode=2&subcode=1&doctorid=${item.id}&doctorname=${item.name}&service=inspectionreports/index" ><span class="iconfont iconfont-xs">&#xe617;</span>检验表管理</a>',
+
+
 
             '    </td>',
             '</tr>',

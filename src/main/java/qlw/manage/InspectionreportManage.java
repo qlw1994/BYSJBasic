@@ -57,11 +57,12 @@ public class InspectionreportManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andInspecttimeLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andInspecttimeGreaterThanOrEqualTo(startDate);
-        }
-        criteria.andDeletedateIsNotNull();
+        } 
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andInspecttimeGreaterThanOrEqualTo(startDate);
+        //}
+        criteria.andDeletedateIsNull();
         List<Inspectionreport> inspectionreports = inspectionreportExMapper.selectByExample(example);
         for (int i = 0; i < inspectionreports.size(); i++) {
             long auditorid = inspectionreports.get(i).getAuditorid();
@@ -98,7 +99,7 @@ public class InspectionreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(inspectionreport.getAuditorid());
         }
         criteria.andDateEqualTo(date);
-        criteria.andDeletedateIsNotNull();
+        criteria.andDeletedateIsNull();
         return inspectionreportExMapper.selectByExample(example);
     }
 
@@ -135,11 +136,12 @@ public class InspectionreportManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andInspecttimeLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andInspecttimeGreaterThanOrEqualTo(startDate);
         }
-        criteria.andDeletedateIsNotNull();
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andInspecttimeGreaterThanOrEqualTo(startDate);
+        //}
+        criteria.andDeletedateIsNull();
         return inspectionreportExMapper.countByExample(example);
     }
 
@@ -169,7 +171,7 @@ public class InspectionreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(inspectionreport.getAuditorid());
         }
         criteria.andDateEqualTo(date);
-        criteria.andDeletedateIsNotNull();
+        criteria.andDeletedateIsNull();
         return inspectionreportExMapper.countByExample(example);
     }
 

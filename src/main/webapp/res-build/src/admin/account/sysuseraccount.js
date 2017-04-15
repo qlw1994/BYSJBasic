@@ -20,7 +20,6 @@ define(function (require, exports, module) {
     });
 
 
-
     var listTpl = juicer(
         [
             '{@if total === 0}',
@@ -56,8 +55,9 @@ define(function (require, exports, module) {
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-account="${item.account}" data-power="${item.power}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <button id="resetPWD" type="button" class="btn btn-danger btn-xs j-disable" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe603;</span>重置密码</button>',
+            '{@if item.power!=0}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
-
+            '{@/if}',
             '    </td>',
             '</tr>',
             '{@/each}',
@@ -157,7 +157,7 @@ define(function (require, exports, module) {
                 $(formDom).find(".j-form-save").show();
 
                 $(formDom).find("input").prop("disabled", false);
-              $SysuserForm.find("input[name='account']").prop("disabled", true);
+                $SysuserForm.find("input[name='account']").prop("disabled", true);
 
                 // $(event.relatedTarget)
             });
@@ -190,7 +190,7 @@ define(function (require, exports, module) {
                 $modal.find('input[name=id]').val(id);
                 $modal.find('input[name=account]').val(account);
                 $modal.find('input[name=name]').val(name);
-                $modal.find('radio[name=power]').val(power);
+                $modal.find('input[name=power]').eq(power).attr("checked","checked");
 
                 $modal.find(".j-form-save").hide();
                 $modal.find(".j-form-edit").show();
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
                     name: "required",
                     password: "required",
                     password_again: {
-                        equalTo: "#password"
+                        equalTo: $("#add_password")
                     },
 
                     power: "required",
@@ -309,9 +309,9 @@ define(function (require, exports, module) {
                     //     // }
                     // },
                     name: "required",
-                    password: "required",
+                    // password: "required",
                     password_again: {
-                        equalTo: "#password"
+                        equalTo:$("#mod_password")
                     },
                     power: "required",
                 },
@@ -322,7 +322,7 @@ define(function (require, exports, module) {
                     //     remote: "用户名重复"
                     // },
                     power: "请选择权限",
-                    password: "密码不能为空",
+                    // password: "密码不能为空",
                     password_again: "两次输入密码不一致",
 
                 },
@@ -348,7 +348,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-                    $ModifyForm.find("input").prop("disabled",false);
+                    $ModifyForm.find("input").prop("disabled", false);
 
                     var updatePath = ROOTPAth + '/admin/sysusers/modSysuser';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {

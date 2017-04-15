@@ -74,7 +74,6 @@ define(function (require, exports, module) {
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
-            $("#service").val(service);
             if (returnUrl == -1 || returnUrl == "") {
                 pageIndex.resetgoto(1);
             } else {
@@ -174,13 +173,13 @@ define(function (require, exports, module) {
                 $modal.find('input[name=auditorid]').val(auditorid);
                 $modal.find('input[name=auditorname]').val(auditorname);
                 $modal.find('input[name=auditor]').val(auditor);
-                $modal.find('input[name=advice]').val(advice);
-                $modal.find('input[name=options]').val(options);
+                $modal.find('textarea[name=advice]').val(advice);
+                $modal.find('textarea[name=options]').val(options);
                 $modal.find('input[name=checktime]').val(checktime);
                 $modal.find('select[name=status]').val(status);
                 $modal.find('input[name=examtime]').val(examtime);
-                $modal.find(".j-form-save").hide();
-                $modal.find(".j-form-edit").show();
+                // $modal.find(".j-form-save").hide();
+                // $modal.find(".j-form-edit").show();
             });
             $("#search").click(function () {
                 $.ajax({

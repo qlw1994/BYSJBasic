@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.CheckreportMapper;
 import qlw.model.Checkreport;
 import qlw.model.CheckreportExample;
+import qlw.model.Doctor;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class CheckreportManage extends BaseManage {
     @Autowired
     CheckreportMapper checkreportMapper;
     private Long init = 0L;
+    @Autowired
+    DoctorManage doctorManage;
 
     /**
      * 检查表列表
@@ -53,12 +56,18 @@ public class CheckreportManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andChecktimeLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andChecktimeGreaterThanOrEqualTo(startDate);
         }
-        criteria.andDeletedateIsNotNull();
-        return checkreportMapper.selectByExample(example);
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andChecktimeGreaterThanOrEqualTo(startDate);
+        //}
+        criteria.andDeletedateIsNull();
+        List<Checkreport> checkreports = checkreportMapper.selectByExample(example);
+        for (Checkreport c : checkreports) {
+            Doctor doctor = doctorManage.getDoctorById(c.getAuditorid());
+            c.setAuditor(doctor);
+        }
+        return checkreports;
     }
 
     /**
@@ -89,7 +98,7 @@ public class CheckreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(checkreport.getAuditorid());
         }
         criteria.andDateEqualTo(date);
-        criteria.andDeletedateIsNotNull();
+        criteria.andDeletedateIsNull();
         return checkreportMapper.selectByExample(example);
     }
 
@@ -126,11 +135,12 @@ public class CheckreportManage extends BaseManage {
         } else if (endDate != null && !"".equals(endDate)) {
             endDate += " 23:59:59";
             criteria.andChecktimeLessThanOrEqualTo(endDate);
-        } else {
-            startDate += " 00:00:00";
-            criteria.andChecktimeGreaterThanOrEqualTo(startDate);
         }
-        criteria.andDeletedateIsNotNull();
+        //else {
+        //    startDate += " 00:00:00";
+        //    criteria.andChecktimeGreaterThanOrEqualTo(startDate);
+        //}
+        criteria.andDeletedateIsNull();
         return checkreportMapper.countByExample(example);
     }
 
@@ -159,7 +169,7 @@ public class CheckreportManage extends BaseManage {
         if (checkreport.getAuditorid() != null && checkreport.getAuditorid().equals(init)) {
             criteria.andAuditoridEqualTo(checkreport.getAuditorid());
         }
-        criteria.andDeletedateIsNotNull();
+        criteria.andDeletedateIsNull();
         criteria.andDateEqualTo(date);
         return checkreportMapper.countByExample(example);
     }

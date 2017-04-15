@@ -122,7 +122,7 @@
                                 <label class="col-md-3 control-label">密码</label>
 
                                 <div class="col-md-8">
-                                    <input type="password" AUTOCOMPLETE="off" class="form-control" name="password"
+                                    <input type="password" AUTOCOMPLETE="off" class="form-control" name="password" id="add_password"
                                            placeholder="密码">
                                 </div>
                             </div>
@@ -136,12 +136,12 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">管理员权限</label>
                                 <div class="col-md-4">
-                                    <label class="radio-inline"> <input type="radio" value="1"
-                                                                        name="type">超级</label>
+                                    <label class="radio-inline"> <input type="radio" value="0"
+                                                                        name="power">超级</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="radio-inline">    <input type="radio" class="form-control" value="2"
-                                                                           name="type">普通</label>
+                                    <label class="radio-inline">    <input type="radio"  value="1"
+                                                                           name="power">普通</label>
                                 </div>
                             </div>
                         </div>
@@ -193,12 +193,27 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">管理员权限</label>
                                 <div class="col-md-4">
-                                    <label class="radio-inline"> <input type="radio"  value="1"
-                                                                        name="type" disabled="disabled">超级</label>
+                                    <label class="radio-inline"> <input type="radio"  value="0"
+                                                                        name="power" disabled="disabled">超级</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="radio-inline"> <input type="radio"  value="2"
-                                                                        name="type" disabled="disabled">普通</label>
+                                    <label class="radio-inline"> <input type="radio"  value="1"
+                                                                        name="power" disabled="disabled">普通</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">密码</label>
+
+                                <div class="col-md-8">
+                                    <input type="password" AUTOCOMPLETE="off" class="form-control" name="password" id="mod_password"
+                                           placeholder="密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">重复密码</label>
+                                <div class="col-md-8">
+                                    <input type="password" AUTOCOMPLETE="off" class="form-control" placeholder="重复密码"
+                                           name="password_again">
                                 </div>
                             </div>
                             <!-- END FORM-->
@@ -268,5 +283,5 @@
     <script type="text/javascript">
         var currentpage = ${currentpage};
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/account/sysuseraccount.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/account/sysuseraccount"></script>
 </content>

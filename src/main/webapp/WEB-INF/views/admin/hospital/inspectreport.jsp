@@ -5,8 +5,10 @@
 <content tag="cssconfig">
     <link rel="stylesheet" type="text/css" href="${ctx}/res-build/res/echarts/css/css.css">
     <link rel="stylesheet" href="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/css/jquery-ui-1.10.3.custom.css"/>
+
     <link href="${ctx}/res-build/css/sys.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/module/ajaxpage/css/page.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="${ctx}/res-build/css/datetimepicker/bootstrap-datetimepicker.css"/>
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
@@ -99,11 +101,17 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title">添加订单</h4>
+                <h4 class="modal-title">添加检验单</h4>
             </div>
-            <form class="form-horizontal" id="vInspectionreportForm">
+            <form class="form-horizontal" id="vInspectionreportForm" enctype="multipart/form-data" METHOD="post">
                 <div class="modal-body">
                     <div class="portlet-body form">
+                        <div class="form-group" >
+                            <label class="col-md-3 control-label">检验项目文件</label>
+                            <div class="col-md-8">
+                                <input id="inspectitemsfile"   type="file" name="file">
+                            </div>
+                        </div>
                         <div class="form-body">
                             <input type="hidden" name="doctorid" value="${doctorid}"/>
                             <input type="hidden" name="patientid" value="${patientid}"/>
@@ -122,6 +130,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3 control-label">检验名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" autocomplete="off" name="inspectname"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">检验时间</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly name="inspecttime" id="add_inspecttime"
@@ -133,7 +148,7 @@
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off"
                                            id="add_auditor"
-                                           name="auditor" placeholder="审核人账号">
+                                           name="auditoraccount" placeholder="审核人账号">
                                     <ul class="list" id="add_auditorList">
 
                                     </ul>
@@ -154,6 +169,7 @@
                                            name="examtime">
                                 </div>
                             </div>
+
                         </div>
                         <!-- END FORM-->
                     </div>
@@ -178,9 +194,9 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title">修改订单</h4>
+                <h4 class="modal-title">修改检验单</h4>
             </div>
-            <form class="form-horizontal" id="vInspectionreportModifyForm">
+            <form class="form-horizontal" id="vInspectionreportModifyForm" >
 
                 <div class="modal-body">
                     <div class="portlet-body form j-disabled-item">
@@ -198,6 +214,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3 control-label">检验名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" autocomplete="off" name="inspectname"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">检验时间</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly name="inspecttime" id="mod_inspecttime"
@@ -210,7 +233,7 @@
                                 <label class="col-md-3 control-label">审核人账号</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off" id="mod_auditor"
-                                           name="auditor" placeholder="审核人账号" readonly disabled="disabled">
+                                           name="auditoraccount" placeholder="审核人账号" readonly disabled="disabled">
                                     <ul class="list" id="mod_auditorList">
                                     </ul>
                                 </div>
@@ -304,6 +327,11 @@
         var hospitalname = '${hospitalname}';
         var uid =${uid};
     </script>
+
+
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/inspectionreport.js"></script>
+            data-init="admin/hospital/inspectionreport"></script>
 </content>

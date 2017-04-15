@@ -27,7 +27,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i> 就诊人
+                    ${uname} - ${patientname} - 就诊人
                 </div>
                 <div class="actions">
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
@@ -59,7 +59,7 @@
                         <thead>
                         <tr role="row">
                             <th class="sorting">就诊人姓名</th>
-                            <th class="sorting">就诊人类型 </th>
+                            <th class="sorting">就诊人类型</th>
                             <th class="sorting">就诊人性别</th>
                             <th class="sorting">就诊人手机</th>
                             <th class="sorting">创建日期</th>
@@ -117,38 +117,39 @@
                                 <label class="col-md-3 control-label">就诊人类型</label>
 
                                 <div class="col-md-8">
-                                        <label class="radio-inline">  <input type="radio"  value="1"
-                                                                             name="type">成人</label>
+                                    <label class="radio-inline"> <input type="radio" value="1"
+                                                                        name="type">成人</label>
 
-                                        <label class="radio-inline"> <input type="radio"  value="2"
-                                                                            name="type">儿童</label>
+                                    <label class="radio-inline"> <input type="radio" value="2"
+                                                                        name="type">儿童</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">就诊人性别</label>
                                 <div class="col-md-8">
-                                    <label class="radio-inline">  <input type="radio"  value="1"
-                                                                         name="sex">男</label>
+                                    <label class="radio-inline"> <input type="radio" value="1"
+                                                                        name="sex">男</label>
 
-                                    <label class="radio-inline"> <input type="radio"  value="2"
+                                    <label class="radio-inline"> <input type="radio" value="2"
                                                                         name="sex">女</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">就诊人出生日期</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_birthday" name="birthday" readonly >
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_birthday"
+                                           name="birthday" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">证件类型</label>
                                 <div class="col-md-8">
-                                    <select  name="idtype" class="form-control">
-                                        <option  value="" selected="selected">请选择</option>
-                                        <option  value="1">二代身份证</option>
-                                        <option  value="2">港澳居民身份证</option>
-                                        <option  value="3">台湾居民身份证</option>
-                                        <option  value="4">护照</option>
+                                    <select name="idtype" class="form-control">
+                                        <option value="" selected="selected">请选择</option>
+                                        <option value="1">二代身份证</option>
+                                        <option value="2">港澳居民身份证</option>
+                                        <option value="3">台湾居民身份证</option>
+                                        <option value="4">护照</option>
                                     </select>
                                 </div>
                             </div>
@@ -169,12 +170,12 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">监护人证件类型</label>
                                 <div class="col-md-8">
-                                    <select  name="guardianidtype" class="form-control">
-                                        <option  value="" selected="selected">请选择</option>
-                                        <option  value="1">二代身份证</option>
-                                        <option  value="2">港澳居民身份证</option>
-                                        <option  value="3">台湾居民身份证</option>
-                                        <option  value="4">护照</option>
+                                    <select name="guardianidtype" class="form-control">
+                                        <option value="" selected="selected">请选择</option>
+                                        <option value="1">二代身份证</option>
+                                        <option value="2">港澳居民身份证</option>
+                                        <option value="3">台湾居民身份证</option>
+                                        <option value="4">护照</option>
                                     </select>
                                 </div>
                             </div>

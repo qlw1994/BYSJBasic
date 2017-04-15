@@ -9,8 +9,8 @@ define(function (require, exports, module) {
 
     var $table = $("#datatable_ajax");
     var $paymentdetailList = $("#paymentdetail-list");
-    var $PaymentdatailForm = $('#vPaymentdatailForm');
-    var $ModifyForm = $("#vPaymentdatailModifyForm");
+    var $paymentdetailForm = $('#vpaymentdetailForm');
+    var $ModifyForm = $("#vpaymentdetailModifyForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
@@ -63,14 +63,21 @@ define(function (require, exports, module) {
             '    <td>${item.doctorname}</td>',
             '    <td>${item.departmentname}</td>',
             '    <td>${item.hospitalname}</td>',
-            '    <td>${item.status}</td>',
+            '{@if item.status==0}',
+            '    <td>未支付</td>',
+            '{@/if}',
+            '{@if item.status==1}',
+            '    <td>已支付</td>',
+            '{@/if}',
             '    <td>${item.paytype}</td>',
             '    <td>${item.createdate}</td>',
             '    <td class=" heading">',
+            '{@if item.status==0}',
             '<input data-money="${item.money}"  type="checkbox" name="checkitem" value="${item.id}"/>选择支付',
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-paynumber="${item.paynumber}"  data-invoicenumber="${item.invoicenumber}" data-paydate="${item.paydate}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '    </td>',
+            '{@/if}',
             '</tr>',
             '{@/each}',
             '{@/if}'
@@ -114,7 +121,7 @@ define(function (require, exports, module) {
 
                             newData.data[i].currentpage = pageIndex.current;
                             if (newData.data[i].paytype == null) {
-                                newData.data[i].paytype = "";
+                                newData.data[i].paytype = "未支付";
                             }
                             if (newData.data[i].payname == null) {
                                 newData.data[i].payname = "";
@@ -131,7 +138,7 @@ define(function (require, exports, module) {
                             btnCancelLabel: "取消",
                             onConfirm: function (event, element) {
                                 event.preventDefault();
-                                self.deletePaymentdatail($(element));
+                                self.deletepaymentdetail($(element));
                             }
                         });
                         //$table.find("tbody").empty().append("");
@@ -170,6 +177,9 @@ define(function (require, exports, module) {
                 // $modal.find(".j-form-save").hide();
                 // $modal.find(".j-form-edit").show();
             });
+            $("#viewPaymentMidProcModal").on("hide.modal", function () {
+                pageIndex.reset();
+            })
             $("#toPayBtn").click(function () {
                 var invoicenumber = $("#invoicenumber").val();
                 if (invoicenumber == undefined || invoicenumber == "") {
@@ -230,9 +240,9 @@ define(function (require, exports, module) {
 
         },
 
-        deletePaymentdatail: function ($that) {
+        deletepaymentdetail: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/paymentdetails/delPaymentdatail/' + id;
+            var delPath = ROOTPAth + '/admin/paymentdetails/delpaymentdetail/' + id;
             $.ajax({
                 url: delPath,
                 type: "POST",
@@ -260,7 +270,7 @@ define(function (require, exports, module) {
             text += '</tr><tr role="row" class="even">';
             text += '<td><b>发票</b></td>';
             // text += '<td>' + data.invoicenumber + '&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/></td>';
-            text += '<td id="td_invoicenumber">&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/>'+data.invoicenumber+'</td>';
+            text += '<td id="td_invoicenumber">&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/>' + data.invoicenumber + '</td>';
             text += '</tr><tr role="row" class="odd">';
             text += '<td><b>支付方式</b></td>';
             text += '<td><label>'
@@ -336,7 +346,7 @@ define(function (require, exports, module) {
         };
         // JsBarcode(barcode, str, options);
 
-        $('#'+id).JsBarcode(str,options);//jQuery
+        $('#' + id).JsBarcode(str, options);//jQuery
     }
 
     Utilitiy.init();

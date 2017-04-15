@@ -51,7 +51,7 @@
         </div>
 
     </div>
-    <div class="portlet-body" id="paymentdatail-list">
+    <div class="portlet-body" id="paymentdetail-list">
         <div class="table-pages clearfix">
             <div class="table-page clearfix"></div>
             <div class="page-length">
@@ -184,7 +184,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/paymentdatails/index?pcode=1&subcode=2&patientid=${patientid}&patientname=${patientname}"
+                <a href="${ctx}/admin/paymentdetails/index?pcode=1&subcode=2&patientid=${patientid}&patientname=${patientname}"
                    class="btn btn-success">返回列表</a>
 
             </div>

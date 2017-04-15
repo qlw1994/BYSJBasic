@@ -92,7 +92,7 @@ public class Doctor_InspectionreportController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, Long patientid, String patientname,Long uid ,HttpServletRequest
+    public ModelAndView View(int pcode, int subcode, Long patientid, String patientname, Long uid, HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("doctor/inspectionreport");
         request.getSession().setAttribute("uid", uid);
@@ -105,7 +105,36 @@ public class Doctor_InspectionreportController extends BaseController {
     }
 
     /**
-     * 固定排班文件上传
+     * 添加检验表
+     *
+     * @param inspectionreport
+     * @return
+     */
+    @RequestMapping(value = "newInspectionreport")
+    @ResponseBody
+    public Map<String, Object> addCheckreport(Inspectionreport inspectionreport, MultipartFile file,HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "添加成功";
+        try {
+            inspectionreport.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+            inspectionreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(inspectionreport.getExamtime()));
+            inspectionreport.setInspecttime(MyUtils.SIMPLE_DATETIME_FORMAT.format(inspectionreport.getInspecttime()));
+            inspectionreportManage.save(inspectionreport);
+            result= this.fileupload(file,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            rtnMsg = "添加失败";
+            rtnCode = ResultCode.ERROR;
+        }
+
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
+    }
+
+    /**
+     * 检验项目文件上传
      *
      * @return
      */

@@ -14,9 +14,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
-            <div class="portlet-title">
+            <div class="portlet-title" style="background-color: white">
                 <div class="caption">
-                    ${sessionScope.hospitalname}- 检验报告
+                    检验报告
                 </div>
                 <form class="form-inline" id="search-form">
                     <%--<div class="form-group">--%>

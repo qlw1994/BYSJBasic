@@ -66,6 +66,7 @@ define(function (require, exports, module) {
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-type="${item.type}" data-sex="${item.sex}" data-idtype="${item.idtype}"  data-idnumber="${item.idnumber}" data-phone="${item.phone}" data-guardianname="${item.guardianname}" data-guardianidtype="${item.guardianidtype}" data-guardianidnumber="${item.guardianidnumber}"  data-birthday="${item.birthday}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/appointments/patientindex?pcode=1&subcode=2&patientid=${item.id}&patientname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span> 预约管理</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugorders/patientindex?pcode=1&subcode=2&patientid=${item.id}&patientname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span> 药品订单查询</a>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/paymentdetails/hospitalChosenindex?pcode=1&subcode=2&patientid=${item.id}&patientname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span> 支付列表</a>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
 

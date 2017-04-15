@@ -9,8 +9,8 @@ define(function (require, exports, module) {
 
     var $table = $("#datatable_ajax");
     var $paymentdetailList = $("#paymentdetail-list");
-    var $PaymentdatailForm = $('#vPaymentdatailForm');
-    var $ModifyForm = $("#vPaymentdatailModifyForm");
+    var $paymentdetailForm = $('#vpaymentdetailForm');
+    var $ModifyForm = $("#vpaymentdetailModifyForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
@@ -130,7 +130,7 @@ define(function (require, exports, module) {
                             btnCancelLabel: "取消",
                             onConfirm: function (event, element) {
                                 event.preventDefault();
-                                self.deletePaymentdatail($(element));
+                                self.deletepaymentdetail($(element));
                             }
                         });
                         //$table.find("tbody").empty().append("");
@@ -171,9 +171,9 @@ define(function (require, exports, module) {
             });
         },
 
-        deletePaymentdatail: function ($that) {
+        deletepaymentdetail: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/paymentdetails/delPaymentdatail/' + id;
+            var delPath = ROOTPAth + '/admin/paymentdetails/delpaymentdetail/' + id;
             $.ajax({
                 url: delPath,
                 type: "POST",

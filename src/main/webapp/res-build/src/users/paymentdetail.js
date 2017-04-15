@@ -8,13 +8,14 @@ define(function (require, exports, module) {
     var pageIndex;
 
     var $table = $("#datatable_ajax");
-    var $paymentdatailList = $("#paymentdatail-list");
-    var $PaymentdatailForm = $('#vPaymentdatailForm');
-    var $ModifyForm = $("#vPaymentdatailModifyForm");
+    var $paymentdetailList = $("#paymentdetail-list");
+    var $paymentdetailForm = $('#vpaymentdetailForm');
+    var $ModifyForm = $("#vpaymentdetailModifyForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
     var pagelength = 10; //一页多少条；
+    var invoicenumber = "";
     $('body').tooltip({
         selector: '.has-tooltip'
     });
@@ -63,12 +64,21 @@ define(function (require, exports, module) {
             '    <td>${item.doctorname}</td>',
             '    <td>${item.departmentname}</td>',
             '    <td>${item.hospitalname}</td>',
-            '    <td>${item.status}</td>',
+            '{@if item.status==0}',
+            '    <td>未支付</td>',
+            '{@/if}',
+            '{@if item.status==1}',
+            '    <td>已支付</td>',
+            '{@/if}',
             '    <td>${item.paytype}</td>',
             '    <td>${item.createdate}</td>',
             '    <td class=" heading">',
+            '{@if item.status==0}',
             '<input data-money="${item.money}"  type="checkbox" name="checkitem" value="${item.id}"/>选择支付',
+            '{@/if}',
+            '{@if item.status==1}',
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-paynumber="${item.paynumber}"  data-invoicenumber="${item.invoicenumber}" data-paydate="${item.paydate}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
+            '{@/if}',
             '    </td>',
             '</tr>',
             '{@/each}',
@@ -98,7 +108,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/user/paymentdatails/list',
+                    url: ROOTPAth + '/user/paymentdetails/list',
                     type: 'POST',
                     dataType: 'json',
                     data: function () {
@@ -114,9 +124,15 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].paytype == null) {
+                                newData.data[i].paytype = "未支付";
+                            }
+                            if (newData.data[i].payname == null) {
+                                newData.data[i].payname = "";
+                            }
                         });
                         tool.stopPageLoading();
-                        $paymentdatailList.find(".page-info-num").text(res.data.length);
+                        $paymentdetailList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除权限
@@ -126,7 +142,7 @@ define(function (require, exports, module) {
                             btnCancelLabel: "取消",
                             onConfirm: function (event, element) {
                                 event.preventDefault();
-                                self.deletePaymentdatail($(element));
+                                self.deletepaymentdetail($(element));
                             }
                         });
                         //$table.find("tbody").empty().append("");
@@ -144,11 +160,11 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $paymentdatailList.on("change", ".j-length", function () {
+            $paymentdetailList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $paymentdatailList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $paymentdetailList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
             //修改表单初始化
@@ -165,42 +181,40 @@ define(function (require, exports, module) {
                 // $modal.find(".j-form-save").hide();
                 // $modal.find(".j-form-edit").show();
             });
-            //预结算
-            $('#viewPaymentBudgetModal').on('show.modal', function (event) {
+            $("#toPayBtn").click(function () {
                 if ($table.find("input[name='checkitem']:checked").length == 0) {
                     $("#ajax_fail").find("h4").html("至少选择一项支付");
                     $("#ajax_fail").modal("show")
-                } else {
-                    var invoicenumber = $("#invoicenumber").val();
-                    if (invoicenumber == undefined || invoicenumber == "") {
-                        $("#ajax_fail").find("h4").html("请输入发票号码");
-                        $("#ajax_fail").modal("show")
-                    }
-                    else {
-                        $("#invoicenumber").prop("readonly", true);
-                        var paymentdetailids = "";
-                        var totalmoney = 0;
-                        $table.find("input[name='checkitem']:checkbox:checked").each(function () {
-                            paymentdetailids = paymentdetailids + "|" + $(this).val();
-                            totalmoney = totalmoney * 1 + $(this).data("money") * 1;
-                        });
-                        tool.startPageLoading();
-                        $.ajax({
-                            url: ROOTPAth + "/user/paymentdetails/paymentBudget",
-                            type: "Post",
-                            dataType: "json",
-                            data: {
-                                paymentdetailids: paymentdetailids,
-                                totalmoney: totalmoney,
-                                invoicenumber: invoicenumber
-                            },
-                            success: function (res) {
-                                tool.stopPageLoading();
-                                fillBudget(res);
-                            }
-                        });
-                    }
                 }
+                else {
+                    $('#viewPaymentBudgetModal').modal("show");
+                }
+            })
+            //预结算
+            $('#viewPaymentBudgetModal').on('show.modal', function (event) {
+
+                var paymentdetailids = "";
+                var totalmoney = 0;
+                $table.find("input[name='checkitem']:checkbox:checked").each(function () {
+                    paymentdetailids = paymentdetailids + "|" + $(this).val();
+                    totalmoney = totalmoney * 1 + $(this).data("money") * 1;
+                });
+                tool.startPageLoading();
+                $.ajax({
+                    url: ROOTPAth + "/user/paymentdetails/paymentBudget",
+                    type: "Post",
+                    dataType: "json",
+                    data: {
+                        paymentdetailids: paymentdetailids,
+                        totalmoney: totalmoney,
+                    },
+                    success: function (res) {
+                        invoicenumber=res.invoicenumber;
+                        tool.stopPageLoading();
+                        fillBudget(res);
+                    }
+                });
+
 
             });
 
@@ -233,7 +247,7 @@ define(function (require, exports, module) {
             text = '<tr><td colspan="2">没有找到相关记录</td></tr>';
         }
         $('#budget_content').html(text);
-        getcode("td_invoicenumber", data.invoicenumber);
+        // getcode("td_invoicenumber", data.invoicenumber);
     }
 
     //选择支付方式后继续支付
@@ -260,7 +274,6 @@ define(function (require, exports, module) {
                 paymentdetailids: paymentdetailids,
                 paytype: paytype,
                 totalFee: totalmoney,
-                invoicenumber: $("#invoicenumber").val(),
                 subject: (hospitalname + "-诊间支付测试[" + new Date() + ']')
             },
             // beforeSend: function () {

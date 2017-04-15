@@ -61,8 +61,8 @@ public class Diagnosispayment extends BaseController {
             if (trade_status != null && (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS"))) {
                 log.info("callback..............................");
                 //数据解密
-                String body = request.getParameter("subject");
-                String mydata_decode = Base64Utils.getFromBase64(body);
+                String subject = request.getParameter("subject");
+                String mydata_decode = Base64Utils.getFromBase64(subject);
                 JSON mydata_temp = JSONObject.parseObject(mydata_decode);
                 Map<String, String> mydata_map = JSONObject.toJavaObject(mydata_temp, Map.class);
                 try {

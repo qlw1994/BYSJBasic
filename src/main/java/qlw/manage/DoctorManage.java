@@ -496,7 +496,19 @@ public class DoctorManage extends BaseManage {
         }
         return null;
     }
-
+    /**
+     * 保存后台用户
+     *
+     * @param doctor
+     * @return
+     */
+    public Doctor saveBackId(Doctor doctor) {
+        long i = doctorExMapper.insertBackId(doctor);
+        if (i > 0) {
+            return doctor;
+        }
+        return null;
+    }
     /**
      * 检查旧密码是否相同
      *

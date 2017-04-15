@@ -6,17 +6,10 @@ define(function (require, exports, module) {
     var Page = require("page");
     var juicer = require("juicer");
     var pageIndex;
-    var $add_total = $("#add_total");
-    var $AddUI_add = $("#add_details");
-    var $AddUI_del = $("#del_details");
-    var $addOrdermoney = $("#add_orderMoney");
     var $table = $("#datatable_ajax");
-    var $accountList = $("#account-list");
-    var $DrugorderForm = $('#vDrugorderForm');
+    var $drugorderList = $("#drugorder-list");
     var $ModifyForm = $("#vDrugorderModifyForm");
     var $modifyModal = $('#modifyModal');
-    var $addModal = $('#addModal');
-    var $addRoletipModal = $('#modal-box');
     var pagelength = 10; //一页多少条；
     $('body').tooltip({
         selector: '.has-tooltip'
@@ -109,7 +102,7 @@ define(function (require, exports, module) {
                             newData.data[i].currentpage = pageIndex.current;
                         });
                         tool.stopPageLoading();
-                        $accountList.find(".page-info-num").text(res.data.length);
+                        $drugorderList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除权限
@@ -136,11 +129,11 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $accountList.on("change", ".j-length", function () {
+            $drugorderList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $accountList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $drugorderList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
             //修改表单初始化
@@ -172,7 +165,7 @@ define(function (require, exports, module) {
             });
             $("#search").click(function () {
                 $.ajax({
-                    url: ROOTPAth + '/user/inspectreports/list',
+                    url: ROOTPAth + '/user/drugorders/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -189,7 +182,7 @@ define(function (require, exports, module) {
                             newData.data[i].currentpage = pageIndex.current;
                         });
                         tool.stopPageLoading();
-                        $inspectionreportList.find(".page-info-num").text(res.data.length);
+                        $drugorderList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                     }

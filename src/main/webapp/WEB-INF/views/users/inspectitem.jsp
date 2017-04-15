@@ -83,32 +83,37 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">检验名</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="name" disabled="disabled" placeholder="检验名">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="name"
+                                           disabled="disabled" placeholder="检验名">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">检验结果</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="result"  disabled="disabled" placeholder="检验结果">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="result"
+                                           disabled="disabled" placeholder="检验结果">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">参考范围</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control"  name="refrange"  disabled="disabled" placeholder="参考范围">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="refrange"
+                                           disabled="disabled" placeholder="参考范围">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">单位</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control"  name="unit"  disabled="disabled"
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="unit"
+                                           disabled="disabled"
                                            placeholder="单位">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">结果异常提示</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="abnormal"  disabled="disabled" placeholder="检验总价">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="abnormal"
+                                           disabled="disabled" placeholder="检验总价">
                                 </div>
                             </div>
                             <!-- END FORM-->
@@ -131,8 +136,9 @@
     <script type="text/javascript">
         var hospitalid =${hospitalid};
         var hospitalname = "${hospitalname}";
-        var patientid=${patientid};
+        var patientid =${patientid};
         var currentpage = ${currentpage};
+        var inspectionid =${inspectionid};
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>

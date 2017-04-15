@@ -27,7 +27,7 @@ public class Doctor_CheckreportController extends BaseController{
 
 
     /**
-     * 检验表列表数据源
+     * 检查表列表数据源
      *
      * @return
      */
@@ -74,7 +74,7 @@ public class Doctor_CheckreportController extends BaseController{
     }
 
     /**
-     * 检验表管理首页跳转
+     * 检查表管理首页跳转
      *
      * @return
      */
@@ -93,7 +93,7 @@ public class Doctor_CheckreportController extends BaseController{
 
 
     /**
-     * 添加检验表
+     * 添加检查表
      *
      * @param checkreport
      * @return
@@ -106,6 +106,8 @@ public class Doctor_CheckreportController extends BaseController{
         String rtnMsg = "添加成功";
         try {
             checkreport.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+            checkreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(checkreport.getExamtime()));
+            checkreport.setChecktime((MyUtils.SIMPLE_DATETIME_FORMAT.format(checkreport.getChecktime())));
             checkreportManage.save(checkreport);
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +121,7 @@ public class Doctor_CheckreportController extends BaseController{
     }
 
     /**
-     * 检验表查询
+     * 检查表查询
      *
      * @param
      * @return
@@ -136,7 +138,7 @@ public class Doctor_CheckreportController extends BaseController{
     }
 
     ///**
-    // * 修改检验表
+    // * 修改检查表
     // *
     // * @return
     // */
@@ -159,7 +161,7 @@ public class Doctor_CheckreportController extends BaseController{
     //}
     //
     ///**
-    // * 删除检验表
+    // * 删除检查表
     // *
     // * @return
     // */

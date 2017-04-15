@@ -161,6 +161,19 @@ public class UserManage extends BaseManage {
     }
 
     /**
+     * 保存后台用户
+     *
+     * @param users
+     * @return
+     */
+    public Users saveBackId(Users users) {
+        long i = usersExMapper.insertBackId(users);
+        if (i > 0) {
+            return users;
+        }
+        return null;
+    }
+    /**
      * 检查旧密码是否相同
      *
      * @param id

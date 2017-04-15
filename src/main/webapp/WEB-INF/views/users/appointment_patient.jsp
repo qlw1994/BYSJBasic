@@ -114,7 +114,6 @@
         var hospitalname = "${hospitalname}";
         var currentpage = ${currentpage};
     </script>
-    <script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/appointment_patient"></script>
 

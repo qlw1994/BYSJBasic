@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 public abstract class MyUtils {
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat SIMPLE_DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static final Pattern PROPERTY = Pattern.compile("([a-z])([A-Z])");
     public static final Pattern CHECK = Pattern.compile("[0-9A-Za-z]{2,32}?");
 

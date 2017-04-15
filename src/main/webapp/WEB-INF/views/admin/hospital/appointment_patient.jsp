@@ -10,17 +10,16 @@
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">医院配置</h3>
+<h3 class="page-title">账户管理</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页 <i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">就诊人预约管理</a></li>
+        <li><a href="#">账户管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">用户</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">就诊人管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">预约管理</a></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
@@ -30,13 +29,13 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i> ${hospitalname}-${departmentname}-${doctorname}-${patientname}-
+                    <i class="iconfont">&#xe619;</i> ${uname}-${patientname}-
                     预约管理
                 </div>
                 <%--<div class="actions">--%>
-                    <%--<a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i--%>
-                            <%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加预约</span>--%>
-                    <%--</a>--%>
+                <%--<a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i--%>
+                <%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加预约</span>--%>
+                <%--</a>--%>
                 <%--</div>--%>
             </div>
             <div class="portlet-body" id="appointment-list">
@@ -145,5 +144,6 @@
         var patientid = ${patientid};
     </script>
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/appointment_patient"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js"
+            data-init="admin/hospital/appointment_patient"></script>
 </content>

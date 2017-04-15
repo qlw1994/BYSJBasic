@@ -43,15 +43,15 @@ public class DrugorderController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, Long patientid, Long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startdate, @RequestParam(value = "endDate", defaultValue = "") String edndate, Long patientid, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");
             Drugorder drugorder = new Drugorder();
             drugorder.setPatientid(patientid);
             drugorder.setHospitalid(hospitalid);
-            result.put("total", drugorderManage.count(startDate, endDate, drugorder));
-            result.put("data", drugorderManage.list(page, length, startDate, endDate, drugorder));
+            result.put("total", drugorderManage.count(startdate, edndate, drugorder));
+            result.put("data", drugorderManage.list(page, length, startdate, edndate, drugorder));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -86,14 +86,25 @@ public class DrugorderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientChosen")
-    public ModelAndView patientChosen(long doctorid, String doctorname, String service, HttpServletRequest request) {
+    public ModelAndView patientChosen(Long doctorid, String doctorname, String service, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
         request.setAttribute("service", service);
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
         return mv;
     }
-
+    /**
+     * 药品订单就诊人管理首页跳转
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patientindex")
+    public ModelAndView patientIndex(Long patientid, String patientname, String service, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("admin/account/drugorder");
+        request.getSession().setAttribute("patientid", patientid);
+        request.getSession().setAttribute("patientname", patientname);
+        return mv;
+    }
     /**
      * 添加药品订单
      *

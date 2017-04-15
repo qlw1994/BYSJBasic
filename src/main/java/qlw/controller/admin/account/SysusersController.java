@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.SysuserManage;
 import qlw.model.Sysusers;
-import qlw.util.MD5Utils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,25 +79,21 @@ public class SysusersController extends BaseController {
         if (!sysusers.getPower().equals(new Integer(0))) {
             rtnMsg = "你没有权限操作";
             rtnCode = ResultCode.AUTHORITY_FORBID;
-
         } else {
             try {
                 if (this.hasSameName(sysusertable.getAccount())) {
                     sysusertable.setCreatedate(simpleDateFormat.format(new Date()));
-                    sysusertable.setPassword(MD5Utils.getMD5(sysusertable.getPassword()));
                     sysuserManage.save(sysusertable);
                 } else {
                     rtnMsg = "管理员名已经存在";
                     rtnCode = ResultCode.ERROR;
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
                 rtnMsg = "添加失败";
                 rtnCode = ResultCode.ERROR;
             }
         }
-
         result.put("message", rtnMsg);
         result.put("code", rtnCode);
         return result;

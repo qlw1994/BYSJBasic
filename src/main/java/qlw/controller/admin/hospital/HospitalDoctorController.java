@@ -322,16 +322,14 @@ public class HospitalDoctorController extends BaseController {
     /**
      * 检查是否存在account 单家医院范围
      *
-     * @param account
-     * @return 相同false，否则true
+     * @param auditoraccount
+     * @return 存在true，否则false
      */
     @RequestMapping(value = "/hasAccount", method = RequestMethod.POST)
     @ResponseBody
-    public boolean hasAccount(String account, long hospitalid) {
-        boolean result = doctorManage.haveSameAccountAndHospital(account, hospitalid);
-        if (!result) {
-            return true;
-        }
-        return false;
+    public boolean hasAccount(String auditoraccount, Long hospitalid) {
+        boolean result = doctorManage.haveSameAccountAndHospital(auditoraccount, hospitalid);
+
+        return result;
     }
 }

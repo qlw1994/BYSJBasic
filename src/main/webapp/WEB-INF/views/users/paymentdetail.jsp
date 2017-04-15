@@ -14,19 +14,27 @@
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
-            <div class="portlet-search clearfix">
+            <div class="portlet-search">
                 <div class="caption">
                     ${sessionScope.hospitalname}- 待支付列表
                 </div>
+
             </div>
+
 
         </div>
     </div>
 </div>
-
-<div class="portlet-body" id="paymentdatail-list" style="background-color: white">
+<div  style="float:right;padding-top: 2%;padding-right: 5%">
+    <button id="toPayBtn" class="btn btn-success btn-sm"
+    ><span class="hidden-480">去支付</span>
+    </button>
+</div>
+<div class="portlet-body" id="paymentdetail-list" style="background-color: white">
     <div class="table-pages clearfix">
-        <div class="table-page clearfix"></div>
+        <div class="table-page clearfix">
+
+        </div>
         <div class="page-length">
             <span class="seperator">|</span> 每页显示 <select name="j-length" aria-controls="datatable_ajax"
                                                           class="j-length input-xsmall input-sm input-inline">

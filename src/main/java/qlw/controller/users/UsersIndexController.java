@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
+import qlw.model.Users;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/userindex")
 public class UsersIndexController extends BaseController {
+
     @RequestMapping(value = "")
     public String admin() {
         return "redirect:userindex/index";
@@ -31,6 +33,12 @@ public class UsersIndexController extends BaseController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("users/index");
         modelAndView.addObject("currentpage", 1);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/signup")
+    public ModelAndView signup(Users users, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("users/signup");
         return modelAndView;
     }
 

@@ -76,7 +76,6 @@ define(function (require, exports, module) {
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
-            $("#service").val(service);
             if (returnUrl == -1 || returnUrl == "") {
                 pageIndex.resetgoto(1);
             } else {
@@ -205,16 +204,17 @@ define(function (require, exports, module) {
                 var checktime = button.data("checktime");
                 var status = button.data("status");
                 var examtime = button.data("examtime");
-
+                var auditoraccount = button.data("auditoraccount");
                 $modal.find('input[name=id]').val(id);
                 $modal.find('input[name=date]').val(date);
                 $modal.find('input[name=part]').val(part);
                 $modal.find('input[name=method]').val(method);
                 $modal.find('input[name=auditorid]').val(auditorid);
+                $modal.find('input[name=auditoraccount]').val(auditoraccount);
                 $modal.find('input[name=auditorname]').val(auditorname);
                 $modal.find('input[name=auditor]').val(auditor);
-                $modal.find('input[name=advice]').val(advice);
-                $modal.find('input[name=options]').val(options);
+                $modal.find('textarea[name=advice]').val(advice);
+                $modal.find('textarea[name=options]').val(options);
                 $modal.find('input[name=checktime]').val(checktime);
                 $modal.find('select[name=status]').val(status);
                 $modal.find('input[name=examtime]').val(examtime);
@@ -248,14 +248,15 @@ define(function (require, exports, module) {
                 rules: {
                     status: "required",
                     checktime: "required",
-                    auditor: {
+                    auditoraccount: {
                         required: true,
                         remote: {
                             url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
                             type: "post",
-                            date: {
+                            dataType:"json",
+                            data: {
                                 hospitalid: hospitalid,
-                                account: $CheckreportForm.find("input[name=auditor]").val()
+                                account: $CheckreportForm.find("input[name=auditoraccount]").val()
                             }
                         }
                     },
@@ -267,9 +268,9 @@ define(function (require, exports, module) {
                 },
                 messages: {
                     status: "请选择状态",
-                    auditor: {
+                    auditoraccount: {
                         required: "请输入审核人账号",
-                        remote: "药品名不存在"
+                        remote: "医生名不存在"
                     },
                     checktime: {
                         required: "请选择检验时间",
@@ -293,7 +294,7 @@ define(function (require, exports, module) {
                 success: function (label) {
                     var strId = label.closest('.form-group').find("input").attr("id") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
                     if (strId == "add_auditor") {
-                        //手动输入药品全名需要查询药品信息
+                        //手动输入医生全名需要查询医生信息
                         if ($("#add_auditor").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
                             $.ajax({
                                 url: ROOTPAth + '/admin/hospitalDoctors/doctorInfo',
@@ -362,14 +363,15 @@ define(function (require, exports, module) {
                 rules: {
                     status: "required",
                     checktime: "required",
-                    auditor: {
+                    auditoraccount: {
                         required: true,
                         remote: {
                             url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
                             type: "post",
-                            date: {
+                            dataType:"json",
+                            data: {
                                 hospitalid: hospitalid,
-                                account: $CheckreportForm.find("input[name=auditor]").val()
+                                account: $ModifyForm.find("input[name=auditoraccount]").val()
                             }
                         }
                     },
@@ -381,9 +383,9 @@ define(function (require, exports, module) {
                 },
                 messages: {
                     status: "请选择状态",
-                    auditor: {
+                    auditoraccount: {
                         required: "请输入审核人账号",
-                        remote: "药品名不存在"
+                        remote: "医生名不存在"
                     },
                     checktime: {
                         required: "请选择检验时间",
@@ -410,7 +412,7 @@ define(function (require, exports, module) {
                 success: function (label) {
                     var strId = label.closest('.form-group').find("input").attr("id") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
                     if (strId == "mod_auditor") {
-                        //手动输入药品全名需要查询药品信息
+                        //手动输入医生全名需要查询医生信息
                         if ($("#mod_auditorid").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
                             $.ajax({
                                 url: ROOTPAth + '/admin/hospitalDoctors/doctorInfo',

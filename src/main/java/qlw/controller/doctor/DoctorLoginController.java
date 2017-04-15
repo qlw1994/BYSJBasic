@@ -53,20 +53,6 @@ public class DoctorLoginController extends BaseController {
             resMap.put("msg", "未找到该用户或该用户已经注销");
             return resMap;
         }
-
-//        if (doctor.getFlag() == 0) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "该用户已被注销");
-//            return resMap;
-//        }
-//
-//        //用户角色无权查看
-//        if (doctor.getPower() == 1) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "该用户无权限登录本系统");
-//            return resMap;
-//        }
-
         //password = MD5Utils.getMD5(password);
         if (password.equals(doctor.getPassword())) {
             Hospital hospital = hospitalManage.getById(doctor.getHospitalid());
@@ -82,6 +68,16 @@ public class DoctorLoginController extends BaseController {
             resMap.put("msg", "密码不对");
             return resMap;
         }
+    }
+
+    @RequestMapping(value = "/doctorsignup")
+    public Map<String, Object> signup(Doctor doctor, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        doctorManange.saveBackId(doctor);
+        request.getSession().setAttribute("doctor", doctor);
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "注册成功");
+        return resMap;
     }
 
     @RequestMapping(value = "/doctorindex/logout")

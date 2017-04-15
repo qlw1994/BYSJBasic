@@ -75,8 +75,9 @@ define(function (require, exports, module) {
             '{@/if}',
 
             '    <td class=" heading">',
+            '{@if item.status==1}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
-
+            '{@/if}',
             '    </td>',
             '</tr>',
             '{@/each}',

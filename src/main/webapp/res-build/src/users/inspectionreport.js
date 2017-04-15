@@ -62,7 +62,6 @@ define(function (require, exports, module) {
         init: function () {
 
             tool.startPageLoading();
-            $("#service").val(service);
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
@@ -83,7 +82,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/user/inspectreports/list',
+                    url: ROOTPAth + '/user/inspectionreports/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -162,7 +161,7 @@ define(function (require, exports, module) {
             
             $("#search").click(function () {
                 $.ajax({
-                    url: ROOTPAth + '/user/inspectreports/list',
+                    url: ROOTPAth + '/user/inspectionreports/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {

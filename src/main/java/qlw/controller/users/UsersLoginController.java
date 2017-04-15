@@ -30,6 +30,16 @@ public class UsersLoginController extends BaseController {
         return "users/userlogin";
     }
 
+    @RequestMapping(value = "/usersignup")
+    public Map<String, Object> signup(Users users, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        userManange.saveBackId(users);
+        request.getSession().setAttribute("user", users);
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "注册成功");
+        return resMap;
+    }
+
     @RequestMapping(value = "/userindex/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(@RequestParam("account") String account, @RequestParam("password") String password, HttpServletRequest request) {
@@ -46,19 +56,6 @@ public class UsersLoginController extends BaseController {
             resMap.put("msg", "未找到该用户或该用户已经注销");
             return resMap;
         }
-
-//        if (user.getFlag() == 0) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "该用户已被注销");
-//            return resMap;
-//        }
-//
-//        //用户角色无权查看
-//        if (user.getPower() == 1) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "该用户无权限登录本系统");
-//            return resMap;
-//        }
 
         //password = MD5Utils.getMD5(password);
         if (password.equals(user.getPassword())) {

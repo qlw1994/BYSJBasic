@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
+import qlw.model.Doctor;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/doctor")
 public class DoctorIndexController extends BaseController {
+
+
     @RequestMapping(value = "")
     public String doctor() {
         return "redirect:doctor/index";
@@ -30,6 +33,12 @@ public class DoctorIndexController extends BaseController {
     @RequestMapping(value = "index")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("doctor/index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/signup")
+    public ModelAndView signup(Doctor doctor, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("doctor/signup");
         return modelAndView;
     }
 

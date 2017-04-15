@@ -46,21 +46,6 @@ public class LoginController extends BaseController {
             resMap.put("msg", "未找到该用户或该用户已经注销");
             return resMap;
         }
-
-//        if (sysuser.getFlag() == 0) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "该用户已被注销");
-//            return resMap;
-//        }
-//
-//        //用户角色无权查看
-//        if (sysuser.getPower() == 1) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "该用户无权限登录本系统");
-//            return resMap;
-//        }
-
-        //password = MD5Utils.getMD5(password);
         if (password.equals(sysuser.getPassword())) {
             request.getSession().setAttribute("sysuser", sysuser);
             resMap.put("code", ResultCode.SUCCESS);

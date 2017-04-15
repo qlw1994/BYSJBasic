@@ -50,7 +50,21 @@ define(function (require, exports, module) {
             '    <td>${item.result}</td>',
             '    <td>${item.refrange}</td>',
             '    <td>${item.unit}</td>',
-            '    <td>${item.abnormal}</td>',
+            '{@if item.abnormal==0}',
+            '    <td>正常</td>',
+            '{@/if}',
+            '{@if item.abnormal==1}',
+            '    <td>偏高</td>',
+            '{@/if}',
+            '{@if item.abnormal==2}',
+            '    <td>偏低</td>',
+            '{@/if}',
+            '{@if item.abnormal==3}',
+            '    <td>阴性</td>',
+            '{@/if}',
+            '{@if item.abnormal==4}',
+            '    <td>阳性</td>',
+            '{@/if}',
             '    <td class=" heading">',
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-result="${item.result}" data-refrange="${item.refrange}" data-unit="${item.unit}" data-abnormal="${item.abnormal}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
@@ -100,6 +114,16 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if(newData.data[i].result==null){
+                                newData.data[i].result="";
+                            }
+                            if(newData.data[i].refrange==null){
+                                newData.data[i].refrange="";
+                            }
+                            if(newData.data[i].unit==null){
+                                newData.data[i].unit="";
+                            }
+
                         });
                         tool.stopPageLoading();
                         $inspectitemList.find(".page-info-num").text(res.data.length);

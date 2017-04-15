@@ -55,7 +55,7 @@
                                 </div>
                             </li>--%>
                         <li class="top-tools-item dropdown top-userbox">
-                            <a href="#" class="top-tools-item-a top-user">
+                            <a href="#" class="top-tools-item-a top-user" data-toggle="modal" data-target="#modifyModal-user">
                                 <img alt="" class="img-circle hide1" src="${ctx}/res-build/img/avatar3_small.jpg">
                                 <span class="username username-hide-on-mobile">${sessionScope.user.name}</span>
                                 <i class="iconfont">&#xe606;</i>
@@ -134,7 +134,91 @@
     <sitemesh:body/>
 
     <!-- E:page-content -->
+    <div class="modal fade" id="modifyModal-user">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">修改用户</h4>
+                </div>
+                <form class="form-horizontal" id="vUserModifyForm">
 
+                    <div class="modal-body">
+                        <div class="portlet-body form j-disabled-item">
+                            <div class="form-body">
+                                <input type="hidden" name="id">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">账号</label>
+                                    <div class="col-md-8">
+                                        <input type="text" AUTOCOMPLETE="off" class="form-control" name="account"
+                                               placeholder="用户名" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">姓名</label>
+                                    <div class="col-md-8">
+                                        <input type="text" AUTOCOMPLETE="off" class="form-control" name="name"
+                                               placeholder="姓名" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">用户性别</label>
+                                    <div class="col-md-8">
+                                        <label class="radio-inline"> <input type="radio" value="1"
+                                                                            name="sex" disabled="disabled">男
+                                        </label>
+                                        <label class="radio-inline"> <input type="radio" value="2"
+                                                                            name="sex" disabled="disabled">女</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">证件类型</label>
+                                    <div class="col-md-8">
+                                        <select name="idtype" disabled="disabled" class="form-control">
+                                            <option value="1">二代身份证</option>
+                                            <option value="2">港澳居民身份证</option>
+                                            <option value="3">台湾居民身份证</option>
+                                            <option value="4">护照</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">证件号码</label>
+                                    <div class="col-md-8">
+                                        <input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="证件号码"
+                                               name="idnumber" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">手机号码</label>
+                                    <div class="col-md-8">
+                                        <input type="text" AUTOCOMPLETE="off" class="form-control" placeholder="手机号码"
+                                               name="phone" disabled="disabled">
+                                    </div>
+                                </div>
+                                <!-- END FORM-->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success j-form-edit">
+                                <i class="iconfont">&#xe61c;</i> 我要编辑
+                            </button>
+                            <button type="submit" class="btn btn-success j-form-save" style="display: none">
+                                <i class="iconfont">&#xe62c;</i> 保存
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <%-- <button type="submit" class="btn btn-success">修改</button>
+                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!-- E:page-header -->
     <div class="modal fade" id="modifyModal-index">
@@ -227,6 +311,13 @@
 </div>
 <script type="text/javascript">
     var ROOTPAth = "${ctx}";
+    var uid;
+    $(function () {
+        if ("${user.id}" != "undefined") {
+            uid = "${user.id}";
+        }
+    });
+
 </script>
 
 <sitemesh:getProperty property="page.jsconfig"/>

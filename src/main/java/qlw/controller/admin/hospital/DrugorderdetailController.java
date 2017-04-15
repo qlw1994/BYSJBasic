@@ -68,7 +68,7 @@ public class DrugorderdetailController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long drugorderid, HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode, Long drugorderid, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/drugorderdetail");
         request.getSession().setAttribute("drugorderid", drugorderid);
         mv.addObject("pcode", pcode);
@@ -77,7 +77,20 @@ public class DrugorderdetailController extends BaseController {
         return mv;
     }
 
-
+    /**
+     * 药品订单详情管理首页跳转
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patientindex")
+    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long drugorderid, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("admin/account/drugorderdetail");
+        request.getSession().setAttribute("drugorderid", drugorderid);
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
+        mv.addObject("currentpage", 1);
+        return mv;
+    }
     /**
      * 添加药品订单详情
      *

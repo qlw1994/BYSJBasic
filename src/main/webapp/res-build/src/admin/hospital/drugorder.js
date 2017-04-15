@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     var $AddUI_del = $("#del_details");
     var $addOrdermoney = $("#add_orderMoney");
     var $table = $("#datatable_ajax");
-    var $accountList = $("#account-list");
+    var $drugorderList = $("#drugorder-list");
     var $DrugorderForm = $('#vDrugorderForm');
     var $ModifyForm = $("#vDrugorderModifyForm");
     var $modifyModal = $('#modifyModal');
@@ -108,7 +108,7 @@ define(function (require, exports, module) {
                             newData.data[i].currentpage = pageIndex.current;
                         });
                         tool.stopPageLoading();
-                        $accountList.find(".page-info-num").text(res.data.length);
+                        $drugorderList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除权限
@@ -135,11 +135,11 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $accountList.on("change", ".j-length", function () {
+            $drugorderList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $accountList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $drugorderList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
             //添加界面关闭,下拉框消失
@@ -361,6 +361,32 @@ define(function (require, exports, module) {
 
                 }
             });
+            //日期搜索
+            $("#search").click(function () {
+                $.ajax({
+                    url: ROOTPAth + '/admin/drugorders/list',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        hospitalid:hospitalid,
+                        patientid: patientid,
+                        startdate:$("#starttime").val(),
+                        enddate:$("#endtime").val(),
+                        length: pagelength
+                    },
+                    success: function (res) {
+                        var newData = $.extend({}, res);
+                        $.each(newData.data, function (i, val) {
+
+                            newData.data[i].currentpage = pageIndex.current;
+                        });
+                        tool.stopPageLoading();
+                        $drugorderList.find(".page-info-num").text(res.data.length);
+
+                        $table.find("tbody").empty().append(listTpl.render(newData));
+                    }
+                })
+            })
             //表单验证-修改订单
             $ModifyForm.validate({
                 rules: {
@@ -595,6 +621,22 @@ define(function (require, exports, module) {
             });
         }, 500);
     }
+    $('#starttime').datepicker({
+        dateFormat: "yy-mm-dd",
+        selectOtherMonths: true,
+        // yearRange: "-100:+0",
+        changeMonth: true,
+        changeYear: true,
+        inline: true
+    });
+    $('#endtime').datepicker({
 
+        dateFormat: "yy-mm-dd",
+        selectOtherMonths: true,
+        // yearRange: "-100:+0",
+        changeMonth: true,
+        changeYear: true,
+        inline: true
+    });
     Utilitiy.init();
 });

@@ -67,7 +67,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/user/appointments/patientindex?patientname=${patientname}&patientid=${patientid}" class="btn btn-danger j-modal-closebtn" >关闭</a>
+                <%--<a href="${ctx}/user/appointments/patientindex?patientname=${patientname}&patientid=${patientid}" class="btn btn-danger j-modal-closebtn" >关闭</a>--%>
+                    <a href="#" class="btn btn-danger j-modal-closebtn" >关闭</a>
             </div>
         </div>
     </div>

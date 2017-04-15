@@ -75,7 +75,7 @@ define(function (require, exports, module) {
 
             '    <td class=" heading">',
             '{@if item.status==1}',
-            ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
+            // ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             ' <button class="btn btn-default btn-xs  j-disable j-quereng"  data-id=${item.id} data-status="4" ><span class="iconfont iconfont-xs">&#xe617;</span>确认取号</button>',
             '{@/if}',
             '{@if item.status==4}',

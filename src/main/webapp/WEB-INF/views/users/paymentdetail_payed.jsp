@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-<div class="portlet-body" id="paymentdatail-list" style="background-color: white">
+<div class="portlet-body" id="paymentdetail-list" style="background-color: white">
     <div class="table-pages clearfix">
         <div class="table-page clearfix"></div>
         <div class="page-length">
