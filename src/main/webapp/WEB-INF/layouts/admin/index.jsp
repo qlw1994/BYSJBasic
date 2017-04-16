@@ -132,6 +132,11 @@
                                     <a class="ajaxify" href='${ctx}/admin/hospitals/index?pcode=2&subcode=1'>医院管理</a>
                                 </li>
                             </ul>
+                            <ul class="sub-menu sub-menu-hide" data-code="RMsg">
+                                <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
+                                    <a class="ajaxify" href='${ctx}/admin/hospitalizations/patientChosen?pcode=2&subcode=2'>住院记录</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                     <ul class="page-sidebar-menu-ul">

@@ -180,7 +180,7 @@ define(function (require, exports, module) {
                 $modal.find('input[name=money]').val(money);
                 $modal.find('input[name=format]').val(format);
                 $modal.find('input[name=amount]').val(amount);
-                $modal.find('input[name=odd_money]').val(money);
+                $modal.find('input[name=old_money]').val(money);
                 $modal.find(".j-form-save").hide();
                 $modal.find(".j-form-edit").show();
             });

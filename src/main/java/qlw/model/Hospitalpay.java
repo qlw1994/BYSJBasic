@@ -23,6 +23,10 @@ public class Hospitalpay {
 
     private Integer status;
 
+    private Integer amount;
+
+    private Integer paytype;
+
     public Long getId() {
         return id;
     }
@@ -101,5 +105,21 @@ public class Hospitalpay {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Integer getPaytype() {
+        return paytype;
+    }
+
+    public void setPaytype(Integer paytype) {
+        this.paytype = paytype;
     }
 }

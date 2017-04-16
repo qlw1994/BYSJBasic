@@ -78,7 +78,7 @@ public class DepartmentManage extends BaseManage {
      * @param hospitalid
      * @return
      */
-    public List<Department> getLike(Integer pageNumber, Integer pageSize, String name, long hospitalid) {
+    public List<Department> getLike(Integer pageNumber, Integer pageSize, String name, Long hospitalid) {
         DepartmentExample example = new DepartmentExample();
         if (pageNumber != null && pageSize != null) {
             example.setOrderByClause(getPage("id desc", pageNumber, pageSize));

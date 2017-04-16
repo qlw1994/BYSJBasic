@@ -130,15 +130,15 @@ public class Doctor_DrugorderdetailController extends BaseController{
      */
     @RequestMapping(value = "modDrugorderdetail", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateDrugorderdetail(Drugorderdetail drugorderdetail, Object odd_money) {
+    public Map<String, Object> updateDrugorderdetail(Drugorderdetail drugorderdetail, Object old_money) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "修改成功";
         try {
             long drugorderid = drugorderdetail.getDrugorderid();
-            BigDecimal oddMoney = BigDecimal.valueOf(Double.parseDouble((String) odd_money));
+            BigDecimal oldmoney = BigDecimal.valueOf(Double.parseDouble((String) old_money));
             Drugorder drugorder = drugorderManage.getById(drugorderid);
-            drugorder.setMoney((drugorder.getMoney().subtract(oddMoney)).add(drugorderdetail.getMoney()));
+            drugorder.setMoney((drugorder.getMoney().subtract(oldmoney)).add(drugorderdetail.getMoney()));
             drugorderManage.update(drugorder);
             drugorderdetailManage.update(drugorderdetail);
         } catch (Exception e) {

@@ -126,7 +126,7 @@ public class DrugorderController extends BaseController {
             List<Drugorderdetail> drugorderdetails = drugorder.getDrugorderdetails();
             for (Drugorderdetail d : drugorderdetails) {
                 d.setDrugorderid(drugorder.getId());
-                drugorderdetailManage.save(d);
+                drugorderdetailManage.saveBackId(d);
 
                 Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
                 Department department = departmentManage.getById(drugorder.getDepartmentid());
@@ -152,6 +152,9 @@ public class DrugorderController extends BaseController {
                 paymentdetail.setUid(users.getId());
                 paymentdetail.setUname(users.getName());
                 paymentdetail.setMoney(d.getMoney());
+
+                paymentdetail.setProjectid(d.getId());
+                paymentdetail.setProjecttype(0);//药品
                 paymentdetailManage.save(paymentdetail);
             }
         } catch (Exception e) {

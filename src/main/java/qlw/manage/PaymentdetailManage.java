@@ -24,6 +24,10 @@ public class PaymentdetailManage extends BaseManage {
     DrugorderManage drugorderManage;
     @Autowired
     DrugorderdetailManage drugorderdetailManage;
+    @Autowired
+    HospitalizationManage hospitalizationManage;
+    @Autowired
+    HospitalpayManage hospitalpayManage;
 
     public List<Paymentdetail> list(Integer pageNumber, Integer pageSize, String startdate, String enddate, Paymentdetail paymentdetail) {
         PaymentdetailExample example = new PaymentdetailExample();
@@ -213,6 +217,24 @@ public class PaymentdetailManage extends BaseManage {
     }
 
     /**
+     * 删除支付详情 项目类型  项目编号
+     *
+     * @param id
+     * @return
+     */
+    public boolean deleteByproject(Long id, Integer type) {
+        PaymentdetailExample example = new PaymentdetailExample();
+        PaymentdetailExample.Criteria criteria = example.createCriteria();
+        criteria.andProjectidEqualTo(id);
+        criteria.andProjecttypeEqualTo(type);
+        int i = paymentdetailMapper.deleteByExample(example);
+        if (i > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 删除支付详情
      *
      * @param paymentdetail
@@ -281,7 +303,7 @@ public class PaymentdetailManage extends BaseManage {
             paymentdetailMapper.updateByExampleSelective(paymentdetail, example);
             Paymentdetail paymentdetail_store = paymentdetailMapper.selectByPrimaryKey(Long.parseLong(paymentdetailids[i]));
             //记录药品订单编号
-            if (paymentdetail_store.getProjecttype().equals(0)) {
+            if (paymentdetail_store.getProjecttype().equals(new Integer(0))) {
                 Drugorderdetail drugorderdetail = drugorderdetailManage.getById(paymentdetail_store.getProjectid());
                 Drugorder drugorder = drugorderManage.getById(drugorderdetail.getDrugorderid());
                 drugorder.setNeedpay(drugorder.getNeedpay() - 1);
@@ -290,6 +312,20 @@ public class PaymentdetailManage extends BaseManage {
                     drugorder.setStatus(1);
                 }
                 drugorderManage.update(drugorder);
+            }
+            //住院消费
+            if (paymentdetail_store.getProjecttype().equals(new Integer(1))) {
+                Long hospitalpayid = paymentdetail_store.getProjectid();
+                Hospitalpay hospitalpay = hospitalpayManage.getById(hospitalpayid);
+                hospitalpay.setPaytype(1);
+                hospitalpay.setStatus(1);
+                hospitalpayManage.update(hospitalpay);
+                Long hospitalizationid = hospitalpay.getHospitalizationid();
+                Hospitalization hospitalization = hospitalizationManage.getById(hospitalizationid);
+                if (!hospitalizationManage.needPay(hospitalizationid)) {
+                    hospitalization.setStatus(1);
+                    hospitalizationManage.update(hospitalization);
+                }
             }
 
         }

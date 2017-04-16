@@ -171,7 +171,7 @@ public class DrugorderdetailController extends BaseController {
      */
     @RequestMapping(value = "modDrugorderdetail", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateDrugorderdetail(Drugorderdetail drugorderdetail, Object odd_money) {
+    public Map<String, Object> updateDrugorderdetail(Drugorderdetail drugorderdetail, Object old_money) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "修改成功";
@@ -179,7 +179,7 @@ public class DrugorderdetailController extends BaseController {
             long drugorderid = drugorderdetail.getDrugorderid();
             Drugorderdetail oddDrugorderdetail = new Drugorderdetail();
             oddDrugorderdetail = drugorderdetailManage.getById(drugorderdetail.getId());
-            BigDecimal oddMoney = BigDecimal.valueOf(Double.parseDouble((String) odd_money));
+            BigDecimal oldmoney = BigDecimal.valueOf(Double.parseDouble((String) old_money));
 
             Drugorder drugorder = drugorderManage.getById(drugorderid);
             Hospital hospital = hospitalManage.getById(drugorder.getHospitalid());
@@ -211,7 +211,7 @@ public class DrugorderdetailController extends BaseController {
                 rtnMsg = "该订单已经支付";
                 rtnCode = ResultCode.ERROR;
             } else {
-                drugorder.setMoney((drugorder.getMoney().subtract(oddMoney)).add(drugorderdetail.getMoney()));
+                drugorder.setMoney((drugorder.getMoney().subtract(oldmoney)).add(drugorderdetail.getMoney()));
                 drugorderManage.update(drugorder);
                 drugorderdetailManage.update(drugorderdetail);
             }

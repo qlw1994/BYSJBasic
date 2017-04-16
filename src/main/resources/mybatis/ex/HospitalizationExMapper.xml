@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="qlw.mapper.ex.HospitalizationExMapper" >
     <insert id="insertBackId" parameterType="qlw.model.Hospitalization" keyProperty="id" useGeneratedKeys="true">
+        INSERT into  hospitalization
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
                 id,
@@ -32,6 +33,12 @@
             </if>
             <if test="status != null" >
                 status,
+            </if>
+            <if test="hospitalid != null" >
+                hospitalid,
+            </if>
+            <if test="hospitalname != null" >
+                hospitalname,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -64,6 +71,12 @@
             </if>
             <if test="status != null" >
                 #{status,jdbcType=INTEGER},
+            </if>
+            <if test="hospitalid != null" >
+                #{hospitalid,jdbcType=BIGINT},
+            </if>
+            <if test="hospitalname != null" >
+                #{hospitalname,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

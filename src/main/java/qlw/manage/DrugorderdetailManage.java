@@ -16,9 +16,11 @@ import java.util.List;
  */
 @Service
 @Transactional(readOnly = true)
-public class DrugorderdetailManage extends BaseManage{
+public class DrugorderdetailManage extends BaseManage {
     @Autowired
     DrugorderdetailExMapper drugorderdetailExMapper;
+    @Autowired
+    PaymentdetailManage paymentdetailManage;
 
     public List<Drugorderdetail> list(Integer pageNumber, Integer pageSize, long drugorderid) {
         DrugorderdetailExample example = new DrugorderdetailExample();
@@ -35,7 +37,7 @@ public class DrugorderdetailManage extends BaseManage{
         criteria.andDrugorderidEqualTo(drugorderid);
         return drugorderdetailExMapper.countByExample(example);
     }
-    
+
 
     /**
      * 根据id获取药品详情
@@ -66,6 +68,7 @@ public class DrugorderdetailManage extends BaseManage{
      * @return
      */
     public boolean delete(Long id) {
+        paymentdetailManage.deleteByproject(id, 1);
         int i = drugorderdetailExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
             return true;
@@ -87,6 +90,7 @@ public class DrugorderdetailManage extends BaseManage{
         }
         return null;
     }
+
     /**
      * 保存药品详情
      *

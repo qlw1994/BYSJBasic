@@ -754,6 +754,126 @@ public class HospitalpayExample {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andAmountIsNull() {
+            addCriterion("amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountIsNotNull() {
+            addCriterion("amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountEqualTo(Integer value) {
+            addCriterion("amount =", value, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountNotEqualTo(Integer value) {
+            addCriterion("amount <>", value, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountGreaterThan(Integer value) {
+            addCriterion("amount >", value, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("amount >=", value, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountLessThan(Integer value) {
+            addCriterion("amount <", value, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountLessThanOrEqualTo(Integer value) {
+            addCriterion("amount <=", value, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountIn(List<Integer> values) {
+            addCriterion("amount in", values, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountNotIn(List<Integer> values) {
+            addCriterion("amount not in", values, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountBetween(Integer value1, Integer value2) {
+            addCriterion("amount between", value1, value2, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountNotBetween(Integer value1, Integer value2) {
+            addCriterion("amount not between", value1, value2, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeIsNull() {
+            addCriterion("paytype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeIsNotNull() {
+            addCriterion("paytype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeEqualTo(Integer value) {
+            addCriterion("paytype =", value, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeNotEqualTo(Integer value) {
+            addCriterion("paytype <>", value, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeGreaterThan(Integer value) {
+            addCriterion("paytype >", value, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("paytype >=", value, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeLessThan(Integer value) {
+            addCriterion("paytype <", value, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeLessThanOrEqualTo(Integer value) {
+            addCriterion("paytype <=", value, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeIn(List<Integer> values) {
+            addCriterion("paytype in", values, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeNotIn(List<Integer> values) {
+            addCriterion("paytype not in", values, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeBetween(Integer value1, Integer value2) {
+            addCriterion("paytype between", value1, value2, "paytype");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaytypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("paytype not between", value1, value2, "paytype");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

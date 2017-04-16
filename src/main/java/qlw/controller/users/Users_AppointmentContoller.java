@@ -85,11 +85,11 @@ public class Users_AppointmentContoller extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientchosen")
-    public ModelAndView ViewPatientChosen(Long schedulingid, int pcode, int subcode, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/appointment_patient_chosen");
-        request.setAttribute("schedulingid", schedulingid);
-        mv.addObject("pcode", pcode);
-        mv.addObject("subcode", subcode);
+    public ModelAndView ViewPatientChosen( int subcode, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/patient_chosen");
+        Users users = (Users) request.getSession().getAttribute("user");
+        request.getSession().setAttribute("uid", users.getId());
+
         mv.addObject("currentpage", 1);
         return mv;
     }

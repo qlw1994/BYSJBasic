@@ -8,12 +8,8 @@ define(function (require, exports, module) {
     var pageIndex;
 
     var $table = $("#datatable_ajax");
-    var $drugorderdetailList = $("#drugorderdetail-list");
-    var $DrugorderdetailForm = $('#vDrugorderdetailForm');
-    var $ModifyForm = $("#vDrugorderdetailModifyForm");
-    var $modifyModal = $('#modifyModal');
-    var $addModal = $('#addModal');
-    var $addRoletipModal = $('#modal-box');
+    var $hospitalpayList = $("#hospitalpay-list");
+
     var pagelength = 10; //一页多少条；
     $('body').tooltip({
         selector: '.has-tooltip'
@@ -33,28 +29,37 @@ define(function (require, exports, module) {
             '{@else}',
             '{@each data as item,index}',
             '{@if index%2==0}',
-            '<tr role="row" class="odd" data-drugname="${item.drugname}">',
-            '<tr role="row" class="odd" data-format="${item.format}">',
-            '<tr role="row" class="odd" data-price="${item.price}">',
+            '<tr role="row" class="odd" data-name="${item.name}">',
+            '<tr role="row" class="odd" data-price="${item.format}">',
+            '<tr role="row" class="odd" data-unit="${item.price}">',
             '<tr role="row" class="odd" data-amount="${item.amount}">',
             '<tr role="row" class="odd" data-money="${item.money}">',
-
+            '<tr role="row" class="odd" data-advice="${item.advice}">',
+            '<tr role="row" class="odd" data-status="${item.status}">',
             '{@else}',
-            '<tr role="row" class="even" data-drugname="${item.drugname}">',
             '<tr role="row" class="even" data-name="${item.name}">',
             '<tr role="row" class="even" data-price="${item.price}">',
             '<tr role="row" class="even" data-amount="${item.amount}">',
+            '<tr role="row" class="even" data-unit="${item.unit}">',
             '<tr role="row" class="even" data-money="${item.money}">',
+            '<tr role="row" class="even" data-advice="${item.advice}">',
+            '<tr role="row" class="even" data-status="${item.status}">',
             '{@/if}',
-            '    <td>${item.drugname}</td>',
-            '    <td>${item.format}</td>',
+            '    <td>${item.name}</td>',
             '    <td>${item.price}</td>',
             '    <td>${item.amount}</td>',
+            '    <td>${item.unit}</td>',
             '    <td>${item.money}</td>',
-
+            '    <td>${item.advice}</td>',
+            '{@if item.status==0}',
+            '    <td>未支付</td>',
+            '{@/if}',
+            '{@if item.status==1}',
+            '    <td>已支付</td>',
+            '{@/if}',
             '    <td class=" heading">',
 
-            ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-format="${item.format}"  data-drugname="${item.drugname}" data-price="${item.price}" data-amount="${item.amount}" data-drugid="${item.drugid}"  data-money="${item.money}"  ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
+            // ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-format="${item.format}"  data-drugname="${item.drugname}" data-price="${item.price}" data-amount="${item.amount}" data-drugid="${item.drugid}"  data-money="${item.money}"  ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
 
             '    </td>',
             '</tr>',
@@ -85,7 +90,7 @@ define(function (require, exports, module) {
             //列表分页
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/user/drugorderdetails/list',
+                    url: ROOTPAth + '/user/hospitalpays/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -101,7 +106,7 @@ define(function (require, exports, module) {
                             newData.data[i].currentpage = pageIndex.current;
                         });
                         tool.stopPageLoading();
-                        $drugorderdetailList.find(".page-info-num").text(res.data.length);
+                        $hospitalpayList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除
@@ -111,7 +116,7 @@ define(function (require, exports, module) {
                             btnCancelLabel: "取消",
                             onConfirm: function (event, element) {
                                 event.preventDefault();
-                                self.deleteDrugorderdetail($(element));
+                                self.deleteHospitalpay($(element));
                             }
                         });
                     }
@@ -128,39 +133,12 @@ define(function (require, exports, module) {
             });
             pageIndex.reset();
             //分页，修改每页显示数据
-            $drugorderdetailList.on("change", ".j-length", function () {
+            $hospitalpayList.on("change", ".j-length", function () {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $drugorderdetailList.find(".j-length").not(this).get(0).selectedIndex = index;
+                $hospitalpayList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
-            });
-            //修改表单初始化
-            $modifyModal.on('show.modal', function (event) {
-                var $modal = $ModifyForm;
-                $($modifyModal).find("input").prop("disabled", true);
-                $modal.find("input").removeAttr("aria-describedby");
-                $modal.find("input").removeAttr("aria-invalid");
-                $modal.find("input").removeAttr("aria-required");
-                $modal.find("div").removeClass("has-error");
-                $modal.find("span").remove();
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var id = button.data("id");
-                var drugname = button.data("drugname");
-                var drugid = button.data("drugid");
-                var price = button.data("price");
-                var money = button.data("money");
-                var format = button.data("format");
-                var amount = button.data("amount");
-
-                $modal.find('input[name=drugname]').val(drugname);
-                $modal.find('input[name=drugid]').val(drugid);
-                $modal.find('input[name=money]').val(money);
-                $modal.find('input[name=format]').val(format);
-                $modal.find('input[name=amount]').val(amount);
-                $modal.find('input[name=old_money]').val(money);
-                $modal.find(".j-form-save").hide();
-                $modal.find(".j-form-edit").show();
             });
         },
     };

@@ -55,7 +55,7 @@ public class DepartmentController extends BaseController {
 
     @RequestMapping(value = "/listLike", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDepartmentLike(String name, long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listDepartmentLike(String name, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", departmentManage.countLike(name, hospitalid));

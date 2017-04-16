@@ -10,13 +10,12 @@
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">医院配置</h3>
+<h3 class="page-title">就诊人选择</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页 <i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">医院管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">就诊人选择</a></li>
     </ul>
 </div>
@@ -46,6 +45,7 @@
                               <option value="inspectionreports/index">检验表管理</option>
                               <option value="checkreports/patientindex">就诊人检查表管理</option>
                               <option value="inspectionreports/patientindex">就诊人检验表管理</option>
+                              <option value="hospitalizations/index">住院记录查询</option>
                           </select>
                         </div>
                     </div>

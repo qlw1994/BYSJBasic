@@ -744,6 +744,136 @@ public class HospitalizationExample {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andHospitalidIsNull() {
+            addCriterion("hospitalid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidIsNotNull() {
+            addCriterion("hospitalid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidEqualTo(Long value) {
+            addCriterion("hospitalid =", value, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidNotEqualTo(Long value) {
+            addCriterion("hospitalid <>", value, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidGreaterThan(Long value) {
+            addCriterion("hospitalid >", value, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidGreaterThanOrEqualTo(Long value) {
+            addCriterion("hospitalid >=", value, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidLessThan(Long value) {
+            addCriterion("hospitalid <", value, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidLessThanOrEqualTo(Long value) {
+            addCriterion("hospitalid <=", value, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidIn(List<Long> values) {
+            addCriterion("hospitalid in", values, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidNotIn(List<Long> values) {
+            addCriterion("hospitalid not in", values, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidBetween(Long value1, Long value2) {
+            addCriterion("hospitalid between", value1, value2, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalidNotBetween(Long value1, Long value2) {
+            addCriterion("hospitalid not between", value1, value2, "hospitalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameIsNull() {
+            addCriterion("hospitalname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameIsNotNull() {
+            addCriterion("hospitalname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameEqualTo(String value) {
+            addCriterion("hospitalname =", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameNotEqualTo(String value) {
+            addCriterion("hospitalname <>", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameGreaterThan(String value) {
+            addCriterion("hospitalname >", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameGreaterThanOrEqualTo(String value) {
+            addCriterion("hospitalname >=", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameLessThan(String value) {
+            addCriterion("hospitalname <", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameLessThanOrEqualTo(String value) {
+            addCriterion("hospitalname <=", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameLike(String value) {
+            addCriterion("hospitalname like", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameNotLike(String value) {
+            addCriterion("hospitalname not like", value, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameIn(List<String> values) {
+            addCriterion("hospitalname in", values, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameNotIn(List<String> values) {
+            addCriterion("hospitalname not in", values, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameBetween(String value1, String value2) {
+            addCriterion("hospitalname between", value1, value2, "hospitalname");
+            return (Criteria) this;
+        }
+
+        public Criteria andHospitalnameNotBetween(String value1, String value2) {
+            addCriterion("hospitalname not between", value1, value2, "hospitalname");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

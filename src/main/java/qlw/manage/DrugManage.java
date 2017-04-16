@@ -67,9 +67,9 @@ public class DrugManage extends BaseManage{
         criteria.andNameLike(name);
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andDeletedateIsNull();
-        List<Drug> cities = drugMapper.selectByExample(example);
-        if (cities.size() > 0) {
-            return cities;
+        List<Drug> drugs = drugMapper.selectByExample(example);
+        if (drugs.size() > 0) {
+            return drugs;
         } else {
             return new ArrayList<>(0);
         }
@@ -86,9 +86,9 @@ public class DrugManage extends BaseManage{
         DrugExample.Criteria criteria = example.createCriteria();
         criteria.andNameEqualTo(name);
         criteria.andHospitalidEqualTo(hospitalid);
-        List<Drug> cities = drugMapper.selectByExample(example);
-        if (cities.size() > 0) {
-            return cities.get(0);
+        List<Drug> drugs = drugMapper.selectByExample(example);
+        if (drugs.size() > 0) {
+            return drugs.get(0);
         } else {
             return null;
         }
@@ -154,13 +154,13 @@ public class DrugManage extends BaseManage{
     /**
      * 保存药品
      *
-     * @param cities
+     * @param drugs
      * @return
      */
-    public Drug save(Drug cities) {
-        long i = drugMapper.insert(cities);
+    public Drug save(Drug drugs) {
+        long i = drugMapper.insert(drugs);
         if (i > 0) {
-            return cities;
+            return drugs;
         }
         return null;
     }

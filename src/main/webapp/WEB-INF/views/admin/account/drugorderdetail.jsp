@@ -177,7 +177,7 @@
                     <div class="portlet-body form j-disabled-item">
                         <div class="form-body">
                             <input type="hidden" name="id">
-                            <input type="hidden" name="odd_money">
+                            <input type="hidden" name="old_money">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品名</label>
                                 <div class="col-md-8">

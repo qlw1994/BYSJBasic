@@ -12,6 +12,8 @@
     <result column="departmentname" property="departmentname" jdbcType="VARCHAR" />
     <result column="money" property="money" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="hospitalid" property="hospitalid" jdbcType="BIGINT" />
+    <result column="hospitalname" property="hospitalname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, patientid, patientname, bednumber, startdate, enddate, departmentid, departmentname, 
-    money, status
+    money, status, hospitalid, hospitalname
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="qlw.model.HospitalizationExample" >
     select
@@ -109,11 +111,13 @@
     insert into hospitalization (id, patientid, patientname, 
       bednumber, startdate, enddate, 
       departmentid, departmentname, money, 
-      status)
+      status, hospitalid, hospitalname
+      )
     values (#{id,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{patientname,jdbcType=VARCHAR}, 
       #{bednumber,jdbcType=INTEGER}, #{startdate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, 
       #{departmentid,jdbcType=BIGINT}, #{departmentname,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, 
-      #{status,jdbcType=INTEGER})
+      #{status,jdbcType=INTEGER}, #{hospitalid,jdbcType=BIGINT}, #{hospitalname,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="qlw.model.Hospitalization" >
     insert into hospitalization
@@ -148,6 +152,12 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="hospitalid != null" >
+        hospitalid,
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -179,6 +189,12 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        #{hospitalname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,6 +237,12 @@
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.hospitalid != null" >
+        hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalname != null" >
+        hospitalname = #{record.hospitalname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +259,9 @@
       departmentid = #{record.departmentid,jdbcType=BIGINT},
       departmentname = #{record.departmentname,jdbcType=VARCHAR},
       money = #{record.money,jdbcType=DECIMAL},
-      status = #{record.status,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=INTEGER},
+      hospitalid = #{record.hospitalid,jdbcType=BIGINT},
+      hospitalname = #{record.hospitalname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +296,12 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="hospitalid != null" >
+        hospitalid = #{hospitalid,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalname != null" >
+        hospitalname = #{hospitalname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -285,7 +315,9 @@
       departmentid = #{departmentid,jdbcType=BIGINT},
       departmentname = #{departmentname,jdbcType=VARCHAR},
       money = #{money,jdbcType=DECIMAL},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      hospitalid = #{hospitalid,jdbcType=BIGINT},
+      hospitalname = #{hospitalname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

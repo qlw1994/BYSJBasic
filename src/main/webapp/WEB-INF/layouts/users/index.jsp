@@ -55,10 +55,20 @@
                                 </div>
                             </li>--%>
                         <li class="top-tools-item dropdown top-userbox">
-                            <a href="#" class="top-tools-item-a top-user" data-toggle="modal" data-target="#modifyModal-user">
+                            <a href="#" class="top-tools-item-a top-user" data-toggle="modal"
+                               data-target="#modifyModal-user">
                                 <img alt="" class="img-circle hide1" src="${ctx}/res-build/img/avatar3_small.jpg">
                                 <span class="username username-hide-on-mobile">${sessionScope.user.name}</span>
-                                <i class="iconfont">&#xe606;</i>
+                            </a><%--
+
+                        <div class="dropdown-menu dropdown-notification">
+                            <div class="dropdown-menu-con "></div>
+                        </div>--%>
+                        </li>
+                        <li class="top-tools-item dropdown top-userbox">
+                            <a href="${ctx}/user/hospitalizations/patientChosen" class="top-tools-item-a top-user" data-toggle="modal"
+                               data-target="#modifyModal-user">
+                                <span class="username username-hide-on-mobile">住院记录查询</span>
                             </a><%--
 
                         <div class="dropdown-menu dropdown-notification">
@@ -92,7 +102,7 @@
         <div class="page-header clearfix header-fixed">
             <div class="page-header-inner">
                 <div class="page-logo">
-                    <a href="${ctx}/users/index">
+                    <a href="${ctx}/userindex/index">
                         智慧医疗
                     </a>
                 </div>

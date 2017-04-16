@@ -6,7 +6,6 @@ import qlw.model.HospitalpayExample;
 import qlw.util.annotation.BatisRepository;
 
 import java.util.List;
-
 @BatisRepository
 public interface HospitalpayMapper {
     int countByExample(HospitalpayExample example);

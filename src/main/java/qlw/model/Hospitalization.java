@@ -1,6 +1,7 @@
 package qlw.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Hospitalization {
     private Long id;
@@ -22,6 +23,10 @@ public class Hospitalization {
     private BigDecimal money;
 
     private Integer status;
+
+    private Long hospitalid;
+
+    private String hospitalname;
 
     public Long getId() {
         return id;
@@ -102,4 +107,30 @@ public class Hospitalization {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public Long getHospitalid() {
+        return hospitalid;
+    }
+
+    public void setHospitalid(Long hospitalid) {
+        this.hospitalid = hospitalid;
+    }
+
+    public String getHospitalname() {
+        return hospitalname;
+    }
+
+    public void setHospitalname(String hospitalname) {
+        this.hospitalname = hospitalname == null ? null : hospitalname.trim();
+    }
+    public List<Hospitalpay> getHospitalpays() {
+        return hospitalpays;
+    }
+
+    public void setHospitalpays(List<Hospitalpay> hospitalpays) {
+        this.hospitalpays = hospitalpays;
+    }
+
+    private List<Hospitalpay> hospitalpays;
+
 }
