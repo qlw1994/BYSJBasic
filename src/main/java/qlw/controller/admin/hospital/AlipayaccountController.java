@@ -30,11 +30,11 @@ public class AlipayaccountController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listAlipayaccount(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,Long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listAlipayaccount(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,String hospitalname, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("total", alipayaccountManage.count(hospitalid));
-            result.put("data", alipayaccountManage.list(page, length, hospitalid));
+            result.put("total", alipayaccountManage.count(hospitalname));
+            result.put("data", alipayaccountManage.list(page, length,hospitalname));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -50,10 +50,8 @@ public class AlipayaccountController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(Long hospitalid,String hospitalname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView View(int pcode, int subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/alipayaccount");
-        request.getSession().setAttribute("hospitalid", hospitalid);
-        request.getSession().setAttribute("hospitalname",hospitalname);
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);
@@ -73,7 +71,7 @@ public class AlipayaccountController extends BaseController {
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "添加成功";
         try {
-                alipayaccountManage.save(alipayaccount);
+            alipayaccountManage.save(alipayaccount);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "添加失败";
@@ -167,13 +165,12 @@ public class AlipayaccountController extends BaseController {
     /**
      * 检查是否有相同的支付宝账号名称
      *
-     * @param name
      * @return 存在返回false 否则true
      */
-    @RequestMapping(value = "/sameName", method = RequestMethod.POST)
+    @RequestMapping(value = "/hasAlipay", method = RequestMethod.POST)
     @ResponseBody
-    public boolean hasSameName(String name, long hospitalid) {
-        boolean res = alipayaccountManage.haveSameName(name, hospitalid);
+    public boolean hasSameName( long hospitalid) {
+        boolean res = alipayaccountManage.hasAlipay(hospitalid);
         return !res;
     }
 

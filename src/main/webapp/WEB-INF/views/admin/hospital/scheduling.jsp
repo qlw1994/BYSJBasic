@@ -30,7 +30,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i>${hospitalname}-${departmentname}- ${doctorname}- 排班查询
+                   ${hospitalname}-${departmentname}- ${doctorname}- 排班查询
                 </div>
             </div>
             <div class="portlet-body" id="scheduling-list">

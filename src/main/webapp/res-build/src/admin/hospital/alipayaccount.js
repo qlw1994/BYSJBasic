@@ -19,6 +19,7 @@ define(function (require, exports, module) {
     var pagelength = 10; //一页多少条；
     var $modifyModal = $('#modifyModal');
     var $ModifyForm = $("#vAlipayModifyForm");
+    var $searchHospital = $("#search_hospitalname");
     var addFormValidate;
     var listTpl = juicer(
         [
@@ -33,6 +34,8 @@ define(function (require, exports, module) {
             '{@else}',
             '{@each data as item,index}',
             '{@if index%2==0}',
+            '<tr role="row" class="odd" data-privatekey="${item.hospitalname}">',
+
             '<tr role="row" class="odd" data-accountname="${item.accountname}">',
             '<tr role="row" class="odd" data-pid="${item.pid}">',
             '<tr role="row" class="odd" data-appid="${item.appid}">',
@@ -40,17 +43,19 @@ define(function (require, exports, module) {
             '<tr role="row" class="odd" data-privatekey="${item.privatekey}">',
 
             '{@else}',
+            '<tr role="row" class="even" data-accountname="${item.hospitalname}">',
             '<tr role="row" class="even" data-accountname="${item.accountname}">',
             '<tr role="row" class="even" data-pid="${item.pid}">',
             '<tr role="row" class="even" data-appid="${item.appid}">',
             '<tr role="row" class="even" data-publickey="${item.publickey}">',
             '<tr role="row" class="even" data-privatekey="${item.privatekey}">',
             '{@/if}',
+            '    <td>${item.hospitalname}</td>',
             '    <td>${item.accountname}</td>',
             '    <td>${item.pid}</td>',
             '    <td>${item.appid}</td>',
             '    <td class=" heading">',
-            ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal" data-id="${item.id}" data-accountname="${item.accountname}" data-pid="${item.pid}" data-checkkey="${item.checkkey}" data-publickey="${item.publickey}" data-privatekey="${item.privatekey}" data-appid="${item.appid}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
+            ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal" data-id="${item.id}" data-accountname="${item.accountname}" data-pid="${item.pid}" data-hospitalname="${item.hospitalname}" data-checkkey="${item.checkkey}" data-publickey="${item.publickey}" data-privatekey="${item.privatekey}" data-appid="${item.appid}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             //  '{@if item.id!==1}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation" data-id="${item.id}" data-placement="top"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             //  '{@/if}',
@@ -88,12 +93,9 @@ define(function (require, exports, module) {
                     url: ROOTPAth + '/admin/alipayaccounts/list',
                     type: 'POST',
                     dataType: 'json',
-                    data: function () {
-                        var data = {
-                            length: pagelength,
-                            hospitalid:hospitalid
-                        };
-                        return data;
+                    data: {
+                        length: pagelength,
+                        hospitalname: $("#search_hospitalname").val()
                     },
                     success: function (res) {
 
@@ -141,7 +143,24 @@ define(function (require, exports, module) {
                 },
                 pageWrapper: '.table-page'
             });
-            //     pageIndex.reset();
+            pageIndex.reset();
+            //添加界面关闭,下拉框消失
+            $addModal.on("hide.modal", function (event) {
+                $addModal.find(".list").hide();
+            });
+            //点击查询
+            $("#search").on('click', function (event) {
+                event.preventDefault();
+                get_search($searchHospital.val());
+            });
+            //添加模块绑定 下拉框
+            $("#add_hospitalname").keyup(function (e) {
+                if (e.keyCode != 40 && e.keyCode != 38) {
+                    get_hospital_addModel($("#add_hospitalname"));
+                }
+            }).focus(function () {
+                this.select();
+            });
 
             //分页，修改每页显示数据
             $alipayList.on("change", ".j-length", function () {
@@ -185,7 +204,8 @@ define(function (require, exports, module) {
                 var publickey = button.data("publickey");
                 var privatekey = button.data("privatekey");
                 var id = button.data("id");
-
+                var hospitalname = button.data("hospitalname");
+                $ModifyForm.find('input[name=hospitalname]').val(hospitalname);
                 $ModifyForm.find('input[name=accountname]').val(accountname);
                 $ModifyForm.find('input[name=pid]').val(pid);
                 $ModifyForm.find('input[name=appid]').val(appid);
@@ -204,46 +224,42 @@ define(function (require, exports, module) {
 
                 $modifyModal.find("input[disabled]").prop("disabled", false);
                 $modifyModal.find("textarea[disabled]").prop("disabled", false);
+                $modifyModal.find("input[name=hospitalname]").prop("disabled", true);
             });
             //表单验证-添加支付宝帐号
             addFormValidate = $AlipayForm.validate({
                 rules: {
+                    hospitalname: {
+                        required: true,
+                        remote: {
+                            url: ROOTPAth + "/admin/hospitals/hasname",
+                            type: "POST",
+                            dataType: "JSON",
+                            data: {
+                                name: $("#add_hospitalname").val()
+                            }
+                        }
+                    },
                     accountname: {
                         required: true,
-                        /*                        remote: { //自带远程验证存在的方法
-                         url: ROOTPAth + '/admin/alipayaccount/sameAlipayName',
-                         type: "POST",
-                         dataType: "json",
-                         data: {
-                         hosname: function () {
-                         return $AlipayForm.find('input[name=hosname]').val();
-                         },
-                         accountname: function () {
-                         return $AlipayForm.find('input[name=accountname]').val();
-                         },
-                         subhoscode: function () {
-                         return $AlipayForm.find('input[name=subhoscode]').val();
-                         },
-                         subhosname: function () {
-                         return $AlipayForm.find('input[name=subhosname]').val();
-                         }
-                         }
-                         }*/
                     },
                     pid: "required",
-                    // appid: "required",
+                    appid: "required",
                     checkkey: "required",
                     publickey: "required",
                     privatekey: "required",
 
                 },
                 messages: {
+                    hospitalname: {
+                        required: "医院名称不能为空",
+                        remote: "医院不存在"
+                    },
                     accountname: {
                         required: "支付宝账户名不能为空",
-                        /*   remote: "支付宝账户名重复"*/
                     },
                     pid: "PID不能为空",
-                    // appid: "APPID不能为空",
+                    appid: "APPID不能为空",
                     checkkey: "安全校验码不能为空",
                     publickey: "支付宝公钥不能为空",
                     privatekey: "支付宝私钥不能为空",
@@ -303,24 +319,9 @@ define(function (require, exports, module) {
             //表单验证-修改支付宝帐号
             $ModifyForm.validate({
                 rules: {
-                    accountname: {
-                        required: true,
-                        /*   remote: { //自带远程验证存在的方法
-                         url: ROOTPAth + '/admin/alipayaccount/sameAlipayName',
-                         type: "POST",
-                         dataType: "json",
-                         data: {
-                         hosname: function () {
-                         return $ModifyForm.find('input[name=hosname]').val();
-                         },
-                         accountname: function () {
-                         return $ModifyForm.find('input[name=accountname]').val();
-                         }
-                         }
-                         }*/
-                    },
+                    accountname: "required",
                     pid: "required",
-                    // appid: "required",
+                    appid: "required",
                     checkkey: "required",
                     publickey: "required",
                     privatekey: "required",
@@ -328,10 +329,9 @@ define(function (require, exports, module) {
                 messages: {
                     accountname: {
                         required: "支付宝账户名不能为空",
-                        // remote: "与旧账户名相同"
                     },
                     pid: "PID不能为空",
-                    // appid: "APPID不能为空",
+                    appid: "APPID不能为空",
                     checkkey: "安全校验码不能为空",
                     publickey: "支付宝公钥不能为空",
                     privatekey: "支付宝私钥不能为空",
@@ -366,8 +366,6 @@ define(function (require, exports, module) {
                             $addRoletipModal.find(".dialogtip-msg").html("数据修改成功");
                             $addRoletipModal.modal('show');
                             pageIndex.reset();
-                            $ModifyForm.find("input[type='hidden']").eq(0).remove();
-                            $ModifyForm.find("input[type='hidden']").eq(1).remove();
                         }
                         else {
                             $("#ajax_fail").find("h4").text(data.desc);
@@ -378,7 +376,7 @@ define(function (require, exports, module) {
                 }
             });
 
-        }   , deleteAlipay: function ($that) {
+        }, deleteAlipay: function ($that) {
             var id = $that.data("id");
             var delPath = ROOTPAth + '/admin/alipayaccounts/deleteAlipayaccount/' + id;
             $.ajax({
@@ -392,6 +390,53 @@ define(function (require, exports, module) {
         },
     }
 
+    function get_hospital_addModel(obj) {
+        var t = setTimeout(function () {
+            $.ajax({
+                url: ROOTPAth + '/admin/hospitals/listLike',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    name: $(obj).val()
+                },
+                success: function (data) {
+                    data = data.data;
+                    var $list = $(obj).next(".list");
+                    $list.show();
+                    $list.html("");
+                    $.each(data, function (index, el) {
+                        var html = $("<li data-id='" + el.id + "'>" + el.name + "</li>");
+                        $list.append(html);
+
+                    });
+                    if ($list.html() == "") {
+                        $list.hide();
+                    }
+                    $($list).find("li").hover(function () {
+
+                        $(this).addClass("esultDivLiHover");
+                    }, function () {
+                        $(this).removeClass("esultDivLiHover");
+                    });
+                    $list.mouseleave(function () {
+                        $list.hide();
+                    });
+                    $($list).find("li").click(function (event) {
+                        $(obj).val($(this).text());
+                        if ($list.attr("id") != "undefined") {
+                            $ModifyForm.find("input[name=hospitalid]").val($(this).data("id"));
+                            $ModifyForm.validate().element($(obj));
+                        }
+                        $list.hide();
+                    });
+                },
+            });
+        }, 500);
+    }
+
+    function get_search(hospitalname) {
+        pageIndex.reset();
+    }
 
     Utilitiy.init();
 });

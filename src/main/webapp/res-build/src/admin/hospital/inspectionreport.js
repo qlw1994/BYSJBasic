@@ -87,6 +87,8 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
+                        startdate:$("#starttime").val(),
+                        enddate:$("#endtime").val(),
                         patientid: patientid,
                         length: pagelength
 
@@ -131,6 +133,11 @@ define(function (require, exports, module) {
                 var index = $this.get(0).selectedIndex;
                 $inspectionreportList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
+            });
+            //点击查询
+            $("#search").on('click', function (event) {
+                event.preventDefault();
+                get_search();
             });
             //添加界面关闭,下拉框消失
             $addModal.on("hide.modal", function (event) {
@@ -550,5 +557,25 @@ define(function (require, exports, module) {
     $('#mod_examtime').datetimepicker({
         format: 'yyyy-mm-dd hh:ii'
     });
+    $('#starttime').datepicker({
+        dateFormat: "yy-mm-dd",
+        selectOtherMonths: true,
+        // yearRange: "-100:+0",
+        changeMonth: true,
+        changeYear: true,
+        inline: true
+    });
+    $('#endtime').datepicker({
+
+        dateFormat: "yy-mm-dd",
+        selectOtherMonths: true,
+        // yearRange: "-100:+0",
+        changeMonth: true,
+        changeYear: true,
+        inline: true
+    });
+    function get_search() {
+        pageIndex.reset();
+    }
     Utilitiy.init();
 });

@@ -64,7 +64,20 @@ public class InspectitemController extends BaseController {
         return mv;
     }
 
-
+    /**
+     * 药品检验项目管理首页跳转 就诊人入口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patientindex")
+    public ModelAndView ViewPatientIndex(int pcode, int subcode, long inspectionid, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("admin/account/inspectitem");
+        request.getSession().setAttribute("inspectionid", inspectionid);
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
+        mv.addObject("currentpage", 1);
+        return mv;
+    }
     /**
      * 添加药品检验项目
      *

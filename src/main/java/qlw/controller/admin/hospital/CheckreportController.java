@@ -33,7 +33,7 @@ public class CheckreportController extends BaseController{
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listCheckreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, HttpServletRequest request) {
+    public Map<String, Object> listCheckreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startDate, String endDate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             Checkreport checkreport = new Checkreport();
@@ -92,21 +92,50 @@ public class CheckreportController extends BaseController{
         mv.addObject("currentpage", 1);
         return mv;
     }
-
+    /**
+     * 检验表管理首页跳转  就诊人入口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patientindex")
+    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long patientid, String patientname, HttpServletRequest
+            request) {
+        ModelAndView mv = new ModelAndView("admin/account/checkreport");
+        request.getSession().setAttribute("patientid", patientid);
+        request.getSession().setAttribute("patientname", patientname);
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
+        mv.addObject("currentpage", 1);
+        return mv;
+    }
     /**
      * 检验表就诊人管理首页跳转
      *
      * @return
      */
     @RequestMapping(value = "/patientChosen")
-    public ModelAndView patientChosen(long doctorid, String doctorname,String service, HttpServletRequest request) {
+    public ModelAndView patientChosen(Integer pcode, Integer subcode,Long doctorid, String doctorname,String service, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
         request.setAttribute("service",service);
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
         return mv;
     }
-
+    /**
+     * 检验表就诊人管理首页跳转 就诊人入口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patient_Chosen")
+    public ModelAndView patient_Chosen(Integer pcode, Integer subcode,HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
+        request.setAttribute("service","checkreports/patientindex");
+        request.getSession().setAttribute("pcode", pcode);
+        request.getSession().setAttribute("subcode", subcode);
+        return mv;
+    }
     /**
      * 添加检验表
      *

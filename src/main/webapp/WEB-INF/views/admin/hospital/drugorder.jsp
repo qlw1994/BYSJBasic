@@ -50,12 +50,13 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-info" id="search">查询</button>
+                    <div class="actions" style="float: right">
+                        <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                                class="iconfont">&#xe612;</i> <span class="hidden-480">添加药品订单</span>
+                        </a>
+                    </div>
                 </form>
-                <div class="actions">
-                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                            class="iconfont">&#xe612;</i> <span class="hidden-480">添加药品订单</span>
-                    </a>
-                </div>
+
             </div>
             <div class="portlet-body" id="drugorder-list">
                 <div class="table-pages clearfix">
@@ -324,6 +325,9 @@
         var hospitalname = '${hospitalname}';
         var uid =${uid};
     </script>
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="admin/hospital/drugorder"></script>
 </content>

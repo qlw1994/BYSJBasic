@@ -16,7 +16,6 @@
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页 <i class="iconfont ico-angle-right">
             &#xe605;</i></li>
         <li><a href="#">账户管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">用户</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">就诊人管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">药品订单管理</a></li>

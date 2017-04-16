@@ -61,7 +61,7 @@ define(function (require, exports, module) {
             '    <td class=" heading">',
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}" data-advice="${item.advice}" data-status="${item.status}"><span class="iconfont iconfont-xs">&#xe62d;</span>修改</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugorderdetails/patientindex?pcode=1&subcode=2&drugorderid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span> 查看详情</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/drugorderdetails/patientindex?pcode=4&subcode=1&drugorderid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span> 查看详情</a>',
             '{@if item.total==0}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '{@/if}',
@@ -97,6 +97,8 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
+                        startdate:$("#starttime").val(),
+                        enddate:$("#endtime").val(),
                         patientid: patientid,
                         length: pagelength
 

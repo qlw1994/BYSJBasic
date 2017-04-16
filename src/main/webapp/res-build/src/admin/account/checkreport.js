@@ -143,10 +143,6 @@ define(function (require, exports, module) {
                 $checkreportList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
-            //添加界面关闭,下拉框消失
-            $addModal.on("hide.modal", function (event) {
-                $addModal.find(".list").hide();
-            });
             //修改界面关闭,下拉框消失
             $modifyModal.on("hide.modal", function (event) {
                 $modifyModal.find(".list").hide();
@@ -166,21 +162,6 @@ define(function (require, exports, module) {
                 $(formDom).find("select").prop("disabled", false);
                 // $(event.relatedTarget)
             });
-            //添加表单初始化
-            $addModal.on('show.modal', function (event) {
-                $CheckreportForm[0].reset();
-                $CheckreportForm.find("input").removeAttr("aria-describedby");
-                $CheckreportForm.find("input").removeAttr("aria-invalid");
-                $CheckreportForm.find("input").removeAttr("aria-required");
-                $CheckreportForm.find("textarea").removeAttr("aria-describedby");
-                $CheckreportForm.find("textarea").removeAttr("aria-invalid");
-                $CheckreportForm.find("textarea").removeAttr("aria-required");
-                $CheckreportForm.find("select").removeAttr("aria-describedby");
-                $CheckreportForm.find("select").removeAttr("aria-invalid");
-                $CheckreportForm.find("select").removeAttr("aria-required");
-                $CheckreportForm.find("div").removeClass("has-error");
-                $CheckreportForm.find("span").remove();
-            })
             //修改表单初始化
             $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
@@ -229,142 +210,17 @@ define(function (require, exports, module) {
                 $modal.find(".j-form-edit").show();
             });
             //时间日期截取
-            $("#add_checktime").bind("input onpropertychange", function (e) {
-                $("#add_date").val($("#add_checktime").val().substring(0, 11));
-            });
             $("#mod_checktime").bind("input onpropertychange", function (e) {
                 $("#mod_date").val($("#mod_checktime").val().substring(0, 11));
             });
 
-            //审核人下拉框绑定
-            $("#add_auditor").keyup(function (e) {
-                if (e.keyCode != 40 && e.keyCode != 38) {
-                    get_auditors_modal($("#add_auditor"), 1);
-                }
-            }).focus(function () {
-                this.select();
-            });
+
             $("#mod_auditor").keyup(function (e) {
                 if (e.keyCode != 40 && e.keyCode != 38) {
                     get_auditors_modal($("#mod_auditor"), 2);
                 }
             }).focus(function () {
                 this.select();
-            });
-            //表单验证-添加表单
-            $CheckreportForm.validate({
-                rules: {
-                    status: "required",
-                    checktime: "required",
-                    auditoraccount: {
-                        required: true,
-                        remote: {
-                            url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
-                            type: "post",
-                            dataType:"json",
-                            data: {
-                                hospitalid: hospitalid,
-                                account: $CheckreportForm.find("input[name=auditoraccount]").val()
-                            }
-                        }
-                    },
-                    part:"required",
-                    method:"required",
-                    advice:"required",
-                    options:"required",
-                    examtime: "required"
-                },
-                messages: {
-                    status: "请选择状态",
-                    auditoraccount: {
-                        required: "请输入审核人账号",
-                        remote: "医生名不存在"
-                    },
-                    checktime: {
-                        required: "请选择检验时间",
-                    },
-                    examtime: "请选择审核时间",
-                    part:"请输入检查部位",
-                    method:"请输入检查方法",
-                    advice:"请输入医嘱",
-                    options:"请输入诊断意见"
-                },
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-                success: function (label) {
-                    var strId = label.closest('.form-group').find("input").attr("id") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
-                    if (strId == "add_auditor") {
-                        //手动输入医生全名需要查询医生信息
-                        if ($("#add_auditor").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
-                            $.ajax({
-                                url: ROOTPAth + '/admin/hospitalDoctors/doctorInfo',
-                                type: "POST",
-                                dataType: "json",
-                                data: {
-                                    account: $("#add_auditor").val(),
-                                    hospitalid: hospitalid
-                                },
-                                success: function (data) {
-                                    $("#add_auditorid").val(data.id);
-                                    $("#add_auditorname").val(data.name);
-                                }
-                            });
-                        }
-                    }
-                    label.closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-
-                errorPlacement: function (error, element) {
-                    var strId = element.closest('.form-group').find("input").attr("id") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
-                    if (strId == "add_auditor" && element.closest('.form-group').hasClass('has-error')) {
-                        $("#add_auditorid").val("");
-                        $("#add_auditorname").val("");
-                    }
-                    error.insertAfter(element);
-                },
-                submitHandler: function () {
-                    var savePath = ROOTPAth + '/admin/checkreports/newCheckreport';
-                    $CheckreportForm.find("input").prop("disabled", false);
-                    $.ajax({
-                        type: "POST",
-                        url: savePath,
-                        dataType: "json",
-                        data: $CheckreportForm.serialize(),
-                        beforeSend: function () {
-                            tool.startPageLoading();
-                        },
-
-                        success: function (data) {
-                            console.log(data);
-                            tool.stopPageLoading();
-                            if (data.code == 1) {
-                                $addModal.modal("hide");
-                                $addRoletipModal.find(".dialogtip-msg").html("表单添加成功");
-                                $addRoletipModal.modal('show');
-                            }
-                            else {
-                                $("#ajax_fail").find("h4").html(data.message);
-                                $("#ajax_fail").modal("show")
-                            }
-                            pageIndex.reset();
-                        },
-
-                        error: function () {
-                            tool.stopPageLoading();
-                            $("#ajax_fail").modal("show")
-                        },
-                    });
-
-                }
             });
             //表单验证-修改表单
             $ModifyForm.validate({
@@ -546,15 +402,11 @@ define(function (require, exports, module) {
         }, 500);
     }
 
-    $('#add_checktime').datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
-    });
+
     $('#mod_checktime').datetimepicker({
         format: 'yyyy-mm-dd hh:ii',
     });
-    $('#add_examtime').datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
-    });
+
     $('#mod_examtime').datetimepicker({
         format: 'yyyy-mm-dd hh:ii',
     });

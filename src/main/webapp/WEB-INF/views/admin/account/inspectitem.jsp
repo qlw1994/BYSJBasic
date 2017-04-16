@@ -10,17 +10,13 @@
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">医院配置</h3>
+<h3 class="page-title">报告查询</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页 <i class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">检验单</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">检验单详情</a></li>
+        <li><a href="#">报告查询</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">就诊人检验报告查询</a></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
@@ -30,7 +26,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    ${hospitalname}-${departmentname}-${doctorname}-${patientname}- 检验单详情
+                    ${uname}-${patientname}- 检验单详情
                 </div>
                 <div class="actions">
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
@@ -93,67 +89,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="addModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title">添加检验详情</h4>
-            </div>
-            <form class="form-horizontal" id="vInspectitemForm">
-                <div class="modal-body">
-                    <div class="portlet-body form">
-                        <div class="form-body">
-                            <input type="hidden" name="inspectionid" value="${inspectionid}">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">检验名</label>
-                                <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="name" placeholder="检验名">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">检验结果</label>
-                                <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="result" placeholder="检验结果">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">参考范围</label>
-                                <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control"  name="refrange" placeholder="参考范围">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">单位</label>
-                                <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control"  name="unit"
-                                           placeholder="单位">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">结果异常提示</label>
-                                <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="abnormal" placeholder="检验总价">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END FORM-->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">
-                        <i class="iconfont">&#xe61c;</i> 保存
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
 <div class="modal fade" id="modifyModal">
@@ -236,7 +171,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/inspectitems/index?pcode=2&subcode=1&inspectionid=${inspectionid}"
+                <a href="${ctx}/admin/inspectitems/patientindex?pcode=4&subcode=2&inspectionid=${inspectionid}"
                    class="btn btn-success">返回列表</a>
 
             </div>
@@ -269,5 +204,5 @@
         var inspectionid = ${inspectionid};
     </script>
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/inspectitem.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/account/inspectitem"></script>
 </content>

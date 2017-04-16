@@ -30,7 +30,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i>${hospitalname}-${departmentname}- ${doctorname}- 日程表管理
+                   ${hospitalname}-${departmentname}- ${doctorname}- 日程表管理
                 </div>
                 <div class="actions">
                     <form id="scheduling_upload" enctype="multipart/form-data">

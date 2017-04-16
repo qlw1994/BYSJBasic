@@ -28,7 +28,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i>${hospitalname}- 科室管理
+                  ${hospitalname}- 科室管理
                 </div>
                 <div class="actions">
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i

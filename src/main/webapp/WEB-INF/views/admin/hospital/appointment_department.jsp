@@ -29,7 +29,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i>${hospitalname}-${departmentname}- 预约管理
+                   ${hospitalname}-${departmentname}- 预约管理
                 </div>
                 <div class="actions">
                 </div>

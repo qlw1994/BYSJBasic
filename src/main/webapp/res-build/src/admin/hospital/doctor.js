@@ -192,14 +192,23 @@ define(function (require, exports, module) {
                 $(formDom).find(".j-form-save").show();
 
                 $(formDom).find("input").prop("disabled", false);
-                $DoctorForm.find("input[name=hospitalname]").prop("disabled", true)
-                $DoctorForm.find("input[name=account]").prop("disabled", true)
+                $ModifyForm.find("input[name=hospitalname]").prop("disabled", true)
+                $ModifyForm.find("input[name=account]").prop("disabled", true)
                 $ModifyForm.find("input[name=name]").prop("disabled", true);
+                $ModifyForm.find("input[name=departmentname]").prop("disabled", true);
             });
             //添加表单账号变更就进行表单验证
             $("#add_account").bind("input onpropertychange", function () {
                 $DoctorForm.validate().element($("#add_account"));
-            })
+            });
+            //审核人下拉框绑定
+            $("#add_auditor").keyup(function (e) {
+                if (e.keyCode != 40 && e.keyCode != 38) {
+                    get_auditors_modal($("#add_auditor"), 1);
+                }
+            }).focus(function () {
+                this.select();
+            });
             //添加表单初始化
             $addModal.on('show.modal', function (event) {
                 $DoctorForm[0].reset();
@@ -347,7 +356,7 @@ define(function (require, exports, module) {
                 success: function (label) {
                     label.closest('.form-group').removeClass('has-error');
                     var inputid = label.closest('.form-group').find("input").attr("id");
-                    if (inputid == "add_account") {
+                    if (inputid == "add_account"&& !element.closest('.form-group').hasClass("has-error")) {
                         $("#add_name").prop("disabled", false);
                     }
                     label.remove();
@@ -355,7 +364,7 @@ define(function (require, exports, module) {
 
                 errorPlacement: function (error, element) {
                     var inputid = element.closest('.form-group').find("input").attr("id");
-                    if (inputid == "add_account") {
+                    if (inputid == "add_account"&& element.closest('.form-group').hasClass("has-error")) {
                         $("#add_name").prop("disabled", true);
                     }
                     error.insertAfter(element);

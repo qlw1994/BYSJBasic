@@ -8,7 +8,6 @@
 
     <link href="${ctx}/res-build/css/sys.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/module/ajaxpage/css/page.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="${ctx}/res-build/css/datetimepicker/bootstrap-datetimepicker.css"/>
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
@@ -32,13 +31,34 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i>${hospitalname}-${departmentname}-${doctorname}-${patientname} 检验单管理
+                    ${hospitalname}-${departmentname}-${doctorname}-${patientname} 检验单管理
                 </div>
-                <div class="actions">
-                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                            class="iconfont">&#xe612;</i> <span class="hidden-480">添加检验单</span>
-                    </a>
-                </div>
+                <form class="form-inline" id="search-form">
+                    <input type="hidden" name="patientid" value="${patientid}">
+                    <input type="hidden" name="hospitalid" value="${hospitalid}">
+                    <div class="form-group">
+                        <label for="starttime">开始日期</label>
+                        <div class="hospital_con">
+                            <input AUTOCOMPLETE="off" name="startdate" type="text" value="${starttime}"
+                                   id="starttime"/>
+
+                        </div>
+                        <label for="endtime">结束日期</label>
+                        <div class="hospital_con">
+                            <input AUTOCOMPLETE="off" name="enddate" type="text" value="${endtime}"
+                                   id="endtime"/>
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-info" id="search">查询</button>
+                    <div class="actions" style="float: right">
+                        <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                                class="iconfont">&#xe612;</i> <span class="hidden-480">添加检验单</span>
+                        </a>
+                    </div>
+                </form>
+
+
             </div>
             <div class="portlet-body" id="inspectionreport-list">
                 <div class="table-pages clearfix">
@@ -106,10 +126,10 @@
             <form class="form-horizontal" id="vInspectionreportForm" enctype="multipart/form-data" METHOD="post">
                 <div class="modal-body">
                     <div class="portlet-body form">
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label class="col-md-3 control-label">检验项目文件</label>
                             <div class="col-md-8">
-                                <input id="inspectitemsfile"   type="file" name="file">
+                                <input id="inspectitemsfile" type="file" name="file">
                             </div>
                         </div>
                         <div class="form-body">
@@ -196,7 +216,7 @@
                 </button>
                 <h4 class="modal-title">修改检验单</h4>
             </div>
-            <form class="form-horizontal" id="vInspectionreportModifyForm" >
+            <form class="form-horizontal" id="vInspectionreportModifyForm">
 
                 <div class="modal-body">
                     <div class="portlet-body form j-disabled-item">
@@ -331,7 +351,8 @@
 
     <script type="text/javascript"
             src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
-    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="admin/hospital/inspectionreport"></script>
 </content>

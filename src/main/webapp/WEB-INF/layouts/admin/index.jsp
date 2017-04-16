@@ -134,6 +134,39 @@
                             </ul>
                         </li>
                     </ul>
+                    <ul class="page-sidebar-menu-ul">
+                        <li class="menu-item <c:if test='${pcode == 3}'>open active</c:if>">
+                            <a href="javascript:" class="menu-item-a">
+                                <i class="iconfont">&#xe604;</i>
+                                <span class="title">医院支付账号管理</span>
+                                <span class="selected"></span>
+                                <i class="iconfont arrow"></i>
+                            </a>
+                            <ul class="sub-menu sub-menu-hide" data-code="RMsg">
+                                <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
+                                    <a class="ajaxify" href='${ctx}/admin/alipayaccounts/index?pcode=3&subcode=1'>支付宝账号</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="page-sidebar-menu-ul">
+                        <li class="menu-item <c:if test='${pcode == 4}'>open active</c:if>">
+                            <a href="javascript:" class="menu-item-a">
+                                <i class="iconfont">&#xe604;</i>
+                                <span class="title">报告查询</span>
+                                <span class="selected"></span>
+                                <i class="iconfont arrow"></i>
+                            </a>
+                            <ul class="sub-menu sub-menu-hide" data-code="RMsg">
+                                <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
+                                    <a class="ajaxify" href='${ctx}/admin/checkreports/patient_Chosen?pcode=3&subcode=1'>就诊人检查报告查询</a>
+                                </li>
+                                <li class="sub-menu-item <c:if test='${subcode==2}'>sub-active</c:if>">
+                                    <a class="ajaxify" href='${ctx}/admin/checkreports/patient_Chosen?pcode=3&subcode=1'>就诊人检验报告查询</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -19,25 +19,27 @@ public class AlipayaccountManage extends BaseManage {
     @Autowired
     AlipayaccountMapper alipayaccountMapper;
 
-    public List<Alipayaccount> list(Integer pageNumber, Integer pageSize, Long hospitalid) {
+    public List<Alipayaccount> list(Integer pageNumber, Integer pageSize, String hospitalname) {
         AlipayaccountExample example = new AlipayaccountExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
-        AlipayaccountExample.Criteria criteria = example.createCriteria();
-        criteria.andHospitalidEqualTo(hospitalid);
+        if (hospitalname != null) {
+            AlipayaccountExample.Criteria criteria = example.createCriteria();
+            criteria.andHospitalnameEqualTo(hospitalname);
+        }
         return alipayaccountMapper.selectByExample(example);
     }
 
 
-    public Integer count(Long hospitalid) {
+    public Integer count(String hospitalname) {
         AlipayaccountExample example = new AlipayaccountExample();
         AlipayaccountExample.Criteria criteria = example.createCriteria();
-        criteria.andHospitalidEqualTo(hospitalid);
+        criteria.andHospitalnameEqualTo(hospitalname);
         return alipayaccountMapper.countByExample(example);
     }
 
 
     /**
-     * 根据药品名得到Alipayaccount
+     * 根据支付宝名得到Alipayaccount
      *
      * @param account
      * @return
@@ -59,7 +61,7 @@ public class AlipayaccountManage extends BaseManage {
 
 
     /**
-     * 是否有相同的药品名 有返回true
+     * 是否有相同的支付宝名 有返回true
      *
      * @param name
      * @return
@@ -76,9 +78,24 @@ public class AlipayaccountManage extends BaseManage {
         return true;
     }
 
+    /**
+     * 是否存在支付宝账号 有返回true
+     *
+     * @return
+     */
+    public Boolean hasAlipay(long hospitalid) {
+        AlipayaccountExample example = new AlipayaccountExample();
+        AlipayaccountExample.Criteria criteria = example.createCriteria();
+        criteria.andHospitalidEqualTo(hospitalid);
+        List<Alipayaccount> Alipayaccount = alipayaccountMapper.selectByExample(example);
+        if (Alipayaccount.size() == 0) {
+            return false;
+        }
+        return true;
+    }
 
     /**
-     * 根据id获取药品
+     * 根据id获取支付宝
      *
      * @param id
      * @return
@@ -89,7 +106,7 @@ public class AlipayaccountManage extends BaseManage {
 
 
     /**
-     * 修改药品信息
+     * 修改支付宝信息
      *
      * @param alipayaccount
      * @return
@@ -100,7 +117,7 @@ public class AlipayaccountManage extends BaseManage {
 
 
     /**
-     * 删除药品
+     * 删除支付宝
      *
      * @param id
      * @return
@@ -115,7 +132,7 @@ public class AlipayaccountManage extends BaseManage {
 
 
     /**
-     * 保存药品
+     * 保存支付宝
      *
      * @param cities
      * @return

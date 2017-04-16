@@ -45,7 +45,7 @@ public class InspectionreportController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listInspectionreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate, HttpServletRequest request) {
+    public Map<String, Object> listInspectionreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             Inspectionreport inspectionreport = new Inspectionreport();
@@ -74,8 +74,8 @@ public class InspectionreportController {
                 long auditorid = Long.parseLong(str_auditorid);
                 inspectionreport.setAuditorid(auditorid);
             }
-            result.put("total", inspectionreportManage.count(startDate, endDate, inspectionreport));
-            result.put("data", inspectionreportManage.list(page, length, startDate, endDate, inspectionreport));
+            result.put("total", inspectionreportManage.count(startdate, enddate, inspectionreport));
+            result.put("data", inspectionreportManage.list(page, length, startdate, enddate, inspectionreport));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -84,7 +84,22 @@ public class InspectionreportController {
         result.put("code", ResultCode.SUCCESS);
         return result;
     }
-
+    /**
+     * 检验表管理首页跳转  就诊人入口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patientindex")
+    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long patientid, String patientname, HttpServletRequest
+            request) {
+        ModelAndView mv = new ModelAndView("admin/account/inspectionreport");
+        request.getSession().setAttribute("patientid", patientid);
+        request.getSession().setAttribute("patientname", patientname);
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
+        mv.addObject("currentpage", 1);
+        return mv;
+    }
     /**
      * 检验表管理首页跳转
      *
@@ -93,7 +108,7 @@ public class InspectionreportController {
     @RequestMapping(value = "/index")
     public ModelAndView View(int pcode, int subcode, long patientid, String patientname, HttpServletRequest
             request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/inspectreport");
+        ModelAndView mv = new ModelAndView("admin/hospital/inspectionreport");
         if (request.getParameter("uid") != null) {
             request.getSession().setAttribute("uid", Long.parseLong(request.getParameter("uid")));
         }
@@ -111,14 +126,28 @@ public class InspectionreportController {
      * @return
      */
     @RequestMapping(value = "/patientChosen")
-    public ModelAndView patientChosen(long doctorid, String doctorname, String service, HttpServletRequest request) {
+    public ModelAndView patientChosen(Integer pcode, Integer subcode,Long doctorid, String doctorname, String service, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
         request.setAttribute("service", service);
         return mv;
     }
-
+    /**
+     * 检验表就诊人管理首页跳转 就诊人入口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/patient_Chosen")
+    public ModelAndView patient_Chosen(Integer pcode, Integer subcode,HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
+        request.setAttribute("service","inspectionreports/patientindex");
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
+        return mv;
+    }
     ///**
     // * 添加检验表
     // *

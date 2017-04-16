@@ -29,7 +29,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i> ${hospitalname}-${departmentname}-${doctorname}-${patientname} 药品订单
+                   ${hospitalname}-${departmentname}-${doctorname}-${patientname} 药品订单
                 </div>
                 <div class="actions">
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i

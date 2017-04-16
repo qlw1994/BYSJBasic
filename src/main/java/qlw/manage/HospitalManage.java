@@ -39,7 +39,7 @@ public class HospitalManage extends BaseManage {
         if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
-
+        criteria.andStatusEqualTo(1);
         return hospitalExMapper.selectByExample(example);
     }
 
@@ -60,6 +60,7 @@ public class HospitalManage extends BaseManage {
         if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
+        criteria.andStatusEqualTo(1);
         return hospitalExMapper.countByExample(example);
     }
 
@@ -84,6 +85,7 @@ public class HospitalManage extends BaseManage {
         if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
+        criteria.andStatusEqualTo(1);
         return hospitalExMapper.countByExample(example);
     }
 
@@ -111,6 +113,7 @@ public class HospitalManage extends BaseManage {
         if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
+        criteria.andStatusEqualTo(1);
         List<Hospital> hospitals = hospitalExMapper.selectByExample(example);
         if (hospitals.size() > 0) {
             return hospitals;
@@ -139,6 +142,7 @@ public class HospitalManage extends BaseManage {
         if (area != null && !"".equals(area)) {
             criteria.andAreaEqualTo(area);
         }
+        criteria.andStatusEqualTo(1);
         List<Hospital> hospitals = hospitalExMapper.selectByExample(example);
         if (hospitals.size() > 0) {
             return hospitals.get(0);

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qlw.mapper.ex.HospitalizationExMapper" >
+    <insert id="insertBackId" parameterType="qlw.model.Hospitalization" keyProperty="id" useGeneratedKeys="true">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="patientid != null" >
+                patientid,
+            </if>
+            <if test="patientname != null" >
+                patientname,
+            </if>
+            <if test="bednumber != null" >
+                bednumber,
+            </if>
+            <if test="startdate != null" >
+                startdate,
+            </if>
+            <if test="enddate != null" >
+                enddate,
+            </if>
+            <if test="departmentid != null" >
+                departmentid,
+            </if>
+            <if test="departmentname != null" >
+                departmentname,
+            </if>
+            <if test="money != null" >
+                money,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="patientid != null" >
+                #{patientid,jdbcType=BIGINT},
+            </if>
+            <if test="patientname != null" >
+                #{patientname,jdbcType=VARCHAR},
+            </if>
+            <if test="bednumber != null" >
+                #{bednumber,jdbcType=INTEGER},
+            </if>
+            <if test="startdate != null" >
+                #{startdate,jdbcType=VARCHAR},
+            </if>
+            <if test="enddate != null" >
+                #{enddate,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentid != null" >
+                #{departmentid,jdbcType=BIGINT},
+            </if>
+            <if test="departmentname != null" >
+                #{departmentname,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null" >
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>

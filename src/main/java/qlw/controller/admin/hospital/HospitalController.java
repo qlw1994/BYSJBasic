@@ -243,7 +243,7 @@ public class HospitalController extends BaseController {
      * 检查医院是否存在
      *
      * @param name
-     * @return @return 存在返回false 否则true
+     * @return @return 存在返回true 否则false
      */
     @RequestMapping(value = "/hasName", method = RequestMethod.POST)
     @ResponseBody

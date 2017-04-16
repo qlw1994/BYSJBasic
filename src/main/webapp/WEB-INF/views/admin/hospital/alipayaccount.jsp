@@ -10,14 +10,13 @@
 </content>
 <body id="body">
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">医院配置</h3>
+<h3 class="page-title">医院支付账号管理</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> <a href="index.html">主页</a> <i class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医院管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">支付宝帐号</a></li>
+        <li><a href="#">医院支付账号管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="${ctx}/admin/alipayaccounts/index?pcode=3&subcode=1">支付宝帐号</a></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
@@ -27,13 +26,25 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="iconfont">&#xe619;</i> ${hospitalname}- 支付宝帐号
+                    支付宝帐号
                 </div>
-                <div class="actions">
-                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                            class="iconfont">&#xe612;</i> <span class="hidden-480">添加账号</span>
-                    </a>
-                </div>
+                <form class="form-inline" id="search-form">
+                    <div class="form-group">
+                        <label for="search_hospitalname"> 医院</label>
+                        <div class="hospital_con">
+                            <input AUTOCOMPLETE="off" type="text" id="search_hospitalname"/>
+                            <ul class="list">
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-info" id="search">查询</button>
+                    <div class="actions" style="float: right;">
+                        <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                                class="iconfont">&#xe612;</i> <span class="hidden-480">添加账号</span>
+                        </a>
+                    </div>
+                </form>
+
             </div>
 
         </div>
@@ -59,6 +70,7 @@
 
                     <thead>
                     <tr role="row">
+                        <th class="sorting">医院</th>
                         <th class="sorting">支付宝帐号</th>
                         <th class="sorting">PID</th>
                         <th class="sorting">APPID</th>
@@ -102,8 +114,18 @@
                 <div class="modal-body">
                     <div class="portlet-body form">
                         <div class="form-body">
-                            <input type='hidden' name='hospitalid' value="${hospitalid}">
-                            <input type="hidden" name="hospitalname" value="${hospitalname}">
+                            <input type="hidden" name="hospitalid">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">医院名称</label>
+                                <div class="col-md-8">
+                                    <input AUTOCOMPLETE="off" type="text" class="form-control" name="hospitalname"
+                                           id="add_hospitalname"
+                                           placeholder="医院名称">
+                                    <ul clas="list" id="add_hospitals">
+
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">账户名称</label>
                                 <div class="col-md-8">
@@ -179,8 +201,14 @@
                     <div class="portlet-body form">
                         <div class="form-body">
                             <input type="hidden" name="id">
-                            <input type='hidden' name='hospitalid' value="${hospitalid}">
-                            <input type="hidden" name="hospitalname" value="${hospitalname}">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">医院名称</label>
+                                <div class="col-md-8">
+                                    <input AUTOCOMPLETE="off" type="text" class="form-control" name="hospitalname"
+                                           disabled="disabled"
+                                           placeholder="医院名称">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">账户名称</label>
                                 <div class="col-md-8">

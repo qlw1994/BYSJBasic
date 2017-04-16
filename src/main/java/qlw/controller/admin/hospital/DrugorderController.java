@@ -43,7 +43,7 @@ public class DrugorderController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startdate, @RequestParam(value = "endDate", defaultValue = "") String edndate, Long patientid, Long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String edndate, Long patientid, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");

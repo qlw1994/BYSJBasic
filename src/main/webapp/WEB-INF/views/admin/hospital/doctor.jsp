@@ -274,8 +274,8 @@
                                     <input type="hidden" name="departmentid" value="${departmentid}">
                                     <input type="text" AUTOCOMPLETE="off" name="departmentname" disabled="disabled"
                                            value="${departmentname}">
-                                    <ul class="list" id="mod_departmentList">
-                                    </ul>
+                                    <%--<ul class="list" id="mod_departmentList">--%>
+                                    <%--</ul>--%>
                                 </div>
                             </div>
                             <div class="form-group">

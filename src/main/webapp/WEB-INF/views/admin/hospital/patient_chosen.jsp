@@ -44,6 +44,8 @@
                               <option value="drugorders/index">药品订单管理</option>
                               <option value="checkreports/index">检查表管理</option>
                               <option value="inspectionreports/index">检验表管理</option>
+                              <option value="checkreports/patientindex">就诊人检查表管理</option>
+                              <option value="inspectionreports/patientindex">就诊人检验表管理</option>
                           </select>
                         </div>
                     </div>

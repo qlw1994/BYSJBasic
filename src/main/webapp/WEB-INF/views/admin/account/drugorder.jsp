@@ -280,7 +280,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/drugorders/paitnetindex?pcode=1&subcode=2&uid=${uid}&patientid=${patientid}"
+                <a href="${ctx}/admin/drugorders/paitnetindex?pcode=1&subcode=2&$patientname=${$patientname}&patientid=${patientid}"
                    class="btn btn-success">返回列表</a>
 
             </div>
@@ -314,8 +314,9 @@
         var patientname = '${patientname}';
         var uid =${uid};
     </script>
-    <script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>
-    <script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="admin/account/drugorder"></script>
 </content>
