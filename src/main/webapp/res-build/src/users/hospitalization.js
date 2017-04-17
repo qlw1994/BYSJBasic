@@ -20,7 +20,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center;background-color: white">',
+            '<td colspan="7" style="text-align:center;background-color: white">',
             '暂无记录',
             '</td>',
 
@@ -52,7 +52,7 @@ define(function (require, exports, module) {
             '    <td class=" heading">',
 
             // ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}" data-advice="${item.advice}" data-status="${item.status}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/user/hospitalpays/index?hospitalizationid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span>药品详情</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/user/hospitalpays/index?hospitalizationid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span>住院消费详情</a>',
             '    </td>',
             '</tr>',
             '{@/each}',
@@ -65,7 +65,6 @@ define(function (require, exports, module) {
             this.bind();
             var windowurl = window.location.href;
             var returnUrl = windowurl.indexOf("currentpage=");
-            $("#service").val(service);
             if (returnUrl == -1 || returnUrl == "") {
                 pageIndex.resetgoto(1);
             } else {
@@ -88,7 +87,6 @@ define(function (require, exports, module) {
                     data: {
                         startdate:$("#starttime").val(),
                         enddate:$("#endtime").val(),
-                        hospitalid:hospitalid,
                         patientid: patientid,
                         length: pagelength
 
@@ -167,7 +165,6 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        hospitalid:hospitalid,
                         patientid: patientid,
                         startdate:$("#starttime").val(),
                         enddate:$("#endtime").val(),

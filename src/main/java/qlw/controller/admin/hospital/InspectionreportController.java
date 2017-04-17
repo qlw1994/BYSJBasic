@@ -90,11 +90,12 @@ public class InspectionreportController {
      * @return
      */
     @RequestMapping(value = "/patientindex")
-    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long patientid, String patientname, HttpServletRequest
+    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long patientid, String patientname,Long uid, HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("admin/account/inspectionreport");
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
+        mv.addObject("uid", uid);
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);
@@ -106,7 +107,7 @@ public class InspectionreportController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long patientid, String patientname, HttpServletRequest
+    public ModelAndView View(Integer pcode, Integer subcode, long patientid, String patientname, HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("admin/hospital/inspectionreport");
         if (request.getParameter("uid") != null) {
@@ -144,6 +145,7 @@ public class InspectionreportController {
     public ModelAndView patient_Chosen(Integer pcode, Integer subcode,HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
         request.setAttribute("service","inspectionreports/patientindex");
+
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         return mv;

@@ -25,9 +25,6 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-title">
-                <div class="caption">
-                    支付宝帐号
-                </div>
                 <form class="form-inline" id="search-form">
                     <div class="form-group">
                         <label for="search_hospitalname"> 医院</label>
@@ -327,8 +324,7 @@
             currentpage
         }
         ;
-        var hospitalid =${hospitalid};
-        var hospitalname = "${hospitalname}";
+
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/alipayaccount"></script>
 </content>

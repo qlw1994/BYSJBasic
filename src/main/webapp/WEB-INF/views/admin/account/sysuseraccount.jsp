@@ -201,21 +201,21 @@
                                                                         name="power" disabled="disabled">普通</label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">密码</label>
+                            <%--<div class="form-group">--%>
+                                <%--<label class="col-md-3 control-label">密码</label>--%>
 
-                                <div class="col-md-8">
-                                    <input type="password" AUTOCOMPLETE="off" class="form-control" name="password" id="mod_password"
-                                           placeholder="密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">重复密码</label>
-                                <div class="col-md-8">
-                                    <input type="password" AUTOCOMPLETE="off" class="form-control" placeholder="重复密码"
-                                           name="password_again">
-                                </div>
-                            </div>
+                                <%--<div class="col-md-8">--%>
+                                    <%--<input type="password" AUTOCOMPLETE="off" class="form-control" name="password" id="mod_password"--%>
+                                           <%--placeholder="密码">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label class="col-md-3 control-label">重复密码</label>--%>
+                                <%--<div class="col-md-8">--%>
+                                    <%--<input type="password" AUTOCOMPLETE="off" class="form-control" placeholder="重复密码"--%>
+                                           <%--name="password_again">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                             <!-- END FORM-->
                         </div>
                     </div>

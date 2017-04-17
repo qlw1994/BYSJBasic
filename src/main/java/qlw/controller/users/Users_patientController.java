@@ -33,7 +33,7 @@ public class Users_patientController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listPatient(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+    public Map<String, Object> listPatient(@RequestParam(value = "page",required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             Users users = (Users) request.getSession().getAttribute("user");

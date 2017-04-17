@@ -276,7 +276,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 invalidHandler: function (event, validator) { //display error alert on form submit
                     //	                $('.alert-danger', $('.login-form')).show();
                 },
@@ -404,7 +404,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit
@@ -541,14 +541,16 @@ define(function (require, exports, module) {
             $AddUI_del.click(function () {
                 if ($add_total.val() == 1) {
                     $("#ajax_fail").find("h4").text("不能少于一条");
-                    $("#ajax_fail").modal("show")
+                    $("#ajax_fail").modal("show");
+                    $(this).closest(".modal").modal("hide");
                 } else {
                     var index = $add_total.val()
                     $("#add_drugMoney_" + index).remove();
                     $("#add_drugId_" + index).remove();
                     $("#add_drugFormat_" + index).remove();
                     $("#add_drugPrice_" + index).remove();
-
+                    $("#add_drugName_" + index).remove();
+                    $("#add_drugAmount_" + index).remove();
                     $add_total.val(index * 1 - 1);
                 }
             })

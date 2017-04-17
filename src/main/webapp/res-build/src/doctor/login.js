@@ -11,7 +11,7 @@ define(function (require, exports, module) {
             $loginForm.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 rules: {
                     account: {
                         required: true
@@ -67,7 +67,7 @@ define(function (require, exports, module) {
                 if (data.code == 1) {
                     //初始化日期
                     $.ajax({
-                        url: ROOTPAth + '/doctor/initDate',
+                        url: basePath + '/doctor/initDate',
                         type: 'POST',
                         dataType: 'json',
                     }).done(function (res) {

@@ -55,7 +55,7 @@ public class NumberController extends BaseController {
     // * @return
     // */
     //@RequestMapping(value = "/index")
-    //public ModelAndView View(Long departmentid, int pcode, int subcode, HttpServletRequest request) {
+    //public ModelAndView View(Long departmentid, Integer pcode, Integer subcode, HttpServletRequest request) {
     //    ModelAndView mv = new ModelAndView("admin/hospital/numbers_department");
     //    request.getSession().setAttribute("departmentid", departmentid);
     //    mv.addObject("pcode", pcode);

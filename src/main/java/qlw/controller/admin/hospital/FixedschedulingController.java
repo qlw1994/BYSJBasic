@@ -82,7 +82,7 @@ public class FixedschedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View( int pcode, int subcode,Long doctorid,String doctorname, HttpServletRequest request) {
+    public ModelAndView View( Integer pcode, Integer subcode,Long doctorid,String doctorname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/fixedscheduling");
         request.getSession().setAttribute("doctorid",doctorid);
         request.getSession().setAttribute("doctorname",doctorname);

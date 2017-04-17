@@ -184,7 +184,7 @@ public class SysusersController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView accountView(int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView accountView(Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/account/sysuseraccount");
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
@@ -251,6 +251,7 @@ public class SysusersController extends BaseController {
         try {
             Sysusers sysusers = sysuserManage.getSysusersById(id);
             //sysusers.setPassword(MD5Utils.getMD5("123456"));
+            sysusers.setPassword("123456");
             sysuserManage.updateSysusers(sysusers);
         } catch (Exception e) {
             e.printStackTrace();

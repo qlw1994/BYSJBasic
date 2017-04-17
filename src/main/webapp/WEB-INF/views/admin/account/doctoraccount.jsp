@@ -268,6 +268,8 @@
 <content tag="jsconfig">
     <script type="text/javascript">
         var currentpage = ${currentpage};
+        var patientid="${patientid}";
+        var patientname = '${patientname}';
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/account/doctoraccount.js"></script>
 </content>

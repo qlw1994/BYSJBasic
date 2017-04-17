@@ -51,11 +51,11 @@ public class InspectionreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(inspectionreport.getAuditorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
+            //startDate += " 00:00:00";
+            //endDate += " 23:59:59";
             criteria.andInspecttimeBetween(startDate, endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            //endDate += " 23:59:59";
             criteria.andInspecttimeLessThanOrEqualTo(endDate);
         } 
         //else {

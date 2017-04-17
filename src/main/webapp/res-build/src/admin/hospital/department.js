@@ -207,7 +207,7 @@ $DepartmentForm.validate({
     },
     errorElement: 'span', //default input error message container
     errorClass: 'help-block', // default input error message class
-    focusInvalid: false, // do not focus the last invalid input
+    //focusInvalid: false, // do not focus the last invalid input
 
 
     invalidHandler: function (event, validator) { //display error alert on form submit
@@ -290,7 +290,7 @@ $ModifyForm.validate({
     },
     errorElement: 'span', //default input error message container
     errorClass: 'help-block', // default input error message class
-    focusInvalid: false, // do not focus the last invalid input
+    //focusInvalid: false, // do not focus the last invalid input
 
 
     invalidHandler: function (event, validator) { //display error alert on form submit

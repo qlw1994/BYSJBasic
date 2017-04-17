@@ -56,7 +56,7 @@ public class DoctorManage extends BaseManage {
      */
     public List<Doctor> listByDepartment(Integer pageNumber, Integer pageSize, Long departmentid, Integer type) {
         DoctorExample example = new DoctorExample();
-        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        example.setOrderByClause(getPage(" level,id desc", pageNumber, pageSize));
         DoctorExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedateIsNull();
         if (type != null) {

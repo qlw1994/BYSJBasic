@@ -67,7 +67,7 @@ public class DrugorderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long patientid, String patientname, HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode, long patientid, String patientname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/drugorder");
         if (request.getParameter("uid") != null) {
             request.getSession().setAttribute("uid", Long.parseLong(request.getParameter("uid")));
@@ -93,6 +93,7 @@ public class DrugorderController extends BaseController {
         request.getSession().setAttribute("doctorname", doctorname);
         return mv;
     }
+
     /**
      * 药品订单就诊人管理首页跳转
      *
@@ -105,6 +106,7 @@ public class DrugorderController extends BaseController {
         request.getSession().setAttribute("patientname", patientname);
         return mv;
     }
+
     /**
      * 添加药品订单
      *
@@ -152,7 +154,7 @@ public class DrugorderController extends BaseController {
                 paymentdetail.setUid(users.getId());
                 paymentdetail.setUname(users.getName());
                 paymentdetail.setMoney(d.getMoney());
-
+                paymentdetail.setPrice(d.getPrice());
                 paymentdetail.setProjectid(d.getId());
                 paymentdetail.setProjecttype(0);//药品
                 paymentdetailManage.save(paymentdetail);

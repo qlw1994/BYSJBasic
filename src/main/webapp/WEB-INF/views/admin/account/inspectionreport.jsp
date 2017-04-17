@@ -27,9 +27,7 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-title">
-                <div class="caption">
-                    ${uname}-${patientname} 就诊人检验报告查询
-                </div>
+
                 <form class="form-inline" id="search-form">
                     <input type="hidden" name="patientid" value="${patientid}">
                     <div class="form-group">
@@ -47,11 +45,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-info" id="search">查询</button>
-                    <div class="actions" style="float: right">
-                        <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
-                                class="iconfont">&#xe612;</i> <span class="hidden-480">添加检验单</span>
-                        </a>
-                    </div>
+
                 </form>
 
 
@@ -181,12 +175,12 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success j-form-edit">
-                            <i class="iconfont">&#xe61c;</i> 我要编辑
-                        </button>
-                        <button type="submit" class="btn btn-success j-form-save" style="display: none">
-                            <i class="iconfont">&#xe62c;</i> 保存
-                        </button>
+                        <%--<button type="button" class="btn btn-success j-form-edit">--%>
+                            <%--<i class="iconfont">&#xe61c;</i> 我要编辑--%>
+                        <%--</button>--%>
+                        <%--<button type="submit" class="btn btn-success j-form-save" style="display: none">--%>
+                            <%--<i class="iconfont">&#xe62c;</i> 保存--%>
+                        <%--</button>--%>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <%-- <button type="submit" class="btn btn-success">修改</button>
                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
@@ -254,5 +248,5 @@
     <script type="text/javascript"
             src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/inspectionreport"></script>
+            data-init="admin/account/inspectionreport"></script>
 </content>

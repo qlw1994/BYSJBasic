@@ -34,6 +34,7 @@
             <form class="form-horizontal" role="form" id="ModelForm">
                 <div class="form-body">
                     <input type="hidden" id="userid" name="uid">
+                    <input type="hidden" id="uname" name="uname">
                     <input type="hidden" id="patientid" name="patientid">
                     <div class="form-group">
                         <label class="col-md-3 control-label">选择服务</label>
@@ -155,10 +156,12 @@
 
 <content tag="jsconfig">
     <script type="text/javascript">
-        var hospitalid = ${hospitalid};
-        var departmentid =${departmentid};
+        var hospitalid = "${hospitalid}";
+        var departmentid ="${departmentid}";
         var service='${service}';
+        var pcode='${pcode}';
+        var subcode='${subcode}';
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
-            data-init="admin/hospital/patient_chosen.js"></script>
+            data-init="admin/hospital/patient_chosen"></script>
 </content>

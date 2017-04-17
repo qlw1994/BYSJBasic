@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qlw.mapper.DepartmentMapper;
+import qlw.mapper.ex.DepartmentExMapper;
 import qlw.model.Department;
 import qlw.model.DepartmentExample;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class DepartmentManage extends BaseManage {
     @Autowired
-    DepartmentMapper departmentMapper;
+    DepartmentExMapper departmentExMapper;
 
     /**
      * 医院科室列表
@@ -30,11 +30,12 @@ public class DepartmentManage extends BaseManage {
      */
     public List<Department> list(Integer pageNumber, Integer pageSize, long hospitalid) {
         DepartmentExample example = new DepartmentExample();
-        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        if (pageNumber != null && pageSize != null) {
+        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));}
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andDeletedateIsNull();
-        return departmentMapper.selectByExample(example);
+        return departmentExMapper.selectByExample(example);
     }
 
     public List<Department> listAll(Long hospitalid) {
@@ -42,7 +43,7 @@ public class DepartmentManage extends BaseManage {
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andDeletedateIsNull();
-        return departmentMapper.selectByExample(example);
+        return departmentExMapper.selectByExample(example);
     }
 
     public Integer count(long hospitalid) {
@@ -50,7 +51,7 @@ public class DepartmentManage extends BaseManage {
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andDeletedateIsNull();
-        return departmentMapper.countByExample(example);
+        return departmentExMapper.countByExample(example);
     }
 
 
@@ -68,7 +69,7 @@ public class DepartmentManage extends BaseManage {
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andNameLike(name);
         criteria.andDeletedateIsNull();
-        return departmentMapper.countByExample(example);
+        return departmentExMapper.countByExample(example);
     }
 
     /**
@@ -88,7 +89,7 @@ public class DepartmentManage extends BaseManage {
         criteria.andNameLike(name);
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andDeletedateIsNull();
-        List<Department> departments = departmentMapper.selectByExample(example);
+        List<Department> departments = departmentExMapper.selectByExample(example);
         if (departments.size() > 0) {
             return departments;
         } else {
@@ -108,7 +109,7 @@ public class DepartmentManage extends BaseManage {
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andNameEqualTo(name);
-        List<Department> departments = departmentMapper.selectByExample(example);
+        List<Department> departments = departmentExMapper.selectByExample(example);
         if (departments.size() > 0) {
             return departments.get(0);
         } else {
@@ -129,7 +130,7 @@ public class DepartmentManage extends BaseManage {
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andHospitalidEqualTo(hospitalid);
         criteria.andNameEqualTo(name);
-        List<Department> departments = departmentMapper.selectByExample(example);
+        List<Department> departments = departmentExMapper.selectByExample(example);
         if (departments.size() == 0) {
             return false;
         }
@@ -144,7 +145,7 @@ public class DepartmentManage extends BaseManage {
      * @return
      */
     public Department getById(Long id) {
-        return departmentMapper.selectByPrimaryKey(id);
+        return departmentExMapper.selectByPrimaryKey(id);
     }
 
 
@@ -155,7 +156,7 @@ public class DepartmentManage extends BaseManage {
      * @return
      */
     public Integer update(Department department) {
-        return departmentMapper.updateByPrimaryKeySelective(department);
+        return departmentExMapper.updateByPrimaryKeySelective(department);
     }
 
 
@@ -166,7 +167,7 @@ public class DepartmentManage extends BaseManage {
      * @return
      */
     public boolean delete(Long id) {
-        int i = departmentMapper.deleteByPrimaryKey(id);
+        int i = departmentExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
             return true;
         }
@@ -181,12 +182,25 @@ public class DepartmentManage extends BaseManage {
      * @return
      */
     public Department save(Department department) {
-        long i = departmentMapper.insert(department);
+        long i = departmentExMapper.insert(department);
         if (i > 0) {
             return department;
         }
         return null;
     }
 
+    /**
+     * 保存科室 返回id
+     *
+     * @param department
+     * @return
+     */
+    public Department saveBackId(Department department) {
+        long i = departmentExMapper.insertBackId(department);
+        if (i > 0) {
+            return department;
+        }
+        return null;
+    }
 
 }

@@ -22,10 +22,9 @@ public class AlipayaccountManage extends BaseManage {
     public List<Alipayaccount> list(Integer pageNumber, Integer pageSize, String hospitalname) {
         AlipayaccountExample example = new AlipayaccountExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
-        if (hospitalname != null) {
             AlipayaccountExample.Criteria criteria = example.createCriteria();
-            criteria.andHospitalnameEqualTo(hospitalname);
-        }
+            criteria.andHospitalnameLike("%"+hospitalname+"%");
+
         return alipayaccountMapper.selectByExample(example);
     }
 
@@ -33,7 +32,7 @@ public class AlipayaccountManage extends BaseManage {
     public Integer count(String hospitalname) {
         AlipayaccountExample example = new AlipayaccountExample();
         AlipayaccountExample.Criteria criteria = example.createCriteria();
-        criteria.andHospitalnameEqualTo(hospitalname);
+        criteria.andHospitalnameLike("%"+hospitalname+"%");
         return alipayaccountMapper.countByExample(example);
     }
 

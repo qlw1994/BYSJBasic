@@ -65,7 +65,7 @@ define(function (require, exports, module) {
                 messages: {},
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -145,8 +145,8 @@ define(function (require, exports, module) {
             dataType: 'json',
             data: {
                     hospitalid: hospitalid,
-                    length: pagelength,
-                    page: currentpage,
+                    // length: pagelength,
+                    // page: currentpage,
 
             },
             success: function (res) {
@@ -157,17 +157,19 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    if (reset == 1) {
-                        $divdepartments.empty();
-                        $divdepartments.append(listTpl.render(newData));
-                    }
-                    else if(res.total<=pagelength||currentpage*1*pagelength>=res.total){
-                        Toast("没有更多数据了", 2000);
-                    }
-                    else {
-                        $divdepartments.append(listTpl.render(newData));
-                        currentpage = currentpage * 1 + 1;
-                    }
+                    $divdepartments.empty();
+                    $divdepartments.append(listTpl.render(newData));
+                    // if (reset == 1) {
+                    //     $divdepartments.empty();
+                    //     $divdepartments.append(listTpl.render(newData));
+                    // }
+                    // else if(res.total<=pagelength||currentpage*1*pagelength>=res.total){
+                    //     Toast("没有更多数据了", 2000);
+                    // }
+                    // else {
+                    //     $divdepartments.append(listTpl.render(newData));
+                    //     currentpage = currentpage * 1 + 1;
+                    // }
                 }
             }
         });
@@ -183,8 +185,8 @@ define(function (require, exports, module) {
             dataType: 'json',
             data: {
                     hospitalid: hospitalid,
-                    length: pagelength,
-                    page: currentpage,
+                    // length: pagelength,
+                    // page: currentpage,
                     name: $departmentname.val()
 
             },
@@ -196,17 +198,19 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    if (reset == 1) {
-                        $divdepartments.empty();
-                        $divdepartments.append(listTpl.render(newData));
-                    }
-                    else if(res.total<=pagelength||currentpage*1*pagelength>=res.total){
-                        Toast("没有更多数据了", 2000);
-                    }
-                    else {
-                        $divdepartments.append(listTpl.render(newData));
-                        currentpage = currentpage * 1 + 1;
-                    }
+                    $divdepartments.empty();
+                    $divdepartments.append(listTpl.render(newData));
+                    // if (reset == 1) {
+                    //     $divdepartments.empty();
+                    //     $divdepartments.append(listTpl.render(newData));
+                    // }
+                    // else if(res.total<=pagelength||currentpage*1*pagelength>=res.total){
+                    //     Toast("没有更多数据了", 2000);
+                    // }
+                    // else {
+                    //     $divdepartments.append(listTpl.render(newData));
+                    //     currentpage = currentpage * 1 + 1;
+                    // }
                 }
             }
         });

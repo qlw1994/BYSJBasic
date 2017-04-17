@@ -43,4 +43,49 @@
             <result column="deletedate" property="deletedate" jdbcType="VARCHAR" />
         </collection>
     </resultMap>
+
+    <insert id="insertBackId" parameterType="qlw.model.Department" keyProperty="id" useGeneratedKeys="true">
+    INSERT into department
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="hospitalid != null" >
+                hospitalid,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="createdate != null" >
+                createdate,
+            </if>
+            <if test="deletedate != null" >
+                deletedate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="hospitalid != null" >
+                #{hospitalid,jdbcType=BIGINT},
+            </if>
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedate != null" >
+                #{deletedate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
 </mapper>

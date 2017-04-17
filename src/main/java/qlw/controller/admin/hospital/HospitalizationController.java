@@ -4,6 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +26,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping(value = "/admin/hospitalizations")
+
 public class HospitalizationController extends BaseController {
 
     @Autowired
@@ -73,13 +75,14 @@ public class HospitalizationController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long patientid, String patientname, HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode,String uname, Long patientid, String patientname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/hospitalization");
         if (request.getParameter("uid") != null) {
             request.getSession().setAttribute("uid", Long.parseLong(request.getParameter("uid")));
         }
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
+        mv.addObject("uname", uname);
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);
@@ -92,9 +95,9 @@ public class HospitalizationController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientChosen")
-    public ModelAndView patientChosen(int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView patientChosen(Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
-        request.setAttribute("service", "admin/hospitalizations/index");
+        request.setAttribute("service", "hospitalizations/index");
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         return mv;
@@ -108,13 +111,12 @@ public class HospitalizationController extends BaseController {
      */
     @RequestMapping(value = "newHospitalization")
     @ResponseBody
+    @Transactional(readOnly = true)
     public Map<String, Object> addHospitalization(MultipartFile file, Hospitalization hospitalization, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "添加成功";
         try {
-            hospitalization.setStartdate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            hospitalizationManage.saveBackId(hospitalization);
 
             //List<Hospitalpay> hospitalpays = hospitalization.getHospitalpays();
 
@@ -138,6 +140,7 @@ public class HospitalizationController extends BaseController {
             String FILE_NAME = path + "/" + fileName;
             // 这里显式地配置一下CSV文件的Header，然后设置跳过Header（要不然读的时候会把头也当成一条记录）
             CSVFormat format = CSVFormat.DEFAULT.withHeader(FILE_HEADER).withSkipHeaderRecord();
+            BigDecimal totalMoney=new BigDecimal("0");
             try (Reader in = new FileReader(FILE_NAME)) {
                 Iterable<CSVRecord> records = format.parse(in);
                 for (CSVRecord record : records) {
@@ -155,15 +158,22 @@ public class HospitalizationController extends BaseController {
                     hospitalpay.setAdvice(advice);
                     hospitalpay.setUnit(unit);
                     hospitalpay.setMoney(new BigDecimal(Double.parseDouble(price) * Integer.parseInt(amount)));
-                    hospitalpay.setHospitalizationid(hospitalization.getId());
+                    totalMoney=totalMoney.add(hospitalpay.getMoney());
+
+                    hospitalpay.setStatus(0);
+
                     hospitalpays.add(hospitalpay);
 
                 }
+                hospitalization.setMoney(totalMoney);
+                hospitalization.setStatus(0);
+                hospitalizationManage.saveBackId(hospitalization);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
             for (Hospitalpay d : hospitalpays) {
-
+                d.setHospitalizationid(hospitalization.getId());
                 hospitalpayManage.saveBackId(d);
 
                 Hospital hospital = hospitalManage.getById(hospitalization.getHospitalid());
@@ -185,7 +195,8 @@ public class HospitalizationController extends BaseController {
                 paymentdetail.setUid(users.getId());
                 paymentdetail.setUname(users.getName());
                 paymentdetail.setMoney(d.getMoney());
-
+                paymentdetail.setUnit(d.getUnit());
+                paymentdetail.setPrice(d.getPrice());
                 paymentdetail.setProjectid(d.getId());
                 paymentdetail.setProjecttype(1);//住院清单
                 paymentdetailManage.save(paymentdetail);

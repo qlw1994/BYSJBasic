@@ -14,4 +14,5 @@ import java.util.List;
 public interface DepartmentExMapper extends DepartmentMapper{
     int countByExampleEx(DepartmentExample example);
     List<Department> selectByExampleEx(DepartmentExample example);
+    long insertBackId(Department department);
 }

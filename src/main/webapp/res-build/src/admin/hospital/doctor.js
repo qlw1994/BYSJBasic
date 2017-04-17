@@ -11,6 +11,7 @@ define(function (require, exports, module) {
     var $accountList = $("#account-list");
     var $DoctorForm = $("#vDoctorForm");
     var $ModifyForm = $("#vDoctorModifyForm");
+    var $UploadForm = $("#vUploadDoctorForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
@@ -209,6 +210,16 @@ define(function (require, exports, module) {
             }).focus(function () {
                 this.select();
             });
+            //批量上传初始化
+            $UploadForm.on('show.modal',function () {
+                $UploadForm[0].reset();
+                $UploadForm.find("input").removeAttr("aria-describedby");
+                $UploadForm.find("input").removeAttr("aria-invalid");
+                $UploadForm.find("input").removeAttr("aria-required");
+                $UploadForm.find("div").removeClass("has-error");
+                $UploadForm.find("span").remove();
+               $("#uploadfile").val("");
+            })
             //添加表单初始化
             $addModal.on('show.modal', function (event) {
                 $DoctorForm[0].reset();
@@ -283,6 +294,92 @@ define(function (require, exports, module) {
                 var score = /^[0-9]*$/;
                 return score.test(value)&&value!=0;
             }, $.validator.format("请输入正确的年龄!"));
+            jQuery.validator.addMethod("checkCsv", function(value, element) {
+                var filepath=$("#uploadfile").val();
+                //获得上传文件名
+                var fileArr=filepath.split("\\");
+                var fileTArr=fileArr[fileArr.length-1].toLowerCase().split(".");
+                var filetype=fileTArr[fileTArr.length-1];
+                //切割出后缀文件名
+                if(filetype != "csv"){
+                    return false;
+                }else{
+                    return true;
+                }
+            }, "上传文件格式不适合");
+            $UploadForm.validate({
+                rules:{
+                    file:{
+                        required:true,
+                        checkCsv:true
+                    }
+                },
+                messages:{
+                    file:{
+                        required:"请选择文件"
+                    }
+                },
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block', // default input error message class
+                //focusInvalid: false, // do not focus the last invalid input
+
+
+                invalidHandler: function (event, validator) { //display error alert on form submit
+                    //	                $('.alert-danger', $('.login-form')).show();
+                },
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+                success: function (label) {
+                    label.closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element);
+                },
+                submitHandler: function () {
+                    var savePath = ROOTPAth + '/admin/hospitalDoctors/upload';
+
+                    var formData = new FormData($($UploadForm)[0]);
+                    $.ajax({
+                        url: savePath,
+                        type: "POST",
+                        dataType: "json",
+                        data: formData,
+                        beforeSend: function () {
+                            tool.startPageLoading();
+                        },
+
+
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            console.log(data);
+                            tool.stopPageLoading();
+                            if (data.code == 1) {
+                                $addModal.modal("hide");
+                                $addRoletipModal.find(".dialogtip-msg").html("账号添加成功");
+                                $addRoletipModal.modal('show');
+                            }
+                            else {
+                                $("#ajax_fail").find("h4").html(data.message);
+                                $("#ajax_fail").modal("show")
+                            }
+                            pageIndex.reset();
+                        },
+
+                        error: function () {
+                            tool.stopPageLoading();
+                            $("#ajax_fail").modal("show")
+                        },
+                    });
+
+                }
+            })
+
             //表单验证-添加用户
             $DoctorForm.validate({
                 rules: {
@@ -343,30 +440,19 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
                 highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
                 success: function (label) {
                     label.closest('.form-group').removeClass('has-error');
-                    var inputid = label.closest('.form-group').find("input").attr("id");
-                    if (inputid == "add_account"&& !element.closest('.form-group').hasClass("has-error")) {
-                        $("#add_name").prop("disabled", false);
-                    }
                     label.remove();
                 },
 
                 errorPlacement: function (error, element) {
-                    var inputid = element.closest('.form-group').find("input").attr("id");
-                    if (inputid == "add_account"&& element.closest('.form-group').hasClass("has-error")) {
-                        $("#add_name").prop("disabled", true);
-                    }
+
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
@@ -465,7 +551,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit

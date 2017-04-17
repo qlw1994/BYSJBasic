@@ -73,7 +73,7 @@ public class SchedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView View(long doctorid, String doctorname, Integer pcode, Integer subcode, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("admin/hospital/scheduling");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss|EEE");

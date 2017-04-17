@@ -79,7 +79,7 @@ public class Doctor_CheckreportController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, Long patientid, String patientname, Long uid,HttpServletRequest
+    public ModelAndView View(Integer pcode, Integer subcode, Long patientid, String patientname, Long uid,HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("doctor/checkreport");
         request.getSession().setAttribute("uid", uid);

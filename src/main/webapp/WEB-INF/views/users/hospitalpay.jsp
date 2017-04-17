@@ -11,6 +11,11 @@
 
 <body>
 <h3 class="page-title">""</h3>
+<div  style="float:right;padding-top: 2%;padding-right: 5%">
+    <a href="${ctx}/user/paymentdetails/index?patientid=${patientid}&patientname=${patientname}" class="btn btn-success btn-sm"
+    ><span class="hidden-480">去支付</span>
+    </a>
+</div>
 <div class="portlet-body" id="hospitalpay-list" style="background-color: white">
     <div class="table-pages clearfix">
         <div class="table-page clearfix"></div>
@@ -41,7 +46,6 @@
                 <th class="sorting">金额</th>
                 <th class="sorting">医嘱</th>
                 <th class="sorting">支付状态</th>
-                <th class="sorting">操作</th>
 
 
             </tr>
@@ -74,6 +78,7 @@
     <script type="text/javascript">
         var patientid =${hospitalid};
         var patientname = "${patientname}";
+        var hospitalizationid=${hospitalizationid};
         var currentpage = ${currentpage};
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>

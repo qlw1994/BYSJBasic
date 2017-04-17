@@ -32,6 +32,9 @@
                     <i class="iconfont">&#xe619;</i>${hospitalname}-${departmentname}- 医生管理
                 </div>
                 <div class="actions">
+                    <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addUpload"> <i
+                            class="iconfont">&#xe612;</i> <span class="hidden-480">批量导入</span>
+                    </a>
                     <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
                             class="iconfont">&#xe612;</i> <span class="hidden-480">添加医生帐户</span>
                     </a>
@@ -94,6 +97,45 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="addUpload">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">批量添加医生</h4>
+            </div>
+            <form class="form-horizontal" id="vUploadDoctorForm" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">选择文件</label>
+                                <div class="col-md-8">
+                                    <input type="file" id="uploadfile" name="file">
+                                </div>
+                            </div>
+                            <input type="hidden" name="hospitalid" value="${hospitalid}">
+                            <input type="hidden" name="hospitalname" value="${hospitalname}">
+                            <input type="hidden" name="departmentid" value="${departmentid}">
+                            <input type="hidden" name="departmentname" value="${departmentname}">
+                        </div>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        <i class="iconfont">&#xe61c;</i> 保存
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <div class="modal fade" id="addModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -139,7 +181,7 @@
                                 <label class="col-md-3 control-label">姓名</label>
                                 <div class="col-md-8">
                                     <input type="text" AUTOCOMPLETE="off" class="form-control" name="name"
-                                           id="add_name" placeholder="姓名" disabled="disabled">
+                                           id="add_name" placeholder="姓名" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -314,12 +356,12 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">医生级别</label>
                                 <div class="col-md-8">
-                                <select  name="level" disabled="disabled" class="form-control">
-                                    <option value="">请选择</option>
-                                    <option value="1">专家</option>
-                                    <option value="2">普通</option>
+                                    <select name="level" disabled="disabled" class="form-control">
+                                        <option value="">请选择</option>
+                                        <option value="1">专家</option>
+                                        <option value="2">普通</option>
 
-                                </select>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -345,7 +387,7 @@
                                 <label class="col-md-3 control-label">医生简介</label>
                                 <div class="col-md-8">
                                     <textarea AUTOCOMPLETE="off" class="form-control"
-                                           placeholder="医生简介" disabled="disabled"
+                                              placeholder="医生简介" disabled="disabled"
                                               name="resume"></textarea>
                                 </div>
                             </div>
@@ -417,8 +459,8 @@
         var currentpage = ${currentpage};
         var hospitalid =${hospitalid};
         var departmentid =${departmentid};
-        var hospitalname ='${hospitalname}';
-        var departmentname ='${departmentname}';
+        var hospitalname = '${hospitalname}';
+        var departmentname = '${departmentname}';
     </script>
     <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/doctor.js"></script>
 </content>

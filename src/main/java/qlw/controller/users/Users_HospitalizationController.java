@@ -59,10 +59,11 @@ public class Users_HospitalizationController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(long patientid, String patientname, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("usres/hospitalization");
+    public ModelAndView View(Long patientid, String patientname, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("users/hospitalization");
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
+        mv.addObject("currentpage",1);
         return mv;
     }
 

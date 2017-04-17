@@ -41,12 +41,9 @@
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" id="login-form" method="post" novalidate="novalidate">
-        <h3 class="form-title">用户登录</h3>
+        <h3 class="form-title">医生登录</h3>
 
-        <div class="alert alert-danger display-hide" id="alert-info">
-            <button class="close" data-close="alert"></button>
-            <span class="alert-info-txt">您输入的帐号或密码有误,忘记密码请联系管理员！</span>
-        </div>
+
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">用户名</label>
@@ -62,7 +59,7 @@
 
             <div class="input-icon">
                 <i class="iconfont">&#xe609;</i>
-                <input class="form-control placeholder-no-fix valid" type="password" value="1" autocomplete="off" placeholder="密码"
+                <input class="form-control placeholder-no-fix valid" type="password" value="123456" autocomplete="off" placeholder="密码"
                        name="password" aria-required="true" aria-invalid="false">
             </div>
         </div>

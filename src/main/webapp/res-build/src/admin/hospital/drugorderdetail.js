@@ -232,12 +232,12 @@ define(function (require, exports, module) {
                     drugname: {
                         required: true,
                         remote: { //自带远程验证存在的方法
-                            url: ROOTPAth + '/admin/drugorderdetails/hasName',
+                            url: ROOTPAth + '/admin/drugs/hasName',
                             type: "POST",
                             dataType: "json",
                             data: {
                                 hospitalid: hospitalid,
-                                drugname: function () {
+                                name: function () {
                                     return $DrugorderdetailForm.find('input[name="drugname"]').val();
                                 }
                             }
@@ -269,7 +269,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit
@@ -281,11 +281,41 @@ define(function (require, exports, module) {
                 },
 
                 success: function (label) {
+                    var strId = label.closest('.form-group').find("input[name=drugname]") == "undefined" ? "" : label.closest('.form-group').find("input[name=drugname]").attr("id");
+                    if (strId == "add_drugname") {
+                        $("#add_amount").prop("disabled", false);
+                        //手动输入药品全名需要查询药品信息
+                        if ($("#add_drugId").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
+                            $.ajax({
+                                url: ROOTPAth + '/admin/drugs/drugInfoByName',
+                                type: "POST",
+                                dataType: "json",
+                                data: {
+                                    name: $("#add_drugname").val(),
+                                    hospitalid: hospitalid
+                                },
+                                success: function (data) {
+                                    $("#add_price").val(data.price);
+                                    $("#add_format").val(data.format);
+                                    $("#add_drugid").val(data.id);
+                                }
+                            });
+                        }
+                    }
                     label.closest('.form-group').removeClass('has-error');
                     label.remove();
                 },
 
                 errorPlacement: function (error, element) {
+                    var strId = element.closest('.form-group').find("input[name=drugname]") == "undefined" ? "" : element.closest('.form-group').find("input[name=drugname]").attr("id");
+                    if ((strId == "add_drugname" ) && element.closest('.form-group').hasClass('has-error')) {
+                        $("#add_money" ).val("");
+                        $("#add_format" ).val("");
+                        $("#add_price" ).val("");
+                        $("#add_drugid_" ).val("");
+                        $("#add_amount" ).val("");
+                        $("#add_amount" ).prop("disabled", true);
+                    }
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
@@ -367,7 +397,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit

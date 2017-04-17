@@ -217,7 +217,7 @@ public class HospitalController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView accountView(int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView accountView(Integer pcode, Integer subcode, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("admin/hospital/hospital");
         mv.addObject("currentpage", 1);

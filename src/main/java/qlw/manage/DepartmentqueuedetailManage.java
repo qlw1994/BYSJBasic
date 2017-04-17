@@ -51,11 +51,11 @@ public class DepartmentqueuedetailManage extends BaseManage {
      * @param patientid
      * @return
      */
-    public Departmentqueuedetail getByPatientid(Long patientid) {
+    public List<Departmentqueuedetail> getByPatientid(Long patientid) {
         DepartmentqueuedetailExample example = new DepartmentqueuedetailExample();
         DepartmentqueuedetailExample.Criteria criteria = example.createCriteria();
         criteria.andPatientidEqualTo(patientid);
-        return departmentqueuedetailMapper.selectByExample(example).get(0);
+        return departmentqueuedetailMapper.selectByExample(example);
     }
 
 

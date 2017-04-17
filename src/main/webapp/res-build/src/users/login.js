@@ -11,7 +11,7 @@ define(function (require, exports, module) {
             $loginForm.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 rules: {
                     account: {
                         required: true
@@ -65,7 +65,19 @@ define(function (require, exports, module) {
                     $.post(basePath + '/userindex/login', $form.serialize(), function (data) {
 
                         if (data.code==1) {
-                            window.location.href = basePath + '/userindex/index';
+
+                            //初始化日期
+                            $.ajax({
+                                url: basePath + '/userindex/initDate',
+                                type: 'POST',
+                                dataType: 'json',
+                            }).done(function (res) {
+                                window.location.href = basePath + '/userindex/index';
+
+                            }).fail(function (err) {
+                                $("#ajax_fail").modal("show")
+                            });
+
                         } else {
                             $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
                         }

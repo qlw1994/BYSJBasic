@@ -54,7 +54,7 @@ define(function (require, exports, module) {
             '    <td class=" heading">',
 
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"  data-account="${item.account}" data-power="${item.power}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
-            ' <button id="resetPWD" type="button" class="btn btn-danger btn-xs j-disable" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe603;</span>重置密码</button>',
+            ' <button id="resetPWD" type="button" class="btn btn-danger btn-xs j-disable resetPWD" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe603;</span>重置密码</button>',
             '{@if item.power!=0}',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '{@/if}',
@@ -117,7 +117,7 @@ define(function (require, exports, module) {
                                 self.deleteSysuser($(element));
                             }
                         });
-                        $table.find("resetPWD").confirmation({
+                        $table.find(".resetPWD").confirmation({
                             title: "确定重置密码吗？",
                             btnOkLabel: "确定",
                             btnCancelLabel: "取消",
@@ -236,12 +236,12 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
+                // //focusInvalid: false, // do not focus the last invalid input
+                //
+                //
+                // invalidHandler: function (event, validator) { //display error alert on form submit
+                //     //	                $('.alert-danger', $('.login-form')).show();
+                // },
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -328,12 +328,12 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
+                // //focusInvalid: false, // do not focus the last invalid input
+                //
+                //
+                // invalidHandler: function (event, validator) { //display error alert on form submit
+                //     //	                $('.alert-danger', $('.login-form')).show();
+                // },
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -387,9 +387,9 @@ define(function (require, exports, module) {
         },
         resetPWD: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/sysusers/resetPWD/' + id;
+            var Path = ROOTPAth + '/admin/sysusers/resetPWD/' + id;
             $.ajax({
-                url: delPath,
+                url: Path,
                 type: "POST",
                 success: function (data) {
                     if (data.code === 1) {

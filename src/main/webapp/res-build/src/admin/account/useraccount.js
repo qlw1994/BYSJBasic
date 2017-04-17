@@ -122,7 +122,7 @@ define(function (require, exports, module) {
                                 self.deleteUser($(element));
                             }
                         });
-                        $table.find("resetPWD").confirmation({
+                        $table.find(".resetPWD").confirmation({
                             title: "确定重置密码吗？",
                             btnOkLabel: "确定",
                             btnCancelLabel: "取消",
@@ -269,12 +269,12 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
+                // //focusInvalid: false, // do not focus the last invalid input
+                //
+                //
+                // invalidHandler: function (event, validator) { //display error alert on form submit
+                //     //	                $('.alert-danger', $('.login-form')).show();
+                // },
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -373,12 +373,12 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
+                // //focusInvalid: false, // do not focus the last invalid input
+                //
+                //
+                // invalidHandler: function (event, validator) { //display error alert on form submit
+                //     //	                $('.alert-danger', $('.login-form')).show();
+                // },
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group

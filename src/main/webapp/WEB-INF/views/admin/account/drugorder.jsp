@@ -28,9 +28,7 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-title">
-                <div class="caption">
-                    ${uname} - ${patientname} - 药品订单
-                </div>
+
                 <form class="form-inline" id="search-form">
 
                     <input type="hidden" name="patientid" value="${patientid}">

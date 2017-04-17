@@ -18,7 +18,7 @@
         <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="${ctx}/admin/hospitalDoctors/index?pcode=2&subcode=1&departmentid=${departmentid}&departmentname=${departmentname}">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">药品订单管理</a></li>
     </ul>
 </div>
@@ -121,7 +121,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品规格</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format"
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format" id="add_format"
                                        readonly    placeholder="药品规格">
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">药品数量</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_amount" name="amount"
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" id="add_amount" name="amount" disabled="disabled"
                                            placeholder="药品数量">
                                 </div>
                             </div>
@@ -281,5 +281,5 @@
         var hospitalid=${hospitalid};
     </script>
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/drugorderdetail.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="admin/hospital/drugorderdetail"></script>
 </content>

@@ -28,9 +28,6 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-title">
-                <div class="caption">
-                    ${uname}-${patientname} -住院记录
-                </div>
                 <form class="form-inline" id="search-form">
                     <input type="hidden" name="patientid" value="${patientid}">
                     <div class="form-group">
@@ -127,6 +124,7 @@
                     <div class="portlet-body form">
                         <div class="form-body">
                             <input type="hidden" name="patientid" value="${patientid}"/>
+                            <input type="hidden" name="patientname" value="${patientname}"/>
                             <input type="hidden" id="add_hospitalid" name="hospitalid"/>
                             <input type="hidden" id="add_departmentid" name="departmentid"/>
                             <div class="form-group">
@@ -138,8 +136,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">医院名称</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="hospitalname" id="add_hospitalname">
-                                    <ul class="list">
+                                    <input type="text" name="hospitalname" id="add_hospitalname" autocomplete="off"  class="form-control">
+                                    <ul class="list" id="add_hospitals">
 
                                     </ul>
                                 </div>
@@ -147,8 +145,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">科室名称</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="departmentname" id="add_departmentname">
-                                    <ul class="list">
+                                    <input type="text" name="departmentname" id="add_departmentname"  autocomplete="off"  class="form-control">
+                                    <ul class="list" id="add_departments">
 
                                     </ul>
                                 </div>
@@ -157,13 +155,13 @@
                                 <label class="col-md-3 control-label">病床号</label>
                                 <div class="col-md-8">
                                     <input type="text" autocomplete="off" name="bednumber"
-                                           class="form-control">
+                                           class="form-control"  autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">入院时间</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly name="startdate" id="add_startdate"
+                                    <input type="text" readonly name="startdate" id="add_startdate"  autocomplete="off"
                                            class="form-control">
                                 </div>
                             </div>
@@ -171,7 +169,7 @@
                                 <label class="col-md-3 control-label">出院时间</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly name="enddate" id="add_enddate"
-                                           class="form-control">
+                                           autocomplete="off"    class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -208,34 +206,34 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">医院名称</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="hospitalname" id="mod_hospitalname" disabled="disabled">
+                                    <input type="text" name="hospitalname"    class="form-control" id="mod_hospitalname" disabled="disabled"  autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">科室名称</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="departmentname" id="mod_departmentname"
+                                    <input type="text" name="departmentname" id="mod_departmentname"  autocomplete="off"  class="form-control"
                                            disabled="disabled">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">病床号</label>
                                 <div class="col-md-8">
-                                    <input type="text" autocomplete="off" name="bednumber" disabled="disabled"
+                                    <input type="text" autocomplete="off" name="bednumber" disabled="disabled"  autocomplete="off"
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">入院时间</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly name="startdate" id="mod_startdate" disabled="disabled"
+                                    <input type="text" readonly name="startdate" id="mod_startdate" disabled="disabled"  autocomplete="off"
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">出院时间</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly name="enddate" id="mod_enddate" disabled="disabled"
+                                    <input type="text" readonly name="enddate" id="mod_enddate" disabled="disabled"  autocomplete="off"
                                            class="form-control">
                                 </div>
                             </div>

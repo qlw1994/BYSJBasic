@@ -55,7 +55,7 @@ public class InspectitemController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long inspectionid, HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode, long inspectionid, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/inspectitem");
         request.getSession().setAttribute("inspectionid", inspectionid);
         mv.addObject("pcode", pcode);
@@ -70,7 +70,7 @@ public class InspectitemController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientindex")
-    public ModelAndView ViewPatientIndex(int pcode, int subcode, long inspectionid, HttpServletRequest request) {
+    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, long inspectionid, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/account/inspectitem");
         request.getSession().setAttribute("inspectionid", inspectionid);
         mv.addObject("pcode", pcode);

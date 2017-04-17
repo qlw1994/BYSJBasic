@@ -16,27 +16,27 @@ define(function (require, exports, module) {
     var pagelength = 10; //一页多少条；
     var $searchform = $("#search-form");
     //初始化日期
-    $(function () {
-        $.ajax({
-            url: ROOTPAth + '/userindex/initDate',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                starttime: $("#date1").val(),
-                endtime: $("#date2").val(),
-            }
-        }).done(function (res) {
-        }).fail(function (err) {
-            $("#ajax_fail").modal("show")
-        });
-    })
+    // $(function () {
+    //     $.ajax({
+    //         url: ROOTPAth + '/userindex/initDate',
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {
+    //             starttime: $("#date1").val(),
+    //             endtime: $("#date2").val(),
+    //         }
+    //     }).done(function (res) {
+    //     }).fail(function (err) {
+    //         $("#ajax_fail").modal("show")
+    //     });
+    // })
     var listTpl = juicer(
         [
             '{@if total == 0}',
             '<center style="background-color: white"><h1>暂无记录</h1></center>',
             '{@else}',
             '{@each data as item,index}',
-            '<div class="col-md-4 col-sm-6 item" style="padding-top: 1%">',
+            '<div  class="col-md-4 col-sm-6 item" style="padding-top: 1%">',
             '<div class="thumbnail">',
             '<img class="img-thumbnail" width="250px" height="140px" src="${ctx}/res-build/img/hospital.jpg" alt="${item.name}">',
             '<div class="caption">',
@@ -82,7 +82,7 @@ define(function (require, exports, module) {
                 messages: {},
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -166,8 +166,8 @@ define(function (require, exports, module) {
                 province: $("#province").val(),
                 city: $("#city").val(),
                 area: $("#area").val(),
-                length: pagelength,
-                page: currentpage,
+                // length: pagelength,
+                // page: currentpage,
                 name: $hospitalname.val()
             },
             success: function (res) {
@@ -178,17 +178,22 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    if (reset == 1) {
-                        $divhospitals.empty();
-                        $divhospitals.append(listTpl.render(newData));
-                    }
-                    else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
-                        Toast("没有更多数据了", 2000);
-                    }
-                    else {
-                        $divhospitals.append(listTpl.render(newData));
-                        currentpage = currentpage * 1 + 1;
-                    }
+                    $divhospitals.empty();
+                    $divhospitals.append(listTpl.render(newData));
+                    // if (reset == 1 || res.total <= pagelength) {
+                    //     $divhospitals.empty();
+                    //     $divhospitals.append(listTpl.render(newData));
+                    // }
+                    // else if (currentpage * 1 * pagelength >= res.total) {
+                    //
+                    // }
+                    // else if (res.total == 0) {
+                    //     Toast("没有更多数据了", 2000);
+                    // }
+                    // else {
+                    //     $divhospitals.append(listTpl.render(newData));
+                    //     currentpage = currentpage * 1 + 1;
+                    // }
 
                 }
             }
@@ -207,8 +212,8 @@ define(function (require, exports, module) {
                 province: $("#province").val(),
                 city: $("#city").val(),
                 area: $("#area").val(),
-                length: pagelength,
-                page: currentpage,
+                // length: pagelength,
+                // page: currentpage,
                 name: $hospitalname.val()
             },
             success: function (res) {
@@ -219,17 +224,19 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    if (reset == 1) {
-                        $divhospitals.empty();
-                        $divhospitals.append(listTpl.render(newData));
-                    }
-                    else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
-                        Toast("没有更多数据了", 2000);
-                    }
-                    else {
-                        $divhospitals.append(listTpl.render(newData));
-                        currentpage = currentpage * 1 + 1;
-                    }
+                    $divhospitals.empty();
+                    $divhospitals.append(listTpl.render(newData));
+                    // if (reset == 1) {
+                    //     $divhospitals.empty();
+                    //     $divhospitals.append(listTpl.render(newData));
+                    // }
+                    // else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                    //     Toast("没有更多数据了", 2000);
+                    // }
+                    // else {
+                    //     $divhospitals.append(listTpl.render(newData));
+                    //     currentpage = currentpage * 1 + 1;
+                    // }
 
                 }
             }

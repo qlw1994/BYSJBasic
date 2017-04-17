@@ -132,7 +132,9 @@ public class DrugorderdetailController extends BaseController {
             paymentdetail.setPatientname(patient.getName());
             paymentdetail.setUid(users.getId());
             paymentdetail.setUname(users.getName());
+            paymentdetail.setPayname(drugorderdetail.getDrugname());
             paymentdetail.setMoney(drugorderdetail.getMoney());
+            paymentdetail.setPrice(drugorderdetail.getPrice());
             paymentdetail.setProjecttype(0);//支付的是药品
             paymentdetail.setProjectid(drugorderdetail.getId());// 药品详情编号
             paymentdetailManage.save(paymentdetail);
@@ -207,7 +209,7 @@ public class DrugorderdetailController extends BaseController {
             newpaymentdetail.setCount(drugorderdetail.getAmount());
             newpaymentdetail.setMoney(drugorderdetail.getMoney());
             newpaymentdetail.setFormat(drugorderdetail.getFormat());
-            if (paymentdetailManage.updateByPaymentdetail(paymentdetail, newpaymentdetail) == -100) {
+            if (paymentdetailManage.updateByPaymentdetail(paymentdetail, newpaymentdetail) .equals(new Integer(-100))) {
                 rtnMsg = "该订单已经支付";
                 rtnCode = ResultCode.ERROR;
             } else {

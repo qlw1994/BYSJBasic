@@ -65,7 +65,7 @@ public class Doctor_DrugorderdetailController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long drugorderid, HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode, long drugorderid, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/drugorderdetail");
         request.getSession().setAttribute("drugorderid", drugorderid);
         mv.addObject("pcode", pcode);

@@ -55,7 +55,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit
@@ -110,7 +110,7 @@ define(function (require, exports, module) {
                 },
                 submitHandler: function () {
                     var Path = ROOTPAth + '/admin/'+$("#service").val();
-                    window.location.href = Path + "?pcode=2&subcode=1&uid=" + $("#userid").val() + "&patientid=" + $("#patientid").val() + "&patientname=" + $("#patientname").val() + "";
+                    window.location.href = Path + "?pcode="+pcode+"&subcode="+subcode+"&uid=" + $("#userid").val() + "&patientid=" + $("#patientid").val() + "&patientname=" + $("#patientname").val() + "&uname="+$("#uname").val()+"";
 
                 }
             });
@@ -132,7 +132,7 @@ define(function (require, exports, module) {
                     $list.show();
                     $list.html("");
                     $.each(data, function (index, el) {
-                        var html = $("<li data-uid='" + el.id + "' value='"+el.account+"'>" + el.account + "</li>");
+                        var html = $("<li data-uid='" + el.id + "' data-uname='" + el.name + "' value='"+el.account+"'>" + el.account + "</li>");
                         $list.append(html);
 
                     });
@@ -151,6 +151,7 @@ define(function (require, exports, module) {
                     $($list).find("li").click(function (event) {
                         $(obj).val($(this).text());
                         $("#userid").val($(this).data("uid"));
+                        $("#uname").val($(this).data("uname"));
                         $list.hide();
                         $ModelForm.validate().element($(obj));
                     });

@@ -84,7 +84,7 @@ public class PaymentdetailController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(Long hospitalid, String hospitalname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView View(Long hospitalid, String hospitalname, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/account/paymentdetail");
         request.getSession().setAttribute("hospitalid", hospitalid);
         request.getSession().setAttribute("hospitalname", hospitalname);
@@ -100,7 +100,7 @@ public class PaymentdetailController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/hospitalChosenindex")
-    public ModelAndView ViewhospitalChosenindex(Long patientid, String patientname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewhospitalChosenindex(Long patientid, String patientname, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/account/payment_hospital_chosen");
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);

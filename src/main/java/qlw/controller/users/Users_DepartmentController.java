@@ -38,7 +38,7 @@ public class Users_DepartmentController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDepartment(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listDepartment(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length",required = false) Integer length, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", departmentManage.count(hospitalid));

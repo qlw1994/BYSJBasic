@@ -138,6 +138,39 @@ define(function (require, exports, module) {
             $("#search").on('click', function (event) {
                 event.preventDefault();
                 get_search();
+                $.ajax({
+                    url: ROOTPAth + '/admin/inspectionreports/list',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        startdate:$("#starttime").val(),
+                        enddate:$("#endtime").val(),
+                        patientid: patientid,
+                        length: pagelength
+
+                    },
+                    success: function (res) {
+                        var newData = $.extend({}, res);
+                        $.each(newData.data, function (i, val) {
+
+                            newData.data[i].currentpage = pageIndex.current;
+                        });
+                        tool.stopPageLoading();
+                        $inspectionreportList.find(".page-info-num").text(res.data.length);
+
+                        $table.find("tbody").empty().append(listTpl.render(newData));
+                        //删除权限
+                        $table.find(".j-del").confirmation({
+                            title: "确定删除该表单吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.deleteInspectreport($(element));
+                            }
+                        });
+                    }
+                })
             });
             //添加界面关闭,下拉框消失
             $addModal.on("hide.modal", function (event) {
@@ -190,9 +223,10 @@ define(function (require, exports, module) {
                 var auditorname = button.data("auditorname");
                 var date = button.data("date");
                 var examtime = button.data("examtime");
+                var auditoraccount = button.data("auditoraccount");
                 $modal.find('input[name=id]').val(id);
                 $modal.find('input[name=date]').val(date);
-                $modal.find('input[name=auditor]').val(auditoraccount);
+                $modal.find('input[name=auditoraccount]').val(auditoraccount);
                 $modal.find('input[name=auditorid]').val(auditorid);
                 $modal.find('input[name=auditorname]').val(auditorname);
                 $modal.find('input[name=inspectname]').val(inspectname);
@@ -278,7 +312,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 invalidHandler: function (event, validator) { //display error alert on form submit
                     //	                $('.alert-danger', $('.login-form')).show();
                 },
@@ -405,7 +439,7 @@ define(function (require, exports, module) {
                     },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit

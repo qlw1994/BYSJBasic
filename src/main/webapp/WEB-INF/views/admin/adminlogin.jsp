@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <title>管理平台</title>
+    <title>管理员平台</title>
     <link href="${ctx}/res-build/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
@@ -42,12 +42,9 @@
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" id="login-form" method="post" novalidate="novalidate">
-        <h3 class="form-title">用户登录</h3>
+        <h3 class="form-title">管理员登录</h3>
 
-        <div class="alert alert-danger display-hide" id="alert-info">
-            <button class="close" data-close="alert"></button>
-            <span class="alert-info-txt">您输入的帐号或密码有误,忘记密码请联系管理员！</span>
-        </div>
+
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">用户名</label>
@@ -55,7 +52,7 @@
             <div class="input-icon">
                 <i class="iconfont">&#xe601;</i>
                 <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名"
-                       name="account" aria-required="true" aria-invalid="false" value="1">
+                       name="account" aria-required="true" aria-invalid="false" value="admin">
             </div>
         </div>
         <div class="form-group">
@@ -64,7 +61,7 @@
             <div class="input-icon">
                 <i class="iconfont">&#xe609;</i>
                 <input class="form-control placeholder-no-fix valid" type="password" autocomplete="off" placeholder="密码"
-                       name="password" aria-required="true" aria-invalid="false" value="1">
+                       name="password" aria-required="true" aria-invalid="false" value="123456">
             </div>
         </div>
         <div class="form-actions">

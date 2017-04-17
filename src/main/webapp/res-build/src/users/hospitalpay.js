@@ -20,7 +20,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center;background-color: white" >',
+            '<td colspan="7" style="text-align:center;background-color: white" >',
             '暂无记录',
             '</td>',
 
@@ -57,11 +57,6 @@ define(function (require, exports, module) {
             '{@if item.status==1}',
             '    <td>已支付</td>',
             '{@/if}',
-            '    <td class=" heading">',
-
-            // ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-format="${item.format}"  data-drugname="${item.drugname}" data-price="${item.price}" data-amount="${item.amount}" data-drugid="${item.drugid}"  data-money="${item.money}"  ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
-
-            '    </td>',
             '</tr>',
             '{@/each}',
             '{@/if}'
@@ -94,8 +89,7 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-
-                        drugorderid: drugorderid,
+                        hospitalizationid: hospitalizationid,
                         length: pagelength
 
                     },

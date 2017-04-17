@@ -37,12 +37,12 @@ public class DepartmentController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDepartment(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+    public Map<String, Object> listDepartment(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Long hospitalid,HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            long hospitalid = Long.parseLong(request.getParameter("hospitalid"));
+            if (hospitalid != null) {
             result.put("total", departmentManage.count(hospitalid));
-            result.put("data", departmentManage.list(page, length, hospitalid));
+            result.put("data", departmentManage.list(page, length, hospitalid));}
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -58,8 +58,10 @@ public class DepartmentController extends BaseController {
     public Map<String, Object> listDepartmentLike(String name, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("total", departmentManage.countLike(name, hospitalid));
-            result.put("data", departmentManage.getLike(null, null, name, hospitalid));
+            if (hospitalid != null) {
+                result.put("total", departmentManage.countLike(name, hospitalid));
+                result.put("data", departmentManage.getLike(null, null, name, hospitalid));
+            }
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -86,13 +88,14 @@ public class DepartmentController extends BaseController {
             if (departmentTemp != null) {
                 departmentTemp.setDeletedate(null);
                 departmentManage.delete(departmentTemp.getId());
-                departmentManage.save(departmentTemp);
+                departmentManage.saveBackId(departmentTemp);
             } else {
                 department.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-                departmentManage.save(department);
+                departmentManage.saveBackId(department);
             }
             Hospital hospital = hospitalManage.getById(department.getHospitalid());
             Departmentqueue departmentqueue = new Departmentqueue();
+            departmentqueue.setDepartmentid(department.getId());
             departmentqueue.setNownumber(0);
             departmentqueue.setNowtotal(0);
             departmentqueue.setTodaytotal(0);
@@ -185,7 +188,7 @@ public class DepartmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView accountView(int pcode, int subcode, long hospitalid, String hospitalname, HttpServletRequest request) {
+    public ModelAndView accountView(Integer pcode, Integer subcode, long hospitalid, String hospitalname, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("admin/hospital/department");
         request.getSession().setAttribute("hospitalid", hospitalid);
@@ -205,12 +208,35 @@ public class DepartmentController extends BaseController {
      */
     @RequestMapping(value = "/sameName", method = RequestMethod.POST)
     @ResponseBody
-    public boolean hasSameName(String name, long hospitalid) {
+    public boolean hasSameName(String name, Long hospitalid) {
+        if(hospitalid==null){
+            return true;
+        }
         Department department = departmentManage.getByName(name, hospitalid);
-        if (department == null || department.getDeletedate() == null) {
+        if (department == null || department.getDeletedate() != null) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 检查是否存在科室名称 存在TRUE 否则false
+     *
+     * @param name
+     * @param hospitalid
+     * @return @return 存在返回false 否则true
+     */
+    @RequestMapping(value = "/hasName", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean hasName(String name, Long hospitalid) {
+        if(hospitalid==null){
+            return false;
+        }
+        Department department = departmentManage.getByName(name, hospitalid);
+        if (department == null || department.getDeletedate() != null) {
+            return false;
+        }
+        return true;
     }
 
     @RequestMapping(value = "/initDepartmentqueue")

@@ -53,7 +53,7 @@ public class Users_DrugController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(Long hospitalid, String hospitalname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView View(Long hospitalid, String hospitalname, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/drug");
         request.getSession().setAttribute("hospitalid", hospitalid);
         request.getSession().setAttribute("hospitalname", hospitalname);

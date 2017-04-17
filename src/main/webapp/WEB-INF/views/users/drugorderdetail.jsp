@@ -11,6 +11,11 @@
 
 <body>
 <h3 class="page-title">""</h3>
+<div  style="float:right;padding-top: 2%;padding-right: 5%">
+    <a href="${ctx}/user/paymentdetails/index?patientid=${patientid}&patientname=${patientname}" class="btn btn-success btn-sm"
+    ><span class="hidden-480">去支付</span>
+    </a>
+</div>
 <div class="portlet-body" id="drugorderdetail-list" style="background-color: white">
     <div class="table-pages clearfix">
         <div class="table-page clearfix"></div>
@@ -134,6 +139,7 @@
         var hospitalid =${hospitalid};
         var hospitalname = "${hospitalname}";
         var currentpage = ${currentpage};
+        var drugorderid=${drugorderid};
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>

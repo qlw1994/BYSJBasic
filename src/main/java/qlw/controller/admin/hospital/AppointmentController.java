@@ -68,7 +68,7 @@ public class AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientindex")
-    public ModelAndView ViewPatient(long patientid, String patientname, Long uid, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewPatient(long patientid, String patientname, Long uid, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/appointment_patient");
         request.getSession().setAttribute("uid", uid);
         request.getSession().setAttribute("patientid", patientid);
@@ -85,7 +85,7 @@ public class AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientchosen")
-    public ModelAndView ViewPatientChosen(Long schedulingid, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewPatientChosen(Long schedulingid, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/appointment_patient_chosen");
         request.setAttribute("schedulingid", schedulingid);
         mv.addObject("pcode", pcode);
@@ -100,7 +100,7 @@ public class AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/doctorindex")
-    public ModelAndView ViewDoctor(long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewDoctor(long doctorid, String doctorname, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/appointment_doctor");
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);
@@ -116,7 +116,7 @@ public class AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/departmentindex")
-    public ModelAndView ViewDepartment(long departmentid, String departmentname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewDepartment(long departmentid, String departmentname, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/appointment_department");
         request.getSession().setAttribute("departmentid", departmentid);
         request.getSession().setAttribute("departmentname", departmentname);

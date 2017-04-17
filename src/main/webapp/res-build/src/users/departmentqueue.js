@@ -13,7 +13,7 @@ define(function (require, exports, module) {
                 if (res.total == 0) {
                     $h1.html("该就诊人不在任何科室队列中！");
                 } else(
-                    $h1.html("当前就诊人序号为 " + "<big>" + res.data + "</big>")
+                    $h1.html("当前就诊人序号为  " + "<big>" + res.data + "</big>")
                 )
             }
         })

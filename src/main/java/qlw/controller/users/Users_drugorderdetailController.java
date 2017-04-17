@@ -68,7 +68,7 @@ public class Users_drugorderdetailController extends BaseController {
      */
     @RequestMapping(value = "/index")
     public ModelAndView View(Long drugorderid, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("admin/hospital/drugorderdetail");
+        ModelAndView mv = new ModelAndView("users/drugorderdetail");
         request.getSession().setAttribute("drugorderid", drugorderid);
         mv.addObject("currentpage", 1);
         return mv;

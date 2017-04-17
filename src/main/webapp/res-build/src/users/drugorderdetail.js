@@ -157,6 +157,7 @@ define(function (require, exports, module) {
                 $modal.find('input[name=drugid]').val(drugid);
                 $modal.find('input[name=money]').val(money);
                 $modal.find('input[name=format]').val(format);
+                $modal.find('input[name=price]').val(price);
                 $modal.find('input[name=amount]').val(amount);
                 $modal.find('input[name=old_money]').val(money);
                 $modal.find(".j-form-save").hide();

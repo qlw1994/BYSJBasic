@@ -12,14 +12,9 @@
 <body>
 <h3 class="page-title">""</h3>
 <div class="row" style="background-color: white">
-    <div class="col-md-12">
-        <div class="portlet">
-            <div class="portlet-search clearfix" id="h1_text">
-                <center><h1></h1></center>
-            </div>
 
-        </div>
-    </div>
+                <center><Big><h1 id="h1_text"></h1></Big></center>
+
 </div>
 </body>
 

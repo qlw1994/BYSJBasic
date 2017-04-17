@@ -28,11 +28,7 @@ define(function (require, exports, module) {
             '<h3>${item.name}</h3>',
             '<p>证件号码：&nbsp;${item.idnumber}</p>',
             // '<textarea name="resume">${item.resume}</textarea>',
-            '<p><a  href="' + ROOTPAth + '/user/departments/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">预约科室</a>&nbsp;<a  href="' + ROOTPAth + '/user/drugorders/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">药品订单</a></p>' +
-            '<a href="' + ROOTPAth + '/user/inspectionreports/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检验报告</a>&nbsp;<a  href="' + ROOTPAth + '/user/checkreports/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">检查报告</a></p>' +
-            '<p><a href="' + ROOTPAth + '/user/paymentdetails/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">待支付列表</a>&nbsp;<a  href="' + ROOTPAth + '/user/paymentdetails/indexpayed?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">已支付列表</a></p>',
-            '<p><a href="' + ROOTPAth + '/user/appointments/patientindex?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">历史预约记录</a>&nbsp;<a href="' + ROOTPAth + '/user/departmentqueues/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">队列当前就诊人序号</a> </p>',
-            '<a href="' + ROOTPAth + '/user/hospitalizations/index?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">住院记录</a>',
+            '<p><a  href="' + ROOTPAth +'/'+service+ '?patientid=${item.id}&patientname=${item.name}" class="btn btn-primary" role="button">选择</a></p>',
             '</div></div></div>',
             '{@/each}',
             '{@/if}'
@@ -264,8 +260,8 @@ define(function (require, exports, module) {
             dataType: 'json',
             data: {
                 uid: uid,
-                // length: pagelength,
-                // page: currentpage,
+                length: pagelength,
+                page: currentpage,
                 name: $patientname.val()
 
             },
@@ -282,19 +278,17 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
                             newData.data[i].currentpage = currentpage;
                         });
-                        $divpatients.empty();
-                        $divpatients.append(listTpl.render(newData));
-                        // if (reset == 1) {
-                        //     $divpatients.empty();
-                        //     $divpatients.append(listTpl.render(newData));
-                        // }
-                        // else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
-                        //     Toast("没有更多数据了", 2000);
-                        // }
-                        // else {
-                        //     $divpatients.append(listTpl.render(newData));
-                        //     currentpage = currentpage * 1 + 1;
-                        // }
+                        if (reset == 1) {
+                            $divpatients.empty();
+                            $divpatients.append(listTpl.render(newData));
+                        }
+                        else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                            Toast("没有更多数据了", 2000);
+                        }
+                        else {
+                            $divpatients.append(listTpl.render(newData));
+                            currentpage = currentpage * 1 + 1;
+                        }
                     }
                 }
             }
@@ -311,8 +305,8 @@ define(function (require, exports, module) {
             dataType: 'json',
             data: {
                 uid: uid,
-                // length: pagelength,
-                // page: currentpage,
+                length: pagelength,
+                page: currentpage,
                 name: $patientname.val()
             },
             success: function (res) {
@@ -328,19 +322,17 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
                             newData.data[i].currentpage = currentpage;
                         });
-                        $divpatients.empty();
-                        $divpatients.append(listTpl.render(newData));
-                        // if (reset == 1) {
-                        //     $divpatients.empty();
-                        //     $divpatients.append(listTpl.render(newData));
-                        // }
-                        // else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
-                        //     Toast("没有更多数据了", 2000);
-                        // }
-                        // else {
-                        //     $divpatients.append(listTpl.render(newData));
-                        //     currentpage = currentpage * 1 + 1;
-                        // }
+                        if (reset == 1) {
+                            $divpatients.empty();
+                            $divpatients.append(listTpl.render(newData));
+                        }
+                        else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
+                            Toast("没有更多数据了", 2000);
+                        }
+                        else {
+                            $divpatients.append(listTpl.render(newData));
+                            currentpage = currentpage * 1 + 1;
+                        }
                     }
                 }
             }

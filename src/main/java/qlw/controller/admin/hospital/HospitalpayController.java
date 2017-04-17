@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/admin/hospitalpays")
-public class HospitalpayController extends BaseController{
+public class HospitalpayController extends BaseController {
     @Autowired
     HospitalizationManage hospitalizationManage;
     @Autowired
@@ -116,6 +116,9 @@ public class HospitalpayController extends BaseController{
             paymentdetail.setUid(users.getId());
             paymentdetail.setUname(users.getName());
             paymentdetail.setMoney(hospitalpay.getMoney());
+            paymentdetail.setPayname(hospitalpay.getName());
+            paymentdetail.setUnit(hospitalpay.getUnit());
+            paymentdetail.setPrice(hospitalpay.getPrice());
 
             paymentdetail.setProjecttype(1);//支付的是住院消费
             paymentdetail.setProjectid(hospitalpay.getId());// 住院消费详情编号
@@ -162,7 +165,7 @@ public class HospitalpayController extends BaseController{
         try {
             long hospitalizationid = hospitalpay.getHospitalizationid();
             Hospitalpay oddHospitalpay = new Hospitalpay();
-            oddHospitalpay = hospitalpayManage.getById(hospitalpay.getId());
+            //oddHospitalpay = hospitalpayManage.getById(hospitalpay.getId());
             BigDecimal oldmoney = BigDecimal.valueOf(Double.parseDouble((String) old_money));
 
             Hospitalization hospitalization = hospitalizationManage.getById(hospitalizationid);
@@ -172,7 +175,7 @@ public class HospitalpayController extends BaseController{
             Patient patient = patientManage.getById(hospitalization.getPatientid());
             Users users = userManage.getUsersById(patient.getUid());
             Paymentdetail paymentdetail = new Paymentdetail();
-            paymentdetail.setMoney(oddHospitalpay.getMoney());
+            paymentdetail.setMoney(hospitalpay.getMoney());
             paymentdetail.setPatientid(hospitalization.getPatientid());
             paymentdetail.setPatientname(patient.getName());
             paymentdetail.setUid(users.getId());
@@ -183,15 +186,18 @@ public class HospitalpayController extends BaseController{
             //paymentdetail.setDoctorname(doctor.getName());
             paymentdetail.setHospitalid(hospital.getId());
             paymentdetail.setHospitalname(hospital.getName());
-            paymentdetail.setCount(oddHospitalpay.getAmount());
-            paymentdetail.setFormat(oddHospitalpay.getFormat());
+            paymentdetail.setCount(hospitalpay.getAmount());
+            paymentdetail.setFormat(hospitalpay.getFormat());
             paymentdetail.setCreatedate(hospitalization.getStartdate());
+            paymentdetail.setPayname(hospitalpay.getName());
+            paymentdetail.setUnit(hospitalpay.getUnit());
+            paymentdetail.setPrice(hospitalpay.getPrice());
 
             Paymentdetail newpaymentdetail = new Paymentdetail();
             newpaymentdetail.setCount(hospitalpay.getAmount());
             newpaymentdetail.setMoney(hospitalpay.getMoney());
             newpaymentdetail.setFormat(hospitalpay.getFormat());
-            if (paymentdetailManage.updateByPaymentdetail(paymentdetail, newpaymentdetail) == -100) {
+            if (paymentdetailManage.updateByPaymentdetail(paymentdetail, newpaymentdetail) .equals(new Integer(-100))) {
                 rtnMsg = "该订单已经支付";
                 rtnCode = ResultCode.ERROR;
             } else {
@@ -244,12 +250,15 @@ public class HospitalpayController extends BaseController{
             paymentdetail.setCount(hospitalpay.getAmount());
             paymentdetail.setFormat(hospitalpay.getFormat());
             paymentdetail.setCreatedate(hospitalization.getStartdate());
+            paymentdetail.setPayname(hospitalpay.getName());
+            paymentdetail.setUnit(hospitalpay.getUnit());
+            paymentdetail.setPrice(hospitalpay.getPrice());
             paymentdetailManage.deleteByPaymentdetail(paymentdetail);
 
 
-                hospitalization.setMoney(hospitalization.getMoney().subtract(hospitalpay.getMoney()));
-                hospitalpayManage.delete(id);
-                hospitalizationManage.update(hospitalization);
+            hospitalization.setMoney(hospitalization.getMoney().subtract(hospitalpay.getMoney()));
+            hospitalpayManage.delete(id);
+            hospitalizationManage.update(hospitalization);
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "删除失败";

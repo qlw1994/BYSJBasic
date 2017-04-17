@@ -35,7 +35,7 @@ public class Users_HospitalController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listHospital(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "province", defaultValue = "") String province, @RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "area", defaultValue = "") String area) {
+    public Map<String, Object> listHospital(@RequestParam(value = "page",  required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, @RequestParam(value = "province",  required = false) String province, @RequestParam(value = "city", required = false) String city, @RequestParam(value = "area",  required = false) String area) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", hospitalManage.count(province, city, area));

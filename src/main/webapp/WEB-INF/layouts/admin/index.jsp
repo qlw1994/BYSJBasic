@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <title>管理平台</title>
+    <title>管理员平台</title>
     <link href="${ctx}/res-build/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
@@ -33,7 +33,7 @@
         <div class="page-header-inner">
             <div class="page-logo">
                 <a href="${ctx}/admin/index">
-                    管理平台
+                    管理员平台
                 </a>
             </div>
             <!--<!--href="#page-sidebar-menu" aria-expanded="false" aria-controls="collapseExample" data-toggle="collapse" data-target=".navbar-collapse"-->
@@ -133,7 +133,7 @@
                                 </li>
                             </ul>
                             <ul class="sub-menu sub-menu-hide" data-code="RMsg">
-                                <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
+                                <li class="sub-menu-item <c:if test='${subcode==2}'>sub-active</c:if>">
                                     <a class="ajaxify" href='${ctx}/admin/hospitalizations/patientChosen?pcode=2&subcode=2'>住院记录</a>
                                 </li>
                             </ul>
@@ -164,10 +164,10 @@
                             </a>
                             <ul class="sub-menu sub-menu-hide" data-code="RMsg">
                                 <li class="sub-menu-item <c:if test='${subcode==1}'>sub-active</c:if>">
-                                    <a class="ajaxify" href='${ctx}/admin/checkreports/patient_Chosen?pcode=3&subcode=1'>就诊人检查报告查询</a>
+                                    <a class="ajaxify" href='${ctx}/admin/checkreports/patient_Chosen?pcode=4&subcode=1'>就诊人检查报告查询</a>
                                 </li>
                                 <li class="sub-menu-item <c:if test='${subcode==2}'>sub-active</c:if>">
-                                    <a class="ajaxify" href='${ctx}/admin/checkreports/patient_Chosen?pcode=3&subcode=1'>就诊人检验报告查询</a>
+                                    <a class="ajaxify" href='${ctx}/admin/inspectionreports/patient_Chosen?pcode=4&subcode=2'>就诊人检验报告查询</a>
                                 </li>
                             </ul>
                         </li>

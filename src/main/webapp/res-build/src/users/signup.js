@@ -15,7 +15,6 @@ define(function (require, exports, module) {
     var Utilitiy = {
         init: function () {
 
-            tool.startPageLoading();
             this.bind();
         },
         bind: function () {
@@ -30,13 +29,14 @@ define(function (require, exports, module) {
                 var mobile = /^1[3|4|5|7|8]\d{9}$/;
                 return this.optional(element) || (mobile.test(value));
             }, "手机格式不对");
+
             //表单验证-添加用户
             $UserForm.validate({
                 rules: {
                     account: {
                         required: true,
                         remote: { //自带远程验证存在的方法
-                            url: ROOTPAth + '/admin/users/sameName',
+                            url: ROOTPAth + '/userindex/sameName',
                             type: "POST",
                             dataType: "json",
                             data: {
@@ -80,12 +80,6 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -102,7 +96,7 @@ define(function (require, exports, module) {
                 submitHandler: function () {
 
                     var basePath = location.href.substring(0, location.href.lastIndexOf('/'));
-                    var savePath = basePath + '/usersignup';
+                    var savePath = basePath + '/signupIn';
                     $.ajax({
                         type: "POST",
                         url: savePath,
@@ -114,7 +108,7 @@ define(function (require, exports, module) {
                         success: function (data) {
                             tool.stopPageLoading();
                             if (data.code == 1) {
-                                window.location.href = basePath + '/userindex/index';
+                                window.location.href = basePath + '/index';
                             }
                         }
                     });
@@ -127,4 +121,5 @@ define(function (require, exports, module) {
         },
 
     };
+    Utilitiy.init();
 });

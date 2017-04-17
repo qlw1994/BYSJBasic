@@ -96,7 +96,7 @@ public class Doctor_DepartmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView accountView(int pcode, int subcode, long hospitalid, String hospitalname, HttpServletRequest request) {
+    public ModelAndView accountView(Integer pcode, Integer subcode, long hospitalid, String hospitalname, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("admin/hospital/department");
         request.getSession().setAttribute("hospitalid", hospitalid);

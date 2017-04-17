@@ -1,8 +1,11 @@
 package qlw.controller.admin.hospital;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.DoctorManage;
@@ -11,6 +14,9 @@ import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,7 +41,7 @@ public class HospitalDoctorController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView hospitalindexView(int pcode, int subcode, long departmentid, String departmentname, HttpServletRequest request) {
+    public ModelAndView hospitalindexView(Integer pcode, Integer subcode, long departmentid, String departmentname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/doctor");
         request.getSession().setAttribute("departmentid", departmentid);
         request.getSession().setAttribute("departmentname", departmentname);
@@ -52,7 +58,7 @@ public class HospitalDoctorController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDoctor(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,Integer type, HttpServletRequest request) {
+    public Map<String, Object> listDoctor(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Integer type, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             long departmentid = Long.parseLong(request.getParameter("departmentid"));
@@ -130,6 +136,89 @@ public class HospitalDoctorController extends BaseController {
             e.printStackTrace();
         }
         result.put("code", ResultCode.SUCCESS);
+        return result;
+    }
+
+    /**
+     * 批量添加医生
+     *
+     * @return
+     */
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> fileupload(MultipartFile file, Long hospitalid, Long departmentid, String hospitalname, String departmentname, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "上传成功";
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        String fileName = new Date().getTime() + ".csv";
+        File targetFile = new File(path, fileName);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+        String[] FILE_HEADER = {"名称", "性别", "年龄", "职务", "级别", "简介", "证件类型", "证件号码", "账号", "密码"};
+        //保存
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String FILE_NAME = path + "/" + fileName;
+        // 这里显式地配置一下CSV文件的Header，然后设置跳过Header（要不然读的时候会把头也当成一条记录）
+        CSVFormat format = CSVFormat.DEFAULT.withHeader(FILE_HEADER).withSkipHeaderRecord();
+        try (Reader in = new FileReader(FILE_NAME)) {
+            Iterable<CSVRecord> records = format.parse(in);
+            String date = MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
+            for (CSVRecord record : records) {
+                String name = record.get("名称").trim();
+                int sex = record.get("性别").equals("男") ? 1 : 2;
+                int age = Integer.parseInt(record.get("年龄"));
+                int level = record.get("级别").trim().equals("专家") ? 1 : 2;
+                String job = record.get("职务").trim();
+                String resume = record.get("简介").trim();
+                String idtypeStr = record.get("证件类型").trim();
+                int idtype;
+                switch (idtypeStr) {
+                    case "二代身份证":
+                        idtype = 1;
+                        break;
+                    case "港澳居民身份证":
+                        idtype = 2;
+                        break;
+                    case "台湾居民身份证":
+                        idtype = 3;
+                        break;
+                    default:
+                        idtype = 4;
+                        break;
+                }
+                String idnumber = record.get("证件号码").trim();
+                String account = record.get("账号").trim();
+                String password = record.get("密码").trim();
+                Doctor doctor = new Doctor();
+                doctor.setPassword(password);
+                doctor.setAccount(account);
+                doctor.setIdnumber(idnumber);
+                doctor.setIdtype(idtype);
+                doctor.setResume(resume);
+                doctor.setJob(job);
+                doctor.setLevel(level);
+                doctor.setAge(age);
+                doctor.setSex(sex);
+                doctor.setName(name);
+                doctor.setHospitalid(hospitalid);
+                doctor.setHospitalname(hospitalname);
+                doctor.setDepartmentid(departmentid);
+                doctor.setDepartmentname(departmentname);
+                doctor.setCreatedate(date);
+                doctorManage.save(doctor);
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
         return result;
     }
 

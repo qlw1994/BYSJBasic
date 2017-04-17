@@ -85,7 +85,7 @@ public class Users_AppointmentContoller extends BaseController {
      * @return
      */
     @RequestMapping(value = "/patientchosen")
-    public ModelAndView ViewPatientChosen( int subcode, HttpServletRequest request) {
+    public ModelAndView ViewPatientChosen( Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("users/patient_chosen");
         Users users = (Users) request.getSession().getAttribute("user");
         request.getSession().setAttribute("uid", users.getId());

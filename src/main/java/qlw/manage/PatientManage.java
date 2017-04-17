@@ -22,7 +22,8 @@ public class PatientManage extends BaseManage {
 
     public List<Patient> list(Integer pageNumber, Integer pageSize, long uid) {
         PatientExample example = new PatientExample();
-        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        if (pageNumber != null && pageSize != null) {
+        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));}
         PatientExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uid);
         criteria.andDeletedateIsNull();

@@ -30,7 +30,7 @@
 
 <!-- BEGIN LOGO -->
 <div class="logo">
-    智慧医疗平台
+    用户平台
 </div>
 <!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -43,17 +43,14 @@
     <form class="login-form" id="login-form" method="post" novalidate="novalidate">
         <h3 class="form-title">用户登录</h3>
 
-        <div class="alert alert-danger display-hide" id="alert-info">
-            <button class="close" data-close="alert"></button>
-            <span class="alert-info-txt">您输入的帐号或密码有误,忘记密码请联系管理员！</span>
-        </div>
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">用户名</label>
 
             <div class="input-icon">
                 <i class="iconfont">&#xe601;</i>
-                <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名" value="user1"
+                <input class="form-control placeholder-no-fix valid" type="text" autocomplete="off" placeholder="用户名"
+                       value="user1"
                        name="account" aria-required="true" aria-invalid="false">
             </div>
         </div>
@@ -62,18 +59,19 @@
 
             <div class="input-icon">
                 <i class="iconfont">&#xe609;</i>
-                <input class="form-control placeholder-no-fix valid" type="password" autocomplete="off" placeholder="密码" value="111"
+                <input class="form-control placeholder-no-fix valid" type="password" autocomplete="off" placeholder="密码"
+                       value="123456"
                        name="password" aria-required="true" aria-invalid="false">
             </div>
         </div>
         <div class="form-actions">
-
+            <button type="submit" class="btn btn-success ">
+                登录<i class="m-icon-swapright m-icon-white"></i>
+            </button>
             <a href="${ctx}/userindex/signup" class="btn btn-success pull-right">
                 注册<i class="m-icon-swapright m-icon-white"></i>
             </a>
-            <button type="submit" class="btn btn-success pull-right">
-                登录<i class="m-icon-swapright m-icon-white"></i>
-            </button>
+
         </div>
 
     </form>

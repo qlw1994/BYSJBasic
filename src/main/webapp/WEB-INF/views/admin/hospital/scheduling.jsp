@@ -19,7 +19,7 @@
         <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="${ctx}/admin/hospitalDoctors/index?pcode=2&subcode=1&departmentid=${departmentid}&departmentname=${departmentname}">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">排班查询</a></li>
     </ul>
 </div>

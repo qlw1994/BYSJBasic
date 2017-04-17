@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <title>智慧医疗用户平台</title>
+    <title>用户平台</title>
     <link href="${ctx}/res-build/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/res-build/res/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
@@ -34,7 +34,7 @@
             <div class="page-header-inner">
                 <div class="page-logo">
                     <a href="${ctx}/userindex/index">
-                        智慧医疗用户平台
+                        用户平台
                     </a>
                 </div>
                 <!--<!--href="#page-sidebar-menu" aria-expanded="false" aria-controls="collapseExample" data-toggle="collapse" data-target=".navbar-collapse"-->

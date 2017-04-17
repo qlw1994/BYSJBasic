@@ -38,7 +38,8 @@
 </div>
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGIN -->
-<div class="content">
+<h3 class="page-title">""</h3>
+<div class="content" style="background-color: white">
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" id="vUserForm" method="post" novalidate="novalidate">
         <h3 class="form-title">用户注册</h3>
@@ -78,15 +79,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">用户性别</label>
-                        <div class="col-md-8">
-                            <label class="radio-inline"> <input type="radio" value="1"
-                                                                name="sex">男</label>
-                            <label class="radio-inline"> <input type="radio" value="2"
-                                                                name="sex">女</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-md-3 control-label">证件类型</label>
                         <div class="col-md-8">
                             <select name="idtype" class="form-control">
@@ -112,12 +104,21 @@
                                    name="phone">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">用户性别</label>
+                        <div class="col-md-8">
+                            <label class="radio-inline"> <input type="radio" value="1"
+                                                                name="sex">男</label>
+                            <label class="radio-inline"> <input type="radio" value="2"
+                                                                name="sex">女</label>
+                        </div>
+                    </div>
                 </div>
                 <!-- END FORM-->
             </div>
         </div>
-        <div class="form-actions">
-            <button type="submit" class="btn btn-success pull-right">
+        <div class="form-actions"style="padding-right: 15%">
+            <button type="submit" class="btn btn-success pull-right" >
                 注册<i class="m-icon-swapright m-icon-white"></i>
             </button>
         </div>
@@ -133,10 +134,6 @@
     var ROOTPAth = "${ctx}";
 </script>
 <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="users/signup"></script>
-
-<%--<script type="text/javascript">
-    seajs.use("${ctx}/res-build/src/login.js")
-</script>--%>
 </body>
 
 

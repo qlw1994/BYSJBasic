@@ -19,7 +19,7 @@
         <li><a href="#">医院配置</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">医院管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">科室管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="${ctx}/admin/hospitalDoctors/index?pcode=2&subcode=1&departmentid=${departmentid}&departmentname=${departmentname}">医生管理</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">检查单管理</a></li>
     </ul>
 </div>
@@ -29,9 +29,9 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-title">
-                <div class="caption">
-                  ${hospitalname}-${departmentname}-${doctorname}-${patientname} 检查单管理
-                </div>
+                <%--<div class="caption">--%>
+                  <%--${hospitalname}-${departmentname}-${doctorname}-${patientname} 检查单管理--%>
+                <%--</div>--%>
                 <form class="form-inline" id="search-form">
                     <input type="hidden" name="patientid" value="${patientid}">
                     <input type="hidden" name="hospitalid" value="${hospitalid}">
@@ -385,7 +385,8 @@
     </script>
     <script type="text/javascript"
             src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
-
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="admin/hospital/checkreport"></script>
 </content>

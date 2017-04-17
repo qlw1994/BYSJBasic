@@ -82,7 +82,7 @@ public class Doctor_FixedschedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode,HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode,HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("doctor/fixedscheduling");
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);

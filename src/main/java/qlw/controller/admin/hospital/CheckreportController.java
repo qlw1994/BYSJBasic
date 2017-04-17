@@ -79,7 +79,7 @@ public class CheckreportController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(int pcode, int subcode, long patientid, String patientname, HttpServletRequest
+    public ModelAndView View(Integer pcode, Integer subcode, long patientid, String patientname, HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("admin/hospital/checkreport");
         if (request.getParameter("uid") != null) {
@@ -98,11 +98,12 @@ public class CheckreportController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/patientindex")
-    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long patientid, String patientname, HttpServletRequest
+    public ModelAndView ViewPatientIndex(Integer pcode, Integer subcode, Long patientid, String patientname,Long uid, HttpServletRequest
             request) {
         ModelAndView mv = new ModelAndView("admin/account/checkreport");
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
+        request.getSession().setAttribute("uid", uid);
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
         mv.addObject("currentpage", 1);
@@ -132,8 +133,9 @@ public class CheckreportController extends BaseController{
     public ModelAndView patient_Chosen(Integer pcode, Integer subcode,HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("admin/hospital/patient_chosen");
         request.setAttribute("service","checkreports/patientindex");
-        request.getSession().setAttribute("pcode", pcode);
-        request.getSession().setAttribute("subcode", subcode);
+
+        mv.addObject("pcode", pcode);
+        mv.addObject("subcode", subcode);
         return mv;
     }
     /**
@@ -150,8 +152,8 @@ public class CheckreportController extends BaseController{
         String rtnMsg = "添加成功";
         try {
             checkreport.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            checkreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(checkreport.getExamtime()));
-            checkreport.setChecktime((MyUtils.SIMPLE_DATETIME_FORMAT.format(checkreport.getChecktime())));
+            checkreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(new Date(checkreport.getExamtime())));
+            checkreport.setChecktime((MyUtils.SIMPLE_DATETIME_FORMAT.format(new Date(checkreport.getChecktime()))));
             checkreportManage.save(checkreport);
         } catch (Exception e) {
             e.printStackTrace();

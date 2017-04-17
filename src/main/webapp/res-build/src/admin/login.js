@@ -51,7 +51,19 @@ define(function (require, exports, module) {
             var basePath = location.href.substring(0, location.href.lastIndexOf('/'));
             $.post(basePath + '/login', $form.serialize(), function (data) {
                 if (data.code === 1) {
-                    window.location.href = basePath + '/admin/index';
+
+                    //初始化日期
+                    $.ajax({
+                        url: basePath + '/admin/initDate',
+                        type: 'POST',
+                        dataType: 'json',
+                    }).done(function (res) {
+                        window.location.href = basePath + '/admin/index';
+
+                    }).fail(function (err) {
+                        $("#ajax_fail").modal("show")
+                    });
+
                 } else {
                     $('#alert-info', $form).show().find(".alert-info-txt").text(data.msg);
                 }

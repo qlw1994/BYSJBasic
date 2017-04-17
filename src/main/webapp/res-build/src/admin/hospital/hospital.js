@@ -6,28 +6,6 @@ define(function (require, exports, module) {
     var Page = require("page");
     var juicer = require("juicer");
     var pageIndex;
-    $(function () {
-        $.ajax({
-            url: ROOTPAth + '/admin/initDate',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                starttime: $("#date1").val(),
-                endtime: $("#date2").val(),
-            }
-        }).done(function (res) {
-        }).fail(function (err) {
-            $("#ajax_fail").modal("show")
-        });
-        $.ajax({
-            url: ROOTPAth + '/admin/hospitals/reflashHospital',
-            type: 'POST',
-            dataType: 'json',
-        }).done(function (res) {
-        }).fail(function (err) {
-            $("#ajax_fail").modal("show")
-        });
-    })
     var $table = $("#datatable_ajax");
     var $hospitalList = $("#hospital-list");
     var $HospitalForm = $('#vHospitalForm');
@@ -287,7 +265,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit
@@ -389,7 +367,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit

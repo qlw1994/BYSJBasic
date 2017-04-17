@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         [
             '{@if total === 0}',
             '<tr>',
-            '<td colspan="6" style="text-align:center">',
+            '<td colspan="7" style="text-align:center">',
             '暂无记录,请添加',
             '</td>',
 
@@ -163,6 +163,7 @@ define(function (require, exports, module) {
                 $HospitalizationForm.find("input").removeAttr("aria-required");
                 $HospitalizationForm.find("div").removeClass("has-error");
                 $HospitalizationForm.find("span").remove();
+                $("#add_hospitalid").val("");
             })
             //修改表单初始化
             $modifyModal.on('show.modal', function (event) {
@@ -178,7 +179,7 @@ define(function (require, exports, module) {
                 var hospitalname = button.data("hospitalname");
                 var departmentname = button.data("departmentname");
                 var startdate = button.data("startdate");
-                var enddate = button.data("status");
+                var enddate = button.data("enddate");
                 var bednumber = button.data("bednumber");
                 $modal.find('input[name=id]').val(id);
                 $modal.find('input[name=hospitalname]').val(hospitalname);
@@ -235,7 +236,7 @@ define(function (require, exports, module) {
                             type: "POST",
                             dataType: "json",
                             data: {
-                                name: $("#add_hospitalname").val(),
+                                name: function(){return $("#add_hospitalname").val()},
                             }
                         }
                     },
@@ -246,7 +247,10 @@ define(function (require, exports, module) {
                             type: "POST",
                             dataType: "json",
                             data: {
-                                name: $("#add_departmentname").val(),
+                                hospitalid:function () {
+                                    return $("#add_hospitalid").val()
+                                },
+                                name: function(){return $("#add_departmentname").val()},
                             }
                         }
                     },
@@ -266,6 +270,10 @@ define(function (require, exports, module) {
                         required: "请输入医院名",
                         remote: "医院名不存在"
                     },
+                    departmentname:{
+                        required: "请输入科室名",
+                        remote: "科室名不存在"
+                    },
                     bednumber: {
                         required: "请输入正确数值",
                     },
@@ -274,7 +282,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 invalidHandler: function (event, validator) { //display error alert on form submit
                     //	                $('.alert-danger', $('.login-form')).show();
                 },
@@ -310,17 +318,10 @@ define(function (require, exports, module) {
                 },
 
                 errorPlacement: function (error, element) {
-                    // var strId = element.closest('.form-group') == "undefined" ? "" : element.closest('.form-group').attr("id");
-                    // var index = strId.charAt(strId.length - 1);
-                    // if ((strId == "add_drugName_" + index) && element.closest('.form-group').hasClass('has-error')) {
-                    //     $addOrdermoney.val(($addOrdermoney.val() * 1.00 - 1.00 * $("#add_drugMoney" + index).val()).toFixed(2));
-                    //     $("#add_drugMoney" + index).val("");
-                    //     $("#add_drugFormat" + index).val("");
-                    //     $("#add_drugPrice" + index).val("");
-                    //     $("#add_drugId_" + index).val("");
-                    //     $("#add_drugAmount" + index).val("");
-                    //     $("#add_drugAmount" + index).prop("disabled", true);
-                    // }
+                    var strId = element.closest('.form-group').find("input[name=hospitalname]") == "undefined" ? "" : element.closest('.form-group').find("input[name=hospitalname]") .attr("id");
+                    if ((strId == "add_hospitalname") && element.closest('.form-group').hasClass('has-error')) {
+                        $("#add_hospitalid" ).val("");
+                    }
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
@@ -369,28 +370,31 @@ define(function (require, exports, module) {
             //表单验证-修改订单
             $ModifyForm.validate({
                 rules: {
-                    hospitalname: {
-                        required: true,
-                        remote: {
-                            url: ROOTPAth + '/admin/hospitals/hasName',
-                            type: "POST",
-                            dataType: "json",
-                            data: {
-                                name: $("#add_hospitalname").val(),
-                            }
-                        }
-                    },
-                    departmentname: {
-                        required: true,
-                        remote: {
-                            url: ROOTPAth + '/admin/departments/hasName',
-                            type: "POST",
-                            dataType: "json",
-                            data: {
-                                name: $("#add_departmentname").val(),
-                            }
-                        }
-                    },
+                    // hospitalname: {
+                    //     required: true,
+                    //     remote: {
+                    //         url: ROOTPAth + '/admin/hospitals/hasName',
+                    //         type: "POST",
+                    //         dataType: "json",
+                    //         data: {
+                    //             name:function(){return  $("#mod_hospitalname").val()},
+                    //         }
+                    //     }
+                    // },
+                    // departmentname: {
+                    //     required: true,
+                    //     remote: {
+                    //         url: ROOTPAth + '/admin/departments/hasName',
+                    //         type: "POST",
+                    //         dataType: "json",
+                    //         data: {
+                    //             hospitalid:function () {
+                    //               return      $("#add_hospitalid").val()
+                    //             },
+                    //             name:function(){return  $("#mod_departmentname").val()},
+                    //         }
+                    //     }
+                    // },
                     bednumber: {
                         required: true,
                         isPositive: true,
@@ -399,10 +403,10 @@ define(function (require, exports, module) {
                     enddate: "required"
                 },
                 messages: {
-                    hospitalname: {
-                        required: "请输入医院名",
-                        remote: "医院名不存在"
-                    },
+                    // hospitalname: {
+                    //     required: "请输入医院名",
+                    //     remote: "医院名不存在"
+                    // },
                     bednumber: {
                         required: "请输入正确数值",
                     },
@@ -411,7 +415,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit
@@ -428,6 +432,10 @@ define(function (require, exports, module) {
                 },
 
                 errorPlacement: function (error, element) {
+                    // var strId = element.closest('.form-group').find("input[name=hospitalname]") == "undefined" ? "" : element.closest('.form-group').find("input[name=hospitalname]") .attr("id");
+                    // if ((strId == "mod_hospitalname") && element.closest('.form-group').hasClass('has-error')) {
+                    //     $("#mod_hospitalid" ).val("");
+                    // }
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
@@ -476,7 +484,7 @@ define(function (require, exports, module) {
     function get_hospitals_Model(obj) {
         var t = setTimeout(function () {
             $.ajax({
-                url: ROOTPAth + '/admin/hoospitals/listLike',
+                url: ROOTPAth + '/admin/hospitals/listLike',
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -484,7 +492,7 @@ define(function (require, exports, module) {
                 },
                 success: function (data) {
                     data = data.data;
-                    var $list = $(obj).next(".list");
+                    var $list = $("#add_hospitals");
                     $list.show();
                     $list.html("");
                     $.each(data, function (index, el) {
@@ -515,21 +523,20 @@ define(function (require, exports, module) {
         }, 500);
     }
 
-    function get_departments_Model(obj, option) {
+    function get_departments_Model(obj) {
         var t = setTimeout(function () {
             $.ajax({
                 url: ROOTPAth + '/admin/departments/listLike',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    hospitalid: $("#hospitalid").val(),
+                    hospitalid: $("#add_hospitalid").val(),
                     name: $(obj).val()
                 },
                 success: function (data) {
-                    var strId = $(obj).attr("id");
-                    var index = strId.charAt(strId.length - 1);
+
                     data = data.data;
-                    var $list = $("#add_drugList" + index);
+                    var $list = $("#add_departments");
                     $list.show();
                     $list.html("");
                     $.each(data, function (index, el) {

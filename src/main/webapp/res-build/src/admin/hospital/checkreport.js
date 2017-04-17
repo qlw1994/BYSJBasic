@@ -154,7 +154,40 @@ define(function (require, exports, module) {
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();
-                get_search();
+                pageIndex.reset();
+               $.ajax({
+                   url: ROOTPAth + '/admin/checkreports/list',
+                   type: 'POST',
+                   dataType: 'json',
+                   data: {
+                       startdate:$("#starttime").val(),
+                       enddate:$("#endtime").val(),
+                       patientid: patientid,
+                       length: pagelength,
+                       page: 1
+                   },
+                   success: function (res) {
+                       var newData = $.extend({}, res);
+                       $.each(newData.data, function (i, val) {
+
+                           newData.data[i].currentpage = pageIndex.current;
+                       });
+                       tool.stopPageLoading();
+                       $checkreportList.find(".page-info-num").text(res.data.length);
+
+                       $table.find("tbody").empty().append(listTpl.render(newData));
+                       //删除权限
+                       $table.find(".j-del").confirmation({
+                           title: "确定删除该表单吗？",
+                           btnOkLabel: "确定",
+                           btnCancelLabel: "取消",
+                           onConfirm: function (event, element) {
+                               event.preventDefault();
+                               self.deleteCheckreport($(element));
+                           }
+                       });
+                   }
+               })
             });
             //我要编辑
             $ModifyForm.on("click", ".j-form-edit", function (event) {
@@ -204,7 +237,6 @@ define(function (require, exports, module) {
                 var method = button.data("method");
                 var auditorid = button.data("auditorid");
                 var auditorname = button.data("auditorname");
-                var auditor = button.data("auditoraccount");
                 var date = button.data("date");
                 var advice = button.data("advice");
                 var options = button.data("options");
@@ -219,7 +251,6 @@ define(function (require, exports, module) {
                 $modal.find('input[name=auditorid]').val(auditorid);
                 $modal.find('input[name=auditoraccount]').val(auditoraccount);
                 $modal.find('input[name=auditorname]').val(auditorname);
-                $modal.find('input[name=auditor]').val(auditor);
                 $modal.find('textarea[name=advice]').val(advice);
                 $modal.find('textarea[name=options]').val(options);
                 $modal.find('input[name=checktime]').val(checktime);
@@ -291,7 +322,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
                 invalidHandler: function (event, validator) { //display error alert on form submit
                     //	                $('.alert-danger', $('.login-form')).show();
                 },
@@ -406,7 +437,7 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                //focusInvalid: false, // do not focus the last invalid input
 
 
                 invalidHandler: function (event, validator) { //display error alert on form submit

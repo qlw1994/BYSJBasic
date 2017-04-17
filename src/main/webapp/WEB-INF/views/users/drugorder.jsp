@@ -14,16 +14,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="portlet">
-            <div class="portlet-title">
-                <div class="caption">
-                    ${sessionScope.hospitalname}- 药品订单
-                </div>
+            <div class="portlet-title" style="background-color: white">
                 <form class="form-inline" id="search-form">
-                    <%--<div class="form-group">--%>
-                    <%--<label>预约时间</label>--%>
-                    <%--<input type="text" id="appoint_date" autocomplete="off" readonly class="form-control"--%>
-                    <%--name="date" value="${sessionScope.nextdate}"/>--%>
-                    <%--</div>--%>
                         <input type="hidden" name="patientid" value="${patientid}">
                         <input type="hidden" name="hospitalid" value="${hospitalid}">
                     <div class="form-group">

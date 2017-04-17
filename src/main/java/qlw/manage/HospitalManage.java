@@ -28,7 +28,9 @@ public class HospitalManage extends BaseManage {
      */
     public List<Hospital> list(Integer pageNumber, Integer pageSize, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
-        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        if (pageNumber != null && pageSize != null) {
+            example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        }
         HospitalExample.Criteria criteria = example.createCriteria();
         if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);

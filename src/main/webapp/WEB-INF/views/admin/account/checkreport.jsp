@@ -27,9 +27,6 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-title">
-                <div class="caption">
-                    ${uname}-${patientname} 就诊人检查报告查询
-                </div>
                 <form class="form-inline" id="search-form">
                     <input type="hidden" name="patientid" value="${patientid}">
                     <div class="form-group">
@@ -198,12 +195,12 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success j-form-edit">
-                            <i class="iconfont">&#xe61c;</i> 我要编辑
-                        </button>
-                        <button type="submit" class="btn btn-success j-form-save" style="display: none">
-                            <i class="iconfont">&#xe62c;</i> 保存
-                        </button>
+                        <%--<button type="button" class="btn btn-success j-form-edit">--%>
+                            <%--<i class="iconfont">&#xe61c;</i> 我要编辑--%>
+                        <%--</button>--%>
+                        <%--<button type="submit" class="btn btn-success j-form-save" style="display: none">--%>
+                            <%--<i class="iconfont">&#xe62c;</i> 保存--%>
+                        <%--</button>--%>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <%-- <button type="submit" class="btn btn-success">修改</button>
                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
@@ -262,11 +259,12 @@
         var currentpage = ${currentpage};
         var patientid =${patientid};
         var patientname = '${patientname}';
-        var uid =${uid};
+        var uid ="${uid}";
     </script>
     <script type="text/javascript"
             src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>
-
+    <script type="text/javascript"
+            src="${ctx}/res-build/res/jquery-ui-timepicker/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" src="${ctx}/res-build/config.js"
             data-init="admin/account/checkreport"></script>
 </content>

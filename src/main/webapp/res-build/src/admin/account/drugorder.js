@@ -172,6 +172,7 @@ define(function (require, exports, module) {
                 $modal.find(".j-form-edit").show();
             });
             $("#search").click(function () {
+                pageIndex.reset();
                 $.ajax({
                     url: ROOTPAth + '/admin/drugorders/list',
                     type: 'POST',
@@ -180,7 +181,8 @@ define(function (require, exports, module) {
                         patientid: patientid,
                         startdate:$("#starttime").val(),
                         enddate:$("#endtime").val(),
-                        length: pagelength
+                        length: pagelength,
+                        page:1
                     },
                     success: function (res) {
                         var newData = $.extend({}, res);

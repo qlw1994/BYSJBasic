@@ -77,7 +77,7 @@ public class Doctor_AppointmentController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView ViewDoctor(Long doctorid, String doctorname, int pcode, int subcode, HttpServletRequest request) {
+    public ModelAndView ViewDoctor(Long doctorid, String doctorname, Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("doctor/appointment");
         request.getSession().setAttribute("doctorid", doctorid);
         request.getSession().setAttribute("doctorname", doctorname);

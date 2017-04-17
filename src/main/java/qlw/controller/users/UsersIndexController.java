@@ -1,11 +1,14 @@
 package qlw.controller.users;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
+import qlw.manage.UserManage;
 import qlw.model.Users;
 import qlw.util.ResultCode;
 
@@ -24,6 +27,9 @@ import java.util.Map;
 @RequestMapping(value = "/userindex")
 public class UsersIndexController extends BaseController {
 
+    @Autowired
+    UserManage userManage;
+
     @RequestMapping(value = "")
     public String admin() {
         return "redirect:userindex/index";
@@ -40,6 +46,18 @@ public class UsersIndexController extends BaseController {
     public ModelAndView signup(Users users, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("users/signup");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/signupIn")
+    @ResponseBody
+    public Map<String, Object> signupIn(Users users, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "注册成功";
+        userManage.save(users);
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
     }
 
     /**
@@ -64,6 +82,32 @@ public class UsersIndexController extends BaseController {
         return result;
     }
 
+
+    /**
+     * 检查是否存在账号名称
+     *
+     * @param account
+     * @return 存在返回true
+     */
+    @RequestMapping(value = "/hasName", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean hasName(String account) {
+        boolean res = userManage.haveSameAccount(account);
+        return res;
+    }
+
+    /**
+     * 检查是否有相同的账号名称
+     *
+     * @param account
+     * @return 存在返回false
+     */
+    @RequestMapping(value = "/sameName", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean hasSameName(String account) {
+        boolean res = userManage.haveSameAccount(account);
+        return !res;
+    }
 
     private void initController(String starttime, String endtime, HttpServletRequest request) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
