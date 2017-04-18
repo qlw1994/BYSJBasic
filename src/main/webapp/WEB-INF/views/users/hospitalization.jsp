@@ -92,55 +92,6 @@
         </div>
     </div>
 </div>
-<!-- /.modal -->
-<%--<div class="modal fade" id="modifyModal">--%>
-    <%--<div class="modal-dialog">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<button type="button" class="close" data-dismiss="modal">--%>
-                    <%--<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>--%>
-                <%--</button>--%>
-                <%--<h4 class="modal-title">查看</h4>--%>
-            <%--</div>--%>
-            <%--<form class="form-horizontal" id="vHospitalizationModifyForm">--%>
-
-                <%--<div class="modal-body">--%>
-                    <%--<div class="portlet-body form j-disabled-item">--%>
-                        <%--<div class="form-body">--%>
-                            <%--<input type="hidden" name="id">--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">医嘱</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<textarea AUTOCOMPLETE="off" class="form-control" name="advice"--%>
-                                              <%--placeholder="医嘱" disabled="disabled"></textarea>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-md-3 control-label">订单状态</label>--%>
-                                <%--<div class="col-md-8">--%>
-                                    <%--<select id="mod_status" name="status" class="form-control">--%>
-                                        <%--<option value="0">未支付</option>--%>
-                                        <%--<option value="1">已支付</option>--%>
-                                        <%--<option value="2">已取药</option>--%>
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<!-- END FORM-->--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="modal-footer">--%>
-                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
-                        <%--&lt;%&ndash; <button type="submit" class="btn btn-success">修改</button>--%>
-                     <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>&ndash;%&gt;--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</form>--%>
-        <%--</div>--%>
-        <%--<!-- /.modal-content -->--%>
-    <%--</div>--%>
-    <%--<!-- /.modal-dialog -->--%>
-<%--</div>--%>
-
 </body>
 
 <content tag="jsconfig">

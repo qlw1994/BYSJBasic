@@ -216,7 +216,6 @@ public class SchedulingController extends BaseController {
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "号源生成成功";
         Date nowDate = new Date();
-
         List<Date> dateList = new ArrayList<Date>();
         long ftime = nowDate.getTime();
         for (int i = 0; i <= 7; i++) {

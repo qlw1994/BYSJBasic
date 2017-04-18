@@ -35,7 +35,7 @@ public class Users_HospitalController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listHospital(@RequestParam(value = "page",  required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, @RequestParam(value = "province",  required = false) String province, @RequestParam(value = "city", required = false) String city, @RequestParam(value = "area",  required = false) String area) {
+    public Map<String, Object> listHospital(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, @RequestParam(value = "province", required = false) String province, @RequestParam(value = "city", required = false) String city, @RequestParam(value = "area", required = false) String area) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", hospitalManage.count(province, city, area));
@@ -52,7 +52,7 @@ public class Users_HospitalController extends BaseController {
 
     @RequestMapping(value = "/listLike", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listHospitalLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, @RequestParam(value = "province", defaultValue = "") String province, @RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "area", defaultValue = "") String area) {
+    public Map<String, Object> listHospitalLike(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "length", required = false) Integer length, String name, String province, String city, String area) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", hospitalManage.countLike(name, province, city, area));

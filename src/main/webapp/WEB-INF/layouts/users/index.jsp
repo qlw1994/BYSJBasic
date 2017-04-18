@@ -66,8 +66,7 @@
                         </div>--%>
                         </li>
                         <li class="top-tools-item dropdown top-userbox">
-                            <a href="${ctx}/user/hospitalizations/patientChosen" class="top-tools-item-a top-user" data-toggle="modal"
-                               data-target="#modifyModal-user">
+                            <a href="${ctx}/user/hospitalizations/patientChosen" class="top-tools-item-a top-user">
                                 <span class="username username-hide-on-mobile">住院记录查询</span>
                             </a><%--
 
@@ -103,7 +102,7 @@
             <div class="page-header-inner">
                 <div class="page-logo">
                     <a href="${ctx}/userindex/index">
-                        智慧医疗
+                        用户平台
                     </a>
                 </div>
                 <!--<!--href="#page-sidebar-menu" aria-expanded="false" aria-controls="collapseExample" data-toggle="collapse" data-target=".navbar-collapse"-->

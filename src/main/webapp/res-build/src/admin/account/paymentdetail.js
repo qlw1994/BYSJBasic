@@ -126,6 +126,12 @@ define(function (require, exports, module) {
                             if (newData.data[i].payname == null) {
                                 newData.data[i].payname = "";
                             }
+                            if (newData.data[i].format == null) {
+                                newData.data[i].format = "";
+                            }
+                            if (newData.data[i].doctorname == null) {
+                                newData.data[i].doctorname = "";
+                            }
                         });
                         tool.stopPageLoading();
                         $paymentdetailList.find(".page-info-num").text(res.data.length);

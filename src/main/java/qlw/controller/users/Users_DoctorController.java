@@ -116,16 +116,14 @@ public class Users_DoctorController extends BaseController {
      * 检查是否存在名称 单家医院范围
      *
      * @param name
-     * @return 相同false，否则true
+     * @return 存在true，否则false
      */
     @RequestMapping(value = "/hasName", method = RequestMethod.POST)
     @ResponseBody
     public boolean hasName(String name, long hospitalid) {
         boolean result = doctorManage.haveSameName(name, hospitalid);
-        if (!result) {
-            return true;
-        }
-        return false;
+
+        return result;
     }
 
 }

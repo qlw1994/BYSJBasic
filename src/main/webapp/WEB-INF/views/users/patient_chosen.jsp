@@ -15,19 +15,12 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-search clearfix">
-                <div class="caption">
-                    就诊人选择
-                </div>
                 <form class="form-inline" id="search-form">
-                    <%--<div class="form-group">--%>
-                    <%--<label>预约时间</label>--%>
-                    <%--<input type="text" id="appoint_date" autocomplete="off" readonly class="form-control"--%>
-                    <%--name="date" value="${sessionScope.nextdate}"/>--%>
-                    <%--</div>--%>
+
                     <div class="form-group">
                         <label for="patientname">就诊人名</label>
                         <div class="hospital_con">
-                            <input AUTOCOMPLETE="off" name="name" type="text" value="${patientname}" id="patientname"/>
+                            <input AUTOCOMPLETE="off" name="name" type="text"  id="patientname"/>
                             <ul class="list" id="patientList">
                             </ul>
                         </div>
@@ -35,8 +28,8 @@
                     <button type="submit" class="btn btn-info" id="search">查询</button>
 
                 </form>
-                <div class="actions" >
-                    <a style="margin-top: -4%;float: right" class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                <div class="actions"style="padding-top: 1.5%" >
+                    <a style="margin-top: -4%;float: right" class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal" > <i
                             class="iconfont">&#xe612;</i> <span class="hidden-480">添加就诊人</span>
                     </a>
                 </div>

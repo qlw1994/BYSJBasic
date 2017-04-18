@@ -31,7 +31,7 @@ public class HospitalController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listHospital(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "province", defaultValue = "") String province, @RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "area", defaultValue = "") String area) {
+    public Map<String, Object> listHospital(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,String province, String city, String area) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", hospitalManage.count(province, city, area));
@@ -247,7 +247,7 @@ public class HospitalController extends BaseController {
      */
     @RequestMapping(value = "/hasName", method = RequestMethod.POST)
     @ResponseBody
-    public boolean hasName(String name, @RequestParam(value = "province", defaultValue = "") String province, @RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "area", defaultValue = "") String area) {
+    public boolean hasName(String name, String province, String city,  String area) {
         boolean res = hospitalManage.haveSameName(name, province, city, area);
         return res;
     }
@@ -257,7 +257,7 @@ public class HospitalController extends BaseController {
      */
     @RequestMapping(value = "/reflashHospital")
     @ResponseBody
-    private Map<String, Object> reflashHospital() {
+    public  Map<String, Object> reflashHospital() {
         HospitalExample example = new HospitalExample();
         HospitalExample.Criteria criteria = example.createCriteria();
         Map<String, Object> result = new HashMap<>();

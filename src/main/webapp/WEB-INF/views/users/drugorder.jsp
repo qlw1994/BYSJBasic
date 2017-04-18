@@ -11,10 +11,10 @@
 
 <body>
 <h3 class="page-title">""</h3>
-<div class="row">
+<div class="row" style="background-color: white">
     <div class="col-md-12">
         <div class="portlet">
-            <div class="portlet-title" style="background-color: white">
+            <div class="portlet-title" >
                 <form class="form-inline" id="search-form">
                         <input type="hidden" name="patientid" value="${patientid}">
                         <input type="hidden" name="hospitalid" value="${hospitalid}">

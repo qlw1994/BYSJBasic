@@ -45,12 +45,12 @@ define(function (require, exports, module) {
 
         },
         bind: function () {
-            //页面到底部加载新数据
-            $(window).scroll(function () {
-                if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-                    fillPatientLike(0);
-                }
-            });
+            // //页面到底部加载新数据
+            // $(window).scroll(function () {
+            //     if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+            //         fillPatientLike(0);
+            //     }
+            // });
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();

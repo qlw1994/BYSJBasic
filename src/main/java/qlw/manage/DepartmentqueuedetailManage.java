@@ -87,6 +87,22 @@ public class DepartmentqueuedetailManage extends BaseManage {
     /**
      * 删除科室队列详情
      *
+     * @return
+     */
+    public boolean deleteAll() {
+        DepartmentqueuedetailExample example = new DepartmentqueuedetailExample();
+        DepartmentqueuedetailExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIsNotNull();
+        int i = departmentqueuedetailMapper.deleteByExample(example);
+        if (i > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 删除科室队列详情
+     *
      * @param patientid
      * @return
      */

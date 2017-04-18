@@ -15,9 +15,7 @@
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-search clearfix">
-                <div class="caption">
-                    就诊人选择
-                </div>
+
                 <form class="form-inline" id="search-form">
                     <%--<div class="form-group">--%>
                     <%--<label>预约时间</label>--%>
@@ -27,7 +25,7 @@
                     <div class="form-group">
                         <label for="patientname">就诊人名</label>
                         <div class="hospital_con">
-                            <input AUTOCOMPLETE="off" name="name" type="text" value="${patientname}" id="patientname"/>
+                            <input AUTOCOMPLETE="off" name="name" type="text"  id="patientname"/>
                             <ul class="list" id="patientList">
                             </ul>
                         </div>
@@ -209,7 +207,6 @@
 
 <content tag="jsconfig">
     <script type="text/javascript">
-        var currentpage = ${currentpage};
         var service="${service}";
         var uid =${sessionScope.user.id};
     </script>

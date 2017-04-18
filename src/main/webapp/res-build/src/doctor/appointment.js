@@ -131,6 +131,9 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if(newData.data[i].serialnumber==null){
+                                newData.data[i].serialnumber="未取号";
+                            }
                         });
                         tool.stopPageLoading();
                         $appointmentList.find(".page-info-num").text(res.data.length);

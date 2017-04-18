@@ -45,7 +45,18 @@ public class DoctorManage extends BaseManage {
         }
         return doctors;
     }
-
+    /**
+     * 所有医生列表
+     *
+     * @return
+     */
+    public List<Doctor> listAll() {
+        DoctorExample example = new DoctorExample();
+        DoctorExample.Criteria criteria = example.createCriteria();
+        criteria.andDeletedateIsNull();
+        List<Doctor> doctors = doctorExMapper.selectByExample(example);
+        return doctors;
+    }
     /**
      * 医生列表 按科室
      *

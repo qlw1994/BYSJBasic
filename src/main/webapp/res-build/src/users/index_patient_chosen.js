@@ -41,12 +41,6 @@ define(function (require, exports, module) {
 
         },
         bind: function () {
-            //页面到底部加载新数据
-            $(window).scroll(function () {
-                if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-                    fillPatientLike(0);
-                }
-            });
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();
@@ -251,9 +245,9 @@ define(function (require, exports, module) {
     }
 
     function fillPatient(reset) {
-        if (reset == 1) {
+
             currentpage = 1;
-        }
+
         $.ajax({
             url: ROOTPAth + '/user/patients/list',
             type: 'POST',
@@ -273,32 +267,17 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
-                    if (res.code == 1) {
-                        var newData = $.extend({}, res);
-                        $.each(newData.data, function (i, val) {
-                            newData.data[i].currentpage = currentpage;
-                        });
-                        if (reset == 1) {
-                            $divpatients.empty();
-                            $divpatients.append(listTpl.render(newData));
-                        }
-                        else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
-                            Toast("没有更多数据了", 2000);
-                        }
-                        else {
-                            $divpatients.append(listTpl.render(newData));
-                            currentpage = currentpage * 1 + 1;
-                        }
-                    }
+                    $divpatients.empty();
+                    $divpatients.append(listTpl.render(newData));
                 }
             }
         });
     }
 
     function fillPatientLike(reset) {
-        if (reset == 1) {
+
             currentpage = 1;
-        }
+
         $.ajax({
             url: ROOTPAth + '/user/patients/listPatientLike',
             type: 'POST',
@@ -317,22 +296,14 @@ define(function (require, exports, module) {
                     $.each(newData.data, function (i, val) {
                         newData.data[i].currentpage = currentpage;
                     });
+
                     if (res.code == 1) {
                         var newData = $.extend({}, res);
                         $.each(newData.data, function (i, val) {
                             newData.data[i].currentpage = currentpage;
                         });
-                        if (reset == 1) {
-                            $divpatients.empty();
-                            $divpatients.append(listTpl.render(newData));
-                        }
-                        else if (res.total <= pagelength || currentpage * 1 * pagelength >= res.total) {
-                            Toast("没有更多数据了", 2000);
-                        }
-                        else {
-                            $divpatients.append(listTpl.render(newData));
-                            currentpage = currentpage * 1 + 1;
-                        }
+                        $divpatients.empty();
+                        $divpatients.append(listTpl.render(newData));
                     }
                 }
             }

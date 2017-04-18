@@ -30,11 +30,11 @@ public class AlipayaccountController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listAlipayaccount(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,String hospitalname, HttpServletRequest request) {
+    public Map<String, Object> listAlipayaccount(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String hospitalname, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             result.put("total", alipayaccountManage.count(hospitalname));
-            result.put("data", alipayaccountManage.list(page, length,hospitalname));
+            result.put("data", alipayaccountManage.list(page, length, hospitalname));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -71,7 +71,12 @@ public class AlipayaccountController extends BaseController {
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "添加成功";
         try {
-            alipayaccountManage.save(alipayaccount);
+            if (alipayaccountManage.hasAlipay(alipayaccount.getHospitalid())) {
+                rtnMsg = "该医院已有支付宝记录";
+                rtnCode = ResultCode.ERROR;
+            } else {
+                alipayaccountManage.save(alipayaccount);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             rtnMsg = "添加失败";
@@ -99,6 +104,7 @@ public class AlipayaccountController extends BaseController {
         }
         return null;
     }
+
     /**
      * 支付宝账号查询  支付宝账号名称  医院编号
      *
@@ -107,14 +113,15 @@ public class AlipayaccountController extends BaseController {
      */
     @RequestMapping(value = "alipayaccountInfoByName")
     @ResponseBody
-    public Alipayaccount getAlipayaccountInfoByName(String name,Long hospitalid) {
+    public Alipayaccount getAlipayaccountInfoByName(String name, Long hospitalid) {
         try {
-            return alipayaccountManage.getByName(name,hospitalid);
+            return alipayaccountManage.getByName(name, hospitalid);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
     /**
      * 修改支付宝账号
      *
@@ -169,7 +176,7 @@ public class AlipayaccountController extends BaseController {
      */
     @RequestMapping(value = "/hasAlipay", method = RequestMethod.POST)
     @ResponseBody
-    public boolean hasSameName( long hospitalid) {
+    public boolean hasSameName(long hospitalid) {
         boolean res = alipayaccountManage.hasAlipay(hospitalid);
         return !res;
     }
@@ -182,9 +189,9 @@ public class AlipayaccountController extends BaseController {
      */
     @RequestMapping(value = "/hasName", method = RequestMethod.POST)
     @ResponseBody
-    public boolean hasName(String name,long hospitalid)
-    {
+    public boolean hasName(String name, long hospitalid) {
         boolean res = alipayaccountManage.haveSameName(name, hospitalid);
         return res;
     }
+
 }

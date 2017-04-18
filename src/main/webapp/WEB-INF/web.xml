@@ -83,6 +83,36 @@
     <url-pattern>/userindex/*</url-pattern>
   </filter-mapping>
 
+
+  <servlet>
+    <servlet-name>TimerManager</servlet-name>
+    <servlet-class>qlw.timeTask.TimerManager</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>TimerManagerAM</servlet-name>
+    <servlet-class>qlw.timeTask.TimerManagerAM</servlet-class>
+    <load-on-startup>3</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>TimerManagerPM</servlet-name>
+    <servlet-class>qlw.timeTask.TimerManagerPM</servlet-class>
+    <load-on-startup>4</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TimerManager</servlet-name>
+    <url-pattern>/task</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TimerManagerAM</servlet-name>
+    <url-pattern>/taskAM</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TimerManagerPM</servlet-name>
+    <url-pattern>/taskPM</url-pattern>
+  </servlet-mapping>
+
+
   <servlet>
     <servlet-name>springServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

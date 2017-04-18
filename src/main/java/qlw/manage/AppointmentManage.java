@@ -254,13 +254,15 @@ public class AppointmentManage extends BaseManage {
     /**
      * 按医院清理当日过期 预约
      *
-     * @param hospital
+     * @param hospitalid
      * @return
      */
-    public Appointment clearAppointrment(Long hospital, int timeflag) {
+    public Appointment clearAppointrment(Long hospitalid, int timeflag) {
         AppointmentExample example = new AppointmentExample();
         AppointmentExample.Criteria criteria = example.createCriteria();
-        criteria.andHospitalidEqualTo(hospital);
+        if (hospitalid != null) {
+            criteria.andHospitalidEqualTo(hospitalid);
+        }
         String dateStr = MyUtils.SIMPLE_DATE_FORMAT.format(new Date());
         criteria.andDateEqualTo(dateStr);
         criteria.andTimeflagEqualTo(timeflag);

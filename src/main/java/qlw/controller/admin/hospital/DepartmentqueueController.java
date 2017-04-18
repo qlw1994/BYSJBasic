@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import qlw.controller.BaseController;
 import qlw.manage.DepartmentManage;
 import qlw.manage.DepartmentqueueManage;
+import qlw.manage.DepartmentqueuedetailManage;
 import qlw.manage.HospitalManage;
 import qlw.model.Department;
 import qlw.model.Departmentqueue;
@@ -28,6 +29,8 @@ public class DepartmentqueueController extends BaseController {
     DepartmentManage departmentManage;
     @Autowired
     HospitalManage hospitalManage;
+    @Autowired
+    DepartmentqueuedetailManage departmentqueuedetailManage;
 
     /**
      * 科室队列需每日重置
@@ -42,6 +45,7 @@ public class DepartmentqueueController extends BaseController {
         departmentqueue.setTodaytotal(0);
         try {
             departmentqueueManage.resetQueue(departmentqueue);
+            departmentqueuedetailManage.deleteAll();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

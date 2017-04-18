@@ -56,14 +56,14 @@
                                 <label class="col-md-3 control-label">医院</label>
                                 <div class="col-md-8">
                                     <input type="hidden" name="hospitalid">
-                                    <input type="text"  AUTOCOMPLETE="off" name="hospitalname" value="${sessionScope.doctor.hospitalname}" disabled="disabled">
+                                    <input type="text"  AUTOCOMPLETE="off"  class="form-control"name="hospitalname" value="${sessionScope.doctor.hospitalname}" disabled="disabled">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">科室</label>
                                 <div class="col-md-8">
                                     <input type="hidden" name="departmentid">
-                                    <input type="text"  AUTOCOMPLETE="off" name="departmentname"  disabled="disabled" value="${sessionScope.doctor.departmentname}" >
+                                    <input type="text"  AUTOCOMPLETE="off" class="form-control"name="departmentname"  disabled="disabled" value="${sessionScope.doctor.departmentname}" >
                                     <ul class="list" id="mod_departmentList">
                                     </ul>
                                 </div>

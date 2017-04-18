@@ -28,15 +28,17 @@
                         <label>区县</label>
                         <select id="area" class="form-control" name="area"></select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label for="hospitalname"> 医院</label>
                         <div class="hospital_con">
-                            <input AUTOCOMPLETE="off" type="text" value="${hospitalname}" id="hospitalname"/>
+                            <input AUTOCOMPLETE="off" type="text" id="hospitalname" style="width:150%;"/>
                             <ul class="list" id="hospitalList">
                             </ul>
                         </div>
                     </div>
+                    <div class="form-group"style="padding-left: 8%"  >
                     <button type="submit" class="btn btn-info" id="search">查询</button>
+                    </div>
                 </form>
 
             </div>
@@ -50,7 +52,7 @@
 
 <content tag="jsconfig">
     <script type="text/javascript">
-        var currentpage = ${currentpage};
+         var currentpage = ${currentpage};
     </script>
     <script type="text/javascript"
             src="${ctx}/res-build/res/province-city-area-selector/PCASClass.js"></script>

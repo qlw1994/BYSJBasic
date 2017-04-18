@@ -18,5 +18,5 @@ define(function (require, exports, module) {
             }
         })
     };
-    setInterval(gerQueue(), 3000);  //每隔3秒循环执行过程函数！
+    setInterval(gerQueue(), 5000);  //每隔5秒循环执行过程函数！
 })

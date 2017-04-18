@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var addFormValidate;
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="6" style="text-align:center">',
             '暂无记录,请添加',
@@ -101,7 +101,7 @@ define(function (require, exports, module) {
 
                         console.log(res);
                         tool.stopPageLoading();
-                        if (res.code === 1) {
+                        if (res.code == 1) {
                             var newData = $.extend({}, res);
                             $.each(newData.data, function (i, val) {
 
@@ -152,6 +152,51 @@ define(function (require, exports, module) {
             $("#search").on('click', function (event) {
                 event.preventDefault();
                 get_search($searchHospital.val());
+                $.ajax( {
+                    url: ROOTPAth + '/admin/alipayaccounts/list',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        length: pagelength,
+                        hospitalname: $("#search_hospitalname").val(),
+                        page:1
+                    },
+                    success: function (res) {
+
+                        console.log(res);
+                        tool.stopPageLoading();
+                        if (res.code == 1) {
+                            var newData = $.extend({}, res);
+                            $.each(newData.data, function (i, val) {
+
+                                newData.data[i].currentpage = pageIndex.current;
+
+                                if (!newData.data[i].accountname) {
+                                    newData.data[i].accountname = ""
+                                }
+                                if (!newData.data[i].pid) {
+                                    newData.data[i].pid = ""
+                                }
+                                if (!newData.data[i].appid) {
+                                    newData.data[i].appid = ""
+                                }
+                            });
+
+                            $alipayList.find(".page-info-num").text(res.total);
+                            $table.find("tbody").empty().append(listTpl.render(newData));
+                        }
+                        //删除权限
+                        $table.find(".j-del").confirmation({
+                            title: "确定删除该记录吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.deleteAlipay($(element));
+                            }
+                        });
+                    }
+                })
             });
             //添加模块绑定 下拉框
             $("#add_hospitalname").keyup(function (e) {
@@ -161,7 +206,9 @@ define(function (require, exports, module) {
             }).focus(function () {
                 this.select();
             });
-
+            // $("#add_hospitalname").bind("input onpropertychange",function () {
+            //     $AlipayForm.validate().element("hospitalname");
+            // })
             //分页，修改每页显示数据
             $alipayList.on("change", ".j-length", function () {
                 var $this = $(this);
@@ -227,16 +274,18 @@ define(function (require, exports, module) {
                 $modifyModal.find("input[name=hospitalname]").prop("disabled", true);
             });
             //表单验证-添加支付宝帐号
-            addFormValidate = $AlipayForm.validate({
+           $AlipayForm.validate({
                 rules: {
                     hospitalname: {
                         required: true,
                         remote: {
-                            url: ROOTPAth + "/admin/hospitals/hasname",
+                            url: ROOTPAth + "/admin/hospitals/hasName",
                             type: "POST",
                             dataType: "JSON",
                             data: {
-                                name: $("#add_hospitalname").val()
+                                name: function () {
+                                    return $("#add_hospitalname").val()
+                                }
                             }
                         }
                     },
@@ -268,18 +317,15 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                // //focusInvalid: false, // do not focus the last invalid input
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
-
                 success: function (label) {
                     label.closest('.form-group').removeClass('has-error');
                     label.remove();
                 },
                 errorPlacement: function (error, element) {
-                    console.log("element" + element.val() + ' | ' + (element)[0].tagName + ' | ' + element.attr('name'));
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
@@ -295,7 +341,7 @@ define(function (require, exports, module) {
                         success: function (data) {
                             console.log(data);
                             tool.stopPageLoading();
-                            if (data.code === '1') {
+                            if (data.code == '1') {
                                 $addModal.modal("hide");
                                 $addRoletipModal.find(".dialogtip-msg").html("数据添加成功");
                                 $addRoletipModal.modal('show');
@@ -338,17 +384,10 @@ define(function (require, exports, module) {
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
-                // //focusInvalid: false, // do not focus the last invalid input
-
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    //	                $('.alert-danger', $('.login-form')).show();
-                },
                 highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
-
                 success: function (label) {
                     label.closest('.form-group').removeClass('has-error');
                     label.remove();
@@ -361,7 +400,7 @@ define(function (require, exports, module) {
                     var updatePath = ROOTPAth + '/admin/alipayaccounts/updateAlipayaccount';
 
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
-                        if (data.code === '1') {
+                        if (data.code == '1') {
                             $modifyModal.modal('hide');
                             $addRoletipModal.find(".dialogtip-msg").html("数据修改成功");
                             $addRoletipModal.modal('show');
@@ -378,7 +417,7 @@ define(function (require, exports, module) {
 
         }, deleteAlipay: function ($that) {
             var id = $that.data("id");
-            var delPath = ROOTPAth + '/admin/alipayaccounts/deleteAlipayaccount/' + id;
+            var delPath = ROOTPAth + '/admin/alipayaccounts/delAlipayaccount/' + id;
             $.ajax({
                 url: delPath,
                 type: "POST",
@@ -401,7 +440,7 @@ define(function (require, exports, module) {
                 },
                 success: function (data) {
                     data = data.data;
-                    var $list = $(obj).next(".list");
+                    var $list = $("#add_hospitals");
                     $list.show();
                     $list.html("");
                     $.each(data, function (index, el) {
@@ -424,8 +463,8 @@ define(function (require, exports, module) {
                     $($list).find("li").click(function (event) {
                         $(obj).val($(this).text());
                         if ($list.attr("id") != "undefined") {
-                            $ModifyForm.find("input[name=hospitalid]").val($(this).data("id"));
-                            $ModifyForm.validate().element($(obj));
+                            $AlipayForm.find("input[name=hospitalid]").val($(this).data("id"));
+                            $AlipayForm.validate().element($(obj));
                         }
                         $list.hide();
                     });

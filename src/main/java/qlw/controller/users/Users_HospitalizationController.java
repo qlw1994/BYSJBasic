@@ -77,7 +77,7 @@ public class Users_HospitalizationController extends BaseController {
         ModelAndView mv = new ModelAndView("users/index_patient_chosen");
         Users users = (Users) request.getSession().getAttribute("user");
         request.getSession().setAttribute("uid", users.getId());
-        request.setAttribute("service","hospitalizations/index");
+        request.setAttribute("service","user/hospitalizations/index");
         return mv;
     }
 

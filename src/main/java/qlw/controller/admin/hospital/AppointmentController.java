@@ -347,6 +347,28 @@ public class AppointmentController extends BaseController {
     }
 
     /**
+     * 修改预约状态   清理当日过期 预约
+     *
+     * @return
+     */
+    @RequestMapping(value = "clearAppointment", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> clearAppointment(Long hospitalid, int timeflag) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "修改预约状态成功";
+        try {
+            appointmentManage.clearAppointrment(hospitalid, timeflag);
+        } catch (Exception e) {
+            e.printStackTrace();
+            rtnMsg = "修改预约状态失败";
+            rtnCode = ResultCode.ERROR;
+        }
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
+    }
+    /**
      * 修改预约状态
      *
      * @return

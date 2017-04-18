@@ -118,7 +118,7 @@
                                     <input AUTOCOMPLETE="off" type="text" class="form-control" name="hospitalname"
                                            id="add_hospitalname"
                                            placeholder="医院名称">
-                                    <ul clas="list" id="add_hospitals">
+                                    <ul class="list" id="add_hospitals">
 
                                     </ul>
                                 </div>

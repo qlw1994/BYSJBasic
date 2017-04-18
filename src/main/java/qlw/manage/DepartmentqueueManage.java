@@ -100,6 +100,8 @@ public class DepartmentqueueManage extends BaseManage {
         return departmentqueueExMapper.updateByExample(departmentqueue, example);
     }
 
+
+
     /**
      * 删除科室队列
      *
