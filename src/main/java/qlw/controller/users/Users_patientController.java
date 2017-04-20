@@ -119,9 +119,14 @@ public class Users_patientController extends BaseController {
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "添加成功";
         try {
+            //判断该就诊人是否已经在其他用户中建档
             if (!hasSameName(patienttable, request)) {
-                rtnMsg = "存在相同的就诊人";
-                rtnCode = ResultCode.ERROR;
+                rtnMsg = "该就诊人已经建档";
+                //判断该就诊人是否已经在用户名下
+                if (!hasPatient(patienttable, request)) {
+                    patientManage.save(patienttable);
+                }
+                rtnCode = ResultCode.SUCCESS;
             } else {
                 Patient patient = patientManage.getByName(patienttable.getName(), (Long) request.getSession().getAttribute("uid"));
                 if (patient != null) {
@@ -222,8 +227,19 @@ public class Users_patientController extends BaseController {
     public boolean hasSameName(Patient patient, HttpServletRequest request) {
         Users users = (Users) request.getSession().getAttribute("user");
         long uid = users.getId();
-        boolean flag = patientManage.haveSameName(patient.getName(), patient.getIdnumber(), patient.getGuardianidnumber(), uid);
+        boolean flag = patientManage.haveSameName(patient.getName(), patient.getIdnumber(), patient.getGuardianidnumber());
         return !flag;
     }
-
+    /**
+     * 该用户下就诊人是否存在
+     *
+     * @param patient
+     * @return 存在false 否则true
+     */
+    @RequestMapping(value = "/hasPatient", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean hasPatient(Patient patient, HttpServletRequest request) {
+        boolean flag = patientManage.hasPatient(patient.getName(), patient.getIdnumber(), patient.getGuardianidnumber(), patient.getUid());
+        return !flag;
+    }
 }

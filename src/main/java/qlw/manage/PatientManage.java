@@ -23,13 +23,15 @@ public class PatientManage extends BaseManage {
     public List<Patient> list(Integer pageNumber, Integer pageSize, long uid) {
         PatientExample example = new PatientExample();
         if (pageNumber != null && pageSize != null) {
-        example.setOrderByClause(getPage("id desc", pageNumber, pageSize));}
+            example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
+        }
         PatientExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uid);
         criteria.andDeletedateIsNull();
         return patientMapper.selectByExample(example);
     }
-    public List<Patient> listAll( long uid) {
+
+    public List<Patient> listAll(long uid) {
         PatientExample example = new PatientExample();
         PatientExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uid);
@@ -72,7 +74,7 @@ public class PatientManage extends BaseManage {
     public List<Patient> getLike(Integer pageNumber, Integer pageSize, String name, long uid) {
         PatientExample example = new PatientExample();
         PatientExample.Criteria criteria = example.createCriteria();
-        if(pageNumber!=null&&pageSize!=null){
+        if (pageNumber != null && pageSize != null) {
             example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         }
         name = name + "%";
@@ -114,14 +116,40 @@ public class PatientManage extends BaseManage {
      * @param name
      * @return
      */
-    public Boolean haveSameName(String name, String idnumber, String guardianidnumber, long uid) {
+    public Boolean haveSameName(String name, String idnumber, String guardianidnumber) {
         PatientExample example = new PatientExample();
         PatientExample.Criteria criteria = example.createCriteria();
         criteria.andNameEqualTo(name);
-        if (idnumber != null && !"".equals(idnumber)){
+        if (idnumber != null && !"".equals(idnumber)) {
             criteria.andIdnumberEqualTo(idnumber);
         }
-        if (guardianidnumber != null && !"".equals(guardianidnumber)){
+        if (guardianidnumber != null && !"".equals(guardianidnumber)) {
+            criteria.andGuardianidnumberEqualTo(guardianidnumber);
+        }
+        //if (uid != null) {
+        //    criteria.andUidEqualTo(uid);
+        //}
+        List<Patient> patient = patientMapper.selectByExample(example);
+        if (patient.size() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 检查该用户下就诊人是否存在
+     *
+     * @param name
+     * @return
+     */
+    public Boolean hasPatient(String name, String idnumber, String guardianidnumber, Long uid) {
+        PatientExample example = new PatientExample();
+        PatientExample.Criteria criteria = example.createCriteria();
+        criteria.andNameEqualTo(name);
+        if (idnumber != null && !"".equals(idnumber)) {
+            criteria.andIdnumberEqualTo(idnumber);
+        }
+        if (guardianidnumber != null && !"".equals(guardianidnumber)) {
             criteria.andGuardianidnumberEqualTo(guardianidnumber);
         }
         criteria.andUidEqualTo(uid);
@@ -131,7 +159,6 @@ public class PatientManage extends BaseManage {
         }
         return true;
     }
-
 
     /**
      * 根据id获取就诊人
@@ -168,8 +195,6 @@ public class PatientManage extends BaseManage {
         }
         return false;
     }
-
-
 
 
     /**
