@@ -45,6 +45,7 @@ public class DoctorManage extends BaseManage {
         }
         return doctors;
     }
+
     /**
      * 所有医生列表
      *
@@ -57,6 +58,7 @@ public class DoctorManage extends BaseManage {
         List<Doctor> doctors = doctorExMapper.selectByExample(example);
         return doctors;
     }
+
     /**
      * 医生列表 按科室
      *
@@ -475,6 +477,14 @@ public class DoctorManage extends BaseManage {
      * @return
      */
     public Integer updateDoctor(Doctor doctor) {
+        if (doctor.getHeadpath() != null) {
+            DoctorExample example = new DoctorExample();
+            DoctorExample.Criteria criteria = example.createCriteria();
+            criteria.andIdEqualTo(doctor.getId());
+            Doctor doctor1 = doctorExMapper.selectByPrimaryKey(doctor.getId());
+            doctor1.setHeadpath(null);
+            doctorExMapper.updateByExample(doctor1, example);
+        }
         return doctorExMapper.updateByPrimaryKeySelective(doctor);
     }
 
@@ -507,6 +517,7 @@ public class DoctorManage extends BaseManage {
         }
         return null;
     }
+
     /**
      * 保存后台用户
      *
@@ -520,6 +531,7 @@ public class DoctorManage extends BaseManage {
         }
         return null;
     }
+
     /**
      * 检查旧密码是否相同
      *

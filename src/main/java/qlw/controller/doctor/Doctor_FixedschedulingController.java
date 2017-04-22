@@ -165,6 +165,7 @@ public class Doctor_FixedschedulingController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        targetFile.delete();
         result.put("message", rtnMsg);
         result.put("code", rtnCode);
         return result;

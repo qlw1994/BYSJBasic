@@ -23,7 +23,7 @@ define(function (require, exports, module) {
             '{@each data as item,index}',
             '<div class="col-md-4 col-sm-6 item">',
             '<div class="thumbnail">',
-            '<img  class="img-thumbnail" width="140px" height="140px" src="${ctx}/res-build/img/user.jpg" alt="${item.name}">',
+            '<img  class="img-thumbnail"  style="width: 140px;height: 140px" src="${ctx}/res-build/img/user.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
             '<p>证件号码：&nbsp;${item.idnumber}</p>',

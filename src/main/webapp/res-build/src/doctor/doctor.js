@@ -25,16 +25,16 @@ define(function (require, exports, module) {
             this.bind();
         },
         bind: function () {
-            $("#resetPassword").confirmation({
-                title: "确定重置密码吗？",
-                btnOkLabel: "确定",
-                btnCancelLabel: "取消",
-                onConfirm: function (event, element) {
-                    event.preventDefault();
-                    self.resetPWD($(element));
-                }
-
-            });
+            // $("#resetPassword").confirmation({
+            //     title: "确定重置密码吗？",
+            //     btnOkLabel: "确定",
+            //     btnCancelLabel: "取消",
+            //     onConfirm: function (event, element) {
+            //         event.preventDefault();
+            //         self.resetPWD($(element));
+            //     }
+            //
+            // });
             var self = this;
             //我要编辑
             $DoctorForm.on("click", ".j-form-edit", function (event) {
@@ -53,23 +53,39 @@ define(function (require, exports, module) {
                     $DoctorForm.find(".j-form-save").hide();
             }
             )
-            //修改表单中科室列表
-            $DoctorForm.find("input[name=departmentname]").keyup(function (e) {
-                if (e.keyCode != 40 && e.keyCode != 38) {
-                    get_department_modModel($DoctorForm.find("input[name=departmentname]"));
-                }
-            }).focus(function () {
-                this.select();
+            // //修改表单中科室列表
+            // $DoctorForm.find("input[name=departmentname]").keyup(function (e) {
+            //     if (e.keyCode != 40 && e.keyCode != 38) {
+            //         get_department_modModel($DoctorForm.find("input[name=departmentname]"));
+            //     }
+            // }).focus(function () {
+            //     this.select();
+            // });
+            //图片变动随时验证
+            $("#headpath").bind("input onpropertychange" ,function () {
+                $DoctorForm.validate().element($("#headpath"));
             });
             //自定义验证大于0方法
             $.validator.addMethod("isPositive", function (value, element) {
                 var score = /^[0-9]*$/;
                 return score.test(value)&&value!=0;
             }, $.validator.format("请输入正确的年龄!"));
+            //判断图片大小
+            $.validator.addMethod("checkPicSize", function(value,element) {
+                var size  = $("#headpath")[0].files[0].size;
+                var maxSize = 1*1024*1024;
+                if(size > maxSize){
+                    return false;
+                }else{
+                    return true;
+                }
+            }, "请上传大小在1M以下的图片");
             //表单验证-修改用户
             $DoctorForm.validate({
                 rules: {
-
+                    file:{
+                        checkPicSize:true
+                    },
                     name: "required",
                     password: "required",
                     password_again: {
@@ -146,21 +162,44 @@ define(function (require, exports, module) {
 
 
                     var updatePath = ROOTPAth + '/doctor/doctors/modDoctor';
-                    $.post(updatePath, $DoctorForm.serialize(), function (data) {
-                        if (data.code === 1) {
-                            $('#modifyModal').modal('hide');
-                            $addRoletipModal.find(".dialogtip-msg").html("账号修改成功");
-                            $addRoletipModal.modal('show');
-                            $DoctorForm.find("input").prop("disabled", true);
-                            $DoctorForm.find("textarea").prop("disabled", true);
-                            $DoctorForm.find("select").prop("disabled", true);
-                            pageIndex.reset();
+                    var formData = new FormData($("#vDoctorForm")[0]);
+                    $.ajax({
+                        url:updatePath,
+                        type:"post",
+                        dataType:"JSON",
+                        data:formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success:function (data) {
+                            if (data.code == 1) {
+                                $('#modifyModal').modal('hide');
+                                $addRoletipModal.find(".dialogtip-msg").html("账号修改成功");
+                                $addRoletipModal.modal('show');
+                                $DoctorForm.find("input").prop("disabled", true);
+                                $DoctorForm.find("textarea").prop("disabled", true);
+                                $DoctorForm.find("select").prop("disabled", true);
+                            }
+                            else {
+                                $("#ajax_fail").find("h4").html(data.message);
+                                $("#ajax_fail").modal("show")
+                            }
                         }
-                        else {
-                            $("#ajax_fail").find("h4").html(data.message);
-                            $("#ajax_fail").modal("show")
-                        }
-                    });
+                    })
+                    // $.post(updatePath, formData, function (data) {
+                    //     if (data.code == 1) {
+                    //         $('#modifyModal').modal('hide');
+                    //         $addRoletipModal.find(".dialogtip-msg").html("账号修改成功");
+                    //         $addRoletipModal.modal('show');
+                    //         $DoctorForm.find("input").prop("disabled", true);
+                    //         $DoctorForm.find("textarea").prop("disabled", true);
+                    //         $DoctorForm.find("select").prop("disabled", true);
+                    //     }
+                    //     else {
+                    //         $("#ajax_fail").find("h4").html(data.message);
+                    //         $("#ajax_fail").modal("show")
+                    //     }
+                    // });
 
                 }
             });
@@ -194,52 +233,52 @@ define(function (require, exports, module) {
         })
     }
 
-    function get_department_modModel(obj) {
-        var t = setTimeout(function () {
-            $.ajax({
-                url: ROOTPAth + '/doctor/departments/listLike',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    hospitalid: hospitalid,
-                    name: $(obj).val()
-                },
-                success: function (data) {
-                    data = data.data;
-                    var $list = $("#mod_departmentList");
-                    $list.show();
-                    $list.html("");
-                    $.each(data, function (index, el) {
-                        var html = $("<li data-departmentid='" + el.id + "'>" + el.name + "</li>");
-                        $list.append(html);
-
-                    });
-                    if ($list.html() == "") {
-                        $list.hide();
-                    }
-                    $($list).find("li").hover(function () {
-
-                        $(this).addClass("esultDivLiHover");
-                    }, function () {
-                        $(this).removeClass("esultDivLiHover");
-                    });
-                    $list.mouseleave(function () {
-                        $list.hide();
-                    });
-                    $($list).find("li").click(function (event) {
-                        $(obj).val($(this).text());
-                        $DoctorForm.find("input[name=departmentid]").val($(this).data("departmentid"));
-                        $list.hide();
-                        $DoctorForm.validate().element($(obj));
-                    });
-                },
-                error: function (err) {
-                    $("#ajax_fail").find("h4").text("修改模块加载城市列表失败");
-                    $("#ajax_fail").modal("show")
-                }
-            });
-        }, 500);
-    }
+    // function get_department_modModel(obj) {
+    //     var t = setTimeout(function () {
+    //         $.ajax({
+    //             url: ROOTPAth + '/doctor/departments/listLike',
+    //             type: 'POST',
+    //             dataType: 'json',
+    //             data: {
+    //                 hospitalid: hospitalid,
+    //                 name: $(obj).val()
+    //             },
+    //             success: function (data) {
+    //                 data = data.data;
+    //                 var $list = $("#mod_departmentList");
+    //                 $list.show();
+    //                 $list.html("");
+    //                 $.each(data, function (index, el) {
+    //                     var html = $("<li data-departmentid='" + el.id + "'>" + el.name + "</li>");
+    //                     $list.append(html);
+    //
+    //                 });
+    //                 if ($list.html() == "") {
+    //                     $list.hide();
+    //                 }
+    //                 $($list).find("li").hover(function () {
+    //
+    //                     $(this).addClass("esultDivLiHover");
+    //                 }, function () {
+    //                     $(this).removeClass("esultDivLiHover");
+    //                 });
+    //                 $list.mouseleave(function () {
+    //                     $list.hide();
+    //                 });
+    //                 $($list).find("li").click(function (event) {
+    //                     $(obj).val($(this).text());
+    //                     $DoctorForm.find("input[name=departmentid]").val($(this).data("departmentid"));
+    //                     $list.hide();
+    //                     $DoctorForm.validate().element($(obj));
+    //                 });
+    //             },
+    //             error: function (err) {
+    //                 $("#ajax_fail").find("h4").text("修改模块加载城市列表失败");
+    //                 $("#ajax_fail").modal("show")
+    //             }
+    //         });
+    //     }, 500);
+    // }
 
     Utilitiy.init();
 });

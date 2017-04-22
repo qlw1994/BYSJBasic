@@ -30,7 +30,7 @@ public class Task extends TimerTask {
         hospitalController.reflashHospital();//刷新授权信息
         List<Doctor> doctors = doctorManage.listAll();
         for (Doctor d : doctors) {
-            schedulingController.generateSchedulingAddOne(d.getId(), d.getHospitalid(), d.getDepartmentid(), d.getLevel(), 50);
+            schedulingController.generateScheduling(d.getId(), d.getHospitalid(), d.getDepartmentid(), d.getLevel(), 50);
         }//号源日更新
         departmentqueueController.resetQueue();//刷新队列
 

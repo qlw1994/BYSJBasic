@@ -38,11 +38,17 @@
             <%--</div>--%>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" id="vDoctorForm">
+            <form class="form-horizontal" id="vDoctorForm" enctype="multipart/form-data" method="post">
 
                 <div class="modal-body">
                     <div class="portlet-body form j-disabled-item">
                         <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">医生头像</label>
+                                <div class="col-md-8">
+                                    <input id="headpath" type="file" name="file" disabled="disabled">
+                                </div>
+                            </div>
                             <input type="hidden" name="id" value="${sessionScope.doctor.id}">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">账号</label>
@@ -136,6 +142,7 @@
                                               name="resume"></textarea>
                                 </div>
                             </div>
+
                             <!-- END FORM-->
                         </div>
                     </div>
@@ -203,5 +210,7 @@
         var doctorid = ${sessionScope.doctor.id};
         var hospitalid="${sessionScope.doctor.hospitalid}"
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="doctor/doctor.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/imgLRZ/exif.js" ></script>
+    <script type="text/javascript" src="${ctx}/res-build/res/imgLRZ/lrz.js" ></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="doctor/doctor"></script>
 </content>

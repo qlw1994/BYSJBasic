@@ -38,7 +38,7 @@ define(function (require, exports, module) {
             '{@each data as item,index}',
             '<div  class="col-md-4 col-sm-6 item" style="padding-top: 1%">',
             '<div class="thumbnail">',
-            '<img class="img-thumbnail" width="250px" height="140px" src="${ctx}/res-build/img/hospital.jpg" alt="${item.name}">',
+            '<img class="img-thumbnail"  style="width: 250px;height: 250px" src="${ctx}/res-build/img/hospital.jpg" alt="${item.name}">',
             '<div class="caption">',
             '<h3>${item.name}</h3>',
             '<textarea style="resize:none" readonly  class="form-control" name="resume">${item.resume}</textarea>',

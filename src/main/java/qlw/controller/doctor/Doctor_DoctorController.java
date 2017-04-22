@@ -3,6 +3,7 @@ package qlw.controller.doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.DepartmentManage;
@@ -12,6 +13,7 @@ import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,12 +146,38 @@ public class Doctor_DoctorController extends BaseController {
      */
     @RequestMapping(value = "modDoctor", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateDoctor(Doctor doctors, HttpServletRequest request) {
+    public Map<String, Object> updateDoctor(Doctor doctors, MultipartFile file, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "修改成功";
 
         try {
+
+            String path = request.getSession().getServletContext().getRealPath("upload");
+            String fileName = String.valueOf(new Date().getTime()) + String.valueOf(doctors.getId()) + ".jpg";
+            File targetFile = new File(path, fileName);
+            Doctor doctor_headpath = doctorManage.getDoctorById(doctors.getId());
+            String old_headpath = doctor_headpath.getHeadpath();
+            //删除旧图像
+            if (old_headpath != null) {
+                String[] str=old_headpath.split("/");
+                old_headpath=str[str.length-1];
+                //old_headpath = old_headpath.replace("/", "\\\\");
+                File deleteFile = new File(path,old_headpath);
+                deleteFile.delete();
+            }
+            if (!targetFile.exists()) {
+                targetFile.mkdirs();
+            }
+            //保存
+            try {
+                file.transferTo(targetFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //String headpath = path + "\\" + fileName;
+            //headpath = headpath.replaceAll("\\\\", "/");
+            doctors.setHeadpath(("/upload/"+fileName));
             doctorManage.updateDoctor(doctors);
         } catch (Exception e) {
             e.printStackTrace();
@@ -259,6 +287,7 @@ public class Doctor_DoctorController extends BaseController {
         result.put("code", rtnCode);
         return result;
     }
+
     /**
      * 相似医生名称列表 按科室
      *
@@ -302,6 +331,7 @@ public class Doctor_DoctorController extends BaseController {
         result.put("code", ResultCode.SUCCESS);
         return result;
     }
+
     /**
      * 科室名称是否存在
      *
