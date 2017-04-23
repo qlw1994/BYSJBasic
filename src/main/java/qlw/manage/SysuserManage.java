@@ -118,6 +118,7 @@ public class SysuserManage extends BaseManage{
      * @param sysusers
      * @return
      */
+    @Transactional
     public Integer updateSysusers(Sysusers sysusers) {
         return sysusersMapper.updateByPrimaryKeySelective(sysusers);
     }
@@ -129,6 +130,7 @@ public class SysuserManage extends BaseManage{
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = sysusersMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -144,6 +146,7 @@ public class SysuserManage extends BaseManage{
      * @param sysusers
      * @return
      */
+    @Transactional
     public Sysusers save(Sysusers sysusers) {
         long i = sysusersMapper.insert(sysusers);
         if (i > 0) {

@@ -2,6 +2,7 @@ package qlw.controller.doctor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
@@ -102,6 +103,7 @@ public class Doctor_DrugorderController extends BaseController {
      */
     @RequestMapping(value = "newDrugorder")
     @ResponseBody
+    @Transactional
     public Map<String, Object> addDrugorder(Drugorder drugorder, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;

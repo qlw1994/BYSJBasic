@@ -52,6 +52,7 @@ public class InspectitemManage extends BaseManage{
      * @param inspectitems
      * @return
      */
+    @Transactional
     public Integer update(Inspectitems inspectitems) {
         return inspectitemsMapper.updateByPrimaryKeySelective(inspectitems);
     }
@@ -63,6 +64,7 @@ public class InspectitemManage extends BaseManage{
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = inspectitemsMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -78,6 +80,7 @@ public class InspectitemManage extends BaseManage{
      * @param cities
      * @return
      */
+    @Transactional
     public Inspectitems save(Inspectitems cities) {
         long i = inspectitemsMapper.insert(cities);
         if (i > 0) {

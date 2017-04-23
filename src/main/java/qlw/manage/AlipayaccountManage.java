@@ -110,6 +110,7 @@ public class AlipayaccountManage extends BaseManage {
      * @param alipayaccount
      * @return
      */
+    @Transactional
     public Integer update(Alipayaccount alipayaccount) {
         return alipayaccountMapper.updateByPrimaryKeySelective(alipayaccount);
     }
@@ -121,6 +122,7 @@ public class AlipayaccountManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = alipayaccountMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -136,6 +138,7 @@ public class AlipayaccountManage extends BaseManage {
      * @param cities
      * @return
      */
+    @Transactional
     public Alipayaccount save(Alipayaccount cities) {
         long i = alipayaccountMapper.insert(cities);
         if (i > 0) {

@@ -83,6 +83,7 @@ public class DepartmentqueueManage extends BaseManage {
      * @param departmentqueue
      * @return
      */
+    @Transactional
     public Integer update(Departmentqueue departmentqueue) {
         return departmentqueueExMapper.updateByPrimaryKeySelective(departmentqueue);
     }
@@ -93,6 +94,7 @@ public class DepartmentqueueManage extends BaseManage {
      * @param departmentqueue
      * @return
      */
+    @Transactional
     public Integer resetQueue(Departmentqueue departmentqueue) {
         DepartmentqueueExample example = new DepartmentqueueExample();
         DepartmentqueueExample.Criteria criteria = example.createCriteria();
@@ -108,6 +110,7 @@ public class DepartmentqueueManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = departmentqueueExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -122,6 +125,7 @@ public class DepartmentqueueManage extends BaseManage {
      * @param hospitalid
      * @return
      */
+    @Transactional
     public boolean deleteByHospitalid(Long hospitalid) {
         DepartmentqueueExample example = new DepartmentqueueExample();
         DepartmentqueueExample.Criteria criteria = example.createCriteria();
@@ -139,6 +143,7 @@ public class DepartmentqueueManage extends BaseManage {
      * @param cities
      * @return
      */
+    @Transactional
     public Departmentqueue save(Departmentqueue cities) {
         long i = departmentqueueExMapper.insert(cities);
         if (i > 0) {

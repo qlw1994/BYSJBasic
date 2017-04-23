@@ -193,6 +193,7 @@ public class InspectionreportManage extends BaseManage {
      * @param inspectionreport
      * @return
      */
+    @Transactional
     public Integer update(Inspectionreport inspectionreport) {
         return inspectionreportExMapper.updateByPrimaryKeySelective(inspectionreport);
     }
@@ -204,6 +205,7 @@ public class InspectionreportManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = inspectionreportExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -219,6 +221,7 @@ public class InspectionreportManage extends BaseManage {
      * @param inspectionreport
      * @return
      */
+    @Transactional
     public Inspectionreport save(Inspectionreport inspectionreport) {
         long i = inspectionreportExMapper.insert(inspectionreport);
         if (i > 0) {
@@ -233,6 +236,7 @@ public class InspectionreportManage extends BaseManage {
      * @param inspectionreport
      * @return
      */
+    @Transactional
     public Inspectionreport saveBackId(Inspectionreport inspectionreport) {
         long i = inspectionreportExMapper.insertBackId(inspectionreport);
         if (i > 0) {

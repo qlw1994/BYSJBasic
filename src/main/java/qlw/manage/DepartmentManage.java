@@ -155,6 +155,7 @@ public class DepartmentManage extends BaseManage {
      * @param department
      * @return
      */
+    @Transactional
     public Integer update(Department department) {
         return departmentExMapper.updateByPrimaryKeySelective(department);
     }
@@ -166,6 +167,7 @@ public class DepartmentManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = departmentExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -181,6 +183,7 @@ public class DepartmentManage extends BaseManage {
      * @param department
      * @return
      */
+    @Transactional
     public Department save(Department department) {
         long i = departmentExMapper.insert(department);
         if (i > 0) {
@@ -195,6 +198,7 @@ public class DepartmentManage extends BaseManage {
      * @param department
      * @return
      */
+    @Transactional
     public Department saveBackId(Department department) {
         long i = departmentExMapper.insertBackId(department);
         if (i > 0) {

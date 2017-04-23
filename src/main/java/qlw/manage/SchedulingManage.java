@@ -198,6 +198,7 @@ public class SchedulingManage extends BaseManage {
      * @param scheduling
      * @return
      */
+    @Transactional
     public Integer update(Scheduling scheduling) {
         return schedulingExMapper.updateByPrimaryKeySelective(scheduling);
     }
@@ -209,6 +210,7 @@ public class SchedulingManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = schedulingExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -224,6 +226,7 @@ public class SchedulingManage extends BaseManage {
      * @param scheduling
      * @return
      */
+    @Transactional
     public Scheduling save(Scheduling scheduling) {
         long i = schedulingExMapper.insert(scheduling);
         if (i > 0) {
@@ -238,6 +241,7 @@ public class SchedulingManage extends BaseManage {
      * @param scheduling
      * @return
      */
+    @Transactional
     public Scheduling saveBackiId(Scheduling scheduling) {
         long i = schedulingExMapper.insertBackId(scheduling);
         if (i > 0) {

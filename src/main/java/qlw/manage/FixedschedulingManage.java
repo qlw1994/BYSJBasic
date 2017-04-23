@@ -85,6 +85,7 @@ public class FixedschedulingManage extends BaseManage {
      * @param fixedscheduling
      * @return
      */
+    @Transactional
     public Integer update(Fixedscheduling fixedscheduling) {
         return fixedschedulingMapper.updateByPrimaryKeySelective(fixedscheduling);
     }
@@ -96,6 +97,7 @@ public class FixedschedulingManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = fixedschedulingMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -110,6 +112,7 @@ public class FixedschedulingManage extends BaseManage {
      * @param doctorid
      * @return
      */
+    @Transactional
     public boolean deleteByDoctorid(Long doctorid) {
         FixedschedulingExample example = new FixedschedulingExample();
         FixedschedulingExample.Criteria criteria = example.createCriteria();
@@ -127,6 +130,7 @@ public class FixedschedulingManage extends BaseManage {
      * @param cities
      * @return
      */
+    @Transactional
     public Fixedscheduling save(Fixedscheduling cities) {
         long i = fixedschedulingMapper.insert(cities);
         if (i > 0) {

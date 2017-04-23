@@ -56,6 +56,7 @@ public class DrugorderdetailManage extends BaseManage {
      * @param drugorderdetail
      * @return
      */
+    @Transactional
     public Integer update(Drugorderdetail drugorderdetail) {
         return drugorderdetailExMapper.updateByPrimaryKeySelective(drugorderdetail);
     }
@@ -67,6 +68,7 @@ public class DrugorderdetailManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         paymentdetailManage.deleteByproject(id, 1);
         int i = drugorderdetailExMapper.deleteByPrimaryKey(id);
@@ -83,6 +85,7 @@ public class DrugorderdetailManage extends BaseManage {
      * @param drugdetail
      * @return
      */
+    @Transactional
     public Drugorderdetail save(Drugorderdetail drugdetail) {
         long i = drugorderdetailExMapper.insert(drugdetail);
         if (i > 0) {
@@ -97,6 +100,7 @@ public class DrugorderdetailManage extends BaseManage {
      * @param drugdetail
      * @return
      */
+    @Transactional
     public Drugorderdetail saveBackId(Drugorderdetail drugdetail) {
         long i = drugorderdetailExMapper.insertBackId(drugdetail);
         if (i > 0) {

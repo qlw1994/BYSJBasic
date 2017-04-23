@@ -192,6 +192,7 @@ public class CheckreportManage extends BaseManage {
      * @param checkreport
      * @return
      */
+    @Transactional
     public Integer update(Checkreport checkreport) {
         return checkreportMapper.updateByPrimaryKeySelective(checkreport);
     }
@@ -203,6 +204,7 @@ public class CheckreportManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = checkreportMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -218,6 +220,7 @@ public class CheckreportManage extends BaseManage {
      * @param checkreport
      * @return
      */
+    @Transactional
     public Checkreport save(Checkreport checkreport) {
         long i = checkreportMapper.insert(checkreport);
         if (i > 0) {

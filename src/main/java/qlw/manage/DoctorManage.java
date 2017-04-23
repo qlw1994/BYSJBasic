@@ -476,6 +476,7 @@ public class DoctorManage extends BaseManage {
      * @param doctor
      * @return
      */
+    @Transactional
     public Integer updateDoctor(Doctor doctor) {
         if (doctor.getHeadpath() != null) {
             DoctorExample example = new DoctorExample();
@@ -495,6 +496,7 @@ public class DoctorManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = doctorExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -510,6 +512,7 @@ public class DoctorManage extends BaseManage {
      * @param doctor
      * @return
      */
+    @Transactional
     public Doctor save(Doctor doctor) {
         long i = doctorExMapper.insert(doctor);
         if (i > 0) {
@@ -524,6 +527,7 @@ public class DoctorManage extends BaseManage {
      * @param doctor
      * @return
      */
+    @Transactional
     public Doctor saveBackId(Doctor doctor) {
         long i = doctorExMapper.insertBackId(doctor);
         if (i > 0) {

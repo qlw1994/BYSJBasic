@@ -131,6 +131,7 @@ public class DrugManage extends BaseManage{
      * @param drug
      * @return
      */
+    @Transactional
     public Integer update(Drug drug) {
         return drugMapper.updateByPrimaryKeySelective(drug);
     }
@@ -142,6 +143,7 @@ public class DrugManage extends BaseManage{
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = drugMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -157,6 +159,7 @@ public class DrugManage extends BaseManage{
      * @param drugs
      * @return
      */
+    @Transactional
     public Drug save(Drug drugs) {
         long i = drugMapper.insert(drugs);
         if (i > 0) {

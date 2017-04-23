@@ -115,6 +115,7 @@ public class UserManage extends BaseManage {
      * @param id
      * @return
      */
+
     public Users getUsersById(Long id) {
         return usersExMapper.selectByPrimaryKey(id);
     }
@@ -126,6 +127,7 @@ public class UserManage extends BaseManage {
      * @param users
      * @return
      */
+    @Transactional
     public Integer updateUsers(Users users) {
         return usersExMapper.updateByPrimaryKeySelective(users);
     }
@@ -137,6 +139,7 @@ public class UserManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = usersExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -152,6 +155,7 @@ public class UserManage extends BaseManage {
      * @param users
      * @return
      */
+    @Transactional
     public Users save(Users users) {
         long i = usersExMapper.insert(users);
         if (i > 0) {
@@ -166,6 +170,7 @@ public class UserManage extends BaseManage {
      * @param users
      * @return
      */
+    @Transactional
     public Users saveBackId(Users users) {
         long i = usersExMapper.insertBackId(users);
         if (i > 0) {

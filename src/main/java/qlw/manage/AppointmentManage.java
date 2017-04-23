@@ -194,6 +194,7 @@ public class AppointmentManage extends BaseManage {
      * @param appointment
      * @return
      */
+    @Transactional
     public Integer update(Appointment appointment) {
         return appointmentMapper.updateByPrimaryKeySelective(appointment);
     }
@@ -205,6 +206,7 @@ public class AppointmentManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = appointmentMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -220,6 +222,7 @@ public class AppointmentManage extends BaseManage {
      * @param appointment
      * @return
      */
+    @Transactional
     public Appointment save(Appointment appointment) {
         long i = appointmentMapper.insert(appointment);
         if (i > 0) {
@@ -257,6 +260,7 @@ public class AppointmentManage extends BaseManage {
      * @param hospitalid
      * @return
      */
+    @Transactional
     public Appointment clearAppointrment(Long hospitalid, int timeflag) {
         AppointmentExample example = new AppointmentExample();
         AppointmentExample.Criteria criteria = example.createCriteria();

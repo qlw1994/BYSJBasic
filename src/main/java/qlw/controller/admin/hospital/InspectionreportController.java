@@ -4,6 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -276,6 +277,7 @@ public class InspectionreportController {
      */
     @RequestMapping(value = "newInspectionreport", method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Map<String, Object> addCheckreport(Inspectionreport inspectionreport, MultipartFile file, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         //Integer rtnCode = ResultCode.SUCCESS;

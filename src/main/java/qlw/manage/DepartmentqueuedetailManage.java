@@ -65,6 +65,7 @@ public class DepartmentqueuedetailManage extends BaseManage {
      * @param drugorderdetail
      * @return
      */
+    @Transactional
     public Integer update(Departmentqueuedetail drugorderdetail) {
         return departmentqueuedetailMapper.updateByPrimaryKeySelective(drugorderdetail);
     }
@@ -76,6 +77,7 @@ public class DepartmentqueuedetailManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = departmentqueuedetailMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -89,6 +91,7 @@ public class DepartmentqueuedetailManage extends BaseManage {
      *
      * @return
      */
+    @Transactional
     public boolean deleteAll() {
         DepartmentqueuedetailExample example = new DepartmentqueuedetailExample();
         DepartmentqueuedetailExample.Criteria criteria = example.createCriteria();
@@ -106,6 +109,7 @@ public class DepartmentqueuedetailManage extends BaseManage {
      * @param patientid
      * @return
      */
+    @Transactional
     public boolean deleteByPatienid(Long patientid) {
         DepartmentqueuedetailExample example = new DepartmentqueuedetailExample();
         DepartmentqueuedetailExample.Criteria criteria = example.createCriteria();
@@ -124,6 +128,7 @@ public class DepartmentqueuedetailManage extends BaseManage {
      * @param departmentqueuedetail
      * @return
      */
+    @Transactional
     public Departmentqueuedetail save(Departmentqueuedetail departmentqueuedetail) {
         long i = departmentqueuedetailMapper.insert(departmentqueuedetail);
         if (i > 0) {

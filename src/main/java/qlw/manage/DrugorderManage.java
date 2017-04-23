@@ -162,6 +162,7 @@ public class DrugorderManage extends BaseManage {
      * @param drugorder
      * @return
      */
+    @Transactional
     public Integer update(Drugorder drugorder) {
         return drugorderExMapper.updateByPrimaryKeySelective(drugorder);
     }
@@ -173,6 +174,7 @@ public class DrugorderManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = drugorderExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -188,6 +190,7 @@ public class DrugorderManage extends BaseManage {
      * @param drugorder
      * @return
      */
+    @Transactional
     public Drugorder save(Drugorder drugorder) {
         long i = drugorderExMapper.insert(drugorder);
         if (i > 0) {
@@ -202,6 +205,7 @@ public class DrugorderManage extends BaseManage {
      * @param drugorder
      * @return
      */
+    @Transactional
     public Drugorder saveBackId(Drugorder drugorder) {
         long i = drugorderExMapper.insertBackId(drugorder);
         if (i > 0) {

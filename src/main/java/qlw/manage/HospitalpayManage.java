@@ -68,6 +68,7 @@ public class HospitalpayManage extends BaseManage {
      * @param hospitalpay
      * @return
      */
+    @Transactional
     public Integer update(Hospitalpay hospitalpay) {
         return hospitalpayExMapper.updateByPrimaryKeySelective(hospitalpay);
     }
@@ -79,6 +80,7 @@ public class HospitalpayManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         paymentdetailManage.deleteByproject(id, 1);
         int i = hospitalpayExMapper.deleteByPrimaryKey(id);
@@ -95,6 +97,7 @@ public class HospitalpayManage extends BaseManage {
      * @param hospitalpay
      * @return
      */
+    @Transactional
     public Hospitalpay save(Hospitalpay hospitalpay) {
         long i = hospitalpayExMapper.insert(hospitalpay);
         if (i > 0) {
@@ -109,6 +112,7 @@ public class HospitalpayManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean deleteByHospitalizationid(Long id) {
         HospitalpayExample example = new HospitalpayExample();
         HospitalpayExample.Criteria criteria = example.createCriteria();
@@ -131,6 +135,7 @@ public class HospitalpayManage extends BaseManage {
      * @param hospitalpay
      * @return
      */
+    @Transactional
     public Hospitalpay saveBackId(Hospitalpay hospitalpay) {
         long i = hospitalpayExMapper.insertBackId(hospitalpay);
         if (i > 0) {

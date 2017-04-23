@@ -200,6 +200,7 @@ public class HospitalManage extends BaseManage {
      * @param hospital
      * @return
      */
+    @Transactional
     public Integer update(Hospital hospital) {
         return hospitalExMapper.updateByPrimaryKeySelective(hospital);
     }
@@ -211,6 +212,7 @@ public class HospitalManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = hospitalExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -226,6 +228,7 @@ public class HospitalManage extends BaseManage {
      * @param hospital
      * @return
      */
+    @Transactional
     public Hospital save(Hospital hospital) {
         long i = hospitalExMapper.insert(hospital);
         if (i > 0) {
@@ -241,6 +244,7 @@ public class HospitalManage extends BaseManage {
      * @param example
      * @return
      */
+    @Transactional
     public Integer updateByExampleSelective(Hospital hospital, HospitalExample example) {
         return hospitalExMapper.updateByExampleSelective(hospital, example);
     }

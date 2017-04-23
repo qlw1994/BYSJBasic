@@ -166,6 +166,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param paymentdetail
      * @return
      */
+    @Transactional
     public Integer update(Paymentdetail paymentdetail) {
         return paymentdetailMapper.updateByPrimaryKeySelective(paymentdetail);
     }
@@ -176,6 +177,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param paymentdetail
      * @return
      */
+    @Transactional
     public Integer updateByPaymentdetail(Paymentdetail paymentdetail, Paymentdetail newpaymentdetail) {
         PaymentdetailExample example = new PaymentdetailExample();
         PaymentdetailExample.Criteria criteria = example.createCriteria();
@@ -208,6 +210,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = paymentdetailMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -222,6 +225,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean deleteByproject(Long id, Integer type) {
         PaymentdetailExample example = new PaymentdetailExample();
         PaymentdetailExample.Criteria criteria = example.createCriteria();
@@ -240,6 +244,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param paymentdetail
      * @return
      */
+    @Transactional
     public boolean deleteByPaymentdetail(Paymentdetail paymentdetail) {
 
         PaymentdetailExample example = new PaymentdetailExample();
@@ -275,6 +280,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param cities
      * @return
      */
+    @Transactional
     public Paymentdetail save(Paymentdetail cities) {
         long i = paymentdetailMapper.insert(cities);
         if (i > 0) {
@@ -289,6 +295,7 @@ public class PaymentdetailManage extends BaseManage {
      * @param paymentdetailidsTemp
      * @return
      */
+    @Transactional
     public boolean paymentConfirm(String paymentdetailidsTemp, Integer paytype, String invoicenumber, String paynumber) {
         String[] paymentdetailids = paymentdetailidsTemp.split("|");
         for (int i = 0; i < paymentdetailids.length; i++) {

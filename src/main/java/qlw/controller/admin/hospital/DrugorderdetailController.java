@@ -2,6 +2,7 @@ package qlw.controller.admin.hospital;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
@@ -99,6 +100,7 @@ public class DrugorderdetailController extends BaseController {
      */
     @RequestMapping(value = "newDrugorderdetail")
     @ResponseBody
+    @Transactional
     public Map<String, Object> addDrugorderdetail(Drugorderdetail drugorderdetail, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
@@ -173,6 +175,7 @@ public class DrugorderdetailController extends BaseController {
      */
     @RequestMapping(value = "modDrugorderdetail", method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Map<String, Object> updateDrugorderdetail(Drugorderdetail drugorderdetail, Object old_money) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
@@ -234,6 +237,7 @@ public class DrugorderdetailController extends BaseController {
      */
     @RequestMapping(value = "delDrugorderdetail/{id}", method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Map<String, Object> delDrugorderdetail(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;

@@ -177,6 +177,7 @@ public class PatientManage extends BaseManage {
      * @param patient
      * @return
      */
+    @Transactional
     public Integer update(Patient patient) {
         return patientMapper.updateByPrimaryKeySelective(patient);
     }
@@ -188,6 +189,7 @@ public class PatientManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = patientMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -203,6 +205,7 @@ public class PatientManage extends BaseManage {
      * @param patient
      * @return
      */
+    @Transactional
     public Patient save(Patient patient) {
         long i = patientMapper.insert(patient);
         if (i > 0) {

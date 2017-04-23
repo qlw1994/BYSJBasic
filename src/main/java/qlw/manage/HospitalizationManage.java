@@ -133,6 +133,7 @@ public class HospitalizationManage extends BaseManage {
      * @param hospitalization
      * @return
      */
+    @Transactional
     public Integer update(Hospitalization hospitalization) {
         return hospitalizationExMapper.updateByPrimaryKeySelective(hospitalization);
     }
@@ -144,6 +145,7 @@ public class HospitalizationManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = hospitalizationExMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -161,6 +163,7 @@ public class HospitalizationManage extends BaseManage {
      * @param hospitalization
      * @return
      */
+    @Transactional
     public Hospitalization save(Hospitalization hospitalization) {
         long i = hospitalizationExMapper.insert(hospitalization);
         if (i > 0) {
@@ -175,6 +178,7 @@ public class HospitalizationManage extends BaseManage {
      * @param hospitalization
      * @return
      */
+    @Transactional
     public Hospitalization saveBackId(Hospitalization hospitalization) {
         long i = hospitalizationExMapper.insertBackId(hospitalization);
         if (i > 0) {

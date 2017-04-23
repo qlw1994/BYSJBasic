@@ -171,6 +171,7 @@ public class NumberManage extends BaseManage {
      * @param numbers
      * @return
      */
+    @Transactional
     public Integer update(Numbers numbers) {
         return numbersMapper.updateByPrimaryKeySelective(numbers);
     }
@@ -182,6 +183,7 @@ public class NumberManage extends BaseManage {
      * @param id
      * @return
      */
+    @Transactional
     public boolean delete(Long id) {
         int i = numbersMapper.deleteByPrimaryKey(id);
         if (i > 0) {
@@ -197,6 +199,7 @@ public class NumberManage extends BaseManage {
      * @param numbers
      * @return
      */
+    @Transactional
     public Numbers save(Numbers numbers) {
         long i = numbersMapper.insert(numbers);
         if (i > 0) {
