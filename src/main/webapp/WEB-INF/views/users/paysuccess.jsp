@@ -2,10 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="ctx" value="${basePath}"/>
-<c:set var="hosid" value="${hosid}"/>
-<c:set var="apikey" value="${apikey}"/>
-<c:set var="secretkey" value="${secretkey}"/>
-<c:set var="hospitalCode" value="${hospitalCode}"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title>费用详情</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/res-build/src/diagnosispayment/css/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/res-build/css/weui.min.css">
 
     <style>
         body {

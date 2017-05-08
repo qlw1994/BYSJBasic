@@ -223,9 +223,9 @@ public class Users_PaymentdetailController extends BaseController {
             model.setBody(subject);
             alipay_request.setBizModel(model);
             // 设置异步通知地址
-            alipay_request.setNotifyUrl(AlipayConfigSandBox.notify_url);
+            alipay_request.setNotifyUrl(AlipayConfigSandBox.user_notify_url);
             // 设置同步地址
-            alipay_request.setReturnUrl(AlipayConfigSandBox.return_url);
+            alipay_request.setReturnUrl(AlipayConfigSandBox.user_return_url);
 
             // form表单生产
             String form = "";

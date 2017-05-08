@@ -151,15 +151,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: alipay-sdk:java20170307171631-source:1.0">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/mylib/alipay-sdk-java20170307171631-source.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: commons:logging-1.1.1:1.0">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/mylib/commons-logging-1.1.1-sources.jar!/" />

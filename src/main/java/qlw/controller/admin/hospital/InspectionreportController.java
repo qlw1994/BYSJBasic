@@ -209,14 +209,6 @@ public class InspectionreportController {
         Inspectionreport inspectionreport = new Inspectionreport();
         inspectionreport.setId((Long)request.getAttribute("inspectionid"));
         Doctor doctor = doctorManage.getDoctorById(Long.parseLong(request.getParameter("doctorid")));
-        //inspectionreport.setDoctorid(doctor.getId());
-        //inspectionreport.setHospitalid(doctor.getHospitalid());
-        //inspectionreport.setDepartmentid(doctor.getDepartmentid());
-        //inspectionreport.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-        //inspectionreport.setAuditorid(doctor.getId());
-        //inspectionreport.setExamtime(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-        //inspectionreport.setDate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-        //inspectionreportManage.saveBackId(inspectionreport);
         Long inspectionid = inspectionreport.getId();
         String FILE_NAME = path + "/" + fileName;
         // 这里显式地配置一下CSV文件的Header，然后设置跳过Header（要不然读的时候会把头也当成一条记录）

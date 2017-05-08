@@ -80,11 +80,26 @@ define(function (require, exports, module) {
                     return true;
                 }
             }, "请上传大小在1M以下的图片");
+            jQuery.validator.addMethod("checkJPG", function(value, element) {
+                var filepath=$("#headpath").val();
+                //获得上传文件名
+                var fileArr=filepath.split("\\");
+                var fileTArr=fileArr[fileArr.length-1].toLowerCase().split(".");
+                var filetype=fileTArr[fileTArr.length-1];
+                //切割出后缀文件名
+                if(filetype != "jpg"){
+                    return false;
+                }else{
+                    return true;
+                }
+            }, "上传文件格式不适合");
             //表单验证-修改用户
             $DoctorForm.validate({
                 rules: {
                     file:{
+                        checkJPG:true,
                         checkPicSize:true
+
                     },
                     name: "required",
                     password: "required",
