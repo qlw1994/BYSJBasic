@@ -42,8 +42,8 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">医院名称</label>
                         <div class="col-md-7">
-                            <input type="text" id="hospitalname" name="name" AUTOCOMPLETE="off">
-                            <ul class="list" id="hospitalList">
+                            <input class="col-md-7" type="text" id="hospitalname" name="name" AUTOCOMPLETE="off">
+                            <ul class="list" id="hospitalList" style="width: 60%">
 
                             </ul>
                         </div>

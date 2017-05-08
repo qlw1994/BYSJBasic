@@ -96,8 +96,8 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate: $("#starttime").val(),
+                        enddate: $("#endtime").val(),
                         patientid: patientid,
                         length: pagelength
 
@@ -154,40 +154,44 @@ define(function (require, exports, module) {
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();
-                pageIndex.reset();
-               $.ajax({
-                   url: ROOTPAth + '/admin/checkreports/list',
-                   type: 'POST',
-                   dataType: 'json',
-                   data: {
-                       startdate:$("#starttime").val(),
-                       enddate:$("#endtime").val(),
-                       patientid: patientid,
-                       length: pagelength,
-                       page: 1
-                   },
-                   success: function (res) {
-                       var newData = $.extend({}, res);
-                       $.each(newData.data, function (i, val) {
+                pageIndex.current = 1;
+                $.ajax({
+                    url: ROOTPAth + '/admin/checkreports/list',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        startdate: function(){
+                            return $("#starttime").val();
+                        },
+                        enddate: function () {
+                            return $("#endtime").val();
+                        },
+                        patientid: patientid,
+                        length: pagelength,
+                        page: 1
+                    },
+                    success: function (res) {
+                        var newData = $.extend({}, res);
+                        $.each(newData.data, function (i, val) {
 
-                           newData.data[i].currentpage = pageIndex.current;
-                       });
-                       tool.stopPageLoading();
-                       $checkreportList.find(".page-info-num").text(res.data.length);
+                            newData.data[i].currentpage = pageIndex.current;
+                        });
+                        tool.stopPageLoading();
+                        $checkreportList.find(".page-info-num").text(res.data.length);
 
-                       $table.find("tbody").empty().append(listTpl.render(newData));
-                       //删除权限
-                       $table.find(".j-del").confirmation({
-                           title: "确定删除该表单吗？",
-                           btnOkLabel: "确定",
-                           btnCancelLabel: "取消",
-                           onConfirm: function (event, element) {
-                               event.preventDefault();
-                               self.deleteCheckreport($(element));
-                           }
-                       });
-                   }
-               })
+                        $table.find("tbody").empty().append(listTpl.render(newData));
+                        //删除权限
+                        $table.find(".j-del").confirmation({
+                            title: "确定删除该表单吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.deleteCheckreport($(element));
+                            }
+                        });
+                    }
+                })
             });
             //我要编辑
             $ModifyForm.on("click", ".j-form-edit", function (event) {
@@ -292,17 +296,17 @@ define(function (require, exports, module) {
                         remote: {
                             url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
                             type: "post",
-                            dataType:"json",
+                            dataType: "json",
                             data: {
                                 hospitalid: hospitalid,
                                 account: $CheckreportForm.find("input[name=auditoraccount]").val()
                             }
                         }
                     },
-                    part:"required",
-                    method:"required",
-                    advice:"required",
-                    options:"required",
+                    part: "required",
+                    method: "required",
+                    advice: "required",
+                    options: "required",
                     examtime: "required"
                 },
                 messages: {
@@ -315,10 +319,10 @@ define(function (require, exports, module) {
                         required: "请选择检验时间",
                     },
                     examtime: "请选择审核时间",
-                    part:"请输入检查部位",
-                    method:"请输入检查方法",
-                    advice:"请输入医嘱",
-                    options:"请输入诊断意见"
+                    part: "请输入检查部位",
+                    method: "请输入检查方法",
+                    advice: "请输入医嘱",
+                    options: "请输入诊断意见"
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
@@ -407,17 +411,17 @@ define(function (require, exports, module) {
                         remote: {
                             url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
                             type: "post",
-                            dataType:"json",
+                            dataType: "json",
                             data: {
                                 hospitalid: hospitalid,
                                 account: $ModifyForm.find("input[name=auditoraccount]").val()
                             }
                         }
                     },
-                    part:"required",
-                    method:"required",
-                    advice:"required",
-                    options:"required",
+                    part: "required",
+                    method: "required",
+                    advice: "required",
+                    options: "required",
                     examtime: "required"
                 },
                 messages: {
@@ -430,10 +434,10 @@ define(function (require, exports, module) {
                         required: "请选择检验时间",
                     },
                     examtime: "请选择审核时间",
-                    part:"请输入检查部位",
-                    method:"请输入检查方法",
-                    advice:"请输入医嘱",
-                    options:"请输入诊断意见"
+                    part: "请输入检查部位",
+                    method: "请输入检查方法",
+                    advice: "请输入医嘱",
+                    options: "请输入诊断意见"
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
@@ -609,5 +613,6 @@ define(function (require, exports, module) {
     function get_search() {
         pageIndex.reset();
     }
+
     Utilitiy.init();
 });

@@ -19,7 +19,11 @@ define(function (require, exports, module) {
             $("#patientname").change(function () {
                 var option = $(this).children('option:selected');
                 $("#patientid").val(option.data("patientid"));
-                $ModelForm.find("input[name=sex]").eq(option.data("sex") - 1).prop("checked", "checked");
+                if (option.data("sex") == undefined) {
+                    $ModelForm.find("input[name=sex]:checked").prop('checked', false);
+                } else {
+                    $ModelForm.find("input[name=sex]").eq(option.data("sex") - 1).prop("checked", "checked");
+                }
                 $ModelForm.find("select[name=idtype]").val(option.data("idtype"));
                 $ModelForm.find("input[name=idnumber]").val(option.data("idnumber"));
                 $ModelForm.find("input[name=birthday]").val(option.data("birthday"));
@@ -28,7 +32,7 @@ define(function (require, exports, module) {
 
             $ModelForm.validate({
                 rules: {
-                    service:"required",
+                    service: "required",
                     useraccount: {
                         required: true,
                         remote: { //自带远程验证存在的方法
@@ -51,7 +55,7 @@ define(function (require, exports, module) {
                         required: "用户名不能为空",
                         remote: "不存在该用户"
                     },
-                    service:"请选择服务"
+                    service: "请选择服务"
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
@@ -68,8 +72,8 @@ define(function (require, exports, module) {
 
                 success: function (label) {
                     label.closest('.form-group').removeClass('has-error');
-                    var inputid = label.closest('.form-group').find("input")== "undefined"?"":label.closest('.form-group').find("input").attr("id");
-                    if (inputid == "useraccount"&&!label.closest('.form-group').hasClass("has-error")) {
+                    var inputid = label.closest('.form-group').find("input") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
+                    if (inputid == "useraccount" && !label.closest('.form-group').hasClass("has-error")) {
 
                         $.ajax({
                             url: ROOTPAth + '/admin/patients/listAll',
@@ -96,21 +100,21 @@ define(function (require, exports, module) {
                 },
 
                 errorPlacement: function (error, element) {
-                    var inputid = element.closest('.form-group').find("input")== "undefined"?"":element.closest('.form-group').find("input").attr("id");
-                    if (inputid == "useraccount"&&element.closest('.form-group').hasClass("has-error")) {
+                    var inputid = element.closest('.form-group').find("input") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
+                    if (inputid == "useraccount" && element.closest('.form-group').hasClass("has-error")) {
                         $("#patientname").empty();
                         $("#patientname").append("<option data-patientid='' value=''>请选择</option>")
                         $("#patientname").prop("disabled", true);
                         $ModelForm.find("input[name=birthday]").val("");
                         $ModelForm.find("select[name=idtype]").val("");
                         $ModelForm.find("input[name=idnumber]").val("");
-                        $ModelForm.find("input[name=sex]:checked").prop('checked',false);
+                        $ModelForm.find("input[name=sex]:checked").prop('checked', false);
                     }
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-                    var Path = ROOTPAth + '/admin/'+$("#service").val();
-                    window.location.href = Path + "?pcode="+pcode+"&subcode="+subcode+"&uid=" + $("#userid").val() + "&patientid=" + $("#patientid").val() + "&patientname=" + $("#patientname").val() + "&uname="+$("#uname").val()+"";
+                    var Path = ROOTPAth + '/admin/' + $("#service").val();
+                    window.location.href = Path + "?pcode=" + pcode + "&subcode=" + subcode + "&uid=" + $("#userid").val() + "&patientid=" + $("#patientid").val() + "&patientname=" + $("#patientname").val() + "&uname=" + $("#uname").val() + "";
 
                 }
             });
@@ -132,7 +136,7 @@ define(function (require, exports, module) {
                     $list.show();
                     $list.html("");
                     $.each(data, function (index, el) {
-                        var html = $("<li data-uid='" + el.id + "' data-uname='" + el.name + "' value='"+el.account+"'>" + el.account + "</li>");
+                        var html = $("<li data-uid='" + el.id + "' data-uname='" + el.name + "' value='" + el.account + "'>" + el.account + "</li>");
                         $list.append(html);
 
                     });

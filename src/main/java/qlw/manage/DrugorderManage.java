@@ -42,11 +42,12 @@ public class DrugorderManage extends BaseManage {
             criteria.andPatientidEqualTo(drugorder.getPatientid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andCreatedateBetween(startDate, endDate);
+            //startDate += " 00:00:00";
+            //endDate += " 23:59:59";
+            criteria.andCreatedateGreaterThanOrEqualTo( startDate);
+            criteria.andCreatedateLessThanOrEqualTo( endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            //endDate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(endDate);
         }
         //else {
@@ -104,11 +105,12 @@ public class DrugorderManage extends BaseManage {
             criteria.andPatientidEqualTo(drugorder.getPatientid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andCreatedateBetween(startDate, endDate);
+            //startDate += " 00:00:00";
+            //endDate += " 23:59:59";
+            criteria.andCreatedateGreaterThanOrEqualTo( startDate);
+            criteria.andCreatedateLessThanOrEqualTo( endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            //endDate += " 23:59:59";
             criteria.andCreatedateLessThanOrEqualTo(endDate);
         }
         //else {

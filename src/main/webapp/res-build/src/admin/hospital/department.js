@@ -47,6 +47,7 @@ define(function (require, exports, module) {
             ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}"  data-name="${item.name}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
             ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/admin/hospitalDoctors/index?pcode=2&subcode=1&departmentid=${item.id}&departmentname=${item.name}" ><span class="iconfont iconfont-xs">&#xe617;</span>医生管理</a>',
             ' <button type="button" class="btn btn-default btn-xs j-disable j-queue" data-toggle="confirmation"  data-placement="top" data-departmentid="${item.id}"><span class="iconfont iconfont-xs">&#xe617;</span>生成队列</button>',
+            ' <button type="button" class="btn btn-default btn-xs j-disable j-requeue" data-toggle="confirmation"  data-placement="top" data-departmentid="${item.id}"><span class="iconfont iconfont-xs">&#xe617;</span>清理队列</button>',
             ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
             '    </td>',
             '</tr>',
@@ -104,8 +105,17 @@ define(function (require, exports, module) {
                                 self.deleteDepartment($(element));
                             }
                         });
+                        $table.find(".j-requeue").confirmation({
+                            title: "确定清理队列吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.resetQueue($(element));
+                            }
+                        });
                         $table.find(".j-queue").confirmation({
-                            title: "确定吗？",
+                            title: "确定生成队列吗？",
                             btnOkLabel: "确定",
                             btnCancelLabel: "取消",
                             onConfirm: function (event, element) {
@@ -359,6 +369,28 @@ deleteDepartment: function ($that) {
                     success: function (data) {
                         if (data.code == 1) {
                             $addRoletipModal.find(".dialogtip-msg").html("科室队列生成成功");
+                            $addRoletipModal.modal('show');
+                            pageIndex.reset();
+                        } else {
+                            $("#ajax_fail").find("h4").html(data.message);
+                            $("#ajax_fail").modal("show")
+                        }
+                    }
+                });
+
+            },
+            resetQueue: function ($that) {
+                var departmentid = $that.data("departmentid");
+                var delPath = ROOTPAth + '/admin/departmentqueues/reset/'
+                $.ajax({
+                    url: delPath,
+                    type: "POST",
+                    data:{
+                        departmentid:departmentid,
+                    },
+                    success: function (data) {
+                        if (data.code == 1) {
+                            $addRoletipModal.find(".dialogtip-msg").html(data.message);
                             $addRoletipModal.modal('show');
                             pageIndex.reset();
                         } else {

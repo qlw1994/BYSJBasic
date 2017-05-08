@@ -38,19 +38,28 @@ public class DepartmentqueueController extends BaseController {
      * @return
      */
     @RequestMapping(value = "reset")
-    public boolean resetQueue() {
+    @ResponseBody
+    public Map<String, Object> resetQueue(Long departmentid) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "清理成功";
         Departmentqueue departmentqueue = new Departmentqueue();
         departmentqueue.setNowtotal(0);
         departmentqueue.setNownumber(0);
         departmentqueue.setTodaytotal(0);
+        departmentqueue.setDepartmentid(departmentid);
         try {
             departmentqueueManage.resetQueue(departmentqueue);
-            departmentqueuedetailManage.deleteAll();
-            return true;
+            departmentqueuedetailManage.deleteAll(departmentqueue);
+
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            rtnMsg = "清理失败";
+            rtnCode = ResultCode.ERROR;
         }
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
     }
 
     /**

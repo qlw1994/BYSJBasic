@@ -87,8 +87,8 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate: $("#starttime").val(),
+                        enddate: $("#endtime").val(),
                         patientid: patientid,
                         length: pagelength
 
@@ -137,14 +137,18 @@ define(function (require, exports, module) {
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();
-                get_search();
+                pageIndex.current = 1;
                 $.ajax({
                     url: ROOTPAth + '/admin/inspectionreports/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate: function () {
+                            return $("#starttime").val();
+                        },
+                        enddate: function () {
+                            return $("#endtime").val();
+                        },
                         patientid: patientid,
                         length: pagelength
 
@@ -258,16 +262,16 @@ define(function (require, exports, module) {
             }).focus(function () {
                 this.select();
             });
-            jQuery.validator.addMethod("checkCsv", function(value, element) {
-                var filepath=$("#inspectitemsfile").val();
+            jQuery.validator.addMethod("checkCsv", function (value, element) {
+                var filepath = $("#inspectitemsfile").val();
                 //获得上传文件名
-                var fileArr=filepath.split("\\");
-                var fileTArr=fileArr[fileArr.length-1].toLowerCase().split(".");
-                var filetype=fileTArr[fileTArr.length-1];
+                var fileArr = filepath.split("\\");
+                var fileTArr = fileArr[fileArr.length - 1].toLowerCase().split(".");
+                var filetype = fileTArr[fileTArr.length - 1];
                 //切割出后缀文件名
-                if(filetype != "csv"){
+                if (filetype != "csv") {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }, "上传文件格式不适合");
@@ -282,16 +286,16 @@ define(function (require, exports, module) {
                         remote: {
                             url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
                             type: "post",
-                            dataType:"json",
+                            dataType: "json",
                             data: {
                                 hospitalid: hospitalid,
                                 account: $InspectreportForm.find("input[name=auditoraccount]").val()
                             }
                         }
                     },
-                    file:{
-                        required:true,
-                        checkCsv:true
+                    file: {
+                        required: true,
+                        checkCsv: true
                     },
                     examtime: "required",
                 },
@@ -306,7 +310,7 @@ define(function (require, exports, module) {
                         required: "请选择检验时间",
                     },
                     examtime: "请选择审核时间",
-                    file:{
+                    file: {
                         required: "请选择文件"
                     }
                 },
@@ -346,7 +350,7 @@ define(function (require, exports, module) {
 
                 errorPlacement: function (error, element) {
                     var strId = element.closest('.form-group').find("input").attr("id") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
-                    if (strId == "add_auditor"&& element.closest('.form-group').hasClass('has-error')) {
+                    if (strId == "add_auditor" && element.closest('.form-group').hasClass('has-error')) {
                         $("#add_auditorid").val("");
                         $("#add_auditorname").val("");
                     }
@@ -360,7 +364,7 @@ define(function (require, exports, module) {
                         type: "POST",
                         url: savePath,
                         dataType: "json",
-                       data:formdata,
+                        data: formdata,
 // {
 //                             file:file,
 //                             status:$InspectreportForm.find("select[name=status]").val(),
@@ -408,35 +412,35 @@ define(function (require, exports, module) {
             });
             //表单验证-修改表单
             $ModifyForm.validate({
-                    rules: {
-                        status: "required",
-                        inspecttime: "required",
-                        auditoraccount: {
-                            required: true,
-                            remote: {
-                                url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
-                                type: "post",
-                                dataType:"json",
-                                data: {
-                                    hospitalid: hospitalid,
-                                    account: $ModifyForm.find("input[name=auditoraccount]").val()
-                                }
+                rules: {
+                    status: "required",
+                    inspecttime: "required",
+                    auditoraccount: {
+                        required: true,
+                        remote: {
+                            url: ROOTPAth + "/admin/hospitalDoctors/hasAccount",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                hospitalid: hospitalid,
+                                account: $ModifyForm.find("input[name=auditoraccount]").val()
                             }
-                        },
-                        examtime: "required",
+                        }
                     },
-                    messages: {
-                        status: "请选择状态",
-                        auditoraccount: {
-                            required: "请输入审核人账号",
-                            remote: "医生名不存在"
-                        },
-                        inspecttime: {
-                            required: "请选择检验 时间",
-                        },
-                        examtime: "请选择审核时间"
+                    examtime: "required",
+                },
+                messages: {
+                    status: "请选择状态",
+                    auditoraccount: {
+                        required: "请输入审核人账号",
+                        remote: "医生名不存在"
+                    },
+                    inspecttime: {
+                        required: "请选择检验 时间",
+                    },
+                    examtime: "请选择审核时间"
 
-                    },
+                },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
                 //focusInvalid: false, // do not focus the last invalid input
@@ -476,7 +480,7 @@ define(function (require, exports, module) {
 
                 errorPlacement: function (error, element) {
                     var strId = element.closest('.form-group').find("input").attr("id") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
-                    if (strId == "mod_auditor"&& element.closest('.form-group').hasClass('has-error')) {
+                    if (strId == "mod_auditor" && element.closest('.form-group').hasClass('has-error')) {
                         $("#mod_auditorid").val("");
                         $("#mod_auditorname").val("");
                     }
@@ -608,8 +612,6 @@ define(function (require, exports, module) {
         changeYear: true,
         inline: true
     });
-    function get_search() {
-        pageIndex.reset();
-    }
+
     Utilitiy.init();
 });

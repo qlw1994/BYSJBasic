@@ -32,7 +32,7 @@ public class Task extends TimerTask {
         for (Doctor d : doctors) {
             schedulingController.generateScheduling(d.getId(), d.getHospitalid(), d.getDepartmentid(), d.getLevel(), 50);
         }//号源日更新
-        departmentqueueController.resetQueue();//刷新队列
+        departmentqueueController.resetQueue(null);//刷新队列
 
     }
 }

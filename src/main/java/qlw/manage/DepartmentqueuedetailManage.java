@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qlw.mapper.DepartmentqueuedetailMapper;
+import qlw.model.Departmentqueue;
 import qlw.model.Departmentqueuedetail;
 import qlw.model.DepartmentqueuedetailExample;
 
@@ -92,10 +93,14 @@ public class DepartmentqueuedetailManage extends BaseManage {
      * @return
      */
     @Transactional
-    public boolean deleteAll() {
+    public boolean deleteAll(Departmentqueue departmentqueue) {
         DepartmentqueuedetailExample example = new DepartmentqueuedetailExample();
         DepartmentqueuedetailExample.Criteria criteria = example.createCriteria();
-        criteria.andIdIsNotNull();
+        if (departmentqueue.getId() != null) {
+            criteria.andDepartmentqueueidEqualTo(departmentqueue.getId());
+        } else {
+            criteria.andIdIsNotNull();
+        }
         int i = departmentqueuedetailMapper.deleteByExample(example);
         if (i > 0) {
             return true;

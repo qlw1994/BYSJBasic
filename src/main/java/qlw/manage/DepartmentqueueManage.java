@@ -98,10 +98,13 @@ public class DepartmentqueueManage extends BaseManage {
     public Integer resetQueue(Departmentqueue departmentqueue) {
         DepartmentqueueExample example = new DepartmentqueueExample();
         DepartmentqueueExample.Criteria criteria = example.createCriteria();
-        criteria.andIdIsNotNull();
-        return departmentqueueExMapper.updateByExample(departmentqueue, example);
+        if (departmentqueue.getId() != null) {
+            criteria.andIdEqualTo(departmentqueue.getId());
+        } else {
+            criteria.andIdIsNotNull();
+        }
+        return departmentqueueExMapper.updateByExampleSelective(departmentqueue, example);
     }
-
 
 
     /**

@@ -150,14 +150,18 @@ define(function (require, exports, module) {
             //点击查询
             $("#search").on('click', function (event) {
                 event.preventDefault();
-                pageIndex.reset();
+                pageIndex.current = 1;
                 $.ajax({
                     url: ROOTPAth + '/admin/checkreports/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        startdate: $("#starttime").val(),
-                        enddate: $("#endtime").val(),
+                        startdate: function () {
+                            return $("#starttime").val();
+                        },
+                        enddate: function () {
+                            return $("#endtime").val();
+                        },
                         patientid: patientid,
                         length: pagelength,
                         page: 1

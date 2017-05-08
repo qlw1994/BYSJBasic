@@ -50,17 +50,15 @@ public class CheckreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(checkreport.getAuditorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andChecktimeBetween(startDate, endDate);
+            startDate += " 00:00";
+            endDate += " 23:59";
+            criteria.andChecktimeLessThanOrEqualTo( endDate);
+            criteria.andChecktimeGreaterThanOrEqualTo( startDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            endDate += " 23:59";
             criteria.andChecktimeLessThanOrEqualTo(endDate);
         }
-        //else {
-        //    startDate += " 00:00:00";
-        //    criteria.andChecktimeGreaterThanOrEqualTo(startDate);
-        //}
+
         criteria.andDeletedateIsNull();
         List<Checkreport> checkreports = checkreportMapper.selectByExample(example);
         for (Checkreport c : checkreports) {
@@ -129,11 +127,12 @@ public class CheckreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(checkreport.getAuditorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andChecktimeBetween(startDate, endDate);
+            startDate += " 00:00";
+            endDate += " 23:59";
+            criteria.andChecktimeLessThanOrEqualTo( endDate);
+            criteria.andChecktimeGreaterThanOrEqualTo( startDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            endDate += " 23:59";
             criteria.andChecktimeLessThanOrEqualTo(endDate);
         }
         //else {

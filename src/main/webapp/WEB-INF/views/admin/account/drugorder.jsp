@@ -29,7 +29,7 @@
         <div class="portlet">
             <div class="portlet-title">
 
-                <form class="form-inline" id="search-form">
+                <div class="form-inline" id="search-form">
 
                     <input type="hidden" name="patientid" value="${patientid}">
                     <div class="form-group">
@@ -46,8 +46,8 @@
 
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-info" id="search">查询</button>
-                </form>
+                    <button class="btn btn-info" id="search">查询</button>
+                </div>
             </div>
             <div class="portlet-body" id="drugorder-list">
                 <div class="table-pages clearfix">

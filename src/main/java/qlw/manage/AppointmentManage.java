@@ -61,11 +61,12 @@ public class AppointmentManage extends BaseManage {
             criteria.andDoctoridEqualTo(appointment.getDoctorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andDateBetween(startDate, endDate);
+            //startDate += " 00:00:00";
+            //endDate += " 23:59:59";
+            criteria.andDateGreaterThanOrEqualTo(startDate);
+            criteria.andDateLessThanOrEqualTo(endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            //endDate += " 23:59:59";
             criteria.andDateLessThanOrEqualTo(endDate);
         }
         //else {
@@ -133,11 +134,12 @@ public class AppointmentManage extends BaseManage {
             criteria.andDoctoridEqualTo(appointment.getDoctorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andDateBetween(startDate, endDate);
+            //startDate += " 00:00:00";
+            //endDate += " 23:59:59";
+            criteria.andDateGreaterThanOrEqualTo(startDate);
+            criteria.andDateLessThanOrEqualTo(endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            //endDate += " 23:59:59";
             criteria.andDateLessThanOrEqualTo(endDate);
         }
         //else {

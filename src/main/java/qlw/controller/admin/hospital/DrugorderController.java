@@ -44,15 +44,21 @@ public class DrugorderController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String edndate, Long patientid, Long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listDrugorder(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String enddate, Long patientid, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Drugorder drugorder = new Drugorder();
             drugorder.setPatientid(patientid);
             drugorder.setHospitalid(hospitalid);
-            result.put("total", drugorderManage.count(startdate, edndate, drugorder));
-            result.put("data", drugorderManage.list(page, length, startdate, edndate, drugorder));
+            result.put("total", drugorderManage.count(startdate, enddate, drugorder));
+            result.put("data", drugorderManage.list(page, length, startdate, enddate, drugorder));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));
@@ -105,6 +111,7 @@ public class DrugorderController extends BaseController {
         ModelAndView mv = new ModelAndView("admin/account/drugorder");
         request.getSession().setAttribute("patientid", patientid);
         request.getSession().setAttribute("patientname", patientname);
+        request.setAttribute("currentpage",1);
         return mv;
     }
 

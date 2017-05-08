@@ -46,6 +46,12 @@ public class AppointmentController extends BaseController {
                                                Long patientid, String startdate, Long doctorid, String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Appointment appointment = new Appointment();
             appointment.setDoctorid(doctorid);
             appointment.setDepartmentid(departmentid);

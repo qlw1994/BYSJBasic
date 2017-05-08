@@ -53,7 +53,8 @@ public class InspectionreportManage extends BaseManage {
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
             //startDate += " 00:00:00";
             //endDate += " 23:59:59";
-            criteria.andInspecttimeBetween(startDate, endDate);
+            criteria.andInspecttimeGreaterThanOrEqualTo(startDate);
+            criteria.andInspecttimeLessThanOrEqualTo(endDate);
         } else if (endDate != null && !"".equals(endDate)) {
             //endDate += " 23:59:59";
             criteria.andInspecttimeLessThanOrEqualTo(endDate);
@@ -130,11 +131,12 @@ public class InspectionreportManage extends BaseManage {
             criteria.andAuditoridEqualTo(inspectionreport.getAuditorid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andInspecttimeBetween(startDate, endDate);
+            //startDate += " 00:00:00";
+            //endDate += " 23:59:59";
+            criteria.andInspecttimeGreaterThanOrEqualTo(startDate);
+            criteria.andInspecttimeLessThanOrEqualTo(endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
+            //endDate += " 23:59:59";
             criteria.andInspecttimeLessThanOrEqualTo(endDate);
         }
         //else {

@@ -236,7 +236,7 @@ define(function (require, exports, module) {
             // 自定义验证自然数方法
             $.validator.addMethod("isPositive", function (value, element) {
                 var score = /^[0-9]*$/;
-                return score.test(value)&&value!=0;
+                return score.test(value) && value != 0;
             }, $.validator.format("请输入正确数值!"));
             //表单验证-添加订单
             $DrugorderForm.validate({
@@ -363,15 +363,20 @@ define(function (require, exports, module) {
             });
             //日期搜索
             $("#search").click(function () {
+                pageIndex.current = 1;
                 $.ajax({
                     url: ROOTPAth + '/admin/drugorders/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        hospitalid:hospitalid,
+                        hospitalid: hospitalid,
                         patientid: patientid,
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate: function () {
+                            return $("#starttime").val();
+                        },
+                        enddate: function () {
+                            return $("#endtime").val();
+                        },
                         length: pagelength
                     },
                     success: function (res) {
@@ -519,7 +524,7 @@ define(function (require, exports, module) {
                         data: {
                             hospitalid: hospitalid,
                             name: function () {
-                                return $DrugorderForm.find('input[name="drugorderdetails['+(newTotal*1-1)+'].drugname"]').val();
+                                return $DrugorderForm.find('input[name="drugorderdetails[' + (newTotal * 1 - 1) + '].drugname"]').val();
                             }
                         }
                     },
@@ -623,6 +628,7 @@ define(function (require, exports, module) {
             });
         }, 500);
     }
+
     $('#starttime').datepicker({
         dateFormat: "yy-mm-dd",
         selectOtherMonths: true,

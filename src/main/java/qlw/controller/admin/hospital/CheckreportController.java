@@ -33,9 +33,15 @@ public class CheckreportController extends BaseController{
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listCheckreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startDate, String endDate, HttpServletRequest request) {
+    public Map<String, Object> listCheckreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Checkreport checkreport = new Checkreport();
             String str_patientid = request.getParameter("patientid");
             String str_departmentid = request.getParameter("departmentid");
@@ -62,8 +68,8 @@ public class CheckreportController extends BaseController{
                 long auditorid = Long.parseLong(str_auditorid);
                 checkreport.setAuditorid(auditorid);
             }
-            result.put("total", checkreportManage.count(startDate, endDate, checkreport));
-            result.put("data", checkreportManage.list(page, length, startDate, endDate, checkreport));
+            result.put("total", checkreportManage.count(startdate, enddate, checkreport));
+            result.put("data", checkreportManage.list(page, length, startdate, enddate, checkreport));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));

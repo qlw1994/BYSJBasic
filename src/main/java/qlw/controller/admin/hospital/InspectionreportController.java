@@ -49,6 +49,12 @@ public class InspectionreportController {
     public Map<String, Object> listInspectionreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Inspectionreport inspectionreport = new Inspectionreport();
             String str_patientid = request.getParameter("patientid");
             String str_departmentid = request.getParameter("departmentid");
