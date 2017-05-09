@@ -290,7 +290,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/sys/pay/alipayManage?pcode=5&subcode=1"
+                <a href="${ctx}/admin/alipayaccounts/index?pcode=3&subcode=1"
                    class="btn btn-success">确定</a>
 
             </div>

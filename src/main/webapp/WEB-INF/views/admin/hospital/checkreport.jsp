@@ -32,7 +32,7 @@
                 <%--<div class="caption">--%>
                   <%--${hospitalname}-${departmentname}-${doctorname}-${patientname} 检查单管理--%>
                 <%--</div>--%>
-                <form class="form-inline" id="search-form">
+                <div class="form-inline" id="search-form">
                     <input type="hidden" name="patientid" value="${patientid}">
                     <input type="hidden" name="hospitalid" value="${hospitalid}">
                     <div class="form-group">
@@ -49,13 +49,13 @@
 
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-info" id="search">查询</button>
+                    <button  class="btn btn-info" id="search">查询</button>
                     <div class="actions" style="float: right">
                         <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
                                 class="iconfont">&#xe612;</i> <span class="hidden-480">添加检查单</span>
                         </a>
                     </div>
-                </form>
+                </div>
 
             </div>
             <div class="portlet-body" id="checkreport-list">

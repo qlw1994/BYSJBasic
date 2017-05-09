@@ -235,84 +235,6 @@ public class PaymentdetailController extends BaseController {
         return mv;
     }
 
-    ///**
-    // * 支付数据处理（MD5）
-    // *
-    // * @param hospitalid       医院UUID
-    // * @param totalFee         支付金额
-    // * @param paytype          支付方式，1-支付宝
-    // * @param paymentdetailids
-    // * @param subject          文字信息
-    // * @param invoicenumber    发票信息
-    // * @return
-    // */
-    //@RequestMapping(value = "pay")
-    //@ResponseBody
-    //public Map<String, Object> pay(Long hospitalid, Long uid, Long patientid, String uname, String patientname, String paytype, Double totalFee,
-    //                               String paymentdetailids, String subject, String invoicenumber, String test) {
-    //    log.info("进入支付部分---------------->");
-    //    Map<String, Object> regMsg = new HashMap<String, Object>();
-    //    if (paytype.equals("1")) {
-    //        log.info("支付宝支付------------------------------>");
-    //        //获取医院的支付宝账户信息
-    //        Alipayaccount alipayaccount = alipayaccountManage.getByName(null, hospitalid);
-    //        AlipayConfig.partner = alipayaccount.getPid();
-    //        AlipayConfig.key = alipayaccount.getCheckkey();
-    //        String out_trade_no = "PAYN" + format_yyyyMMddHHmmssSSS.format(new Date()) + UUID.randomUUID().toString().substring(9, 13).toUpperCase();
-    //        String total_fee = totalFee.toString();//"0.01" totalFee.toString();
-    //        Map<String, String> mydata_map = new HashMap<String, String>();
-    //        mydata_map.put("uid", String.valueOf(uid));
-    //        mydata_map.put("patientid", String.valueOf(patientid));
-    //        mydata_map.put("uname", uname);
-    //        mydata_map.put("patientname", patientname);
-    //        mydata_map.put("paymentdetailids", paymentdetailids);//识别序号
-    //        mydata_map.put("paytype", String.valueOf(paytype));
-    //        mydata_map.put("paynumber", out_trade_no);//交易的流水号
-    //        mydata_map.put("invoicenumber", invoicenumber);//发票号码
-    //        log.info("[支付宝支付]body参数源数据：" + mydata_map);
-    //        String mydata = JSONObject.toJSONString(mydata_map);
-    //        String mydata_encode = qlw.sign.Base64.encode(mydata.getBytes());
-    //        log.info("[支付宝支付]body参数编码后：" + mydata_encode);
-    //
-    //        Map<String, String> sParaTemp = new HashMap<String, String>();
-    //        sParaTemp.put("service", "alipay.wap.create.direct.pay.by.user");
-    //        sParaTemp.put("partner", AlipayConfig.partner);
-    //        sParaTemp.put("seller_id", AlipayConfig.partner);
-    //        sParaTemp.put("_input_charset", "utf-8");
-    //        sParaTemp.put("payment_type", AlipayConfig.payment_type);
-    //        sParaTemp.put("notify_url", AlipayConfig.notify_url);
-    //        if (test != null && "1".equals(test)) {
-    //            sParaTemp.put("return_url", "");
-    //        } else {
-    //            sParaTemp.put("return_url", AlipayConfig.return_url);
-    //        }
-    //        sParaTemp.put("out_trade_no", out_trade_no);
-    //        sParaTemp.put("subject", subject);
-    //        sParaTemp.put("total_fee", total_fee);
-    //        sParaTemp.put("show_url", "");
-    //        sParaTemp.put("body", mydata_encode);
-    //        log.info("[支付宝支付]报文参数：" + sParaTemp);
-    //        String sHtmlText = AlipaySubmit.buildRequest(sParaTemp, "get", "确认", "utf-8");
-    //        log.info("[支付宝支付]响应：" + sHtmlText + "\n\n------------------------------------>结束");
-    //
-    //        regMsg.put("code", ResultCode.SUCCESS);
-    //        regMsg.put("data", sHtmlText);
-    //
-    //        return regMsg;
-    //    } else if (paytype.equals("2")) {
-    //        regMsg.put("code", ResultCode.ERROR);
-    //        regMsg.put("message", "模块建设中");
-    //        return regMsg;
-    //    } else if (paytype.equals("3")) {
-    //        regMsg.put("code", ResultCode.ERROR);
-    //        regMsg.put("message", "模块建设中");
-    //        return regMsg;
-    //    } else {
-    //        regMsg.put("code", ResultCode.PARAMETERS_NOTLEGAL);
-    //        regMsg.put("message", "paytype参数不符合规则");
-    //        return regMsg;
-    //    }
-    //}
 
     /**
      * 支付数据处理（RSA）
@@ -364,14 +286,21 @@ public class PaymentdetailController extends BaseController {
             AlipayClient client = new DefaultAlipayClient(AlipayConfigSandBox.URL, AlipayConfigSandBox.APPID, AlipayConfigSandBox.RSA_PRIVATE_KEY, AlipayConfigSandBox.FORMAT, AlipayConfigSandBox.CHARSET, AlipayConfigSandBox.ALIPAY_PUBLIC_KEY, AlipayConfigSandBox.SIGNTYPE);
             AlipayTradeWapPayRequest alipay_request = new AlipayTradeWapPayRequest();
 
+            Map<String, String> user_patient = new HashMap<String, String>();
+            user_patient.put("uid", String.valueOf(uid));
+            user_patient.put("patientid", String.valueOf(patientid));
+            user_patient.put("uname", uname);
+            user_patient.put("patientname", patientname);
+            String user_patient_data = JSONObject.toJSONString(mydata_map);
             // 封装请求支付信息
             AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
             model.setOutTradeNo(out_trade_no);
-            model.setSubject(mydata_encode);//业务参数
+            model.setSubject(subject);
+            model.setBody(user_patient_data);
             model.setTotalAmount(total_amount);
             model.setTimeoutExpress(timeout_express);
             model.setProductCode(product_code);
-            model.setBody(subject);
+            model.setPassbackParams(mydata_encode);//业务参数
             alipay_request.setBizModel(model);
             // 设置异步通知地址
             alipay_request.setNotifyUrl(AlipayConfigSandBox.notify_url);

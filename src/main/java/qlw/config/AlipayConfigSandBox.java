@@ -9,11 +9,11 @@ public class AlipayConfigSandBox {
     // 私钥 pkcs8格式的
     public static String RSA_PRIVATE_KEY = "";
     // 服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    public static String notify_url = "http://115.159.23.173/diagnosispay/paymentConfirm";
-    public static String user_notify_url = "http://115.159.23.173/diagnosispay/user_paymentConfirm";
+    public static String notify_url = "http://www.qlw777.cn/diagnosispay/paymentConfirm";
+    public static String user_notify_url = "http://www.qlw777.cn/diagnosispay/user_paymentConfirm";
     // 页面跳转同步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 商户可以自定义同步跳转地址
-    public static String return_url = "http://115.159.23.173/diagnosispay/return_url";
-    public static String user_return_url = "http://115.159.23.173/diagnosispay/user_return_url";
+    public static String return_url = "http://www.qlw777.cn/diagnosispay/return_url";
+    public static String user_return_url = "http://www.qlw777.cn/diagnosispay/user_return_url";
     // 请求网关地址
     //public static String URL = "https://openapi.alipay.com/gateway.do";
     public static String URL = "https://openapi.alipaydev.com/gateway.do";//沙箱网关

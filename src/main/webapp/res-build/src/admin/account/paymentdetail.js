@@ -216,11 +216,11 @@ define(function (require, exports, module) {
                 var paymentdetailids = "";
                 var totalmoney = 0;
                 $table.find("input[name='checkitem']:checkbox:checked").each(function () {
-                    if (paymentdetailids != "") {
-                        paymentdetailids = paymentdetailids + "|" + $(this).val();
+                    if (paymentdetailids == "") {
+                        paymentdetailids = $(this).val();
                         totalmoney = totalmoney * 1 + $(this).data("money") * 1;
                     } else {
-                        paymentdetailids = $(this).val();
+                        paymentdetailids += "|" + $(this).val();
                         totalmoney = totalmoney * 1 + $(this).data("money") * 1;
                     }
                 });
@@ -303,8 +303,13 @@ define(function (require, exports, module) {
         var paymentdetailids = "";
         var totalmoney = 0;
         $table.find("input[name='checkitem']:checkbox:checked").each(function () {
-            paymentdetailids = paymentdetailids + "|" + $(this).val();
-            totalmoney = totalmoney * 1 + $(this).data("money") * 1;
+            if (paymentdetailids == "") {
+                paymentdetailids = $(this).val();
+                totalmoney = totalmoney * 1 + $(this).data("money") * 1;
+            } else {
+                paymentdetailids += "|" + $(this).val();
+                totalmoney = totalmoney * 1 + $(this).data("money") * 1;
+            }
         });
 
         $.ajax({

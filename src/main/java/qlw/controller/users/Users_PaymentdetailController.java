@@ -213,11 +213,18 @@ public class Users_PaymentdetailController extends BaseController {
             AlipayClient client = new DefaultAlipayClient(AlipayConfigSandBox.URL, AlipayConfigSandBox.APPID, AlipayConfigSandBox.RSA_PRIVATE_KEY, AlipayConfigSandBox.FORMAT, AlipayConfigSandBox.CHARSET, AlipayConfigSandBox.ALIPAY_PUBLIC_KEY, AlipayConfigSandBox.SIGNTYPE);
             AlipayTradeWapPayRequest alipay_request = new AlipayTradeWapPayRequest();
 
+            Map<String, String> user_patient = new HashMap<String, String>();
+            user_patient.put("uid", String.valueOf(uid));
+            user_patient.put("patientid", String.valueOf(patientid));
+            user_patient.put("uname", uname);
+            user_patient.put("patientname", patientname);
+            String user_patient_data = JSONObject.toJSONString(mydata_map);
             // 封装请求支付信息
             AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
             model.setOutTradeNo(out_trade_no);
             model.setSubject(mydata_encode);//业务参数
             model.setTotalAmount(total_amount);
+            model.setBody(user_patient_data);
             model.setTimeoutExpress(timeout_express);
             model.setProductCode(product_code);
             model.setBody(subject);

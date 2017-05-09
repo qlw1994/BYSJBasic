@@ -252,6 +252,7 @@ define(function (require, exports, module) {
                 var privatekey = button.data("privatekey");
                 var id = button.data("id");
                 var hospitalname = button.data("hospitalname");
+                $ModifyForm.find('input[name=id]').val(id);
                 $ModifyForm.find('input[name=hospitalname]').val(hospitalname);
                 $ModifyForm.find('input[name=accountname]').val(accountname);
                 $ModifyForm.find('input[name=pid]').val(pid);
@@ -397,7 +398,7 @@ define(function (require, exports, module) {
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-                    var updatePath = ROOTPAth + '/admin/alipayaccounts/updateAlipayaccount';
+                    var updatePath = ROOTPAth + '/admin/alipayaccounts/modAlipayaccount';
 
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
                         if (data.code == '1') {

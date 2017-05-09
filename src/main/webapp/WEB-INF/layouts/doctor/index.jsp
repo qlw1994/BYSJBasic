@@ -152,7 +152,7 @@
                         <li class="menu-item <c:if test='${pcode == 2}'>open active</c:if>">
                             <a href="javascript:" class="menu-item-a">
                                 <i class="iconfont">&#xe604;</i>
-                                <span class="title">功能</span>
+                                <span class="title">就诊操作</span>
                                 <span class="selected"></span>
                                 <i class="iconfont arrow"></i>
                             </a>
