@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.config.AlipayConfigSandBox;
 import qlw.controller.BaseController;
 import qlw.manage.PaymentdetailManage;
+import qlw.model.Paymentdetail;
 import qlw.util.Base64Utils;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
@@ -99,7 +100,8 @@ public class Diagnosispayment extends BaseController {
                         //request.setAttribute("totalmoney", totalmoney);
                         request.setAttribute("invoicenumber", invoicenumber);
 
-                        boolean resflag = paymentdetailManage.paymentConfirm(paymentdetailids, paytype, paynumber, invoicenumber);
+                        log.info("---paymentdetailids------------"+paymentdetailids);
+                        boolean resflag = paymentdetailManage.paymentConfirm(paymentdetailids, paytype,invoicenumber,  paynumber);
                         log.info("paymentConfirm-----------resflag：" + resflag + "--------------------");
                         if (resflag) {
                             out = "success";
@@ -151,35 +153,38 @@ public class Diagnosispayment extends BaseController {
             if (AlipaySignature.rsaCheckV1(map, AlipayConfigSandBox.ALIPAY_PUBLIC_KEY, AlipayConfigSandBox.CHARSET, "RSA")) {
                 //验证成功
                 log.info("===========alipay return 验证成功==========");
-                if (trade_status != null && (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS"))) {
-                    //数据解析
-                    String user_patient_data = request.getParameter("body");
-                    JSON mydata_temp = JSONObject.parseObject(user_patient_data);
-                    Map<String, String> mydata_map = JSONObject.toJavaObject(mydata_temp, Map.class);
+                //if (trade_status != null && (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS"))) {
+                //数据解析
+                String paynumber = request.getParameter("out_trade_no");
+                //JSON mydata_temp = JSONObject.parseObject(user_patient_data);
+                //Map<String, String> mydata_map = JSONObject.toJavaObject(mydata_temp, Map.class);
+                //
+                //log.info("=============  数据解析 start =================");
+                //for (String key : mydata_map.keySet()) {
+                //    log.info(key + ":" + mydata_map.get(key).toString());
+                //}
+                //log.info("=============  数据解析 end ===================");
+                Paymentdetail paymentdetail = paymentdetailManage.getByPaynumber(paynumber);
 
-                    log.info("=============  数据解析 start =================");
-                    for (String key : mydata_map.keySet()) {
-                        log.info(key + ":" + mydata_map.get(key).toString());
-                    }
-                    log.info("=============  数据解析 end ===================");
-                    //数据提取
-                    Long patientid = Long.parseLong(mydata_map.get("patientid"));
-                    String patientname = mydata_map.get("patientname");
-                    Long uid = Long.parseLong(mydata_map.get("uid"));
-                    String uname = mydata_map.get("uname");
-                    //request中增加数据
-                    String tempPath = request.getRequestURL().toString();
-                    String basePath = "http://" + tempPath.split("/")[2];
-                    log.info("--------------------basepath-------:");
-                    log.info(tempPath);
-                    log.info(tempPath.split("/")[2]);
-                    model.put("basePath", basePath);
-                    model.put("uid", uid);
-                    model.put("uname", uname);
-                    model.put("patientid", patientid);
-                    model.put("patientname", patientname);
-                    modelAndView = new ModelAndView("admin/account/paysuccess", model);
-                }
+                //数据提取
+                Long patientid =paymentdetail.getPatientid();
+                String patientname = paymentdetail.getPatientname();
+                Long uid =paymentdetail.getUid();
+                String uname =paymentdetail.getUname();
+
+                //request中增加数据
+                String tempPath = request.getRequestURL().toString();
+                String basePath = "http://" + tempPath.split("/")[2];
+                log.info("--------------------basepath-------:");
+                log.info(tempPath);
+                log.info(tempPath.split("/")[2]);
+                model.put("basePath", basePath);
+                model.put("uid", uid);
+                model.put("uname", uname);
+                model.put("patientid", patientid);
+                model.put("patientname", patientname);
+                modelAndView = new ModelAndView("admin/account/paysuccess", model);
+                //}
             } else {
                 log.info("===========alipay return 验证失败==========");
 
@@ -252,7 +257,7 @@ public class Diagnosispayment extends BaseController {
                         //request.setAttribute("totalmoney", totalmoney);
                         request.setAttribute("invoicenumber", invoicenumber);
 
-                        boolean resflag = paymentdetailManage.paymentConfirm(paymentdetailids, paytype, paynumber, invoicenumber);
+                        boolean resflag = paymentdetailManage.paymentConfirm(paymentdetailids, paytype,  invoicenumber,paynumber);
                         log.info("paymentConfirm-----------resflag：" + resflag + "--------------------");
                         if (resflag) {
                             out = "success";
@@ -304,35 +309,37 @@ public class Diagnosispayment extends BaseController {
             if (AlipaySignature.rsaCheckV1(map, AlipayConfigSandBox.ALIPAY_PUBLIC_KEY, AlipayConfigSandBox.CHARSET, "RSA")) {
                 //验证成功
                 log.info("===========alipay return 验证成功==========");
-                if (trade_status != null && (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS"))) {
-                    //数据解析
-                    String user_patient_data = request.getParameter("body");
-                    JSON mydata_temp = JSONObject.parseObject(user_patient_data);
-                    Map<String, String> mydata_map = JSONObject.toJavaObject(mydata_temp, Map.class);
+                //if (trade_status != null && (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS"))) {
+                //数据解析
+                String paynumber = request.getParameter("out_trade_no");
+                //JSON mydata_temp = JSONObject.parseObject(user_patient_data);
+                //Map<String, String> mydata_map = JSONObject.toJavaObject(mydata_temp, Map.class);
+                //
+                //log.info("=============  数据解析 start =================");
+                //for (String key : mydata_map.keySet()) {
+                //    log.info(key + ":" + mydata_map.get(key).toString());
+                //}
+                //log.info("=============  数据解析 end ===================");
+                Paymentdetail paymentdetail = paymentdetailManage.getByPaynumber(paynumber);
 
-                    log.info("=============  数据解析 start =================");
-                    for (String key : mydata_map.keySet()) {
-                        log.info(key + ":" + mydata_map.get(key).toString());
-                    }
-                    log.info("=============  数据解析 end ===================");
-                    //数据提取
-                    Long patientid = Long.parseLong(mydata_map.get("patientid"));
-                    String patientname = mydata_map.get("patientname");
-                    Long uid = Long.parseLong(mydata_map.get("uid"));
-                    String uname = mydata_map.get("uname");
-                    //request中增加数据
-                    String tempPath = request.getRequestURL().toString();
-                    String basePath = "http://" + tempPath.split("/")[2];
-                    log.info("--------------------basepath-------:");
-                    log.info(tempPath);
-                    log.info(tempPath.split("/")[2]);
-                    model.put("basePath", basePath);
-                    model.put("uid", uid);
-                    model.put("uname", uname);
-                    model.put("patientid", patientid);
-                    model.put("patientname", patientname);
-                    modelAndView = new ModelAndView("users/paysuccess", model);
-                }
+                //数据提取
+                Long patientid =paymentdetail.getPatientid();
+                String patientname = paymentdetail.getPatientname();
+                Long uid =paymentdetail.getUid();
+                String uname =paymentdetail.getUname();
+                //request中增加数据
+                String tempPath = request.getRequestURL().toString();
+                String basePath = "http://" + tempPath.split("/")[2];
+                log.info("--------------------basepath-------:");
+                log.info(tempPath);
+                log.info(tempPath.split("/")[2]);
+                model.put("basePath", basePath);
+                model.put("uid", uid);
+                model.put("uname", uname);
+                model.put("patientid", patientid);
+                model.put("patientname", patientname);
+                modelAndView = new ModelAndView("users/paysuccess", model);
+                //}
             } else {
                 log.info("===========alipay return 验证失败==========");
 

@@ -52,7 +52,7 @@ define(function (require, exports, module) {
             '    <td class=" heading">',
 
             // ' <button type="button" class="btn btn-default btn-xs j-disable j-edit" data-toggle="modal" data-target="#modifyModal"  data-id="${item.id}" data-advice="${item.advice}" data-status="${item.status}"><span class="iconfont iconfont-xs">&#xe62d;</span>查看</button>',
-            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/user/hospitalpays/index?hospitalizationid=${item.id}" ><span class="iconfont iconfont-xs">&#xe617;</span>住院消费详情</a>',
+            ' <a class="btn btn-default btn-xs"  href="' + ROOTPAth + '/user/hospitalpays/index?hospitalizationid=${item.id}&hospitalid=${item.hospitalid}&hospitalname=${item.hospitalname}" ><span class="iconfont iconfont-xs">&#xe617;</span>住院消费详情</a>',
             '    </td>',
             '</tr>',
             '{@/each}',
@@ -159,15 +159,21 @@ define(function (require, exports, module) {
             //     $modal.find(".j-form-save").hide();
             //     $modal.find(".j-form-edit").show();
             // });
-            $("#search").click(function () {
+            $("#search").click(function (e) {
+                e.preventDefault();
+                pageIndex.current=1;
                 $.ajax({
                     url: ROOTPAth + '/user/hospitalizations/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
                         patientid: patientid,
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate:function () {
+                            return $("#starttime").val();
+                        },
+                        enddate:function () {
+                            return $("#endtime").val();
+                        },
                         length: pagelength
                     },
                     success: function (res) {

@@ -94,10 +94,10 @@ define(function (require, exports, module) {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate: $("#starttime").val(),
+                        enddate: $("#endtime").val(),
                         patientid: patientid,
-                        hospitalid:hospitalid,
+                        hospitalid: hospitalid,
                         length: pagelength
                     },
                     success: function (res) {
@@ -132,7 +132,6 @@ define(function (require, exports, module) {
                 $checkreportList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
-
 
 
             //修改表单初始化
@@ -181,16 +180,22 @@ define(function (require, exports, module) {
                 // $modal.find(".j-form-save").hide();
                 // $modal.find(".j-form-edit").show();
             });
-            $("#search").click(function () {
+            $("#search").click(function (e) {
+                e.preventDefault();
+                pageIndex.current = 1;
                 $.ajax({
                     url: ROOTPAth + '/user/inspectreports/list',
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        hospitalid:hospitalid,
+                        hospitalid: hospitalid,
                         patientid: patientid,
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate: function () {
+                            return $("#starttime").val();
+                        },
+                        enddate: function () {
+                            return $("#endtime").val();
+                        },
                         length: pagelength
                     },
                     success: function (res) {
@@ -200,7 +205,7 @@ define(function (require, exports, module) {
                             newData.data[i].currentpage = pageIndex.current;
                         });
                         tool.stopPageLoading();
-                        $inspectionreportList.find(".page-info-num").text(res.data.length);
+                        $CheckreportForm.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
                     }

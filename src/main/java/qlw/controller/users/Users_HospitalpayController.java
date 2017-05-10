@@ -55,9 +55,11 @@ public class Users_HospitalpayController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(Long hospitalizationid, HttpServletRequest request) {
+    public ModelAndView View(Long hospitalizationid,Long hospitalid,String hospitalname, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("users/hospitalpay");
         request.getSession().setAttribute("hospitalizationid", hospitalizationid);
+        request.getSession().setAttribute("hospitalid", hospitalid);
+        request.getSession().setAttribute("hospitalname", hospitalname);
         mv.addObject("currentpage", 1);
         return mv;
     }

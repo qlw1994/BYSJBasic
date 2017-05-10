@@ -35,15 +35,21 @@ public class Users_HospitalizationController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listHospitalization(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String edndate, Long patientid, Long hospitalid, HttpServletRequest request) {
+    public Map<String, Object> listHospitalization(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String enddate, Long patientid, Long hospitalid, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
             //long patientid = (Long) request.getSession().getAttribute("patientid");
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Hospitalization hospitalization = new Hospitalization();
             hospitalization.setPatientid(patientid);
             hospitalization.setHospitalid(hospitalid);
-            result.put("total", hospitalizationManage.count(startdate, edndate, hospitalization));
-            result.put("data", hospitalizationManage.list(page, length, startdate, edndate, hospitalization));
+            result.put("total", hospitalizationManage.count(startdate, enddate, hospitalization));
+            result.put("data", hospitalizationManage.list(page, length, startdate, enddate, hospitalization));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));

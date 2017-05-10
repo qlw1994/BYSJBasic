@@ -27,10 +27,9 @@ define(function (require, exports, module) {
                             }
                         }
                     },
-                    patientname: "required",
                 },
                 messages: {
-                    useraccount: {
+                    name: {
                         required: "医院名不能为空",
                         remote: "不存在该医院"
                     },

@@ -76,7 +76,7 @@
 
 <content tag="jsconfig">
     <script type="text/javascript">
-        var patientid =${hospitalid};
+        var patientid =${patientid};
         var patientname = "${patientname}";
         var hospitalizationid=${hospitalizationid};
         var currentpage = ${currentpage};

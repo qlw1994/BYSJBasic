@@ -162,7 +162,9 @@ define(function (require, exports, module) {
                 $modal.find(".j-form-save").hide();
                 $modal.find(".j-form-edit").show();
             });
-            $("#search").click(function () {
+            $("#search").click(function (e) {
+                e.preventDefault();
+                pageIndex.current=1;
                 $.ajax({
                     url: ROOTPAth + '/user/drugorders/list',
                     type: 'POST',
@@ -170,8 +172,12 @@ define(function (require, exports, module) {
                     data: {
                         hospitalid:hospitalid,
                         patientid: patientid,
-                        startdate:$("#starttime").val(),
-                        enddate:$("#endtime").val(),
+                        startdate:function () {
+                            return $("#starttime").val();
+                        },
+                        enddate:function () {
+                            return $("#endtime").val();
+                        },
                         length: pagelength
                     },
                     success: function (res) {

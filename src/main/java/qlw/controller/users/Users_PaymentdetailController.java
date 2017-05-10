@@ -183,6 +183,7 @@ public class Users_PaymentdetailController extends BaseController {
         if (paytype.equals("1")) {
             log.info("支付宝支付------------------------------>");
             //获取医院的支付宝账户信息
+            //获取医院的支付宝账户信息
             Alipayaccount alipayaccount = alipayaccountManage.getByName(null, hospitalid);
             AlipayConfigSandBox.APPID = alipayaccount.getAppid();
             AlipayConfigSandBox.RSA_PRIVATE_KEY = alipayaccount.getPrivatekey();
@@ -222,12 +223,12 @@ public class Users_PaymentdetailController extends BaseController {
             // 封装请求支付信息
             AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
             model.setOutTradeNo(out_trade_no);
-            model.setSubject(mydata_encode);//业务参数
-            model.setTotalAmount(total_amount);
+            model.setSubject(subject);
             model.setBody(user_patient_data);
+            model.setTotalAmount(total_amount);
             model.setTimeoutExpress(timeout_express);
             model.setProductCode(product_code);
-            model.setBody(subject);
+            model.setPassbackParams(mydata_encode);//业务参数
             alipay_request.setBizModel(model);
             // 设置异步通知地址
             alipay_request.setNotifyUrl(AlipayConfigSandBox.user_notify_url);

@@ -1,16 +1,16 @@
 package qlw.manage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qlw.mapper.DrugorderMapper;
+import qlw.controller.alipayNotify.Diagnosispayment;
 import qlw.mapper.PaymentdetailMapper;
 import qlw.model.*;
 
-import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by wiki on 2017/3/23.
@@ -28,7 +28,7 @@ public class PaymentdetailManage extends BaseManage {
     HospitalizationManage hospitalizationManage;
     @Autowired
     HospitalpayManage hospitalpayManage;
-
+    protected static final Logger log = LoggerFactory.getLogger(PaymentdetailManage.class);
     public List<Paymentdetail> list(Integer pageNumber, Integer pageSize, String startdate, String enddate, Paymentdetail paymentdetail) {
         PaymentdetailExample example = new PaymentdetailExample();
         example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
@@ -157,6 +157,22 @@ public class PaymentdetailManage extends BaseManage {
      */
     public Paymentdetail getById(Long id) {
         return paymentdetailMapper.selectByPrimaryKey(id);
+    }
+    /**
+     * 根据id获取支付详情
+     *
+     * @param paynumber
+     * @return
+     */
+    public Paymentdetail getByPaynumber(String paynumber) {
+        PaymentdetailExample example = new PaymentdetailExample();
+        PaymentdetailExample.Criteria criteria = example.createCriteria();
+        criteria.andPaynumberEqualTo(paynumber);
+        List<Paymentdetail> paymentdetails= paymentdetailMapper.selectByExample(example);
+        if(paymentdetails.size()>0){
+            return paymentdetails.get(0);
+        }
+        return null;
     }
 
 
@@ -297,7 +313,10 @@ public class PaymentdetailManage extends BaseManage {
      */
     @Transactional
     public boolean paymentConfirm(String paymentdetailidsTemp, Integer paytype, String invoicenumber, String paynumber) {
-        String[] paymentdetailids = paymentdetailidsTemp.split("|");
+        String[] paymentdetailids = paymentdetailidsTemp.split("\\|");
+        try{
+            log.info("paymentdetailids--------------"+paymentdetailidsTemp);
+            log.info("id length--------------"+ paymentdetailids.length);
         for (int i = 0; i < paymentdetailids.length; i++) {
             Paymentdetail paymentdetail = new Paymentdetail();
             paymentdetail.setStatus(1);
@@ -309,13 +328,16 @@ public class PaymentdetailManage extends BaseManage {
             criteria.andIdEqualTo(Long.parseLong(paymentdetailids[i]));
             paymentdetailMapper.updateByExampleSelective(paymentdetail, example);
             Paymentdetail paymentdetail_store = paymentdetailMapper.selectByPrimaryKey(Long.parseLong(paymentdetailids[i]));
+            log.info("id string--------------"+paymentdetailids[i]);
+            log.info("id long--------------"+Long.parseLong(paymentdetailids[i]));
+            log.info("id--------------"+paymentdetail_store.getId());
             //记录药品订单编号
             if (paymentdetail_store.getProjecttype().equals(new Integer(0))) {
                 Drugorderdetail drugorderdetail = drugorderdetailManage.getById(paymentdetail_store.getProjectid());
                 Drugorder drugorder = drugorderManage.getById(drugorderdetail.getDrugorderid());
                 drugorder.setNeedpay(drugorder.getNeedpay() - 1);
                 //检查药品订单中是否全部支付完毕  (默认全部支付 即药品订单改为支付状态)
-                if (drugorder.getNeedpay().equals(0)) {
+                if (drugorder.getNeedpay().equals(new Integer(0))) {
                     drugorder.setStatus(1);
                 }
                 drugorderManage.update(drugorder);
@@ -335,6 +357,9 @@ public class PaymentdetailManage extends BaseManage {
                 }
             }
 
+        }
+        }catch (Exception e){
+            log.info("Error------"+e);
         }
 
 

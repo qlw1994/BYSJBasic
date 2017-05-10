@@ -42,12 +42,12 @@ public class HospitalizationManage extends BaseManage {
             criteria.andPatientidEqualTo(hospitalization.getPatientid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andStartdateBetween(startDate, endDate);
+
+            criteria.andStartdateGreaterThanOrEqualTo(startDate);
+            criteria.andEnddateLessThanOrEqualTo(endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
-            criteria.andStartdateLessThanOrEqualTo(endDate);
+
+            criteria.andEnddateLessThanOrEqualTo(endDate);
         }
         //else {
         //    startDate += " 00:00:00";
@@ -101,12 +101,11 @@ public class HospitalizationManage extends BaseManage {
             criteria.andPatientidEqualTo(hospitalization.getPatientid());
         }
         if (startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)) {
-            startDate += " 00:00:00";
-            endDate += " 23:59:59";
-            criteria.andStartdateBetween(startDate, endDate);
+            criteria.andStartdateGreaterThanOrEqualTo(startDate);
+            criteria.andEnddateLessThanOrEqualTo(endDate);
         } else if (endDate != null && !"".equals(endDate)) {
-            endDate += " 23:59:59";
-            criteria.andStartdateLessThanOrEqualTo(endDate);
+
+            criteria.andEnddateLessThanOrEqualTo(endDate);
         }
         //else {
         //    startDate += " 00:00:00";

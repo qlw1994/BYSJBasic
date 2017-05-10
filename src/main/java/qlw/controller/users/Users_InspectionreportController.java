@@ -36,9 +36,15 @@ public class Users_InspectionreportController extends BaseController {
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listInspectionreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String starttime, @RequestParam(value = "endDate", defaultValue = "") String endtime, HttpServletRequest request) {
+    public Map<String, Object> listInspectionreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,  String startdate,  String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Inspectionreport inspectionreport = new Inspectionreport();
             String str_patientid = request.getParameter("patientid");
             String str_departmentid = request.getParameter("departmentid");
@@ -65,8 +71,8 @@ public class Users_InspectionreportController extends BaseController {
                 long auditorid = Long.parseLong(str_auditorid);
                 inspectionreport.setAuditorid(auditorid);
             }
-            result.put("total", inspectionreportManage.count(starttime, endtime, inspectionreport));
-            result.put("data", inspectionreportManage.list(page, length, starttime, endtime, inspectionreport));
+            result.put("total", inspectionreportManage.count(startdate, enddate, inspectionreport));
+            result.put("data", inspectionreportManage.list(page, length, startdate, enddate, inspectionreport));
         } catch (Exception e) {
             result.put("total", 0);
             result.put("data", new ArrayList<>(0));

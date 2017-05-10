@@ -15,7 +15,6 @@ define(function (require, exports, module) {
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
     var pagelength = 10; //一页多少条；
-    var invoicenumber = "";
     $('body').tooltip({
         selector: '.has-tooltip'
     });
@@ -187,6 +186,7 @@ define(function (require, exports, module) {
                 // $modal.find(".j-form-save").hide();
                 // $modal.find(".j-form-edit").show();
             });
+
             $("#toPayBtn").click(function () {
                 if ($table.find("input[name='checkitem']:checked").length == 0) {
                     $("#ajax_fail").find("h4").html("至少选择一项支付");
@@ -220,7 +220,6 @@ define(function (require, exports, module) {
                         totalmoney: totalmoney,
                     },
                     success: function (res) {
-                        invoicenumber=res.invoicenumber;
                         tool.stopPageLoading();
                         fillBudget(res);
                     }
@@ -239,11 +238,11 @@ define(function (require, exports, module) {
         if (data) {
             text += '</tr><tr role="row" class="odd">';
             text += '<td><b>金额</b></td>';
-            text += '<td>' + (data.money) + '&nbsp;<input type="hidden" id="budget_money" value="' + data.money + '"/></td>';
+            text += '<td>' + (data.totalmoney) + '&nbsp;<input type="hidden" id="budget_money" value="' + data.totalmoney + '"/></td>';
             text += '</tr><tr role="row" class="even">';
             text += '<td><b>发票</b></td>';
             // text += '<td>' + data.invoicenumber + '&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/></td>';
-            text += '<td id="td_invoicenumber">&nbsp;<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/></td>';
+            text += '<td id="td_invoicenumber">&nbsp;' + data.invoicenumber + '<input type="hidden" id="budget_invoicenumber" value="' + data.invoicenumber + '"/></td>';
             text += '</tr><tr role="row" class="odd">';
             text += '<td><b>支付方式</b></td>';
             text += '<td><label>'
@@ -300,9 +299,9 @@ define(function (require, exports, module) {
             success: function (res) {
                 tool.stopPageLoading();
                 var data = res.data;
-                $("#viewPaymentMidProcModal").modal("show");
+                console.log(data);
                 // document.getElementById('html_con').contentWindow.document.write(data);
-                $("#html_con").html(data);
+                $("#paymentdetail-list").html(data);
             },
             error: function (err) {
                 tool.stopPageLoading();

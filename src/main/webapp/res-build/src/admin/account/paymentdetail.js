@@ -185,6 +185,7 @@ define(function (require, exports, module) {
             });
             $("#viewPaymentMidProcModal").on("hide.modal", function () {
                 pageIndex.reset();
+                $("#invoicenumber").val("");
             })
             $("#toPayBtn").click(function () {
                 var invoicenumber = $("#invoicenumber").val();
@@ -201,17 +202,6 @@ define(function (require, exports, module) {
             })
             //预结算
             $('#viewPaymentBudgetModal').on('show.modal', function (event) {
-                // if ($table.find("input[name='checkitem']:checked").length == 0) {
-                //     $("#ajax_fail").find("h4").html("至少选择一项支付");
-                //     $("#ajax_fail").modal("show")
-                // } else {
-                // var invoicenumber = $("#invoicenumber").val();
-                // if (invoicenumber == undefined || invoicenumber == "") {
-                //     $("#ajax_fail").find("h4").html("请输入发票号码");
-                //     $("#ajax_fail").modal("show");
-                //     return;
-                // }
-                // else {
                 $("#invoicenumber").prop("readonly", true);
                 var paymentdetailids = "";
                 var totalmoney = 0;
@@ -239,9 +229,6 @@ define(function (require, exports, module) {
                         fillBudget(res);
                     }
                 });
-                // }
-                // }
-
             });
 
         },

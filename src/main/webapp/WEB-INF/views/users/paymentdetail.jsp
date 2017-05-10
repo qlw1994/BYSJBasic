@@ -11,7 +11,7 @@
 
 <body>
 <h3 class="page-title">""</h3>
-<div class="row">
+<div class="row" style="background-color: white">
     <div class="col-md-12">
         <div class="portlet">
             <div class="portlet-search">
@@ -174,31 +174,26 @@
         <!-- /.modal-content -->
     </div>
 </div>
-
-
-<!--  支付中间结果 -->
-<div class="modal fade" id="viewPaymentMidProcModal">
-    <div class="modal-dialog">
+<div class="modal fade bs-example-modal-sm" id="ajax_fail" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true" style="z-index: 9998">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title">支付过程</h4>
-            </div>
             <div class="modal-body">
-                <div class="table-container" id="html_con">
-                    <%--<iframe id="html_con" src="${ctx}/user/paymentdetails/blank"--%>
-                            <%--style="width:560px;height:420px;"></iframe>--%>
+                <div class="dialogtip-con-wrap clearfix dialogtipg-warning">
+                    <div class="dialogtip-icon iconfont">&#xe615;</div>
+                    <div class="dialogtip-con">
+                        <h4 class="dialogtip-tit" style="margin-top: 12px;">保存失败</h4>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <a href="#" class="btn btn-danger j-modal-closebtn" data-dismiss="modal">关闭</a>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
 </div>
+
+
 </body>
 
 <content tag="jsconfig">
@@ -208,6 +203,8 @@
         var hospitalid =${hospitalid};
         var hospitalname = "${hospitalname}";
         var currentpage = ${currentpage};
+        var uid=${sessionScope.user.id};
+        var uname="${sessionScope.user.name}";
     </script>
     <%--<script src="${ctx}/res-build/res/echarts/echarts.common.min.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/res-build/res/echarts/jquery-ui-bootstrap/jquery-ui-1.10.3.custom.min.js"></script>--%>

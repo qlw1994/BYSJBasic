@@ -34,9 +34,15 @@ public class Users_CheckreportController extends BaseController{
      */
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> listCheckreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, @RequestParam(value = "startDate", defaultValue = "") String startdate, @RequestParam(value = "endDate", defaultValue = "") String enddate, HttpServletRequest request) {
+    public Map<String, Object> listCheckreport(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, String startdate, String enddate, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         try {
+            if(startdate!=null){
+                request.setAttribute("starttime",startdate);
+            }
+            if(enddate!=null){
+                request.setAttribute("endtime",enddate);
+            }
             Checkreport checkreport = new Checkreport();
             String str_patientid = request.getParameter("patientid");
             String str_departmentid = request.getParameter("departmentid");

@@ -76,7 +76,7 @@ public class HospitalManage extends BaseManage {
     public Integer countLike(String name, String province, String city, String area) {
         HospitalExample example = new HospitalExample();
         HospitalExample.Criteria criteria = example.createCriteria();
-        name = name + "%";
+        name = "%"+name + "%";
         criteria.andNameLike(name);
         if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
@@ -104,7 +104,7 @@ public class HospitalManage extends BaseManage {
             example.setOrderByClause(getPage("id desc", pageNumber, pageSize));
         }
         HospitalExample.Criteria criteria = example.createCriteria();
-        name = name + "%";
+        name ="%"+ name + "%";
         criteria.andNameLike(name);
         if (province != null && !"".equals(province)) {
             criteria.andProvinceEqualTo(province);
