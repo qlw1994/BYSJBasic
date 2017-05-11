@@ -10,9 +10,11 @@ import qlw.controller.BaseController;
 import qlw.manage.UserManage;
 import qlw.model.Users;
 import qlw.util.CommonUtils;
+import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ import java.util.Map;
 @Controller
 public class UsersLoginController extends BaseController {
     @Autowired
-    UserManage userManange;
+    UserManage userManage;
 
 
     @RequestMapping(value = "userlogin")
@@ -33,7 +35,8 @@ public class UsersLoginController extends BaseController {
     @RequestMapping(value = "/usersignup")
     public Map<String, Object> signup(Users users, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
-        userManange.saveBackId(users);
+        users.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+        userManage.saveBackId(users);
         request.getSession().setAttribute("user", users);
         resMap.put("code", ResultCode.SUCCESS);
         resMap.put("msg", "注册成功");
@@ -50,7 +53,7 @@ public class UsersLoginController extends BaseController {
             resMap.put("msg", "传入参数不能为空");
             return resMap;
         }
-        Users user = userManange.getUsersByAccount(account);
+        Users user = userManage.getUsersByAccount(account);
         if (user == null) {
             resMap.put("code", ResultCode.ERROR);
             resMap.put("msg", "未找到该用户或该用户已经注销");

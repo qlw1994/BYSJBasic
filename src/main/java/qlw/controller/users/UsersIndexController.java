@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.UserManage;
 import qlw.model.Users;
+import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +55,9 @@ public class UsersIndexController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
         String rtnMsg = "注册成功";
-        userManage.save(users);
+        users.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
+        userManage.saveBackId(users);
+        request.getSession().setAttribute("user", users);
         result.put("message", rtnMsg);
         result.put("code", rtnCode);
         return result;

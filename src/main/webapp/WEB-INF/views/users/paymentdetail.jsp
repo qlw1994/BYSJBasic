@@ -109,20 +109,20 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">交易流水号</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="name" readonly placeholder="交易流水号">
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="paynumber" readonly placeholder="交易流水号">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">发票号码</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="price"
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="invoicenumber"
                                            placeholder="发票号码" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">支付时间</label>
                                 <div class="col-md-8">
-                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="format"
+                                    <input type="text" AUTOCOMPLETE="off" class="form-control" name="paydate"
                                            placeholder="支付时间" readonly>
                                 </div>
                             </div>

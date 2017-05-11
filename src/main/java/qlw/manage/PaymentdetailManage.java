@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import qlw.controller.alipayNotify.Diagnosispayment;
 import qlw.mapper.PaymentdetailMapper;
 import qlw.model.*;
+import qlw.util.MyUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -322,6 +324,7 @@ public class PaymentdetailManage extends BaseManage {
             paymentdetail.setStatus(1);
             paymentdetail.setPaytype(paytype);
             paymentdetail.setPaynumber(paynumber);
+            paymentdetail.setPaydate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
             paymentdetail.setInvoicenumber(invoicenumber);
             PaymentdetailExample example = new PaymentdetailExample();
             PaymentdetailExample.Criteria criteria = example.createCriteria();
