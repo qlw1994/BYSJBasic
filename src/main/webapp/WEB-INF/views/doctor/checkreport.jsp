@@ -106,6 +106,7 @@
                     <div class="portlet-body form">
                         <div class="form-body">
                             <input type="hidden" name="doctorid" value="${sessionScope.doctor.id}"/>
+                            <input type="hidden" id="add_auditorid" name="auditorid"/>
                             <input type="hidden" name="patientid" value="${patientid}"/>
                             <input type="hidden" name="hospitalid" value="${sessionScope.doctor.hospitalid}"/>
                             <input type="hidden" name="departmentid" value="${sessionScope.doctor.departmentid}"/>
@@ -151,8 +152,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">诊断意见</label>
                                 <div class="col-md-8">
-                                    <textarea class="form-control" name="options">
-                                    </textarea>
+                                    <textarea class="form-control" name="options"></textarea>
                                 </div>
                             </div>
 
@@ -161,7 +161,7 @@
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off"
                                            id="add_auditor"
-                                           name="auditor" placeholder="审核人账号">
+                                           name="auditoraccount" placeholder="审核人账号">
                                     <ul class="list" id="add_auditorList">
 
                                     </ul>
@@ -264,7 +264,7 @@
                                 <label class="col-md-3 control-label">审核人账号</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off" id="mod_auditor"
-                                           name="auditor" placeholder="审核人账号" disabled="disabled">
+                                           name="auditoraccount" placeholder="审核人账号" disabled="disabled">
                                     <ul class="list" id="mod_auditorList">
 
                                     </ul>

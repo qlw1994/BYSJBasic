@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     var $table = $("#datatable_ajax");
     var $paymentdetailList = $("#paymentdetail-list");
     var $paymentdetailForm = $('#vpaymentdetailForm');
-    var $ModifyForm = $("#vpaymentdetailModifyForm");
+    var $ModifyForm = $("#vPaymentdetailModifyForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');
@@ -289,6 +289,9 @@ define(function (require, exports, module) {
                 paymentdetailids: paymentdetailids,
                 paytype: paytype,
                 totalFee: totalmoney,
+                invoicenumber:function () {
+                    return $("#budget_invoicenumber").val();
+                },
                 subject: (hospitalname + "-诊间支付测试[" + new Date() + ']')
             },
             // beforeSend: function () {

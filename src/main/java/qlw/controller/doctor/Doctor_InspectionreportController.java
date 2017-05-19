@@ -120,9 +120,10 @@ public class Doctor_InspectionreportController extends BaseController {
         String rtnMsg = "添加成功";
         try {
             inspectionreport.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            inspectionreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(inspectionreport.getExamtime()));
-            inspectionreport.setInspecttime(MyUtils.SIMPLE_DATETIME_FORMAT.format(inspectionreport.getInspecttime()));
-            inspectionreportManage.save(inspectionreport);
+            inspectionreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(new Date(inspectionreport.getExamtime())));
+            inspectionreport.setInspecttime(MyUtils.SIMPLE_DATETIME_FORMAT.format(new Date(inspectionreport.getInspecttime())));
+            inspectionreportManage.saveBackId(inspectionreport);
+            request.setAttribute("inspectionid",inspectionreport.getId());
             result= this.fileupload(file,request);
         } catch (Exception e) {
             e.printStackTrace();

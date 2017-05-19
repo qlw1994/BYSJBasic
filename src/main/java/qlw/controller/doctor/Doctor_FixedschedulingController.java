@@ -4,15 +4,17 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
 import qlw.manage.FixedschedulingManage;
+import qlw.manage.NumberManage;
+import qlw.manage.SchedulingManage;
+import qlw.model.Doctor;
 import qlw.model.Fixedscheduling;
+import qlw.model.Scheduling;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
 
@@ -31,6 +33,11 @@ import java.util.*;
 public class Doctor_FixedschedulingController extends BaseController {
     @Autowired
     FixedschedulingManage fixedschedulingManage;
+    @Autowired
+    SchedulingManage schedulingManage;
+    @Autowired
+    NumberManage numberManage;
+
 
     /**
      * 固定排班列表数据源
@@ -43,28 +50,6 @@ public class Doctor_FixedschedulingController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         try {
             List<Fixedscheduling> fixedschedulings = fixedschedulingManage.list(doctorid);
-            //List<List<Integer>> lists = new ArrayList<>();
-            //int[][] timeflag = new int[3][8];
-            //if (fixedschedulings != null) {
-            //    for (Fixedscheduling f : fixedschedulings) {
-            //        timeflag[f.getTimeflag()][f.getWeek()] = f.getStatus();
-            //    }
-            //    for (int j = 1; j < 3; j++) {
-            //        List<Integer> temp = new ArrayList<>();
-            //        for (int i = 1; i < 8; i++) {
-            //            temp.add(timeflag[j][i]);
-            //        }
-            //        lists.add(temp);
-            //    }
-            //} else {
-            //    for (int j = 1; j < 3; j++) {
-            //        List<Integer> temp = new ArrayList<>();
-            //        for (int i = 1; i < 8; i++) {
-            //            temp.add(0);
-            //        }
-            //        lists.add(temp);
-            //    }
-            //}
             result.put("total", fixedschedulings.size());
             result.put("data", fixedschedulings);
         } catch (Exception e) {
@@ -82,7 +67,7 @@ public class Doctor_FixedschedulingController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public ModelAndView View(Integer pcode, Integer subcode,HttpServletRequest request) {
+    public ModelAndView View(Integer pcode, Integer subcode, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("doctor/fixedscheduling");
         mv.addObject("pcode", pcode);
         mv.addObject("subcode", subcode);
@@ -98,6 +83,7 @@ public class Doctor_FixedschedulingController extends BaseController {
      */
     @RequestMapping(value = "/fileupload", method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Map<String, Object> fileupload(MultipartFile file, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
@@ -115,7 +101,8 @@ public class Doctor_FixedschedulingController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fixedschedulingManage.deleteByDoctorid((Long) request.getSession().getAttribute("doctorid"));
+        Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+        fixedschedulingManage.deleteByDoctorid(doctor.getId());
         String FILE_NAME = path + "/" + fileName;
         // 这里显式地配置一下CSV文件的Header，然后设置跳过Header（要不然读的时候会把头也当成一条记录）
         CSVFormat format = CSVFormat.DEFAULT.withHeader(FILE_HEADER).withSkipHeaderRecord();
@@ -134,9 +121,9 @@ public class Doctor_FixedschedulingController extends BaseController {
                 int status6 = Integer.parseInt(record.get("星期六"));
                 int status7 = Integer.parseInt(record.get("星期日"));
                 Fixedscheduling fixedscheduling = new Fixedscheduling();
-                fixedscheduling.setDoctorid((Long) request.getSession().getAttribute("doctorid"));
-                fixedscheduling.setDepartmentid((Long) request.getSession().getAttribute("departmentid"));
-                fixedscheduling.setHospitalid((Long) request.getSession().getAttribute("hospitalid"));
+                fixedscheduling.setDoctorid(doctor.getId());
+                fixedscheduling.setDepartmentid(doctor.getDepartmentid());
+                fixedscheduling.setHospitalid(doctor.getHospitalid());
                 fixedscheduling.setTimeflag(timeflag);
                 fixedscheduling.setRegfee(new BigDecimal(regfee));
                 fixedscheduling.setDate(date);
@@ -168,6 +155,7 @@ public class Doctor_FixedschedulingController extends BaseController {
         targetFile.delete();
         result.put("message", rtnMsg);
         result.put("code", rtnCode);
+        this.generateScheduling(doctor.getId(), doctor.getHospitalid(), doctor.getDepartmentid(), doctor.getLevel(), 50);
         return result;
     }
 
@@ -260,4 +248,64 @@ public class Doctor_FixedschedulingController extends BaseController {
         return result;
     }
 
+    //生成号源
+    private Map<String, Object> generateScheduling(Long doctorid, Long hospitalid, Long departmentid, Integer type, @RequestParam(value = "totalnumber", defaultValue = "50") Integer totalnumber) {
+        Map<String, Object> result = new HashMap<>();
+        Integer rtnCode = ResultCode.SUCCESS;
+        String rtnMsg = "号源生成成功";
+        Date nowDate = new Date();
+        List<Date> dateList = new ArrayList<Date>();
+        long ftime = nowDate.getTime();
+        for (int i = 0; i <= 7; i++) {
+            Date fdate = new Date();
+            fdate.setTime(ftime + (i * 24 * 3600000));
+            String fDateStr = MyUtils.SIMPLE_DATE_FORMAT.format(fdate);
+            //周日 从0转换为7
+            int fweek = fdate.getDay() == 0 ? 7 : fdate.getDay();
+
+            List<Fixedscheduling> fixedschedulings = fixedschedulingManage.getByWeek(doctorid, fweek);
+            //Fixedscheduling fixedscheduling = fixedschedulings.get(0);
+            for (Fixedscheduling fixedscheduling : fixedschedulings) {
+                if (fixedscheduling.getStatus() == 1) {
+                    if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                        Scheduling scheduling = new Scheduling();
+                        scheduling.setDoctorid(doctorid);
+                        scheduling.setDepartmentid(departmentid);
+                        scheduling.setHospitalid(hospitalid);
+                        scheduling.setDate(fDateStr);
+                        scheduling.setStatus(1);
+                        scheduling.setRegfee(fixedscheduling.getRegfee());
+                        scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                        scheduling.setType(type);
+                        scheduling.setTotalnumber(totalnumber);
+                        scheduling.setAppointleftcount(totalnumber / 2);
+                        scheduling.setOtherleftcount(totalnumber / 2);
+                        schedulingManage.save(scheduling);
+                    }
+                } else {
+                    int status = fixedscheduling.getStatus();
+                    if (!schedulingManage.hasSame(fDateStr, fixedscheduling.getTimeflag())) {
+                        Scheduling scheduling = new Scheduling();
+                        scheduling.setDoctorid(doctorid);
+                        scheduling.setDepartmentid(departmentid);
+                        scheduling.setHospitalid(hospitalid);
+                        scheduling.setDate(fDateStr);
+                        scheduling.setStatus(status);
+                        scheduling.setRegfee(fixedscheduling.getRegfee());
+                        scheduling.setTimeflag(fixedscheduling.getTimeflag());
+                        scheduling.setType(type);
+                        scheduling.setTotalnumber(0);
+                        scheduling.setAppointleftcount(0);
+                        scheduling.setOtherleftcount(0);
+
+                        schedulingManage.save(scheduling);
+                    }
+                }
+            }
+        }
+        result.put("message", rtnMsg);
+        result.put("code", rtnCode);
+        return result;
+
+    }
 }

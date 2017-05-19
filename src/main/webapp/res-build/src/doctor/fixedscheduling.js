@@ -19,7 +19,7 @@ define(function (require, exports, module) {
 
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="8" style="text-align:center">',
             '暂无记录,请添加',
@@ -93,12 +93,9 @@ define(function (require, exports, module) {
                     url: ROOTPAth + '/doctor/fixedschedulings/list',
                     type: 'POST',
                     dataType: 'json',
-                    data: function () {
-                        var data = {
+                    data: {
                             doctorid:doctorid,
                             length: pagelength
-                        };
-                        return data;
                     },
                     success: function (res) {
                         var newData = $.extend({}, res);
@@ -220,7 +217,7 @@ define(function (require, exports, module) {
                         contentType: false,
                         processData: false,
                         success:function (data) {
-                            if (data.code === 1) {
+                            if (data.code == 1) {
                                 $('#modifyModal').modal('hide');
                                 $addRoletipModal.find(".dialogtip-msg").html("文件上传成功");
                                 $addRoletipModal.modal('show');

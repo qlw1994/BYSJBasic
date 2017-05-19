@@ -73,6 +73,11 @@ define(function (require, exports, module) {
             '{@if item.timeflag==3}',
             '    <td>晚上</td>',
             '{@/if}',
+            '    <td class=" heading">',
+            '{@if item.status==1}',
+            ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>取消</button>',
+            '{@/if}',
+            '    </td>',
             '</tr>',
             '{@/each}',
             '{@/if}'
@@ -123,11 +128,23 @@ define(function (require, exports, module) {
                         $.each(newData.data, function (i, val) {
 
                             newData.data[i].currentpage = pageIndex.current;
+                            if (newData.data[i].serialnumber == null) {
+                                newData.data[i].serialnumber = "未取号";
+                            }
                         });
                         tool.stopPageLoading();
                         $appointmentList.find(".page-info-num").text(res.data.length);
 
                         $table.find("tbody").empty().append(listTpl.render(newData));
+                        $table.find(".j-del").confirmation({
+                            title: "确定取消预约吗？",
+                            btnOkLabel: "确定",
+                            btnCancelLabel: "取消",
+                            onConfirm: function (event, element) {
+                                event.preventDefault();
+                                self.deleteAppointment($(element));
+                            }
+                        });
                     }
                 },
                 pageName: "page",
@@ -155,6 +172,23 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
         },
+        deleteAppointment: function ($that) {
+            var id = $that.data("id");
+            var delPath = ROOTPAth + '/user/appointments/delAppointment/' + id;
+            $.ajax({
+                url: delPath,
+                type: "POST",
+                success: function (data) {
+                    if (data.code === 1) {
+                        pageIndex.reset();
+                    } else {
+                        $("#ajax_fail").find("h4").html(data.message);
+                        $("#ajax_fail").modal("show")
+                    }
+                }
+            });
+
+        }
 
     };
 

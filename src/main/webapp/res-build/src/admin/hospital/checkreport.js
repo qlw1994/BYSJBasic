@@ -299,7 +299,9 @@ define(function (require, exports, module) {
                             dataType: "json",
                             data: {
                                 hospitalid: hospitalid,
-                                account: $CheckreportForm.find("input[name=auditoraccount]").val()
+                                account: function () {
+                                    return $CheckreportForm.find("input[name=auditoraccount]").val()
+                                }
                             }
                         }
                     },
@@ -414,7 +416,9 @@ define(function (require, exports, module) {
                             dataType: "json",
                             data: {
                                 hospitalid: hospitalid,
-                                account: $ModifyForm.find("input[name=auditoraccount]").val()
+                                account: function () {
+                                    return $CheckreportForm.find("input[name=auditoraccount]").val()
+                                }
                             }
                         }
                     },

@@ -76,7 +76,7 @@ define(function (require, exports, module) {
 
             '    <td class=" heading">',
             '{@if item.status==1}',
-            ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>删除</button>',
+            ' <button type="button" class="btn btn-danger btn-xs j-disable j-del" data-toggle="confirmation"  data-placement="top" data-id="${item.id}"><span class="iconfont iconfont-xs">&#xe618;</span>取消</button>',
             '{@/if}',
             '    </td>',
             '</tr>',
@@ -133,7 +133,7 @@ define(function (require, exports, module) {
                         $table.find("tbody").empty().append(listTpl.render(newData));
                         //删除权限
                         $table.find(".j-del").confirmation({
-                            title: "确定删除该记录吗？",
+                            title: "确定取消预约吗？",
                             btnOkLabel: "确定",
                             btnCancelLabel: "取消",
                             onConfirm: function (event, element) {

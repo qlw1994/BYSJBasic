@@ -290,7 +290,7 @@ public class Users_AppointmentContoller extends BaseController {
     public Map<String, Object> delAppointment(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
         Integer rtnCode = ResultCode.SUCCESS;
-        String rtnMsg = "删除成功";
+        String rtnMsg = "取消成功";
         try {
             Appointment appointment = appointmentManage.getById(id);
             appointment.setStatus(2);
@@ -306,7 +306,7 @@ public class Users_AppointmentContoller extends BaseController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            rtnMsg = "删除失败";
+            rtnMsg = "取消失败";
             rtnCode = ResultCode.ERROR;
         }
         result.put("message", rtnMsg);

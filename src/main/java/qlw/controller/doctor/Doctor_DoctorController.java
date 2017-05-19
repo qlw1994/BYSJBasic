@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import qlw.controller.BaseController;
-import qlw.manage.DepartmentManage;
-import qlw.manage.DoctorManage;
+import qlw.manage.*;
 import qlw.model.Doctor;
 import qlw.util.MyUtils;
 import qlw.util.ResultCode;
@@ -29,6 +28,7 @@ public class Doctor_DoctorController extends BaseController {
     DoctorManage doctorManage;
     @Autowired
     DepartmentManage departmentManage;
+
 
     /**
      * 账号列表数据源
@@ -89,39 +89,6 @@ public class Doctor_DoctorController extends BaseController {
         return result;
     }
 
-    ///**
-    // * 添加帐号
-    // *
-    // * @param doctor
-    // * @return
-    // */
-    //@RequestMapping(value = "newDoctor")
-    //@ResponseBody
-    //public Map<String, Object> addDoctor(Doctor doctor, HttpServletRequest request) {
-    //    Map<String, Object> result = new HashMap<>();
-    //    Integer rtnCode = ResultCode.SUCCESS;
-    //    String rtnMsg = "添加成功";
-    //    try {
-    //        Doctor doctorTemp = doctorManage.getDoctorByAccount(doctor.getAccount());
-    //        doctor.setPassword(MD5Utils.getMD5(doctor.getPassword()));
-    //        if (doctorTemp != null) {
-    //            doctor.setDeletedate(null);
-    //            doctorManage.updateDoctor(doctor);
-    //        } else {
-    //            doctor.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-    //            doctorManage.save(doctor);
-    //        }
-    //    } catch (Exception e) {
-    //        e.printStackTrace();
-    //        rtnMsg = "添加失败";
-    //        rtnCode = ResultCode.ERROR;
-    //    }
-    //
-    //    result.put("message", rtnMsg);
-    //    result.put("code", rtnCode);
-    //    return result;
-    //}
-
     /**
      * 帐号查询
      *
@@ -160,10 +127,10 @@ public class Doctor_DoctorController extends BaseController {
             String old_headpath = doctor_headpath.getHeadpath();
             //删除旧图像
             if (old_headpath != null) {
-                String[] str=old_headpath.split("/");
-                old_headpath=str[str.length-1];
+                String[] str = old_headpath.split("/");
+                old_headpath = str[str.length - 1];
                 //old_headpath = old_headpath.replace("/", "\\\\");
-                File deleteFile = new File(path,old_headpath);
+                File deleteFile = new File(path, old_headpath);
                 deleteFile.delete();
             }
             if (!targetFile.exists()) {
@@ -177,7 +144,7 @@ public class Doctor_DoctorController extends BaseController {
             }
             //String headpath = path + "\\" + fileName;
             //headpath = headpath.replaceAll("\\\\", "/");
-            doctors.setHeadpath(("/upload/"+fileName));
+            doctors.setHeadpath(("/upload/" + fileName));
             doctorManage.updateDoctor(doctors);
         } catch (Exception e) {
             e.printStackTrace();
@@ -345,4 +312,20 @@ public class Doctor_DoctorController extends BaseController {
         boolean res = departmentManage.haveSameName(name, hospitalid);
         return !res;
     }
+
+    /**
+     * 检查是否存在account 单家医院范围
+     *
+     * @param account
+     * @return 存在true，否则false
+     */
+    @RequestMapping(value = "/hasAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean hasAccount(String account, Long hospitalid) {
+        boolean result = doctorManage.haveSameAccountAndHospital(account, hospitalid);
+
+        return result;
+    }
+
+
 }

@@ -21,7 +21,7 @@ define(function (require, exports, module) {
 
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="4" style="text-align:center">',
             '暂无记录,请添加',
@@ -136,32 +136,18 @@ define(function (require, exports, module) {
             $addModal.on("hide.modal", function (event) {
                 $addModal.find(".list").hide();
             });
+            //审核人下拉框绑定
+            $("#add_auditor").keyup(function (e) {
+                if (e.keyCode != 40 && e.keyCode != 38) {
+                    get_auditors_modal($("#add_auditor"), 1);
+                }
+            }).focus(function () {
+                this.select();
+            });
             //修改界面关闭,下拉框消失
             $modifyModal.on("hide.modal", function (event) {
                 $modifyModal.find(".list").hide();
             });
-            // //我要编辑
-            // $ModifyForm.on("click", ".j-form-edit", function (event) {
-            //     var formDom = event.delegateTarget;
-            //     $(this).hide();
-            //     $(formDom).find(".j-form-save").show();
-            //     $(formDom).find("input").prop("disabled", false);
-            //     $(formDom).find("select").prop("disabled", false);
-            //     // $(event.relatedTarget)
-            // });
-            //添加表单初始化
-            // $addModal.on('show.modal', function (event) {
-            //     $InspectreportForm[0].reset();
-            //     $InspectreportForm.find("input").removeAttr("aria-describedby");
-            //     $InspectreportForm.find("input").removeAttr("aria-invalid");
-            //     $InspectreportForm.find("input").removeAttr("aria-required");
-            //     $InspectreportForm.find("select").removeAttr("aria-describedby");
-            //     $InspectreportForm.find("select").removeAttr("aria-invalid");
-            //     $InspectreportForm.find("select").removeAttr("aria-required");
-            //     $InspectreportForm.find("div").removeClass("has-error");
-            //     $InspectreportForm.find("span").remove();
-            // })
-            //修改表单初始化
             $modifyModal.on('show.modal', function (event) {
                 var $modal = $ModifyForm;
                 $modal.find("input").prop("disabled", true);
@@ -195,232 +181,9 @@ define(function (require, exports, module) {
                 $modal.find(".j-form-save").hide();
                 $modal.find(".j-form-edit").show();
             });
-            // //时间日期截取
-            // $("#add_inspecttime").bind("input onpropertychange", function (e) {
-            //     $("#add_date").val($("#add_inspecttime").val().substring(0, 11));
-            // });
-            // $("#mod_inspecttime").bind("input onpropertychange", function (e) {
-            //     $("#mod_date").val($("#mod_inspecttime").val().substring(0, 11));
-            // });
-            // //审核人下拉框绑定
-            // $("#add_auditor").keyup(function (e) {
-            //     if (e.keyCode != 40 && e.keyCode != 38) {
-            //         get_auditors_modal($("#add_auditor"), 1);
-            //     }
-            // }).focus(function () {
-            //     this.select();
-            // });
-            // $("#mod_auditor").keyup(function (e) {
-            //     if (e.keyCode != 40 && e.keyCode != 38) {
-            //         get_auditors_modal($("#mod_auditor"), 2);
-            //     }
-            // }).focus(function () {
-            //     this.select();
-            // });
-            // //表单验证-添加表单
-            // $InspectreportForm.validate({
-            //     rules: {
-            //         status: "required",
-            //         inspecttime: "required",
-            //         auditor: {
-            //             required: true,
-            //             remote: {
-            //                 url: ROOTPAth + "/doctor/doctors/hasAccount",
-            //                 type: "post",
-            //                 date: {
-            //                     hospitalid: hospitalid,
-            //                     account: $InspectreportForm.find("input[name=auditor]").val()
-            //                 }
-            //             }
-            //         },
-            //         examtime: "required",
-            //     },
-            //     messages: {
-            //         status: "请选择状态",
-            //         auditor: {
-            //             required: "请输入审核人账号",
-            //             remote: "药品名不存在"
-            //         },
-            //         inspecttime: {
-            //             required: "请选择检验时间",
-            //         },
-            //         examtime: "请选择审核时间"
-            //
-            //     },
-            //     errorElement: 'span', //default input error message container
-            //     errorClass: 'help-block', // default input error message class
-            //     //focusInvalid: false, // do not focus the last invalid input
-            //     invalidHandler: function (event, validator) { //display error alert on form submit
-            //         //	                $('.alert-danger', $('.login-form')).show();
-            //     },
-            //     highlight: function (element) { // hightlight error inputs
-            //         $(element)
-            //             .closest('.form-group').addClass('has-error'); // set error class to the control group
-            //     },
-            //     success: function (label) {
-            //         var strId = label.closest('.form-group').find("input").attr("id") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
-            //         if (strId == "add_auditor") {
-            //             //手动输入药品全名需要查询药品信息
-            //             if ($("#add_auditor").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
-            //                 $.ajax({
-            //                     url: ROOTPAth + '/doctor/doctors/doctorInfo',
-            //                     type: "POST",
-            //                     dataType: "json",
-            //                     data: {
-            //                         account: $("#add_auditor").val(),
-            //                         hospitalid: hospitalid
-            //                     },
-            //                     success: function (data) {
-            //                         $("#add_auditorid").val(data.id);
-            //                         $("#add_auditorname").val(data.name);
-            //                     }
-            //                 });
-            //             }
-            //         }
-            //         label.closest('.form-group').removeClass('has-error');
-            //         label.remove();
-            //     },
-            //
-            //     errorPlacement: function (error, element) {
-            //         var strId = element.closest('.form-group').find("input").attr("id") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
-            //         if (strId == "add_auditor"&& element.closest('.form-group').hasClass('has-error')) {
-            //             $("#add_auditorid").val("");
-            //             $("#add_auditorname").val("");
-            //         }
-            //         error.insertAfter(element);
-            //     },
-            //     submitHandler: function () {
-            //         var savePath = ROOTPAth + '/doctor/inspectionreports/newInspectreport';
-            //         $InspectreportForm.find("input").prop("disabled", false);
-            //         $.ajax({
-            //             type: "POST",
-            //             url: savePath,
-            //             dataType: "json",
-            //             data: $InspectreportForm.serialize(),
-            //             beforeSend: function () {
-            //                 tool.startPageLoading();
-            //             },
-            //
-            //             success: function (data) {
-            //                 console.log(data);
-            //                 tool.stopPageLoading();
-            //                 if (data.code == 1) {
-            //                     $addModal.modal("hide");
-            //                     $addRoletipModal.find(".dialogtip-msg").html("表单添加成功");
-            //                     $addRoletipModal.modal('show');
-            //                 }
-            //                 else {
-            //                     $("#ajax_fail").find("h4").html(data.message);
-            //                     $("#ajax_fail").modal("show")
-            //                 }
-            //                 pageIndex.reset();
-            //             },
-            //
-            //             error: function () {
-            //                 tool.stopPageLoading();
-            //                 $("#ajax_fail").modal("show")
-            //             },
-            //         });
-            //
-            //     }
-            // });
-            // //表单验证-修改表单
-            // $ModifyForm.validate({
-            //     rules: {
-            //         status: "required",
-            //         inspecttime: "required",
-            //         auditor: {
-            //             required: true,
-            //             remote: {
-            //                 url: ROOTPAth + "/doctor/doctors/hasAccount",
-            //                 type: "post",
-            //                 date: {
-            //                     hospitalid: hospitalid,
-            //                     account: $ModifyForm.find("input[name=auditor]").val()
-            //                 }
-            //             }
-            //         },
-            //         examtime: "required",
-            //     },
-            //     messages: {
-            //         status: "请选择状态",
-            //         auditor: {
-            //             required: "请输入审核人账号",
-            //             remote: "药品名不存在"
-            //         },
-            //         inspecttime: {
-            //             required: "请选择检验 时间",
-            //         },
-            //         examtime: "请选择审核时间"
-            //
-            //     },
-            //     errorElement: 'span', //default input error message container
-            //     errorClass: 'help-block', // default input error message class
-            //     //focusInvalid: false, // do not focus the last invalid input
-            //
-            //
-            //     invalidHandler: function (event, validator) { //display error alert on form submit
-            //         //	                $('.alert-danger', $('.login-form')).show();
-            //     },
-            //     highlight: function (element) { // hightlight error inputs
-            //         $(element)
-            //             .closest('.form-group').addClass('has-error'); // set error class to the control group
-            //     },
-            //
-            //     success: function (label) {
-            //         var strId = label.closest('.form-group').find("input").attr("id") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
-            //         if (strId == "mod_auditor") {
-            //             //手动输入药品全名需要查询药品信息
-            //             if ($("#mod_auditorid").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
-            //                 $.ajax({
-            //                     url: ROOTPAth + '/doctor/doctors/doctorInfo',
-            //                     type: "POST",
-            //                     dataType: "json",
-            //                     data: {
-            //                         account: $("#mod_auditor").val(),
-            //                         hospitalid: hospitalid
-            //                     },
-            //                     success: function (data) {
-            //                         $("#mod_auditorid").val(data.id);
-            //                         $("#mod_auditorname").val(data.name);
-            //                     }
-            //                 });
-            //             }
-            //         }
-            //         label.closest('.form-group').removeClass('has-error');
-            //         label.remove();
-            //     },
-            //
-            //     errorPlacement: function (error, element) {
-            //         var strId = element.closest('.form-group').find("input").attr("id") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
-            //         if (strId == "mod_auditor"&& element.closest('.form-group').hasClass('has-error')) {
-            //             $("#mod_auditorid").val("");
-            //             $("#mod_auditorname").val("");
-            //         }
-            //         error.insertAfter(element);
-            //     },
-            //     submitHandler: function () {
-            //
-            //
-            //         var updatePath = ROOTPAth + '/doctor/inspectionreports/modInspectreport';
-            //         $.post(updatePath, $ModifyForm.serialize(), function (data) {
-            //             if (data.code === 1) {
-            //                 $('#modifyModal').modal('hide');
-            //                 $addRoletipModal.find(".dialogtip-msg").html("表单修改成功");
-            //                 $addRoletipModal.modal('show');
-            //                 pageIndex.reset();
-            //             }
-            //             else {
-            //                 $("#ajax_fail").find("h4").html(data.message);
-            //                 $("#ajax_fail").modal("show")
-            //             }
-            //         });
-            //
-            //     }
-            // });
 
             jQuery.validator.addMethod("checkCsv", function(value, element) {
-                var filepath=$("#fixedschedulingfile").val();
+                var filepath=$("#inspectitemsfile").val();
                 //获得上传文件名
                 var fileArr=filepath.split("\\");
                 var fileTArr=fileArr[fileArr.length-1].toLowerCase().split(".");
@@ -432,26 +195,49 @@ define(function (require, exports, module) {
                     return true;
                 }
             }, "上传文件格式不适合");
-            $("#inspection_upload").validate({
-
+            $InspectreportForm.validate({
                 rules: {
-                    file:{
-                        required:true,
-                        checkCsv:true
-                    }
-
-
+                    status: "required",
+                    inspecttime: "required",
+                    inspectname: "required",
+                    auditoraccount: {
+                        required: true,
+                        remote: {
+                            url: ROOTPAth + "/doctor/doctors/hasAccount",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                hospitalid: hospitalid,
+                                account: function () {
+                                    return $InspectreportForm.find("input[name=auditoraccount]").val();
+                                }
+                            }
+                        }
+                    },
+                    file: {
+                        required: true,
+                        checkCsv: true
+                    },
+                    examtime: "required",
                 },
                 messages: {
-                    file:{
+                    status: "请选择状态",
+                    inspectname: "检验名称不能为空",
+                    auditoraccount: {
+                        required: "请输入审核人账号",
+                        remote: "医生名不存在"
+                    },
+                    inspecttime: {
+                        required: "请选择检验时间",
+                    },
+                    examtime: "请选择审核时间",
+                    file: {
                         required: "请选择文件"
                     }
                 },
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
                 //focusInvalid: false, // do not focus the last invalid input
-
-
                 invalidHandler: function (event, validator) { //display error alert on form submit
                     //	                $('.alert-danger', $('.login-form')).show();
                 },
@@ -459,134 +245,142 @@ define(function (require, exports, module) {
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
-
                 success: function (label) {
+                    var strId = label.closest('.form-group').find("input").attr("id") == "undefined" ? "" : label.closest('.form-group').find("input").attr("id");
+                    if (strId == "add_auditor") {
+                        //手动输入医生全名需要查询医生信息
+                        if ($("#add_auditor").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
+                            $.ajax({
+                                url: ROOTPAth + '/doctor/doctors/doctorInfo',
+                                type: "POST",
+                                dataType: "json",
+                                data: {
+                                    account: $("#add_auditor").val(),
+                                    hospitalid: hospitalid
+                                },
+                                success: function (data) {
+                                    $("#add_auditorid").val(data.id);
+                                    $("#add_auditorname").val(data.name);
+                                }
+                            });
+                        }
+                    }
                     label.closest('.form-group').removeClass('has-error');
                     label.remove();
                 },
 
                 errorPlacement: function (error, element) {
+                    var strId = element.closest('.form-group').find("input").attr("id") == "undefined" ? "" : element.closest('.form-group').find("input").attr("id");
+                    if (strId == "add_auditor" && element.closest('.form-group').hasClass('has-error')) {
+                        $("#add_auditorid").val("");
+                        $("#add_auditorname").val("");
+                    }
                     error.insertAfter(element);
                 },
                 submitHandler: function () {
-
-
-
-                    var formData = new FormData($("#scheduling_upload")[0]);
-
-                    var updatePath = ROOTPAth + '/doctor/inspectionreports/fileupload';
+                    var savePath = ROOTPAth + '/doctor/inspectionreports/newInspectionreport';
+                    $InspectreportForm.find("input").prop("disabled", false);
+                    var formdata = new FormData($($InspectreportForm)[0]);
                     $.ajax({
-                        url: updatePath,
-                        type:"post",
-                        dataType:"json",
-                        data: formData,
+                        type: "POST",
+                        url: savePath,
+                        dataType: "json",
+                        data: formdata,
                         cache: false,
                         contentType: false,
                         processData: false,
-                        success:function (data) {
-                            if (data.code === 1) {
-                                $addRoletipModal.find(".dialogtip-msg").html("文件上传成功");
+                        beforeSend: function () {
+                            tool.startPageLoading();
+                        },
+
+                        success: function (data) {
+                            console.log(data);
+                            tool.stopPageLoading();
+                            if (data.code == 1) {
+                                $addModal.modal("hide");
+                                $addRoletipModal.find(".dialogtip-msg").html("表单添加成功");
                                 $addRoletipModal.modal('show');
-                                pageIndex.reset();
                             }
                             else {
                                 $("#ajax_fail").find("h4").html(data.message);
                                 $("#ajax_fail").modal("show")
                             }
-                        }
+                            pageIndex.reset();
+                        },
+
+                        error: function () {
+                            tool.stopPageLoading();
+                            $("#ajax_fail").modal("show")
+                        },
                     });
 
                 }
             });
         },
-        // deleteInspectreport: function ($that) {
-        //     var id = $that.data("id");
-        //     var delPath = ROOTPAth + '/doctor/inspectionreports/delInspectreport/' + id;
-        //     $.ajax({
-        //         url: delPath,
-        //         type: "POST",
-        //         success: function (data) {
-        //             if (data.code === 1) {
-        //                 $addRoletipModal.find(".dialogtip-msg").html(data.message);
-        //                 $addRoletipModal.modal('show');
-        //                 pageIndex.reset();
-        //             } else {
-        //                 $("#ajax_fail").find("h4").html(data.message);
-        //                 $("#ajax_fail").modal("show")
-        //             }
-        //         }
-        //     });
-        //
-        // },
+
 
     };
-    // // option 1 ：添加   ； 2：修改
-    // function get_auditors_modal(obj, option) {
-    //     var t = setTimeout(function () {
-    //         $.ajax({
-    //             url: ROOTPAth + '/doctor/doctors/listDoctorLikeByHospital',
-    //             type: 'POST',
-    //             dataType: 'json',
-    //             data: {
-    //                 hospitalid: hospitalid,
-    //                 account: $(obj).val()
-    //             },
-    //             success: function (data) {
-    //                 data = data.data;
-    //                 if (option == 1) {
-    //                     var $list = $("#add_auditorList");
-    //                 }
-    //                 else {
-    //                     var $list = $("#mod_auditorList");
-    //                 }
-    //                 $list.show();
-    //                 $list.html("");
-    //                 $.each(data, function (index, el) {
-    //                     var html = $("<li  data-id='" + el.id + "' data-name='" + el.name + "'>" + el.account + "</li>");
-    //                     $list.append(html);
-    //
-    //                 });
-    //                 if ($list.html() == "") {
-    //                     $list.hide();
-    //                 }
-    //                 $($list).find("li").hover(function () {
-    //
-    //                     $(this).addClass("esultDivLiHover");
-    //                 }, function () {
-    //                     $(this).removeClass("esultDivLiHover");
-    //                 });
-    //                 $list.mouseleave(function () {
-    //                     $list.hide();
-    //                 });
-    //                 $($list).find("li").click(function (event) {
-    //                     $(obj).val($(this).text());
-    //                     if (option == 1) {
-    //                         $("#add_auditorid").val($(this).data("id"));
-    //                         $("#add_auditorname").val($(this).data("name"));
-    //                     }
-    //                     else {
-    //                         $("#mod_auditorid").val($(this).data("id"));
-    //                         $("#mod_auditorname").val($(this).data("name"));
-    //                     }
-    //                     $list.hide();
-    //                     $InspectreportForm.validate().element($(obj));
-    //                 });
-    //             },
-    //         });
-    //     }, 500);
-    // }
+    // option 1 ：添加   ； 2：修改
+    function get_auditors_modal(obj, option) {
+        var t = setTimeout(function () {
+            $.ajax({
+                url: ROOTPAth + '/doctor/doctors/listDoctorLikeByHospital',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    hospitalid: hospitalid,
+                    account: $(obj).val()
+                },
+                success: function (data) {
+                    data = data.data;
+                    if (option == 1) {
+                        var $list = $("#add_auditorList");
+                    }
+                    else {
+                        var $list = $("#mod_auditorList");
+                    }
+                    $list.show();
+                    $list.html("");
+                    $.each(data, function (index, el) {
+                        var html = $("<li  data-id='" + el.id + "' data-name='" + el.name + "'>" + el.account + "</li>");
+                        $list.append(html);
 
-    // $('#add_inspecttime').datetimepicker({
-    //     format: 'yyyy-mm-dd hh:ii',
-    // });
-    // $('#mod_inspecttime').datetimepicker({
-    //     format: 'yyyy-mm-dd hh:ii',
-    // });
-    // $('#add_examtime').datetimepicker({
-    //     format: 'yyyy-mm-dd hh:ii',
-    // });
-    // $('#mod_examtime').datetimepicker({
-    //     format: 'yyyy-mm-dd hh:ii',
-    // });
+                    });
+                    if ($list.html() == "") {
+                        $list.hide();
+                    }
+                    $($list).find("li").hover(function () {
+
+                        $(this).addClass("esultDivLiHover");
+                    }, function () {
+                        $(this).removeClass("esultDivLiHover");
+                    });
+                    $list.mouseleave(function () {
+                        $list.hide();
+                    });
+                    $($list).find("li").click(function (event) {
+                        $(obj).val($(this).text());
+                        if (option == 1) {
+                            $("#add_auditorid").val($(this).data("id"));
+                            $("#add_auditorname").val($(this).data("name"));
+                        }
+                        else {
+                            $("#mod_auditorid").val($(this).data("id"));
+                            $("#mod_auditorname").val($(this).data("name"));
+                        }
+                        $list.hide();
+                        $InspectreportForm.validate().element($(obj));
+                    });
+                },
+            });
+        }, 500);
+    }
+    $('#add_inspecttime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+    });
+    $('#add_examtime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+    });
+
     Utilitiy.init();
 });

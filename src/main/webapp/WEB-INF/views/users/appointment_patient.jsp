@@ -78,7 +78,7 @@
                     <th class="sorting">预约状态</th>
                     <th class="sorting">预约日期</th>
                     <th class="sorting">预约时间</th>
-                    <%--<th class="sorting">操作</th>--%>
+                    <th class="sorting">操作</th>
                 </tr>
                 </thead>
                 <tbody>

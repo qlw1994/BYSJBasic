@@ -29,19 +29,12 @@
                 <div class="caption">
                     <i class="iconfont">&#xe619;</i>${sessionScope.doctor.hospitalname}-${sessionScope.doctor.departmentname}-${sessionScope.doctor.name}-${patientname}-  检验单管理
                 </div>
-                <div class="actions">
-                    <form id="inspection_upload" enctype="multipart/form-data">
-                        <div class="form-group" >
-                            <input id="inspectionfile"  type="file" name="file">
 
-                        </div>
-                        <button type="submit" class="btn btn-success btn-sm" id="file_upload" >上传
-                        </button>
-                    </form>
-                    <%--<a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i--%>
-                            <%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加检验单</span>--%>
-                    <%--</a>--%>
-                </div>
+                    <div class="actions" style="float: right">
+                        <a class="btn btn-success btn-sm" href="#" data-toggle="modal" data-target="#addModal"> <i
+                                class="iconfont">&#xe612;</i> <span class="hidden-480">添加检验单</span>
+                        </a>
+                    </div>
             </div>
             <div class="portlet-body" id="inspectionreport-list">
                 <div class="table-pages clearfix">
@@ -106,16 +99,23 @@
                 </button>
                 <h4 class="modal-title">添加订单</h4>
             </div>
-            <form class="form-horizontal" id="vInspectionreportForm">
+            <form class="form-horizontal" id="vInspectionreportForm" enctype="multipart/form-data" METHOD="post">
                 <div class="modal-body">
                     <div class="portlet-body form">
                         <div class="form-body">
-                            <input type="hidden" name="doctorid" value="${doctorid}"/>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">检验项目文件</label>
+                                <div class="col-md-8">
+                                    <input id="inspectitemsfile" type="file" name="file">
+                                </div>
+                            </div>
+                            <input type="hidden" name="doctorid" value="${sessionScope.doctor.id}"/>
                             <input type="hidden" name="patientid" value="${patientid}"/>
                             <input type="hidden" name="hospitalid" value="${hospitalid}"/>
                             <input type="hidden" name="departmentid" value="${departmentid}"/>
                             <input type="hidden" name="date" id="add_date">
                             <input type="hidden" id="add_auditorid" name="auditorid">
+
                             <div class="form-group">
                                 <label class="col-md-3 control-label">检查表状态</label>
                                 <div class="col-md-8">
@@ -138,7 +138,7 @@
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off"
                                            id="add_auditor"
-                                           name="auditor" placeholder="审核人账号">
+                                           name="auditoraccount" placeholder="审核人账号">
                                     <ul class="list" id="add_auditorList">
 
                                     </ul>
@@ -215,7 +215,7 @@
                                 <label class="col-md-3 control-label">审核人账号</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" AUTOCOMPLETE="off" id="mod_auditor"
-                                           name="auditor" placeholder="审核人账号" readonly disabled="disabled">
+                                           name="auditoraccount" placeholder="审核人账号" readonly disabled="disabled">
                                     <ul class="list" id="mod_auditorList">
                                     </ul>
                                 </div>
@@ -239,15 +239,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <%--<button type="button" class="btn btn-success j-form-edit">--%>
-                            <%--<i class="iconfont">&#xe61c;</i> 我要编辑--%>
-                        <%--</button>--%>
-                        <%--<button type="submit" class="btn btn-success j-form-save" style="display: none">--%>
-                            <%--<i class="iconfont">&#xe62c;</i> 保存--%>
-                        <%--</button>--%>
+                        <button type="button" class="btn btn-success j-form-edit">
+                            <i class="iconfont">&#xe61c;</i> 我要编辑
+                        </button>
+                        <button type="submit" class="btn btn-success j-form-save" style="display: none">
+                            <i class="iconfont">&#xe62c;</i> 保存
+                        </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <%-- <button type="submit" class="btn btn-success">修改</button>
-                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+                       <%--<button type="submit" class="btn btn-success">修改</button>--%>
+                     <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
                     </div>
                 </div>
             </form>

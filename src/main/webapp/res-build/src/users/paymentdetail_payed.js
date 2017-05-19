@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     var $table = $("#datatable_ajax");
     var $paymentdetailList = $("#paymentdetail-list");
     var $paymentdetailForm = $('#vpaymentdetailForm');
-    var $ModifyForm = $("#vpaymentdetailModifyForm");
+    var $ModifyForm = $("#vPaymentdetailModifyForm");
     var $modifyModal = $('#modifyModal');
     var $addModal = $('#addModal');
     var $addRoletipModal = $('#modal-box');

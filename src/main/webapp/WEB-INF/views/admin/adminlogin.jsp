@@ -65,10 +65,10 @@
             </div>
         </div>
         <div class="form-actions">
-            <label class="checkbox">
-                <div class="checker"><span class="checked"><input type="checkbox" name="remember" value="1"></span>
-                </div>
-                记住我 </label>
+            <%--<label class="checkbox">--%>
+                <%--<div class="checker"><span class="checked"><input type="checkbox" name="remember" value="1"></span>--%>
+                <%--</div>--%>
+                <%--记住我 </label>--%>
             <button type="submit" class="btn btn-success pull-right">
                 登录<i class="m-icon-swapright m-icon-white"></i>
             </button>

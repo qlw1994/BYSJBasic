@@ -106,8 +106,8 @@ public class Doctor_CheckreportController extends BaseController{
         String rtnMsg = "添加成功";
         try {
             checkreport.setCreatedate(MyUtils.SIMPLE_DATE_FORMAT.format(new Date()));
-            checkreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(checkreport.getExamtime()));
-            checkreport.setChecktime((MyUtils.SIMPLE_DATETIME_FORMAT.format(checkreport.getChecktime())));
+            checkreport.setExamtime(MyUtils.SIMPLE_DATETIME_FORMAT.format(new Date(checkreport.getExamtime())));
+            checkreport.setChecktime((MyUtils.SIMPLE_DATETIME_FORMAT.format(new Date(checkreport.getChecktime()))));
             checkreportManage.save(checkreport);
         } catch (Exception e) {
             e.printStackTrace();

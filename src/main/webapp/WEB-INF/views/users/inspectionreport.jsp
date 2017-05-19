@@ -105,7 +105,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title">修改订单</h4>
+                <h4 class="modal-title">查看检验单</h4>
             </div>
             <form class="form-horizontal" id="vInspectionreportModifyForm">
 

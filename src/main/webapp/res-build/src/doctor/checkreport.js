@@ -21,7 +21,7 @@ define(function (require, exports, module) {
 
     var listTpl = juicer(
         [
-            '{@if total === 0}',
+            '{@if total == 0}',
             '<tr>',
             '<td colspan="7" style="text-align:center">',
             '暂无记录,请添加',
@@ -212,8 +212,8 @@ define(function (require, exports, module) {
                 $modal.find('input[name=auditorid]').val(auditorid);
                 $modal.find('input[name=auditorname]').val(auditorname);
                 $modal.find('input[name=auditor]').val(auditor);
-                $modal.find('input[name=advice]').val(advice);
-                $modal.find('input[name=options]').val(options);
+                $modal.find('textarea[name=advice]').val(advice);
+                $modal.find('textarea[name=options]').val(options);
                 $modal.find('input[name=checktime]').val(checktime);
                 $modal.find('select[name=status]').val(status);
                 $modal.find('input[name=examtime]').val(examtime);
@@ -250,11 +250,13 @@ define(function (require, exports, module) {
                     auditor: {
                         required: true,
                         remote: {
-                            url: ROOTPAth + "/doctor/hospitalDoctors/hasAccount",
+                            url: ROOTPAth + "/doctor/doctors/hasAccount",
                             type: "post",
-                            date: {
+                            data: {
                                 hospitalid: hospitalid,
-                                account: $CheckreportForm.find("input[name=auditor]").val()
+                                account: function () {
+                                    return $CheckreportForm.find("input[name=auditor]").val();
+                                }
                             }
                         }
                     },
@@ -295,7 +297,7 @@ define(function (require, exports, module) {
                         //手动输入药品全名需要查询药品信息
                         if ($("#add_auditor").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
                             $.ajax({
-                                url: ROOTPAth + '/doctor/hospitalDoctors/doctorInfo',
+                                url: ROOTPAth + '/doctor/doctors/doctorInfo',
                                 type: "POST",
                                 dataType: "json",
                                 data: {
@@ -361,14 +363,16 @@ define(function (require, exports, module) {
                 rules: {
                     status: "required",
                     checktime: "required",
-                    auditor: {
+                    auditoraccount: {
                         required: true,
                         remote: {
-                            url: ROOTPAth + "/doctor/hospitalDoctors/hasAccount",
+                            url: ROOTPAth + "/doctor/doctors/hasAccount",
                             type: "post",
-                            date: {
+                            data: {
                                 hospitalid: hospitalid,
-                                account: $CheckreportForm.find("input[name=auditor]").val()
+                                account: function () {
+                                    return $CheckreportForm.find("input[name=auditor]").val()
+                                }
                             }
                         }
                     },
@@ -380,7 +384,7 @@ define(function (require, exports, module) {
                 },
                 messages: {
                     status: "请选择状态",
-                    auditor: {
+                    auditoraccount: {
                         required: "请输入审核人账号",
                         remote: "药品名不存在"
                     },
@@ -412,7 +416,7 @@ define(function (require, exports, module) {
                         //手动输入药品全名需要查询药品信息
                         if ($("#mod_auditorid").val() == "" && !label.closest('.form-group').hasClass('has-error')) {
                             $.ajax({
-                                url: ROOTPAth + '/doctor/hospitalDoctors/doctorInfo',
+                                url: ROOTPAth + '/doctor/doctors/doctorInfo',
                                 type: "POST",
                                 dataType: "json",
                                 data: {
@@ -443,7 +447,7 @@ define(function (require, exports, module) {
 
                     var updatePath = ROOTPAth + '/doctor/checkreports/modCheckreport';
                     $.post(updatePath, $ModifyForm.serialize(), function (data) {
-                        if (data.code === 1) {
+                        if (data.code == 1) {
                             $('#modifyModal').modal('hide');
                             $addRoletipModal.find(".dialogtip-msg").html("表单修改成功");
                             $addRoletipModal.modal('show');
@@ -465,7 +469,7 @@ define(function (require, exports, module) {
         //         url: delPath,
         //         type: "POST",
         //         success: function (data) {
-        //             if (data.code === 1) {
+        //             if (data.code == 1) {
         //                 $addRoletipModal.find(".dialogtip-msg").html(data.message);
         //                 $addRoletipModal.modal('show');
         //                 pageIndex.reset();
