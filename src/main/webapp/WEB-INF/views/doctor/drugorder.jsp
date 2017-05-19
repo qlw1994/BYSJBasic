@@ -10,13 +10,13 @@
 </content>
 <body>
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">预约病人查询</h3>
+<h3 class="page-title">功能</h3>
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> 主页<i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="#">预约病人查询</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">功能</a><i class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">药品订单管理</a></li>
     </ul>
 </div>
